@@ -1,0 +1,137 @@
+{{ define "main" }}
+{{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+
+{{/* ---------------- hero ---------------- */}}
+{{ with .Params.hero }}
+<section class="hero" id="top">
+  <div class="container hero-inner">
+    <h1>{{ .heading }}</h1>
+    <p>{{ .text }}</p>
+    <a class="btn" href="#products">{{ .cta }}</a>
+  </div>
+</section>
+{{ with .badges }}
+{{ $b := resources.Get . }}
+{{ $sm := $b.Resize "700x webp q85" }}
+{{ $lg := $b.Resize "1378x webp q85" }}
+<section class="badges">
+  <div class="container">
+    <img src="{{ $lg.RelPermalink }}" width="{{ $lg.Width }}" height="{{ $lg.Height }}"
+         srcset="{{ $sm.RelPermalink }} 700w, {{ $lg.RelPermalink }} 1378w"
+         sizes="(max-width: 896px) 100vw, 896px"
+         alt="10,000 happy customers · 10 years in business since 2011 · Customer care support · Well structured sales team">
+  </div>
+</section>
+{{ end }}
+{{ end }}
+
+{{/* ---------------- products ---------------- */}}
+{{ with .Params.products }}
+<section class="section" id="products">
+  <div class="container">
+    <h2 class="section-title">{{ .heading }}</h2>
+    <div class="product-grid">
+      {{ range .items }}
+      {{ $p := resources.Get .image }}
+      {{ $sm := $p.Fill "400x400 Center webp q80" }}
+      {{ $lg := $p.Fill "800x800 Center webp q80" }}
+      <article class="product-card">
+        <img src="{{ $sm.RelPermalink }}"
+             srcset="{{ $sm.RelPermalink }} 400w, {{ $lg.RelPermalink }} 800w"
+             sizes="(max-width: 600px) 100vw, (max-width: 992px) 50vw, 33vw"
+             width="400" height="400" loading="lazy" alt="{{ .name }}">
+        <div class="product-body">
+          <h3>{{ .name }}</h3>
+          <a class="btn btn-sm" target="_blank" rel="noopener"
+             href="{{ $wa }}&amp;text={{ printf "Hello, Send me sizes and more details about %s." .enquiry }}&amp;type=phone_number&amp;app_absent=0">Shop Now</a>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ---------------- about ---------------- */}}
+{{ with .Params.about }}
+{{ $a := resources.Get .image }}
+{{ $a1 := $a.Resize "700x webp q82" }}
+<section class="section section-alt" id="about">
+  <div class="container about-grid">
+    <div>
+      <h2 class="section-title left">{{ .heading }}</h2>
+      <p>{{ .text }}</p>
+      <a class="btn" href="#contact">{{ .cta }}</a>
+    </div>
+    <div class="about-img">
+      <img src="{{ $a1.RelPermalink }}" width="{{ $a1.Width }}" height="{{ $a1.Height }}"
+           loading="lazy" alt="Inside the Sri Raja Bags factory">
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ---------------- gallery ---------------- */}}
+{{ with .Params.gallery }}
+<section class="section" id="gallery">
+  <div class="container">
+    <h2 class="section-title">{{ .heading }}</h2>
+    <div class="gallery-grid">
+      {{ range .images }}
+      {{ $g := resources.Get . }}
+      {{ $thumb := $g.Fill "500x500 Center webp q78" }}
+      {{ $full := $g.Resize "1200x webp q82" }}
+      <a href="{{ $full.RelPermalink }}" target="_blank" rel="noopener">
+        <img src="{{ $thumb.RelPermalink }}" width="500" height="500" loading="lazy"
+             alt="Sri Raja Bags product photograph">
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ---------------- contact ---------------- */}}
+{{ with .Params.contact }}
+<section class="section section-alt" id="contact">
+  <div class="container">
+    <h2 class="section-title">{{ .heading }}</h2>
+    <div class="contact-grid">
+      <div class="contact-cards">
+        <div class="contact-card">
+          <a href="tel:+{{ $.Site.Params.phoneRaw }}" aria-label="Call us">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </a>
+          <div>
+            <h3>Phone</h3>
+            <p><a href="tel:+{{ $.Site.Params.phoneRaw }}">{{ $.Site.Params.phone }}</a></p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <a href="mailto:{{ $.Site.Params.email }}" aria-label="Email us">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+          </a>
+          <div>
+            <h3>Email</h3>
+            <p><a href="mailto:{{ $.Site.Params.email }}">{{ $.Site.Params.email }}</a></p>
+          </div>
+        </div>
+        <div class="contact-card">
+          <a href="{{ $wa }}&amp;text=Send%20Me%20More%20Offers.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp us">
+            {{ partial "icon-whatsapp.html" $ }}
+          </a>
+          <div>
+            <h3>WhatsApp</h3>
+            <p><a href="{{ $wa }}&amp;text=Send%20Me%20More%20Offers.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Message us</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="map">
+        <iframe src="{{ $.Site.Params.mapEmbed }}" title="Sri Raja Bags location"
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}

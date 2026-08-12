@@ -1,0 +1,25 @@
+{{ $logo := resources.Get "images/srb-22.png" }}
+{{ $logo2x := $logo.Resize "160x webp" }}
+<header class="navbar">
+  <div class="navbar-inner">
+    <a class="navbar-brand" href="{{ "/" | relURL }}">
+      <img src="{{ $logo2x.RelPermalink }}" width="{{ div $logo2x.Width 2 }}" height="{{ div $logo2x.Height 2 }}" alt="Sri Raja Bags logo">
+      <span>SRI RAJA BAGS</span>
+    </a>
+
+    <!-- CSS-only toggle: works without JavaScript -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </label>
+
+    <nav class="navbar-links">
+      <a href="{{ "/" | relURL }}">Home</a>
+      <a href="{{ "/blog/" | relURL }}">Blog</a>
+      <a href="{{ "/#contact" | relURL }}">Contact us</a>
+      <a class="nav-wa" href="https://wa.me/{{ .Site.Params.phoneRaw }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+        {{ partial "icon-whatsapp.html" . }}
+      </a>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,330 @@
+/* Sri Raja Bags — hand-written stylesheet for the whole site.
+   Replaces ~1.4 MB of Mobirise/Bootstrap CSS. Palette and typeface carried
+   over from the original Mobirise theme so the design is recognisably the same. */
+
+:root {
+  --navy: #05386b;
+  --navy-deep: #032a52;
+  --navy-soft: #3a628c;
+  --mint: #5cdb95;
+  --mint-pale: #edf5e1;
+  --ink: #232323;
+  --ink-soft: #6b6b72;
+  --rule: #e4e9ef;
+  --paper: #ffffff;
+  --paper-alt: #f7f9fb;
+  --nav-h: 4.5rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--navy); }
+
+.container {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+.container.narrow { max-width: 44rem; }
+
+.btn {
+  display: inline-block;
+  background: var(--navy);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 4px;
+  transition: background 0.15s ease;
+}
+.btn:hover { background: var(--navy-soft); }
+.btn-sm { padding: 0.5rem 1.15rem; font-size: 0.875rem; }
+
+/* ---------------- navbar ---------------- */
+
+/* White bar with navy text, as the original Mobirise header was. The logo is a
+   transparent PNG whose internal gaps read as white, so it needs a light bar. */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  min-height: var(--nav-h);
+}
+.navbar-inner {
+  max-width: 68rem;
+  margin: 0 auto;
+  padding: 0.55rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--navy);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 1.05rem;
+}
+.navbar-brand img { height: 3.4rem; width: auto; }
+
+.navbar-links { display: flex; align-items: center; gap: 1.75rem; }
+.navbar-links a {
+  color: var(--navy);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+.navbar-links a:hover { color: var(--navy-soft); }
+.nav-wa { color: #25d366; }
+.nav-wa:hover { color: #1da851; }
+.nav-wa svg { width: 1.4rem; height: 1.4rem; display: block; }
+
+/* CSS-only hamburger — the original Mobirise export shipped no JS, so its
+   mobile menu button did nothing. This works without any JavaScript. */
+.nav-burger { display: none; cursor: pointer; padding: 0.4rem; }
+.nav-burger span {
+  display: block; width: 26px; height: 2px; margin: 5px 0;
+  background: var(--navy); transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+@media (max-width: 800px) {
+  .nav-burger { display: block; }
+  .navbar-links {
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease, padding 0.25s ease;
+  }
+  .nav-toggle:checked ~ .navbar-links { max-height: 20rem; padding: 1rem 0 0.5rem; }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
+  .nav-toggle:checked ~ .nav-burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .navbar-brand span { font-size: 0.95rem; }
+  .navbar-brand img { height: 2.8rem; }
+}
+
+/* ---------------- hero ---------------- */
+
+.hero {
+  margin-top: var(--nav-h);
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy-deep) 100%);
+  color: #fff;
+  text-align: center;
+}
+.hero-inner { padding: 4.5rem 1.25rem 4rem; }
+.hero h1 {
+  font-size: clamp(1.7rem, 4.5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin: 0 0 1.25rem;
+}
+.hero p {
+  max-width: 46rem;
+  margin: 0 auto 2rem;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.9);
+}
+.hero .btn { background: var(--mint); color: var(--navy); }
+.hero .btn:hover { background: #7ee6ac; }
+
+/* Trust-badge strip (10,000 customers / 10 years / support / sales team).
+   Source image is pre-cropped to the badges, so it just scales. */
+.badges {
+  background: #fff;
+  border-bottom: 1px solid var(--rule);
+  padding: 2rem 0;
+}
+.badges img { width: 100%; max-width: 56rem; margin: 0 auto; }
+
+/* ---------------- sections ---------------- */
+
+.section { padding: 4.5rem 0; }
+.section-alt { background: var(--paper-alt); }
+
+.section-title {
+  font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+  font-weight: 800;
+  color: var(--navy);
+  text-align: center;
+  margin: 0 0 2.5rem;
+}
+.section-title.left { text-align: left; margin-bottom: 1.25rem; }
+
+/* products */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.75rem;
+}
+.product-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+.product-card:hover { box-shadow: 0 8px 26px rgba(5,56,107,0.13); transform: translateY(-2px); }
+.product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.product-body { padding: 1.15rem 1.25rem 1.4rem; text-align: center; margin-top: auto; }
+.product-body h3 { font-size: 1.05rem; color: var(--navy); margin: 0 0 1rem; }
+
+/* about */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.about-grid p { margin: 0 0 1.5rem; }
+.about-img img { border-radius: 8px; }
+
+@media (max-width: 800px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* gallery */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.9rem;
+}
+.gallery-grid a { display: block; overflow: hidden; border-radius: 6px; }
+.gallery-grid img {
+  width: 100%; aspect-ratio: 1/1; object-fit: cover;
+  transition: transform 0.25s ease;
+}
+.gallery-grid a:hover img { transform: scale(1.05); }
+
+/* contact */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+.contact-card:last-child { border-bottom: 0; }
+.contact-card > a {
+  flex: 0 0 auto;
+  width: 3rem; height: 3rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: var(--mint-pale);
+  color: var(--navy);
+}
+.contact-card svg { width: 1.4rem; height: 1.4rem; }
+.contact-card h3 { margin: 0; font-size: 1rem; color: var(--navy); }
+.contact-card p { margin: 0; font-size: 0.95rem; }
+.contact-card p a { color: var(--ink-soft); text-decoration: none; }
+.contact-card p a:hover { color: var(--navy); }
+
+.map iframe { width: 100%; height: 20rem; border: 0; border-radius: 8px; }
+
+@media (max-width: 800px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+/* ---------------- blog ---------------- */
+
+.page { padding: calc(var(--nav-h) + 3rem) 0 4rem; }
+.page-title {
+  font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.2;
+  margin: 0 0 0.4rem;
+}
+.lede { color: var(--ink-soft); margin-bottom: 2rem; }
+
+.post-card { padding: 1.75rem 0; border-bottom: 1px solid var(--rule); }
+.post-card h2 { font-size: 1.25rem; margin: 0 0 0.3rem; }
+.post-card h2 a { color: var(--navy); text-decoration: none; }
+.post-card h2 a:hover { color: var(--navy-soft); }
+.post-card p:last-child { margin: 0; }
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin: 0 0 1.75rem;
+}
+.post-card .meta { margin-bottom: 0.6rem; }
+
+.post h2 { font-size: 1.35rem; color: var(--navy); margin: 2.2rem 0 0.6rem; }
+.post p { margin: 0 0 1.2rem; }
+.post ul, .post ol { padding-left: 1.3rem; }
+.post li { margin-bottom: 0.4rem; }
+.post img { border-radius: 6px; }
+.post blockquote {
+  margin: 1.6rem 0;
+  padding: 0.85rem 1.25rem;
+  background: var(--mint-pale);
+  border-left: 4px solid var(--mint);
+  border-radius: 0 4px 4px 0;
+}
+.post blockquote p:last-child { margin-bottom: 0; }
+.back { margin-top: 3rem; font-size: 0.9rem; }
+
+/* ---------------- footer ---------------- */
+
+.site-footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.8);
+  padding: 2.5rem 0 2rem;
+  text-align: center;
+}
+.foot-links { margin-bottom: 1.25rem; }
+.foot-links a {
+  color: #fff; text-decoration: none;
+  margin: 0 0.85rem; font-size: 0.92rem;
+}
+.foot-links a:hover { color: var(--mint); }
+
+.social { display: flex; justify-content: center; gap: 1.1rem; margin-bottom: 1.5rem; }
+.social a {
+  width: 2.4rem; height: 2.4rem;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  transition: background 0.15s ease;
+}
+.social a:hover { background: var(--mint); color: var(--navy); }
+.social svg { width: 1.15rem; height: 1.15rem; }
+
+.copyright { font-size: 0.82rem; margin: 0; color: rgba(255,255,255,0.66); }
