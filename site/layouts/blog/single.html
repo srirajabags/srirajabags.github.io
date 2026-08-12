@@ -1,0 +1,13 @@
+{{ define "main" }}
+<main class="page">
+  <article class="container narrow post">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="meta">
+      {{ .Date.Format "2 January 2006" }}
+      {{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}
+    </p>
+    {{ .Content }}
+    <p class="back"><a href="{{ "/blog/" | relURL }}">← All posts</a></p>
+  </article>
+</main>
+{{ end }}
