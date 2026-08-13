@@ -131,7 +131,7 @@
         {{ range $key := slice "factory" "office" }}
         {{ with index $a $key }}
         <div class="contact-card">
-          <a href="https://www.google.com/maps/search/?api=1&amp;query={{ $a.latitude }},{{ $a.longitude }}" target="_blank" rel="noopener" aria-label="Find us on the map">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query={{ .latitude }},{{ .longitude }}" target="_blank" rel="noopener" aria-label="Find {{ lower .label }} on the map">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5"/></svg>
           </a>
           <div>
@@ -148,10 +148,16 @@
         {{ end }}
         {{ end }}
       </div>
+      {{/* Built from the primary address coordinates rather than the old place-ID
+           embed, which was pinned to a Google listing we do not control and which
+           may be removed. Coordinates keep the map working regardless. */}}
+      {{ with index $.Site.Params.address $.Site.Params.address.primary }}
       <div class="map">
-        <iframe src="{{ $.Site.Params.mapEmbed }}" title="Sri Raja Bags location"
+        <iframe src="https://maps.google.com/maps?q={{ .latitude }},{{ .longitude }}&amp;z=16&amp;output=embed"
+                title="Sri Raja Bags {{ lower .label }} location, {{ .streetAddress }}, {{ .locality }}"
                 loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
+      {{ end }}
     </div>
   </div>
 </section>

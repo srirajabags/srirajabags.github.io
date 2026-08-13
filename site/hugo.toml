@@ -44,7 +44,6 @@ disableKinds = ["taxonomy", "term"]
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
-  mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4776.901799079004!2d77.85850274132397!3d15.399339631855982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb681979a2b79d9%3A0x9be3fee3185d7353!2sRaja%20Bags!5e0!3m2!1sen!2sin!4v1664364264982!5m2!1sen!2sin"
 
 # Canonical NAP. The Google Business Profile is registered at the office, so
 # `primary` points there — the schema address and the profile have to agree
@@ -57,25 +56,33 @@ disableKinds = ["taxonomy", "term"]
   primary = "office"
   region = "Andhra Pradesh"
   country = "IN"
-  # Coordinates of the pin in the existing Maps embed.
-  latitude = 15.399339
-  longitude = 77.858502
 
   # Manufacturing unit — the GST-registered principal place of business.
+  # 15.3993/77.8585 is the pin the old Maps embed used: "Dhone Rural", between
+  # Dorapalli village and Dhone town, so it reads as the factory side.
   [params.address.factory]
     label = "Factory"
     streetAddress = "479/A1, Dorapally Road"
     locality = "Dhone"
     postalCode = "518222"
+    latitude = 15.399339
+    longitude = 77.858502
 
   # Office — the address the Google Business Profile is verified at, so this
   # string must stay identical to what the profile shows.
   # GBP store code 03454079842909153724.
+  #
+  # TODO: coordinates are Dhone town centre, not the building. Nominatim has no
+  # street-level data for KVS Colony or Kothapeta. Replace with the exact pin
+  # from the Business Profile once verification completes — right-click the
+  # marker in Google Maps and copy the lat/long.
   [params.address.office]
     label = "Office"
     streetAddress = "9/74-1, KVS Colony, Kothapeta"
     locality = "Dhone"
     postalCode = "518222"
+    latitude = 15.396972
+    longitude = 77.871848
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"
