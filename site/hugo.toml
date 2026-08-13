@@ -27,8 +27,8 @@ disableKinds = ["taxonomy", "term"]
   legalEntities = ["Sai Polymers", "Aswini Bags", "Sri Raja Plastic Industries"]
 
   # Sai Polymers is the unit registered at the factory address, so it is the
-  # entity the Google Business Profile is verified against and the one whose
-  # GSTIN is published. Checksum-validated; state code 37 is Andhra Pradesh.
+  # entity the Google Business Profile is verified against, and its GSTIN is the
+  # one the schema publishes as taxID. Checksum-validated; state 37 = AP.
   registeredEntity = "Sai Polymers"
   gstin = "37BYPPR4050M1ZP"
 
@@ -82,3 +82,21 @@ disableKinds = ["taxonomy", "term"]
 [imaging]
   quality = 82
   resampleFilter = "Lanczos"
+
+# Statutory registrations, each tied to the entity that actually holds it.
+# They belong to different units with different proprietors and PANs, so the
+# About page labels every number with its owner rather than implying one
+# registrant covers the whole brand.
+#
+# NOTE: the Udyam certificate names an owner (Raja Lakshmaiah, PAN AAQPR8079L),
+# an address (Kothapeta) and a district (Nandyal) that differ from the GST
+# record. Unverified — see the audit notes before treating these as reconciled.
+[[params.registrations]]
+  entity = "Sai Polymers"
+  label = "GSTIN"
+  number = "37BYPPR4050M1ZP"
+
+[[params.registrations]]
+  entity = "M/S Sri Raja Bags"
+  label = "Udyam registration"
+  number = "UDYAM-AP-26-0017818"

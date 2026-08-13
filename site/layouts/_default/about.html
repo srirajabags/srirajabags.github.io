@@ -46,7 +46,11 @@
   {{/* Registration and certification details — renders only once supplied. */}}
   {{ $reg := slice }}
   {{ with .Site.Params.legalEntities }}{{ $reg = $reg | append (dict "k" "Registered units" "v" (delimit . ", " " and ")) }}{{ end }}
-  {{ with .Site.Params.gstin }}{{ $reg = $reg | append (dict "k" (printf "GSTIN (%s)" $.Site.Params.registeredEntity) "v" .) }}{{ end }}
+  {{/* Each number is labelled with the unit that holds it — they have different
+       proprietors, so an unlabelled list would misstate who is registered. */}}
+  {{ range .Site.Params.registrations }}
+  {{ $reg = $reg | append (dict "k" (printf "%s — %s" .label .entity) "v" .number) }}
+  {{ end }}
   {{ with .Params.udyam }}{{ $reg = $reg | append (dict "k" "Udyam registration" "v" .) }}{{ end }}
   {{ with .Params.capacity }}{{ $reg = $reg | append (dict "k" "Monthly capacity" "v" .) }}{{ end }}
   {{ with .Params.certifications }}{{ $reg = $reg | append (dict "k" "Certifications" "v" (delimit . ", ")) }}{{ end }}
