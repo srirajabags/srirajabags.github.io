@@ -153,7 +153,7 @@
            may be removed. Coordinates keep the map working regardless. */}}
       {{ with index $.Site.Params.address $.Site.Params.address.primary }}
       <div class="map">
-        <iframe src="https://maps.google.com/maps?q={{ .latitude }},{{ .longitude }}&amp;z=16&amp;output=embed"
+        <iframe src="https://www.google.com/maps/embed?pb=!1m3!2m1!1s{{ .latitude }},{{ .longitude }}!6i16"
                 title="Sri Raja Bags {{ lower .label }} location, {{ .streetAddress }}, {{ .locality }}"
                 loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
       </div>
