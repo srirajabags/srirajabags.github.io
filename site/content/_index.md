@@ -5,7 +5,7 @@ hero:
   # Cropped from the original Mobirise hero graphic, which was mostly empty white.
   badges: "images/trust-badges.png"
   heading: "Non Woven Carry Bags and Plastic Covers Manufacturers"
-  text: "A manufacturing and supply unit established in 2011. Sri Raja Plastic Industries supplies all types of shopping bags and carry bags across three South Indian states — Andhra Pradesh, Telangana and Karnataka — to more than 10,000 customers."
+  text: "A manufacturing and supply unit established in 2011. Sri Raja Bags supplies all types of shopping bags and carry bags across three South Indian states — Andhra Pradesh, Telangana and Karnataka — to more than 10,000 customers."
   cta: "Our Products"
 
 products:

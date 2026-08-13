@@ -36,11 +36,9 @@ photos:
 #   capacity: ""           e.g. "8 lakh bags per month"
 ---
 
-Sri Raja Bags is the name three registered units — Sai Polymers, Aswini Bags
-and Sri Raja Plastic Industries — trade under. All of them manufacture
-non-woven fabric bags at Dhone, in Nandyal district of Andhra Pradesh, and
-have done since 2011. Dhone was part of Kurnool district until the 2022
-reorganisation, and much of our trade still runs through Kurnool.
+Sri Raja Bags manufactures non-woven fabric bags at Dhone, in Nandyal district
+of Andhra Pradesh, and has done since 2011. Dhone was part of Kurnool district
+until the 2022 reorganisation, and much of our trade still runs through Kurnool.
 
 We make non-woven fabric carry bags and plastic covers: D-cut and W-cut bags in
 plain and printed finishes, loop-handle stitched bags, and side-patty stitched
