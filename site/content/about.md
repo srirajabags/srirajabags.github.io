@@ -29,18 +29,18 @@ photos:
     alt: "Storage racks holding printing screens and stacks of finished non-woven bags ready for despatch"
     caption: "Printing screens are kept for every customer, so repeat orders match the first run exactly."
 
-# TODO — supply these and they will render automatically:
-#   gstin: ""              GST registration number
+# Registered units and GSTIN come from site params, so they stay consistent
+# with the schema. Still to supply, and they will render automatically:
 #   udyam: ""              Udyam / MSME registration number
 #   certifications: []     e.g. ["ISO 9001:2015", "BIS licence"]
 #   capacity: ""           e.g. "8 lakh bags per month"
-#   machines: ""           number of bag-making and printing machines
-registrations: []
 ---
 
 Sri Raja Bags is the name three registered units — Sai Polymers, Aswini Bags
 and Sri Raja Plastic Industries — trade under. All of them manufacture
-non-woven fabric bags at Dhone, in Kurnool district, and have done since 2011.
+non-woven fabric bags at Dhone, in Nandyal district of Andhra Pradesh, and
+have done since 2011. Dhone was part of Kurnool district until the 2022
+reorganisation, and much of our trade still runs through Kurnool.
 
 We make non-woven fabric carry bags and plastic covers: D-cut and W-cut bags in
 plain and printed finishes, loop-handle stitched bags, and side-patty stitched

@@ -32,7 +32,7 @@ products:
 
 about:
   heading: "About Our Factory"
-  text: "Sri Raja Bags is a unit of Sri Raja Plastic Industries, located in Dorapalli (V), Dhone (M), Kurnool (D). We manufacture every type of non-woven fabric carry bag and plastic cover. The Sri Raja Plastic Industries group currently employs around 300 people directly, and provides household work to a further 600 women in the surrounding villages."
+  text: "Sri Raja Bags manufactures every type of non-woven fabric carry bag and plastic cover at Dhone, in Nandyal district of Andhra Pradesh. We employ around 300 people directly, and provide household work to a further 600 women in the surrounding villages."
   image: "images/capture-980x702.jpg"
   cta: "Learn more"
 
