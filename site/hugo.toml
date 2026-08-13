@@ -7,14 +7,52 @@ enableRobotsTXT = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
+  # Homepage <title>. "Sri Raja Bags" alone matches nothing buyers actually
+  # search for — the product term and the district have to be in here.
+  homeTitle = "Non Woven Carry Bag Manufacturers in Kurnool, AP · Sri Raja Bags"
   description = "Manufacturers of non-woven carry bags and plastic covers since 2011. Sri Raja Plastic Industries, Dorapalli (V), Dhone (M), Kurnool (D), Andhra Pradesh."
   phone = "+91 91770 56061"
   phoneRaw = "919177056061"
   email = "dhoneaswinibags@gmail.com"
+  # Source image for og:image / twitter:image social preview cards.
+  # The production line: native 16:9 so it crops to 1200x630 with no upscaling,
+  # and shows people actually making bags — the strongest "real manufacturer" signal.
+  ogImage = "images/factory-production-line.jpg"
+  foundingYear = "2011"
+
   gtag = "G-PEF5RMYG3G"
-  instagram = "http://www.instagram.com/srirajabags"
+  instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
   mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4776.901799079004!2d77.85850274132397!3d15.399339631855982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb681979a2b79d9%3A0x9be3fee3185d7353!2sRaja%20Bags!5e0!3m2!1sen!2sin!4v1664364264982!5m2!1sen!2sin"
+
+# Canonical NAP. There is no Google Business Profile yet, so this file is the
+# authoritative source for the business name and address — when the GBP is
+# created it should be filled in to match these strings exactly, not the other
+# way round. `primary` selects which address the LocalBusiness schema carries.
+#
+# Note: these tables must stay last in [params] — any plain key written after a
+# TOML sub-table gets absorbed into that sub-table.
+[params.address]
+  primary = "factory"
+  region = "Andhra Pradesh"
+  country = "IN"
+  # Coordinates of the pin in the existing Maps embed.
+  latitude = 15.399339
+  longitude = 77.858502
+
+  # Manufacturing unit — the GST-registered principal place of business.
+  [params.address.factory]
+    label = "Factory"
+    streetAddress = "479/A1, Dorapally Road"
+    locality = "Dhone, Kurnool (D)"
+    postalCode = "518222"
+
+  # Correspondence / back office.
+  [params.address.office]
+    label = "Back office"
+    streetAddress = "KVS Colony, Kotha Peta"
+    locality = "Dhone, Kurnool (D)"
+    postalCode = "518222"
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"

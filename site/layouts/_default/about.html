@@ -1,0 +1,69 @@
+{{ define "main" }}
+{{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+<main class="page">
+
+  {{ with .Params.hero }}
+  {{ $h := resources.Get .image }}
+  {{ $sm := $h.Resize "800x webp q80" }}
+  {{ $lg := $h.Resize "1400x webp q80" }}
+  <div class="container">
+    <h1 class="page-title">{{ $.Title }}</h1>
+    <img class="about-hero" src="{{ $lg.RelPermalink }}" width="{{ $lg.Width }}" height="{{ $lg.Height }}"
+         srcset="{{ $sm.RelPermalink }} 800w, {{ $lg.RelPermalink }} 1400w"
+         sizes="(max-width: 68rem) 100vw, 68rem" alt="{{ .alt }}">
+  </div>
+  {{ end }}
+
+  {{ with .Params.stats }}
+  <div class="container">
+    <dl class="stat-strip">
+      {{ range . }}
+      <div><dt>{{ .value }}</dt><dd>{{ .label }}</dd></div>
+      {{ end }}
+    </dl>
+  </div>
+  {{ end }}
+
+  <div class="container narrow prose">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.photos }}
+  <div class="container">
+    <div class="photo-grid">
+      {{ range . }}
+      {{ $p := resources.Get .src }}
+      {{ $t := $p.Fill "700x460 Smart webp q78" }}
+      <figure>
+        <img src="{{ $t.RelPermalink }}" width="700" height="460" loading="lazy" alt="{{ .alt }}">
+        <figcaption>{{ .caption }}</figcaption>
+      </figure>
+      {{ end }}
+    </div>
+  </div>
+  {{ end }}
+
+  {{/* Registration and certification details — renders only once supplied. */}}
+  {{ $reg := slice }}
+  {{ with .Params.gstin }}{{ $reg = $reg | append (dict "k" "GSTIN" "v" .) }}{{ end }}
+  {{ with .Params.udyam }}{{ $reg = $reg | append (dict "k" "Udyam registration" "v" .) }}{{ end }}
+  {{ with .Params.capacity }}{{ $reg = $reg | append (dict "k" "Monthly capacity" "v" .) }}{{ end }}
+  {{ with .Params.certifications }}{{ $reg = $reg | append (dict "k" "Certifications" "v" (delimit . ", ")) }}{{ end }}
+  {{ with $reg }}
+  <div class="container narrow">
+    <h2 class="section-title left">Registration</h2>
+    <dl class="reg-list">
+      {{ range . }}<div><dt>{{ .k }}</dt><dd>{{ .v }}</dd></div>{{ end }}
+    </dl>
+  </div>
+  {{ end }}
+
+  <div class="container narrow">
+    <p class="about-cta">
+      <a class="btn" target="_blank" rel="noopener"
+         href="{{ $wa }}&amp;text=Hello,%20I%20would%20like%20a%20quote%20for%20non%20woven%20bags.&amp;type=phone_number&amp;app_absent=0">Ask for a quote on WhatsApp</a>
+    </p>
+  </div>
+
+</main>
+{{ end }}
