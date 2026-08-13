@@ -29,13 +29,11 @@ photos:
     alt: "Storage racks holding printing screens and stacks of finished non-woven bags ready for despatch"
     caption: "Printing screens are kept for every customer, so repeat orders match the first run exactly."
 
-# TODO — supply these and they will render automatically:
-#   gstin: ""              GST registration number
+# Registered units and GSTIN come from site params, so they stay consistent
+# with the schema. Still to supply, and they will render automatically:
 #   udyam: ""              Udyam / MSME registration number
 #   certifications: []     e.g. ["ISO 9001:2015", "BIS licence"]
 #   capacity: ""           e.g. "8 lakh bags per month"
-#   machines: ""           number of bag-making and printing machines
-registrations: []
 ---
 
 Sri Raja Bags is the name three registered units — Sai Polymers, Aswini Bags

@@ -16,6 +16,8 @@
   "@id" (printf "%s#business" .Site.BaseURL)
   "name" .Site.Title
   "description" .Site.Params.description
+  "legalName" .Site.Params.registeredEntity
+  "taxID" .Site.Params.gstin
   "url" .Site.BaseURL
   "telephone" (printf "+%s" .Site.Params.phoneRaw)
   "email" .Site.Params.email

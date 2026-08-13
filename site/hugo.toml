@@ -26,6 +26,12 @@ disableKinds = ["taxonomy", "term"]
   # legal entity.
   legalEntities = ["Sai Polymers", "Aswini Bags", "Sri Raja Plastic Industries"]
 
+  # Sai Polymers is the unit registered at the factory address, so it is the
+  # entity the Google Business Profile is verified against and the one whose
+  # GSTIN is published. Checksum-validated; state code 37 is Andhra Pradesh.
+  registeredEntity = "Sai Polymers"
+  gstin = "37BYPPR4050M1ZP"
+
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
