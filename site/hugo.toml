@@ -11,8 +11,10 @@ disableKinds = ["taxonomy", "term"]
   # search for — the product term and the district have to be in here.
   homeTitle = "Non Woven Carry Bag Manufacturers in Kurnool, AP · Sri Raja Bags"
   # Dhone moved from Kurnool to Nandyal district in the 2022 reorganisation.
-  # Postal address and schema use Nandyal; "Kurnool" stays in the title and here
-  # because it remains the term buyers in this region actually search for.
+  # The district appears in prose only — the postal address and schema omit it,
+  # because the Google Business Profile shows "Dhone, Andhra Pradesh 518222"
+  # with no district and the NAP has to match that exactly. "Kurnool" stays in
+  # the title and here because it is still what buyers in this region search.
   description = "Manufacturers of non-woven carry bags and plastic covers since 2011. Based at Dhone, Nandyal district near Kurnool, Andhra Pradesh. Supplying AP, Telangana and Karnataka."
   phone = "+91 91770 56061"
   phoneRaw = "919177056061"
@@ -29,45 +31,54 @@ disableKinds = ["taxonomy", "term"]
   # legal entity.
   legalEntities = ["Sai Polymers", "Aswini Bags", "Sri Raja Plastic Industries"]
 
-  # Sai Polymers is the unit registered at the factory address, so it is the
-  # entity the Google Business Profile is verified against, and its GSTIN is the
-  # one the schema publishes as taxID. Checksum-validated; state 37 = AP.
+  # Published as schema legalName + taxID. Checksum-validated; state 37 = AP.
+  #
+  # CAVEAT: Sai Polymers is GST-registered at the factory (479/A1, Dorapally
+  # Road), but the Google Business Profile is verified at the office (9/74-1,
+  # Kothapeta) — which is the Udyam address, not this one. So the entity named
+  # here is not the one registered at the address the schema now carries.
+  # Harmless for ranking, but revisit once the Udyam question is settled.
   registeredEntity = "Sai Polymers"
   gstin = "37BYPPR4050M1ZP"
 
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
-  mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4776.901799079004!2d77.85850274132397!3d15.399339631855982!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb681979a2b79d9%3A0x9be3fee3185d7353!2sRaja%20Bags!5e0!3m2!1sen!2sin!4v1664364264982!5m2!1sen!2sin"
 
-# Canonical NAP. There is no Google Business Profile yet, so this file is the
-# authoritative source for the business name and address — when the GBP is
-# created it should be filled in to match these strings exactly, not the other
-# way round. `primary` selects which address the LocalBusiness schema carries.
+# Canonical NAP. The Google Business Profile is registered at the office, so
+# `primary` points there — the schema address and the profile have to agree
+# character for character or the two signals compete. The factory is still
+# shown on the page; it is just not the address Google matches against.
 #
 # Note: these tables must stay last in [params] — any plain key written after a
 # TOML sub-table gets absorbed into that sub-table.
 [params.address]
-  primary = "factory"
+  primary = "office"
   region = "Andhra Pradesh"
   country = "IN"
-  # Coordinates of the pin in the existing Maps embed.
-  latitude = 15.399339
-  longitude = 77.858502
 
   # Manufacturing unit — the GST-registered principal place of business.
+  # 15.3993/77.8585 is the pin the old Maps embed used: "Dhone Rural", between
+  # Dorapalli village and Dhone town, so it reads as the factory side.
   [params.address.factory]
     label = "Factory"
     streetAddress = "479/A1, Dorapally Road"
-    locality = "Dhone, Nandyal (D)"
+    locality = "Dhone"
     postalCode = "518222"
+    latitude = 15.399339
+    longitude = 77.858502
 
-  # Correspondence / back office.
+  # Office — the address the Google Business Profile is verified at, so this
+  # string must stay identical to what the profile shows.
+  # GBP store code 03454079842909153724.
+  # Coordinates are the exact place pin from Google Maps, not a geocode.
   [params.address.office]
-    label = "Back office"
-    streetAddress = "KVS Colony, Kotha Peta"
-    locality = "Dhone, Nandyal (D)"
+    label = "Office"
+    streetAddress = "9/74-1, KVS Colony, Kothapeta"
+    locality = "Dhone"
     postalCode = "518222"
+    latitude = 15.3977683
+    longitude = 77.8754492
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"

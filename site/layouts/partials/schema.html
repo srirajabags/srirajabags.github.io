@@ -23,7 +23,7 @@
   "email" .Site.Params.email
   "foundingDate" .Site.Params.foundingYear
   "address" $addr
-  "geo" (dict "@type" "GeoCoordinates" "latitude" $a.latitude "longitude" $a.longitude)
+  "geo" (dict "@type" "GeoCoordinates" "latitude" $p.latitude "longitude" $p.longitude)
   "areaServed" (slice
     (dict "@type" "State" "name" "Andhra Pradesh")
     (dict "@type" "State" "name" "Telangana")
