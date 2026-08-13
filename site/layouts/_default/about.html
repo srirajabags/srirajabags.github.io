@@ -43,20 +43,15 @@
   </div>
   {{ end }}
 
-  {{/* Registration and certification details — renders only once supplied. */}}
+  {{/* Statutory registration details live in the footer — buyers who need to
+       verify go looking for them; everyone else should not have to read past
+       them. Capacity and certifications stay here: those are selling points. */}}
   {{ $reg := slice }}
-  {{ with .Site.Params.legalEntities }}{{ $reg = $reg | append (dict "k" "Registered units" "v" (delimit . ", " " and ")) }}{{ end }}
-  {{/* Each number is labelled with the unit that holds it — they have different
-       proprietors, so an unlabelled list would misstate who is registered. */}}
-  {{ range .Site.Params.registrations }}
-  {{ $reg = $reg | append (dict "k" (printf "%s — %s" .label .entity) "v" .number) }}
-  {{ end }}
-  {{ with .Params.udyam }}{{ $reg = $reg | append (dict "k" "Udyam registration" "v" .) }}{{ end }}
   {{ with .Params.capacity }}{{ $reg = $reg | append (dict "k" "Monthly capacity" "v" .) }}{{ end }}
   {{ with .Params.certifications }}{{ $reg = $reg | append (dict "k" "Certifications" "v" (delimit . ", ")) }}{{ end }}
   {{ with $reg }}
   <div class="container narrow">
-    <h2 class="section-title left">Registration</h2>
+    <h2 class="section-title left">Capability</h2>
     <dl class="reg-list">
       {{ range . }}<div><dt>{{ .k }}</dt><dd>{{ .v }}</dd></div>{{ end }}
     </dl>

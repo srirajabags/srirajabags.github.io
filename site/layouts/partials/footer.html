@@ -19,6 +19,20 @@
       </a>
     </div>
 
+    {{/* Collapsed by default. Buyers verifying a supplier before a first order
+         go looking for these; nobody else needs them in the way. */}}
+    {{ with .Site.Params.registrations }}
+    <details class="reg-disclosure">
+      <summary>Business registration details</summary>
+      <p class="reg-note">Sri Raja Bags is the name the following registered units trade under. Each GSTIN below belongs to the unit named beside it.</p>
+      <dl>
+        {{ range . }}
+        <div><dt>{{ .entity }}</dt><dd>{{ .label }} <span>{{ .number }}</span></dd></div>
+        {{ end }}
+      </dl>
+    </details>
+    {{ end }}
+
     <p class="copyright">&copy; Copyright {{ now.Format "2006" }} Sri Raja Bags. All Rights Reserved.</p>
   </div>
 </footer>

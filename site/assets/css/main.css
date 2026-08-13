@@ -425,3 +425,52 @@ a { color: var(--navy); }
 .social svg { width: 1.15rem; height: 1.15rem; }
 
 .copyright { font-size: 0.82rem; margin: 0; color: rgba(255,255,255,0.66); }
+
+/* Statutory registration details. Deliberately quiet — closed by default and
+   dimmer than the copyright line, so only someone verifying the business
+   before an order goes looking for it. */
+.reg-disclosure {
+  max-width: 34rem;
+  margin: 0 auto 1.25rem;
+  text-align: left;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 1rem;
+}
+.reg-disclosure summary {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  cursor: pointer;
+  text-align: center;
+  list-style: none;
+}
+.reg-disclosure summary::-webkit-details-marker { display: none; }
+.reg-disclosure summary::after { content: " ▾"; }
+.reg-disclosure[open] summary::after { content: " ▴"; }
+.reg-disclosure summary:hover { color: rgba(255,255,255,0.8); }
+.reg-disclosure summary:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.reg-note {
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.5);
+  margin: 0.9rem 0 0.75rem;
+}
+.reg-disclosure dl { margin: 0; font-size: 0.75rem; }
+.reg-disclosure dl div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.2rem 1rem;
+  padding: 0.35rem 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.reg-disclosure dt { color: rgba(255,255,255,0.62); }
+.reg-disclosure dd { margin: 0; color: rgba(255,255,255,0.45); }
+.reg-disclosure dd span {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.02em;
+  color: rgba(255,255,255,0.6);
+}
