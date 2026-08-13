@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ .Site.LanguageCode }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · {{ .Site.Title }}{{ end }}</title>
+  {{/* The home title carries the product term and location — "Sri Raja Bags" alone
+       matches nothing anyone searches for. Editable via params.homeTitle. */}}
+  {{ $title := cond .IsHome (default .Site.Title .Site.Params.homeTitle) (printf "%s · %s" .Title .Site.Title) }}
+  <title>{{ $title }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <link rel="canonical" href="{{ .Permalink }}">
   {{/* Square, white-backed crop of the logo — the original has wide transparent
        margins that made it near-invisible at favicon sizes. */}}
   {{ $icon := resources.Get "images/logo-square.png" }}
@@ -15,21 +19,38 @@
   <link rel="apple-touch-icon" href="{{ $i180.RelPermalink }}">
   <meta name="theme-color" content="#05386b">
 
-  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+  <meta property="og:title" content="{{ $title }}">
   <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  <meta property="og:locale" content="en_IN">
   <meta name="twitter:card" content="summary_large_image">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:400,500,600,700,800&display=swap">
+  {{/* Social preview. Without this, every WhatsApp and Facebook share renders a
+       blank card — and WhatsApp is where the enquiries actually come from.
+       Absolute URLs are required; scrapers do not resolve relative paths. */}}
+  {{ $ogSrc := resources.Get (default "images/img-1891.jpg" .Site.Params.ogImage) }}
+  {{ with $ogSrc }}
+  {{ $og := .Fill "1200x630 Smart jpg q85" }}
+  <meta property="og:image" content="{{ $og.Permalink }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ $.Site.Title }} — non woven carry bags manufactured in Dhone, Kurnool">
+  <meta name="twitter:image" content="{{ $og.Permalink }}">
+  {{ end }}
+
+  {{/* Inter is self-hosted (see main.css) — no third-party font origin, so no
+       render-blocking stylesheet and no extra DNS/TLS handshakes. Preloading the
+       latin subset starts the fetch before the CSS finishes parsing. */}}
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   {{ $css := resources.Get "css/main.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
 
   {{ with .OutputFormats.Get "RSS" }}
   <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
   {{ end }}
+  {{ partial "schema.html" . }}
   {{ partial "analytics.html" . }}
 </head>
 <body>

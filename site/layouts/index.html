@@ -61,11 +61,11 @@
     <div>
       <h2 class="section-title left">{{ .heading }}</h2>
       <p>{{ .text }}</p>
-      <a class="btn" href="#contact">{{ .cta }}</a>
+      <a class="btn" href="{{ "/about/" | relURL }}">{{ .cta }}</a>
     </div>
     <div class="about-img">
       <img src="{{ $a1.RelPermalink }}" width="{{ $a1.Width }}" height="{{ $a1.Height }}"
-           loading="lazy" alt="Inside the Sri Raja Bags factory">
+           loading="lazy" alt="The Sri Raja Bags manufacturing unit at Dorapalli, Dhone">
     </div>
   </div>
 </section>
@@ -78,12 +78,12 @@
     <h2 class="section-title">{{ .heading }}</h2>
     <div class="gallery-grid">
       {{ range .images }}
-      {{ $g := resources.Get . }}
-      {{ $thumb := $g.Fill "500x500 Center webp q78" }}
-      {{ $full := $g.Resize "1200x webp q82" }}
+      {{ $g := resources.Get .src }}
+      {{ $thumb := $g.Fill "500x500 Center webp q72" }}
+      {{ $full := $g.Resize "1200x webp q80" }}
       <a href="{{ $full.RelPermalink }}" target="_blank" rel="noopener">
         <img src="{{ $thumb.RelPermalink }}" width="500" height="500" loading="lazy"
-             alt="Sri Raja Bags product photograph">
+             alt="{{ .alt }}">
       </a>
       {{ end }}
     </div>
@@ -125,6 +125,28 @@
             <p><a href="{{ $wa }}&amp;text=Send%20Me%20More%20Offers.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Message us</a></p>
           </div>
         </div>
+        {{/* Crawlable NAP. Google reads the visible address, not the map iframe. */}}
+        {{ with $.Site.Params.address }}
+        {{ $a := . }}
+        {{ range $key := slice "factory" "office" }}
+        {{ with index $a $key }}
+        <div class="contact-card">
+          <a href="https://www.google.com/maps/search/?api=1&amp;query={{ $a.latitude }},{{ $a.longitude }}" target="_blank" rel="noopener" aria-label="Find us on the map">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7m0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5"/></svg>
+          </a>
+          <div>
+            <h3>{{ .label }}</h3>
+            <address>
+              Sri Raja Plastic Industries<br>
+              {{ .streetAddress }}<br>
+              {{ .locality }}<br>
+              {{ $a.region }}{{ with .postalCode }} – {{ . }}{{ end }}
+            </address>
+          </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        {{ end }}
       </div>
       <div class="map">
         <iframe src="{{ $.Site.Params.mapEmbed }}" title="Sri Raja Bags location"

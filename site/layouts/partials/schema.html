@@ -1,0 +1,68 @@
+{{/* Structured data. The site had none at all, which left a real factory with a
+     real Maps listing invisible to the entity graph. Address fields come from
+     params.address so the visible NAP and the schema can never disagree. */}}
+
+{{ if .IsHome }}
+{{ $a := .Site.Params.address }}
+{{/* Schema carries the address the Google Business Profile lists — params.address.primary. */}}
+{{ $p := index $a $a.primary }}
+{{ $ogSrc := resources.Get (default "images/factory-production-line.jpg" .Site.Params.ogImage) }}
+{{ $addr := dict "@type" "PostalAddress" "addressLocality" $p.locality "addressRegion" $a.region "addressCountry" $a.country }}
+{{ with $p.streetAddress }}{{ $addr = merge $addr (dict "streetAddress" .) }}{{ end }}
+{{ with $p.postalCode }}{{ $addr = merge $addr (dict "postalCode" .) }}{{ end }}
+{{ $biz := dict
+  "@context" "https://schema.org"
+  "@type" "LocalBusiness"
+  "@id" (printf "%s#business" .Site.BaseURL)
+  "name" .Site.Title
+  "legalName" "Sri Raja Plastic Industries"
+  "description" .Site.Params.description
+  "url" .Site.BaseURL
+  "telephone" (printf "+%s" .Site.Params.phoneRaw)
+  "email" .Site.Params.email
+  "foundingDate" .Site.Params.foundingYear
+  "address" $addr
+  "geo" (dict "@type" "GeoCoordinates" "latitude" $a.latitude "longitude" $a.longitude)
+  "areaServed" (slice
+    (dict "@type" "State" "name" "Andhra Pradesh")
+    (dict "@type" "State" "name" "Telangana")
+    (dict "@type" "State" "name" "Karnataka"))
+  "knowsAbout" (slice
+    "Non-woven carry bag manufacturing"
+    "D-cut and W-cut bags"
+    "Loop handle stitched bags"
+    "Bag printing")
+  "sameAs" (slice .Site.Params.instagram .Site.Params.facebook)
+}}
+{{ with $ogSrc }}{{ $biz = merge $biz (dict "image" (($ogSrc.Fill "1200x630 Smart jpg q85").Permalink)) }}{{ end }}
+<script type="application/ld+json">{{ $biz | jsonify | safeJS }}</script>
+{{ end }}
+
+{{ if eq .Section "blog" }}{{ if .IsPage }}
+{{ $post := dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" .Title
+  "description" (cond (ne .Description "") .Description .Summary)
+  "datePublished" (.Date.Format "2006-01-02T15:04:05-07:00")
+  "dateModified" (.Lastmod.Format "2006-01-02T15:04:05-07:00")
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "url" .Permalink
+  "wordCount" .WordCount
+  "inLanguage" .Site.LanguageCode
+  "author" (dict "@type" "Organization" "name" .Site.Title "url" .Site.BaseURL)
+  "publisher" (dict "@type" "Organization" "name" .Site.Title "@id" (printf "%s#business" .Site.BaseURL))
+}}
+<script type="application/ld+json">{{ $post | jsonify | safeJS }}</script>
+
+{{/* Breadcrumbs: Home › Blog › this post */}}
+{{ $crumbs := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" (slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" "Blog" "item" (printf "%sblog/" .Site.BaseURL))
+    (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink))
+}}
+<script type="application/ld+json">{{ $crumbs | jsonify | safeJS }}</script>
+{{ end }}{{ end }}
