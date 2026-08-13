@@ -38,9 +38,9 @@ photos:
 registrations: []
 ---
 
-Sri Raja Bags is the trading name of Sri Raja Plastic Industries, a non-woven
-bag manufacturing unit at Dorapalli village in Dhone mandal, Kurnool district.
-We have been making bags here since 2011.
+Sri Raja Bags is the name three registered units — Sai Polymers, Aswini Bags
+and Sri Raja Plastic Industries — trade under. All of them manufacture
+non-woven fabric bags at Dhone, in Kurnool district, and have done since 2011.
 
 We make non-woven fabric carry bags and plastic covers: D-cut and W-cut bags in
 plain and printed finishes, loop-handle stitched bags, and side-patty stitched

@@ -20,6 +20,12 @@ disableKinds = ["taxonomy", "term"]
   ogImage = "images/factory-production-line.jpg"
   foundingYear = "2011"
 
+  # "Sri Raja Bags" is the brand the three registered units trade under. There
+  # is no single legal name, so the schema carries the brand as `name` and lists
+  # these as related organisations rather than claiming one of them as THE
+  # legal entity.
+  legalEntities = ["Sai Polymers", "Aswini Bags", "Sri Raja Plastic Industries"]
+
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"

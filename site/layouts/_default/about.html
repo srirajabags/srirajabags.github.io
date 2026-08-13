@@ -45,6 +45,7 @@
 
   {{/* Registration and certification details — renders only once supplied. */}}
   {{ $reg := slice }}
+  {{ with .Site.Params.legalEntities }}{{ $reg = $reg | append (dict "k" "Registered units" "v" (delimit . ", " " and ")) }}{{ end }}
   {{ with .Params.gstin }}{{ $reg = $reg | append (dict "k" "GSTIN" "v" .) }}{{ end }}
   {{ with .Params.udyam }}{{ $reg = $reg | append (dict "k" "Udyam registration" "v" .) }}{{ end }}
   {{ with .Params.capacity }}{{ $reg = $reg | append (dict "k" "Monthly capacity" "v" .) }}{{ end }}

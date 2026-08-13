@@ -15,7 +15,6 @@
   "@type" "LocalBusiness"
   "@id" (printf "%s#business" .Site.BaseURL)
   "name" .Site.Title
-  "legalName" "Sri Raja Plastic Industries"
   "description" .Site.Params.description
   "url" .Site.BaseURL
   "telephone" (printf "+%s" .Site.Params.phoneRaw)
@@ -35,6 +34,13 @@
   "sameAs" (slice .Site.Params.instagram .Site.Params.facebook)
 }}
 {{ with $ogSrc }}{{ $biz = merge $biz (dict "image" (($ogSrc.Fill "1200x630 Smart jpg q85").Permalink)) }}{{ end }}
+{{/* Three registered units trade under the one brand, so none of them is "the"
+     legal name. They are declared as related organisations instead. */}}
+{{ with .Site.Params.legalEntities }}
+{{ $orgs := slice }}
+{{ range . }}{{ $orgs = $orgs | append (dict "@type" "Organization" "name" .) }}{{ end }}
+{{ $biz = merge $biz (dict "subOrganization" $orgs) }}
+{{ end }}
 <script type="application/ld+json">{{ $biz | jsonify | safeJS }}</script>
 {{ end }}
 
