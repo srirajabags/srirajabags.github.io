@@ -10,7 +10,10 @@ disableKinds = ["taxonomy", "term"]
   # Homepage <title>. "Sri Raja Bags" alone matches nothing buyers actually
   # search for — the product term and the district have to be in here.
   homeTitle = "Non Woven Carry Bag Manufacturers in Kurnool, AP · Sri Raja Bags"
-  description = "Manufacturers of non-woven carry bags and plastic covers since 2011. Sri Raja Plastic Industries, Dorapalli (V), Dhone (M), Kurnool (D), Andhra Pradesh."
+  # Dhone moved from Kurnool to Nandyal district in the 2022 reorganisation.
+  # Postal address and schema use Nandyal; "Kurnool" stays in the title and here
+  # because it remains the term buyers in this region actually search for.
+  description = "Manufacturers of non-woven carry bags and plastic covers since 2011. Based at Dhone, Nandyal district near Kurnool, Andhra Pradesh. Supplying AP, Telangana and Karnataka."
   phone = "+91 91770 56061"
   phoneRaw = "919177056061"
   email = "dhoneaswinibags@gmail.com"
@@ -56,14 +59,14 @@ disableKinds = ["taxonomy", "term"]
   [params.address.factory]
     label = "Factory"
     streetAddress = "479/A1, Dorapally Road"
-    locality = "Dhone, Kurnool (D)"
+    locality = "Dhone, Nandyal (D)"
     postalCode = "518222"
 
   # Correspondence / back office.
   [params.address.office]
     label = "Back office"
     streetAddress = "KVS Colony, Kotha Peta"
-    locality = "Dhone, Kurnool (D)"
+    locality = "Dhone, Nandyal (D)"
     postalCode = "518222"
 
 [permalinks]
@@ -84,19 +87,26 @@ disableKinds = ["taxonomy", "term"]
   resampleFilter = "Lanczos"
 
 # Statutory registrations, each tied to the entity that actually holds it.
-# They belong to different units with different proprietors and PANs, so the
-# About page labels every number with its owner rather than implying one
-# registrant covers the whole brand.
+# Different units have different proprietors, so the About page labels every
+# number with its owner rather than implying one registrant covers the brand.
 #
-# NOTE: the Udyam certificate names an owner (Raja Lakshmaiah, PAN AAQPR8079L),
-# an address (Kothapeta) and a district (Nandyal) that differ from the GST
-# record. Unverified — see the audit notes before treating these as reconciled.
+# The Udyam registration is deliberately withheld: its certificate names a
+# different proprietor and PAN than the GST record, and until that is resolved
+# publishing it would point a buyer who verified it at the wrong entity.
+# Trade names are spelled exactly as they appear on each certificate, since a
+# buyer checking a number against the GST portal is matching these strings.
+# All three checksum-validate; all are proprietorships registered 01/07/2017.
 [[params.registrations]]
   entity = "Sai Polymers"
   label = "GSTIN"
   number = "37BYPPR4050M1ZP"
 
 [[params.registrations]]
-  entity = "M/S Sri Raja Bags"
-  label = "Udyam registration"
-  number = "UDYAM-AP-26-0017818"
+  entity = "Aswinibags"
+  label = "GSTIN"
+  number = "37AZSPR9190H1ZD"
+
+[[params.registrations]]
+  entity = "Sri Raja Plastic Industries"
+  label = "GSTIN"
+  number = "37AAPPR5458Q1ZH"
