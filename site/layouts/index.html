@@ -137,7 +137,7 @@
           <div>
             <h3>{{ .label }}</h3>
             <address>
-              Sri Raja Plastic Industries<br>
+              {{ $.Site.Title }}<br>
               {{ .streetAddress }}<br>
               {{ .locality }}<br>
               {{ $a.region }}{{ with .postalCode }} – {{ . }}{{ end }}
