@@ -71,18 +71,14 @@ disableKinds = ["taxonomy", "term"]
   # Office — the address the Google Business Profile is verified at, so this
   # string must stay identical to what the profile shows.
   # GBP store code 03454079842909153724.
-  #
-  # TODO: coordinates are Dhone town centre, not the building. Nominatim has no
-  # street-level data for KVS Colony or Kothapeta. Replace with the exact pin
-  # from the Business Profile once verification completes — right-click the
-  # marker in Google Maps and copy the lat/long.
+  # Coordinates are the exact place pin from Google Maps, not a geocode.
   [params.address.office]
     label = "Office"
     streetAddress = "9/74-1, KVS Colony, Kothapeta"
     locality = "Dhone"
     postalCode = "518222"
-    latitude = 15.396972
-    longitude = 77.871848
+    latitude = 15.3977683
+    longitude = 77.8754492
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"
