@@ -93,11 +93,23 @@
     return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
   }
 
+  // Product names sit mid-sentence, so they read lowercase — but two kinds of
+  // token keep their case: acronyms ("BOPP Multicolor Bags" -> "BOPP multicolor
+  // bags") and letter-prefixed codes ("D-cut plain bags" stays "D-cut").
+  function midSentence(s) {
+    return s.split(" ").map(function (w) {
+      var letters = w.replace(/[^A-Za-z]/g, "");
+      var isAcronym = letters.length > 1 && letters === letters.toUpperCase();
+      var isCode = /^[A-Z]-/.test(w);
+      return isAcronym || isCode ? w : w.toLowerCase();
+    }).join(" ");
+  }
+
   function compose() {
     var product = selected("product")[0];
     var aspects = selected("aspect");
     var parts = [];
-    parts.push(product ? shape.withProduct.replace("{product}", product.toLowerCase()) : shape.noProduct);
+    parts.push(product ? shape.withProduct.replace("{product}", midSentence(product)) : shape.noProduct);
     if (aspects.length) {
       var s = joinList(aspects);
       parts.push(s.charAt(0).toUpperCase() + s.slice(1) + ".");
