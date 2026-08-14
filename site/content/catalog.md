@@ -1,9 +1,9 @@
 ---
-title: "Non Woven Carry Bag Catalogue"
+title: "Non Woven Carry Bag Catalog"
 description: "Browse every non woven carry bag we manufacture — D-cut, W-cut, loop handle and stitched, 60 to 110 GSM, plain or printed. Pick what you need and send the list on WhatsApp for a same-day rate."
 layout: "catalog"
 
-# Unlisted while the catalogue is being checked. Nothing on the site links here
+# Unlisted while the catalog is being checked. Nothing on the site links here
 # — not the navbar, not the footer, not the homepage product grid — so the page
 # is reachable only by typing the URL. noindex keeps it out of Google and, via
 # layouts/_default/sitemap.xml, out of the sitemap as well; "follow" is implied

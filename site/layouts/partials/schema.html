@@ -51,7 +51,7 @@
 <script type="application/ld+json">{{ $biz | jsonify | safeJS }}</script>
 {{ end }}
 
-{{/* Catalogue: the products are the reason this page exists, so they are
+{{/* Catalog: the products are the reason this page exists, so they are
      published as an ItemList of Products rather than left as unlabelled markup.
      `offers` is emitted only for rows whose rate is actually filled in — a
      Product with a fabricated price is worse than a Product with none, and the
@@ -65,33 +65,71 @@
   "@type" "Product"
   "name" $p.name
   "url" (printf "%s#p-%s" $.Permalink $p.id)
-  "category" $p.shopType
   "material" "Non-woven polypropylene"
   "brand" (dict "@type" "Brand" "name" $.Site.Title)
   "manufacturer" (dict "@type" "Organization" "@id" (printf "%s#business" $.Site.BaseURL))
 }}
 {{ with $p.note }}{{ $prod = merge $prod (dict "description" .) }}{{ end }}
-{{ with $p.img }}{{ $prod = merge $prod (dict "image" (. | absURL)) }}{{ end }}
-{{ if gt $p.gsm 0 }}
-  {{ $prod = merge $prod (dict "additionalProperty" (slice (dict
-      "@type" "PropertyValue" "name" "Fabric GSM" "value" $p.gsm "unitText" "GSM"))) }}
+{{/* All photos, not just the card one — Google accepts an array and prefers
+     several angles of the same product. */}}
+{{ with $p.imgs }}
+  {{ $urls := slice }}
+  {{ range . }}{{ $urls = $urls | append (.full | absURL) }}{{ end }}
+  {{ $prod = merge $prod (dict "image" $urls) }}
 {{ end }}
-{{ if $p.hasSize }}
-  {{ $prod = merge $prod (dict
-      "width" (dict "@type" "QuantitativeValue" "value" $p.w "unitCode" "INH")
-      "height" (dict "@type" "QuantitativeValue" "value" $p.h "unitCode" "INH")) }}
+{{ with $p.shops }}{{ $prod = merge $prod (dict "category" (delimit . ", ")) }}{{ end }}
+
+{{/* One row can be several variants. The GSMs and the extra sizes are published
+     as properties rather than as separate Products: they share a name, an image
+     and a page anchor, so splitting them would put near-duplicate entries in the
+     list for no gain. */}}
+{{ $props := slice }}
+{{ with $p.gsms }}
+  {{ $g := slice }}{{ range . }}{{ $g = $g | append (string .value) }}{{ end }}
+  {{ $props = $props | append (dict
+      "@type" "PropertyValue" "name" "Fabric GSM" "value" (delimit $g ", ") "unitText" "GSM") }}
 {{ end }}
+{{ if gt (len $p.sizes) 1 }}
+  {{ $s := slice }}{{ range $p.sizes }}{{ $s = $s | append .plain }}{{ end }}
+  {{ $props = $props | append (dict
+      "@type" "PropertyValue" "name" "Available sizes" "value" (delimit $s ", ")) }}
+{{ end }}
+{{ with $p.colours }}
+  {{ $cl := slice }}{{ range . }}{{ $cl = $cl | append .name }}{{ end }}
+  {{ $props = $props | append (dict
+      "@type" "PropertyValue" "name" "Fabric colour" "value" (delimit $cl ", ")) }}
+{{ end }}
+{{ with $props }}{{ $prod = merge $prod (dict "additionalProperty" .) }}{{ end }}
+
+{{/* width/height describe a single artefact, so they are only emitted when the
+     row really is one size. */}}
+{{ if eq (len $p.sizes) 1 }}
+  {{ $s := index $p.sizes 0 }}
+  {{ if $s.ok }}
+    {{ $prod = merge $prod (dict
+        "width" (dict "@type" "QuantitativeValue" "value" $s.w "unitCode" "INH")
+        "height" (dict "@type" "QuantitativeValue" "value" $s.h "unitCode" "INH")) }}
+  {{ end }}
+{{ end }}
+
+{{/* Rates vary by GSM, so the offer is a range when they differ and a single
+     price when they do not. Emitted only for rows the sheet actually prices. */}}
 {{ if $p.hasRate }}
+  {{ $spec := dict
+    "@type" "UnitPriceSpecification"
+    "priceCurrency" "INR"
+    "referenceQuantity" (dict "@type" "QuantitativeValue" "value" 1 "unitCode" "KGM") }}
+  {{ if eq $p.rateMin $p.rateMax }}
+    {{ $spec = merge $spec (dict "price" $p.rateMin) }}
+  {{ else }}
+    {{ $spec = merge $spec (dict "minPrice" $p.rateMin "maxPrice" $p.rateMax) }}
+  {{ end }}
   {{ $offer := dict
     "@type" "Offer"
     "priceCurrency" "INR"
     "availability" "https://schema.org/InStock"
     "url" $.Permalink
-    "priceSpecification" (dict
-      "@type" "UnitPriceSpecification"
-      "price" $p.rate
-      "priceCurrency" "INR"
-      "referenceQuantity" (dict "@type" "QuantitativeValue" "value" 1 "unitCode" "KGM")) }}
+    "priceSpecification" $spec }}
   {{ if $p.hasMoq }}
     {{ $offer = merge $offer (dict "eligibleQuantity" (dict
         "@type" "QuantitativeValue" "minValue" $p.moq "unitCode" "KGM")) }}
