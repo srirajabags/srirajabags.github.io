@@ -51,6 +51,76 @@
 <script type="application/ld+json">{{ $biz | jsonify | safeJS }}</script>
 {{ end }}
 
+{{/* Catalogue: the products are the reason this page exists, so they are
+     published as an ItemList of Products rather than left as unlabelled markup.
+     `offers` is emitted only for rows whose rate is actually filled in — a
+     Product with a fabricated price is worse than a Product with none, and the
+     rate card is expected to be blank until the office fills the sheet. */}}
+{{ if eq .Layout "catalog" }}
+{{ $c := partialCached "catalog-data.html" . }}
+{{ with $c.products }}
+{{ $items := slice }}
+{{ range $i, $p := . }}
+{{ $prod := dict
+  "@type" "Product"
+  "name" $p.name
+  "url" (printf "%s#p-%s" $.Permalink $p.id)
+  "category" $p.shopType
+  "material" "Non-woven polypropylene"
+  "brand" (dict "@type" "Brand" "name" $.Site.Title)
+  "manufacturer" (dict "@type" "Organization" "@id" (printf "%s#business" $.Site.BaseURL))
+}}
+{{ with $p.note }}{{ $prod = merge $prod (dict "description" .) }}{{ end }}
+{{ with $p.img }}{{ $prod = merge $prod (dict "image" (. | absURL)) }}{{ end }}
+{{ if gt $p.gsm 0 }}
+  {{ $prod = merge $prod (dict "additionalProperty" (slice (dict
+      "@type" "PropertyValue" "name" "Fabric GSM" "value" $p.gsm "unitText" "GSM"))) }}
+{{ end }}
+{{ if $p.hasSize }}
+  {{ $prod = merge $prod (dict
+      "width" (dict "@type" "QuantitativeValue" "value" $p.w "unitCode" "INH")
+      "height" (dict "@type" "QuantitativeValue" "value" $p.h "unitCode" "INH")) }}
+{{ end }}
+{{ if $p.hasRate }}
+  {{ $offer := dict
+    "@type" "Offer"
+    "priceCurrency" "INR"
+    "availability" "https://schema.org/InStock"
+    "url" $.Permalink
+    "priceSpecification" (dict
+      "@type" "UnitPriceSpecification"
+      "price" $p.rate
+      "priceCurrency" "INR"
+      "referenceQuantity" (dict "@type" "QuantitativeValue" "value" 1 "unitCode" "KGM")) }}
+  {{ if $p.hasMoq }}
+    {{ $offer = merge $offer (dict "eligibleQuantity" (dict
+        "@type" "QuantitativeValue" "minValue" $p.moq "unitCode" "KGM")) }}
+  {{ end }}
+  {{ $prod = merge $prod (dict "offers" $offer) }}
+{{ end }}
+{{ $items = $items | append (dict "@type" "ListItem" "position" (add $i 1) "item" $prod) }}
+{{ end }}
+{{ $list := dict
+  "@context" "https://schema.org"
+  "@type" "ItemList"
+  "name" $.Title
+  "description" ($.Description | default $.Site.Params.description)
+  "numberOfItems" (len .)
+  "itemListElement" $items
+}}
+<script type="application/ld+json">{{ $list | jsonify | safeJS }}</script>
+{{ end }}
+
+{{ $crumbs := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" (slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink))
+}}
+<script type="application/ld+json">{{ $crumbs | jsonify | safeJS }}</script>
+{{ end }}
+
 {{ if eq .Section "blog" }}{{ if .IsPage }}
 {{ $post := dict
   "@context" "https://schema.org"

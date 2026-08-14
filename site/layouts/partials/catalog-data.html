@@ -1,0 +1,250 @@
+{{/* Catalogue data layer.
+
+     Reads assets/data/catalog.csv — the one file the office edits. It is plain
+     CSV precisely so it can be opened in Google Sheets, filled in, exported and
+     dropped back here unchanged. Nothing else in the build hard-codes a product.
+
+     Two rules follow from that:
+
+     1. Columns are matched by HEADER NAME, not position. Reordering columns in
+        the sheet, or adding a column we do not read yet, cannot break the page.
+     2. Every commercial number (rate, min order, pcs/kg) is optional. A blank
+        cell is the normal state, not an error — the page falls back to "Rate on
+        request" and hides the arithmetic that depends on it. This is what lets
+        the catalogue go live before the rate card is settled.
+
+     Facet lists (bag types, GSMs, colours, shop types) are derived from the rows
+     rather than declared, so a new GSM typed into the sheet shows up as a filter
+     on the next build with no template change.
+
+     Returns: dict of products, colours, facets, shopTiles, hasAnyRate, hasAnyPcs. */}}
+
+{{- $stepKg := 25 -}}
+
+{{/* ---- colour lookup: name -> swatch hex ------------------------------- */}}
+{{/* Keyed lowercase so "navy" and "Navy" in the product sheet both resolve.
+     A blank or non-hex value is not an error: the swatch falls back to a CSS
+     class keyed on the colour's slug, which is how Multicolour gets its
+     gradient without putting CSS inside a data file. */}}
+{{- $colours := dict -}}
+{{- with resources.Get "data/catalog-colours.csv" -}}
+  {{- $rows := . | transform.Unmarshal -}}
+  {{- range after 1 $rows -}}
+    {{- if ge (len .) 1 -}}
+      {{- $name := trim (index . 0) " ﻿" -}}
+      {{- $hex := "" -}}
+      {{- if ge (len .) 2 }}{{ $hex = trim (index . 1) " " }}{{ end -}}
+      {{/* Only a literal hex colour is allowed through to a style attribute. */}}
+      {{- if not (findRE "^#[0-9a-fA-F]{3,8}$" $hex) }}{{ $hex = "" }}{{ end -}}
+      {{- if $name }}{{ $colours = merge $colours (dict (lower $name) $hex) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* ---- products -------------------------------------------------------- */}}
+{{- $products := slice -}}
+{{- $hasAnyRate := false -}}
+{{- $hasAnyPcs := false -}}
+
+{{- with resources.Get "data/catalog.csv" -}}
+{{- $rows := . | transform.Unmarshal -}}
+{{- if gt (len $rows) 1 -}}
+
+  {{/* Header row, normalised. ﻿ strips the BOM Google Sheets prepends on
+       export, which would otherwise make the first column name unmatchable. */}}
+  {{- $head := slice -}}
+  {{- range index $rows 0 -}}
+    {{- $head = $head | append (lower (trim . " ﻿")) -}}
+  {{- end -}}
+
+  {{- $order := 0 -}}
+  {{- range after 1 $rows -}}
+    {{- $r := . -}}
+
+    {{/* Row -> map. Short rows are fine; missing cells read as absent. */}}
+    {{- $m := dict -}}
+    {{- range $i, $k := $head -}}
+      {{- if and $k (lt $i (len $r)) -}}
+        {{- $m = merge $m (dict $k (trim (index $r $i) " ")) -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $name := index $m "name" | default "" -}}
+    {{- if $name -}}
+      {{- $order = add $order 1 -}}
+      {{- $id := index $m "id" | default "" -}}
+      {{- if not $id }}{{ $id = urlize $name }}{{ end -}}
+
+      {{/* Numbers are read leniently: a sheet round-trip can add currency
+           symbols, thousands separators or stray spaces. Strip to digits and a
+           decimal point, then accept only if what remains is a real number.
+           Anything else is treated as "not supplied" rather than as zero —
+           a zero rate would render as "₹0/kg", which is worse than silence. */}}
+      {{- $rate := 0.0 }}{{ $hasRate := false -}}
+      {{- $rr := replaceRE "[^0-9.]" "" (string (index $m "rate_per_kg" | default "")) -}}
+      {{- if findRE "^[0-9]+(\\.[0-9]+)?$" $rr -}}
+        {{- $rate = float $rr }}{{ $hasRate = gt $rate 0.0 -}}
+      {{- end -}}
+      {{- if $hasRate }}{{ $hasAnyRate = true }}{{ end -}}
+
+      {{- $moq := 0 }}{{ $hasMoq := false -}}
+      {{- $mr := replaceRE "[^0-9.]" "" (string (index $m "min_order_kg" | default "")) -}}
+      {{- if findRE "^[0-9]+(\\.[0-9]+)?$" $mr -}}
+        {{- $moq = int (float $mr) }}{{ $hasMoq = gt $moq 0 -}}
+      {{- end -}}
+
+      {{- $pcs := 0 }}{{ $hasPcs := false -}}
+      {{- $pr := replaceRE "[^0-9.]" "" (string (index $m "pcs_per_kg" | default "")) -}}
+      {{- if findRE "^[0-9]+(\\.[0-9]+)?$" $pr -}}
+        {{- $pcs = int (float $pr) }}{{ $hasPcs = gt $pcs 0 -}}
+      {{- end -}}
+      {{- if $hasPcs }}{{ $hasAnyPcs = true }}{{ end -}}
+
+      {{- $w := 0 }}{{ $h := 0 -}}
+      {{- $wr := replaceRE "[^0-9.]" "" (string (index $m "width_in" | default "")) -}}
+      {{- $hr := replaceRE "[^0-9.]" "" (string (index $m "height_in" | default "")) -}}
+      {{- if findRE "^[0-9]+(\\.[0-9]+)?$" $wr }}{{ $w = float $wr }}{{ end -}}
+      {{- if findRE "^[0-9]+(\\.[0-9]+)?$" $hr }}{{ $h = float $hr }}{{ end -}}
+      {{- $hasSize := and (gt $w 0.0) (gt $h 0.0) -}}
+      {{- $sizeLabel := "" -}}
+      {{- if $hasSize }}{{ $sizeLabel = printf "%v″ × %v″" $w $h }}{{ end -}}
+
+      {{/* Bucketed on height — the dimension a shopkeeper judges a bag by.
+           12″ is the small counter bag, 13–16″ the standard shop bag, 17″+ the
+           saree and textile sizes. */}}
+      {{- $sizeClass := "" -}}
+      {{- if gt $h 0.0 -}}
+        {{- if le $h 12.0 }}{{ $sizeClass = "Small" -}}
+        {{- else if le $h 16.0 }}{{ $sizeClass = "Medium" -}}
+        {{- else }}{{ $sizeClass = "Large" }}{{ end -}}
+      {{- end -}}
+
+      {{- $gsm := 0 -}}
+      {{- $gr := replaceRE "[^0-9]" "" (string (index $m "gsm" | default "")) -}}
+      {{- if $gr }}{{ $gsm = int $gr }}{{ end -}}
+
+      {{/* Colours: pipe-separated in one cell, so the sheet stays one row per
+           product. An unknown colour name still renders — as a labelled chip
+           with no swatch — rather than disappearing. */}}
+      {{- $cols := slice -}}
+      {{- range (split (index $m "colours" | default "") "|") -}}
+        {{- $cn := trim . " " -}}
+        {{- if $cn -}}
+          {{- $cols = $cols | append (dict
+              "name" $cn
+              "slug" (urlize $cn)
+              "hex" (index $colours (lower $cn) | default "")) -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{/* Image. A missing or misspelled filename must not fail the build —
+           the card falls back to a placeholder tile. */}}
+      {{- $img := "" }}{{ $img2x := "" -}}
+      {{- with index $m "image" | default "" -}}
+        {{- with resources.Get (printf "images/%s" .) -}}
+          {{- $img = (.Fill "320x320 Smart webp q80").RelPermalink -}}
+          {{- $img2x = (.Fill "640x640 Smart webp q80").RelPermalink -}}
+        {{- end -}}
+      {{- end -}}
+
+      {{- $products = $products | append (dict
+          "id" $id
+          "order" $order
+          "name" $name
+          "img" $img
+          "img2x" $img2x
+          "bagType" (index $m "bag_type" | default "")
+          "print" (index $m "print" | default "")
+          "w" $w "h" $h "hasSize" $hasSize
+          "sizeLabel" $sizeLabel
+          "sizeClass" $sizeClass
+          "area" (mul $w $h)
+          "gsm" $gsm
+          "colours" $cols
+          "shopType" (index $m "shop_type" | default "")
+          "badge" (index $m "badge" | default "")
+          "rate" $rate "hasRate" $hasRate
+          "moq" $moq "hasMoq" $hasMoq
+          "startKg" (cond $hasMoq $moq $stepKg)
+          "pcs" $pcs "hasPcs" $hasPcs
+          "note" (index $m "note" | default "")
+      ) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/* ---- facets, derived from the rows above ----------------------------- */}}
+{{- $types := slice }}{{ $prints := slice }}{{ $gsms := slice }}{{ $shops := slice }}{{ $colNames := slice -}}
+{{- range $products -}}
+  {{- with .bagType }}{{ if not (in $types .) }}{{ $types = $types | append . }}{{ end }}{{ end -}}
+  {{- with .print }}{{ if not (in $prints .) }}{{ $prints = $prints | append . }}{{ end }}{{ end -}}
+  {{- if gt .gsm 0 }}{{ if not (in $gsms .gsm) }}{{ $gsms = $gsms | append .gsm }}{{ end }}{{ end -}}
+  {{- with .shopType }}{{ if not (in $shops .) }}{{ $shops = $shops | append . }}{{ end }}{{ end -}}
+  {{- range .colours }}{{ if not (in $colNames .name) }}{{ $colNames = $colNames | append .name }}{{ end }}{{ end -}}
+{{- end -}}
+{{- $gsms = sort $gsms -}}
+{{- $shops = sort $shops -}}
+
+{{/* Size options are a fixed ladder, but only the buckets actually stocked are
+     offered — a filter that can only ever return nothing is worse than no
+     filter. */}}
+{{- $sizeOpts := slice -}}
+{{- range (slice
+    (dict "value" "Small" "label" "Small (up to 12″)")
+    (dict "value" "Medium" "label" "Medium (13–16″)")
+    (dict "value" "Large" "label" "Large (17″ and up)")) -}}
+  {{- $v := .value -}}
+  {{- $used := false -}}
+  {{- range $products }}{{ if eq .sizeClass $v }}{{ $used = true }}{{ end }}{{ end -}}
+  {{- if $used }}{{ $sizeOpts = $sizeOpts | append . }}{{ end -}}
+{{- end -}}
+
+{{- $facets := slice -}}
+{{- if $types -}}
+  {{- $o := slice }}{{ range $types }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "type" "title" "Bag type" "options" $o) -}}
+{{- end -}}
+{{- if $prints -}}
+  {{- $o := slice }}{{ range $prints }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "print" "title" "Printed or plain" "options" $o) -}}
+{{- end -}}
+{{- if $sizeOpts -}}
+  {{- $facets = $facets | append (dict "key" "size" "title" "Size" "options" $sizeOpts) -}}
+{{- end -}}
+{{- if $gsms -}}
+  {{- $o := slice }}{{ range $gsms }}{{ $o = $o | append (dict "value" (string .) "label" (printf "%d GSM" .)) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "gsm" "title" "Fabric GSM" "options" $o) -}}
+{{- end -}}
+{{- if $colNames -}}
+  {{- $o := slice }}{{ range $colNames }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "colour" "title" "Fabric colour" "options" $o) -}}
+{{- end -}}
+{{- if $shops -}}
+  {{- $o := slice }}{{ range $shops }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "shop" "title" "Shop type" "options" $o) -}}
+{{- end -}}
+
+{{/* Shop-type tiles for the "browse by shop" strip. The representative image is
+     the first product carrying that shop type, so the strip needs no curation
+     and cannot reference an image the catalogue does not have. */}}
+{{- $shopTiles := slice -}}
+{{- range $shops -}}
+  {{- $s := . }}{{ $img := "" }}{{ $n := 0 -}}
+  {{- range $products -}}
+    {{- if eq .shopType $s -}}
+      {{- $n = add $n 1 -}}
+      {{- if not $img }}{{ $img = .img }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $shopTiles = $shopTiles | append (dict "name" $s "img" $img "count" $n) -}}
+{{- end -}}
+
+{{- return (dict
+    "products" $products
+    "colours" $colours
+    "facets" $facets
+    "shopTiles" $shopTiles
+    "stepKg" $stepKg
+    "hasAnyRate" $hasAnyRate
+    "hasAnyPcs" $hasAnyPcs) -}}
