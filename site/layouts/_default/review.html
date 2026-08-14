@@ -39,9 +39,16 @@
     <section class="rv-step">
       <h2><span>4</span> Post it on Google</h2>
       <p class="rv-photo">{{ .Params.photoPrompt }}</p>
-      <a class="rv-go" id="rv-go" href="{{ .Site.Params.reviewLink }}" target="_blank" rel="noopener">
+      {{/* Guarded: an empty href resolves to the current page, so a missing
+           reviewLink would silently reopen this page in a new tab instead of
+           failing visibly. */}}
+      {{ with .Site.Params.reviewLink }}
+      <a class="rv-go" id="rv-go" href="{{ . }}" target="_blank" rel="noopener">
         Copy &amp; open Google
       </a>
+      {{ else }}
+      <p class="rv-hint rv-warn">Review link not configured — set <code>params.reviewLink</code>.</p>
+      {{ end }}
       <p class="rv-hint" id="rv-status" role="status" aria-live="polite"></p>
       <p class="rv-hint">Paste into the review box, choose your stars, and post.</p>
       <p class="rv-hint rv-alt">
@@ -66,6 +73,8 @@
   var status = document.getElementById("rv-status");
   var go = document.getElementById("rv-go");
   var edited = false;
+
+  if (!text) return;
 
   // Each visitor gets a different sentence shape, so a run of reviews does not
   // read as one template. Chosen once per page load, not per keystroke.
@@ -123,7 +132,7 @@
   // Once they type, stop overwriting their words.
   text.addEventListener("input", function () { edited = true; update(); });
 
-  go.addEventListener("click", function () {
+  if (go) go.addEventListener("click", function () {
     var value = text.value.trim();
     if (!value) return; // let the link open a blank form
     var done = function (ok) {
