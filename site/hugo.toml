@@ -44,6 +44,16 @@ disableKinds = ["taxonomy", "term"]
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
+  # Verified Google Business Profile, added to schema sameAs to tie this site's
+  # entity to the listing. This is the canonical ?cid= form rather than a
+  # share.google/ shortlink: it resolves in one hop and carries no session
+  # tracking. 6670143212572038284 is CID 0x5c911be97256d48c, the same place ID
+  # as the map embed below.
+  googleProfile = "https://www.google.com/maps?cid=6670143212572038284"
+
+  # Direct "write a review" link from the profile. Its token decodes to the same
+  # CID, so all three references point at one listing.
+  reviewLink = "https://g.page/r/CYzUVnLpG5FcEBM/review"
 
 # Canonical NAP. The Google Business Profile is registered at the office, so
 # `primary` points there — the schema address and the profile have to agree
@@ -71,14 +81,23 @@ disableKinds = ["taxonomy", "term"]
   # Office — the address the Google Business Profile is verified at, so this
   # string must stay identical to what the profile shows.
   # GBP store code 03454079842909153724.
-  # Coordinates are the exact place pin from Google Maps, not a geocode.
+  # Coordinates come from the verified profile's own embed, so the pin, the
+  # map and the listing all trace to one source. (An earlier value taken from
+  # the postal-address record sat 47 m away.)
+  #
+  # mapEmbed: optional. Paste the src URL from Google Maps → Share → Embed a map
+  # on the VERIFIED BUSINESS PROFILE (not the postal address entity — they are
+  # different records). With it, the map shows the business card and, once
+  # reviews exist, the star rating. Without it, the map falls back to a plain
+  # coordinate pin, so clearing this string is always a safe rollback.
   [params.address.office]
     label = "Office"
     streetAddress = "9/74-1, KVS Colony, Kothapeta"
     locality = "Dhone"
     postalCode = "518222"
-    latitude = 15.3977683
-    longitude = 77.8754492
+    latitude = 15.3976443
+    longitude = 77.8750319
+    mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d264.4537360613112!2d77.87503186540425!3d15.397644281347027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb6811f3ccc2d4b%3A0x5c911be97256d48c!2sSri%20Raja%20Bags!5e0!3m2!1sen!2sin!4v1786679451089!5m2!1sen!2sin"
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"

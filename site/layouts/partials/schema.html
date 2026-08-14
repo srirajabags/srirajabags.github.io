@@ -24,6 +24,7 @@
   "foundingDate" .Site.Params.foundingYear
   "address" $addr
   "geo" (dict "@type" "GeoCoordinates" "latitude" $p.latitude "longitude" $p.longitude)
+  "hasMap" (printf "https://www.google.com/maps/search/?api=1&query=%v,%v" $p.latitude $p.longitude)
   "areaServed" (slice
     (dict "@type" "State" "name" "Andhra Pradesh")
     (dict "@type" "State" "name" "Telangana")
@@ -35,6 +36,10 @@
     "Bag printing")
   "sameAs" (slice .Site.Params.instagram .Site.Params.facebook)
 }}
+{{/* The verified Business Profile, once its share URL is known. */}}
+{{ with .Site.Params.googleProfile }}
+{{ $biz = merge $biz (dict "sameAs" (slice $.Site.Params.instagram $.Site.Params.facebook .)) }}
+{{ end }}
 {{ with $ogSrc }}{{ $biz = merge $biz (dict "image" (($ogSrc.Fill "1200x630 Smart jpg q85").Permalink)) }}{{ end }}
 {{/* Three registered units trade under the one brand, so none of them is "the"
      legal name. They are declared as related organisations instead. */}}

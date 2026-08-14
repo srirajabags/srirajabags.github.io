@@ -426,6 +426,23 @@ a { color: var(--navy); }
 
 .copyright { font-size: 0.82rem; margin: 0; color: rgba(255,255,255,0.66); }
 
+.review-cta { margin: 0 0 1.5rem; }
+.review-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  padding: 0.45rem 1.1rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.review-cta a:hover { color: #fff; border-color: var(--mint); }
+.review-cta a:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+.review-cta svg { width: 1rem; height: 1rem; color: #fbbc04; }
+
 /* Statutory registration details. Deliberately quiet — closed by default and
    dimmer than the copyright line, so only someone verifying the business
    before an order goes looking for it. */

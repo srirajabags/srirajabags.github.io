@@ -148,14 +148,16 @@
         {{ end }}
         {{ end }}
       </div>
-      {{/* Built from the primary address coordinates rather than the old place-ID
-           embed, which was pinned to a Google listing we do not control and which
-           may be removed. Coordinates keep the map working regardless. */}}
+      {{/* Prefer the Business Profile embed, which renders the business card and
+           star rating. Falls back to a plain coordinate pin when unset, so the
+           map never depends on a listing surviving. */}}
       {{ with index $.Site.Params.address $.Site.Params.address.primary }}
+      {{ $map := printf "https://www.google.com/maps/embed?pb=!1m3!2m1!1s%v,%v!6i17" .latitude .longitude }}
+      {{ with .mapEmbed }}{{ $map = . }}{{ end }}
       <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m3!2m1!1s{{ .latitude }},{{ .longitude }}!6i17"
+        <iframe src="{{ $map }}"
                 title="Sri Raja Bags {{ lower .label }} location, {{ .streetAddress }}, {{ .locality }}"
-                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       {{ end }}
     </div>
