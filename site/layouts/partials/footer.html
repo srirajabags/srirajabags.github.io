@@ -22,9 +22,12 @@
     {{/* Reviews are the slowest local ranking signal to build, so the ask needs
          to be visible on every page — but quiet enough not to compete with the
          WhatsApp enquiry CTAs that actually carry the sales funnel. */}}
-    {{ with .Site.Params.reviewLink }}
+    {{/* Sends people to /review/, which composes the text for them, rather than
+         to a blank Google form — the friction the page exists to remove.
+         Hidden on /review/ itself so it does not link to the current page. */}}
+    {{ if and .Site.Params.reviewLink (ne .RelPermalink "/review/") }}
     <p class="review-cta">
-      <a href="{{ . }}" target="_blank" rel="noopener">
+      <a href="{{ "/review/" | relURL }}">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 17.27 5.18 3.13c.39.24.87-.11.77-.55l-1.38-5.89 4.58-3.97c.34-.3.16-.87-.29-.91l-6.03-.51-2.36-5.56c-.17-.41-.75-.41-.92 0L9.19 8.57l-6.03.51c-.45.04-.63.61-.29.91l4.58 3.97-1.38 5.89c-.1.44.38.79.77.55z"/></svg>
         Review us on Google
       </a>

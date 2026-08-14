@@ -1,0 +1,160 @@
+{{ define "main" }}
+{{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+<main class="page">
+  <div class="container narrow rv">
+
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="rv-intro">{{ .Params.intro }}</p>
+
+    {{ with .Params.products }}
+    <section class="rv-step">
+      <h2><span>1</span> What did you order?</h2>
+      <div class="rv-chips" role="group" aria-label="What did you order">
+        {{ range . }}
+        <button type="button" class="rv-chip" data-group="product" data-value="{{ . }}" aria-pressed="false">{{ . }}</button>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    {{ with .Params.aspects }}
+    <section class="rv-step">
+      <h2><span>2</span> What went well? <em>Pick any</em></h2>
+      <div class="rv-chips" role="group" aria-label="What went well">
+        {{ range . }}
+        <button type="button" class="rv-chip" data-group="aspect" data-value="{{ . }}" aria-pressed="false">{{ . }}</button>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    <section class="rv-step">
+      <h2><span>3</span> Your review <em>Edit freely</em></h2>
+      <label class="rv-sr" for="rv-text">Your review text</label>
+      <textarea id="rv-text" class="rv-text" rows="5"
+                placeholder="Tap the options above, or just write your own."></textarea>
+      <p class="rv-hint" id="rv-count" aria-live="polite"></p>
+    </section>
+
+    <section class="rv-step">
+      <h2><span>4</span> Post it on Google</h2>
+      <p class="rv-photo">{{ .Params.photoPrompt }}</p>
+      {{/* Guarded: an empty href resolves to the current page, so a missing
+           reviewLink would silently reopen this page in a new tab instead of
+           failing visibly. */}}
+      {{ with .Site.Params.reviewLink }}
+      <a class="rv-go" id="rv-go" href="{{ . }}" target="_blank" rel="noopener">
+        Copy &amp; open Google
+      </a>
+      {{ else }}
+      <p class="rv-hint rv-warn">Review link not configured — set <code>params.reviewLink</code>.</p>
+      {{ end }}
+      <p class="rv-hint" id="rv-status" role="status" aria-live="polite"></p>
+      <p class="rv-hint">Paste into the review box, choose your stars, and post.</p>
+      <p class="rv-hint rv-alt">
+        {{ .Params.photoAlt }}
+        <a href="{{ $wa }}&amp;text={{ printf "Hello, sending a photo of the bags we received." }}&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Send on WhatsApp</a>
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function () {
+  var data = {
+    openers: {{ .Params.openers | jsonify | safeJS }},
+    openersNoProduct: {{ .Params.openersNoProduct | jsonify | safeJS }},
+    closers: {{ .Params.closers | jsonify | safeJS }}
+  };
+
+  var text = document.getElementById("rv-text");
+  var count = document.getElementById("rv-count");
+  var status = document.getElementById("rv-status");
+  var go = document.getElementById("rv-go");
+  var edited = false;
+
+  if (!text) return;
+
+  // Each visitor gets a different sentence shape, so a run of reviews does not
+  // read as one template. Chosen once per page load, not per keystroke.
+  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+  var shape = { withProduct: pick(data.openers), noProduct: pick(data.openersNoProduct), closer: pick(data.closers) };
+
+  function selected(group) {
+    return Array.prototype.slice
+      .call(document.querySelectorAll('.rv-chip[data-group="' + group + '"][aria-pressed="true"]'))
+      .map(function (b) { return b.dataset.value; });
+  }
+
+  function joinList(items) {
+    if (items.length === 1) return items[0];
+    if (items.length === 2) return items[0] + " and " + items[1];
+    return items.slice(0, -1).join(", ") + " and " + items[items.length - 1];
+  }
+
+  function compose() {
+    var product = selected("product")[0];
+    var aspects = selected("aspect");
+    var parts = [];
+    parts.push(product ? shape.withProduct.replace("{product}", product.toLowerCase()) : shape.noProduct);
+    if (aspects.length) {
+      var s = joinList(aspects);
+      parts.push(s.charAt(0).toUpperCase() + s.slice(1) + ".");
+    }
+    parts.push(shape.closer);
+    return parts.join(" ");
+  }
+
+  function refresh() {
+    if (!edited) text.value = compose();
+    update();
+  }
+
+  function update() {
+    var n = text.value.trim().length;
+    count.textContent = n ? n + " characters" : "";
+  }
+
+  document.querySelectorAll(".rv-chip").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var on = btn.getAttribute("aria-pressed") === "true";
+      if (btn.dataset.group === "product" && !on) {
+        document.querySelectorAll('.rv-chip[data-group="product"]').forEach(function (o) {
+          o.setAttribute("aria-pressed", "false");
+        });
+      }
+      btn.setAttribute("aria-pressed", on ? "false" : "true");
+      refresh();
+    });
+  });
+
+  // Once they type, stop overwriting their words.
+  text.addEventListener("input", function () { edited = true; update(); });
+
+  if (go) go.addEventListener("click", function () {
+    var value = text.value.trim();
+    if (!value) return; // let the link open a blank form
+    var done = function (ok) {
+      status.textContent = ok
+        ? "Copied. Paste it into the review box."
+        : "Copy the text above, then paste it into the review box.";
+      status.className = "rv-hint " + (ok ? "rv-ok" : "rv-warn");
+    };
+    // Clipboard access fails in some in-app browsers; the text stays on screen
+    // to copy by hand, and the link still opens either way.
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(value).then(function () { done(true); }, function () { done(false); });
+    } else {
+      try {
+        text.select();
+        text.setSelectionRange(0, 99999);
+        done(document.execCommand("copy"));
+      } catch (e) { done(false); }
+    }
+  });
+
+  refresh();
+})();
+</script>
+{{ end }}
