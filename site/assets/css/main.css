@@ -572,7 +572,7 @@ a { color: var(--navy); }
   color: rgba(255,255,255,0.6);
 }
 
-/* ---------------- catalogue ---------------- */
+/* ---------------- catalog ---------------- */
 /* Browse-and-enquire, not a shop: every path out of this page ends in WhatsApp.
    Built mobile-first for a shopkeeper on 4G — the grid, the cards and the
    specs are plain server-rendered markup, and the filter/sort/enquiry layer is
@@ -581,6 +581,13 @@ a { color: var(--navy); }
 
 html.js .nojs-only { display: none !important; }
 html:not(.js) .js-only { display: none !important; }
+
+/* The [hidden] attribute only sets display:none at the very bottom of the
+   cascade, so any element given an explicit display — and most of the controls
+   here are flex — ignores it and stays on screen. The script toggles [hidden]
+   on buttons, totals and rows throughout this page, so it is stated once here
+   rather than patched per component. */
+.ct [hidden], .ct-dock [hidden], .ct-dialog [hidden], [hidden].ct-btn { display: none !important; }
 
 .ct { padding-bottom: 6rem; }
 
@@ -692,22 +699,33 @@ html:not(.js) .js-only { display: none !important; }
 .ct-sheet-close, .ct-filters-foot { display: none; }
 
 .ct-group { border: 0; border-top: 1px solid var(--rule); margin: 0; padding: 0.9rem 0 0.2rem; }
+/* A <legend> is rendered into a gap cut out of the fieldset's border, which
+   left the rule above each group starting partway across. Floating it opts out
+   of that placement so the rule runs the full width and the label sits under
+   it; .ct-opts then clears the float. */
 .ct-group legend {
+  float: left;
+  width: 100%;
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--ink-soft);
-  padding: 0; margin-bottom: 0.6rem;
+  padding: 0; margin: 0 0 0.6rem;
 }
-.ct-opts { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ct-opts { clear: both; display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .ct-opt { position: relative; }
 .ct-opt input {
   position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer;
 }
-.ct-opt span {
-  display: block;
+/* Direct child only. A colour option nests a swatch <span> inside this one, and
+   an unscoped `.ct-opt span` would style the swatch as a second pill — padding,
+   min-height, border and all. */
+.ct-opt > span {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 0.82rem;
+  line-height: 1.2;
   padding: 0.5rem 0.7rem;
   min-height: 2.4rem;
-  display: flex; align-items: center;
   background: var(--paper-alt);
   border: 1px solid var(--rule);
   border-radius: 7px;
@@ -715,7 +733,19 @@ html:not(.js) .js-only { display: none !important; }
 }
 .ct-opt input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
 .ct-opt input:focus-visible + span { outline: 2px solid var(--navy); outline-offset: 2px; }
-.ct-opt:hover span { border-color: var(--navy-soft); }
+.ct-opt:hover > span { border-color: var(--navy-soft); }
+
+/* Colour filters show the fabric, not just its name. The swatch keeps its own
+   inset ring so a white or cream chip stays visible against the navy selected
+   state as well as the pale unselected one. */
+.ct-opt-colour .ct-sw { width: 1rem; height: 1rem; }
+.ct-opt input:checked + span .ct-sw { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55); }
+
+/* Colour names vary in length far more than the other facets, so ragged
+   flex-wrap leaves the swatches on staggered left edges. A grid puts every
+   swatch on the same column. */
+.ct-group-colour .ct-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.75rem, 1fr)); }
+.ct-group-colour .ct-opt > span { width: 100%; }
 
 /* product grid */
 .ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
@@ -743,14 +773,19 @@ html:not(.js) .js-only { display: none !important; }
   font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--ink-soft); background: var(--paper-alt);
 }
+/* A row can carry several badges ("New|Premium"), so they stack down the
+   corner rather than overlapping. */
+.ct-badges {
+  position: absolute; top: 0.5rem; left: 0.5rem;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 0.25rem;
+}
 .ct-badge, .ct-flag {
-  position: absolute;
   font-size: 0.62rem; font-weight: 700;
   letter-spacing: 0.08em; text-transform: uppercase;
   padding: 0.3rem 0.45rem; border-radius: 4px;
 }
-.ct-badge { top: 0.5rem; left: 0.5rem; background: var(--navy); color: #fff; }
-.ct-flag { bottom: 0.5rem; left: 0.5rem; background: rgba(255,255,255,0.94); color: var(--navy); }
+.ct-badge { background: var(--navy); color: #fff; }
+.ct-flag { position: absolute; bottom: 0.5rem; left: 0.5rem; background: rgba(255,255,255,0.94); color: var(--navy); }
 
 .ct-body { display: flex; flex-direction: column; gap: 0.45rem; padding: 0.75rem 0.8rem 0.8rem; flex: 1; }
 .ct-name {
@@ -777,6 +812,9 @@ html:not(.js) .js-only { display: none !important; }
 
 .ct-rate { margin: auto 0 0; display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
 .ct-rate strong { font-size: 1rem; color: var(--navy); font-variant-numeric: tabular-nums; }
+/* "from ₹165/kg" — the qualifier must not read as part of the number. */
+.ct-from { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
+.ct-more { background: transparent !important; color: var(--ink-soft) !important; padding-left: 0 !important; }
 .ct-rate-ask { font-size: 0.86rem !important; font-weight: 600; color: var(--ink-soft) !important; }
 .ct-rate span { font-size: 0.7rem; color: var(--ink-soft); }
 
@@ -866,7 +904,73 @@ html:not(.js) .js-only { display: none !important; }
 }
 .ct-dialog-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .ct-dialog-img { background: var(--paper-alt); }
-.ct-dialog-img img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+
+/* Photo carousel. Scroll-snap does the actual work, so swipe and keyboard
+   scrolling behave natively and the thing still functions with no JS — the
+   arrows and dots below are decoration over a scroll container. */
+.ct-carousel { position: relative; }
+.ct-slides {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.ct-slides::-webkit-scrollbar { display: none; }
+.ct-slides img {
+  flex: 0 0 100%;
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  scroll-snap-align: start;
+}
+.ct-slides:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
+
+.ct-cnav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 2.25rem; height: 2.25rem;
+  display: grid; place-items: center;
+  font: inherit; font-size: 1.4rem; line-height: 1;
+  background: rgba(255,255,255,0.92); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: 999px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.ct-cnav:hover { background: #fff; }
+.ct-cnav:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.ct-cnav:disabled { opacity: 0; pointer-events: none; }
+.ct-cprev { left: 0.5rem; }
+.ct-cnext { right: 0.5rem; }
+
+.ct-dots {
+  position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 0.3rem;
+  padding: 0.3rem 0.45rem;
+  background: rgba(17,24,32,0.35);
+  border-radius: 999px;
+}
+.ct-dot {
+  width: 0.45rem; height: 0.45rem; padding: 0;
+  background: rgba(255,255,255,0.6);
+  border: 0; border-radius: 999px; cursor: pointer;
+  transition: width 0.18s ease, background 0.18s ease;
+}
+.ct-dot.is-on { width: 1.1rem; background: #fff; }
+.ct-dot:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+/* Card cue that there are more photos inside. */
+.ct-photon {
+  position: absolute; bottom: 0.5rem; right: 0.5rem;
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.45rem; border-radius: 4px;
+  background: rgba(17,24,32,0.62); color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ct-slides { scroll-behavior: auto; }
+  .ct-dot, .ct-cnav { transition: none; }
+}
 .ct-dialog-info { padding: 1.25rem 1.4rem 1.5rem; }
 .ct-tags { display: flex; gap: 0.35rem; margin: 0 0 0.6rem; }
 .ct-tags span {
@@ -887,6 +991,25 @@ html:not(.js) .js-only { display: none !important; }
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em;
   text-transform: uppercase; color: var(--ink-soft); margin: 0 0 0.6rem;
 }
+.ct-tag-badge { background: var(--navy) !important; color: #fff !important; }
+
+/* Variant pickers. Choosing a size changes pcs/kg; choosing a GSM changes the
+   rate — so these are the controls that make the numbers below them true. */
+.ct-picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.1rem; }
+.ct-pick {
+  font: inherit; font-size: 0.85rem; font-weight: 600;
+  min-height: 2.75rem; padding: 0.55rem 0.85rem;
+  background: #fff; color: var(--ink);
+  border: 1.5px solid var(--rule); border-radius: 8px; cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: border-color 0.12s ease, background 0.12s ease, color 0.12s ease;
+}
+.ct-pick:hover { border-color: var(--navy-soft); }
+.ct-pick.is-on { background: var(--mint-pale); border-color: var(--navy); color: var(--navy); }
+.ct-pick:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+/* The same variants as prose, for readers that never run the pickers. */
+.ct-variant-text { font-size: 0.88rem; color: var(--ink-soft); margin: 0 0 1.1rem; }
 .ct-colour-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 1.1rem; padding: 0; }
 .ct-colour-list li {
   display: flex; align-items: center; gap: 0.4rem;
@@ -966,22 +1089,31 @@ html:not(.js) .js-only { display: none !important; }
   border-top: 1px solid var(--rule);
   box-shadow: 0 -4px 16px rgba(17,24,32,0.06);
 }
-.ct-dock .ct-btn { min-height: 3rem; font-size: 0.88rem; }
+.ct-dock .ct-btn { min-height: 3rem; font-size: 0.88rem; white-space: nowrap; }
 .ct-dock-cart, .ct-dock-ask { flex: 1.2; }
 
 @media (min-width: 801px) {
   /* The filter sidebar is always on screen here, so the dock stops being a bar
-     and becomes a floating pill carrying just the WhatsApp action — "WhatsApp
-     us" while the list is empty, "Send N" once it is not. */
+     and carries just the WhatsApp action — "WhatsApp us" while the list is
+     empty, "Send N" once it is not.
+     That leaves exactly one button in it, so the dock drops its bar chrome
+     entirely: keeping the white background and border would frame the button
+     in a second pill. The button itself becomes the floating element and owns
+     the shadow that lifts it off the page. */
   .ct-dock {
     left: auto; right: 1.5rem; bottom: 1.5rem; width: auto;
-    border-radius: 999px;
-    border: 1px solid var(--rule);
-    padding: 0.5rem 0.6rem;
-    box-shadow: 0 6px 24px rgba(17,24,32,0.14);
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
   }
   .ct-dock-filter { display: none; }
-  .ct-dock .ct-btn { padding: 0.7rem 1.4rem; }
+  .ct-dock-cart, .ct-dock-ask { flex: 0 0 auto; }
+  .ct-dock .ct-btn {
+    padding: 0.85rem 1.6rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 22px rgba(17,24,32,0.22);
+  }
 }
 
 @media (max-width: 800px) {

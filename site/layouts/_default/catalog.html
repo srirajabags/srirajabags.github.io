@@ -1,17 +1,20 @@
 {{ define "main" }}
-{{/* Catalogue. Every product is rendered into the HTML at build time — the
+{{/* Catalog. Every product is rendered into the HTML at build time — the
      filtering, sorting and enquiry list are a layer on top of that markup, not
      the thing that produces it. So the page is fully readable to a crawler and
      to a phone whose JavaScript never arrives, which is the whole point of a
      page meant to rank for "non woven carry bag manufacturers".
 
-     Product data comes from assets/data/catalog.csv via the catalog-data
-     partial. Nothing below hard-codes a bag. */}}
+     A row in the sheet is one product that may come in several sizes, GSMs,
+     colours and shop types. The card shows the range; the detail dialog lets a
+     buyer pick the exact variant, and that choice is what travels into the
+     WhatsApp message. Product data comes from assets/data/catalog.csv via the
+     catalog-data partial — nothing below hard-codes a bag. */}}
 
 {{/* Set before the grid parses, so no-JS-only controls never flash. */}}
 <script>document.documentElement.className += " js";</script>
 
-{{/* Cached: the schema partial reads the same catalogue in <head>, and the CSV
+{{/* Cached: the schema partial reads the same catalog in <head>, and the CSV
      does not vary by page. */}}
 {{ $c := partialCached "catalog-data.html" . }}
 {{ $products := $c.products }}
@@ -21,9 +24,6 @@
 {{/* The message a buyer sends when nothing in the list fits. */}}
 {{ $customText := "Hello Sri Raja Bags, I need non woven carry bags. Size: __ x __ inch, printing: __, quantity: __ kg. Please send rates." }}
 {{ $waCustom := printf "%s&text=%s%s" $wa (urlquery $customText) $waSuffix }}
-
-{{ $hasAnyMoq := false }}
-{{ range $products }}{{ if .hasMoq }}{{ $hasAnyMoq = true }}{{ end }}{{ end }}
 
 <main class="page ct">
   <div class="container">
@@ -41,7 +41,7 @@
          The page degrades to the enquiry CTA rather than showing a bare grid. */}}
     {{ if not $products }}
     <div class="ct-empty">
-      <p><strong>Our catalogue is being updated.</strong></p>
+      <p><strong>Our catalog is being updated.</strong></p>
       <p>Tell us the size, printing and quantity you need and we will send rates the same day.</p>
       <a class="ct-wa" href="{{ $waCustom }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
     </div>
@@ -61,7 +61,7 @@
     <div class="ct-bar">
       <p class="ct-count" id="ct-count" role="status">{{ len $products }} bags</p>
       <div class="ct-tools js-only">
-        <label class="rv-sr" for="ct-search">Search the catalogue</label>
+        <label class="rv-sr" for="ct-search">Search the catalog</label>
         <input type="search" id="ct-search" class="ct-search" placeholder="Search size, GSM, bag type…" autocomplete="off">
         <label class="rv-sr" for="ct-sort">Sort by</label>
         <select id="ct-sort" class="ct-select">
@@ -72,7 +72,7 @@
           {{ end }}
           <option value="size-asc">Size: small to large</option>
           <option value="size-desc">Size: large to small</option>
-          {{ if $hasAnyMoq }}<option value="moq-asc">Lowest min order</option>{{ end }}
+          {{ if $c.hasAnyMoq }}<option value="moq-asc">Lowest min order</option>{{ end }}
         </select>
         <button type="button" class="ct-filter-btn" id="ct-filter-open" aria-expanded="false" aria-controls="ct-filters">
           Filters <span class="ct-filter-n" id="ct-filter-n" hidden>0</span>
@@ -92,13 +92,20 @@
         <div class="ct-filters-body">
           {{ range $c.facets }}
           {{ $k := .key }}
-          <fieldset class="ct-group">
+          <fieldset class="ct-group{{ if eq $k "colour" }} ct-group-colour{{ end }}">
             <legend>{{ .title }}</legend>
             <div class="ct-opts">
               {{ range .options }}
-              <label class="ct-opt">
-                <input type="checkbox" name="{{ $k }}" value="{{ .value }}">
-                <span>{{ .label }}</span>
+              {{ $opt := . }}
+              <label class="ct-opt{{ if $opt.slug }} ct-opt-colour{{ end }}">
+                <input type="checkbox" name="{{ $k }}" value="{{ $opt.value }}">
+                {{/* Colour options carry a swatch; every other facet is text. */}}
+                <span>
+                  {{ if $opt.slug }}
+                  <span class="ct-sw" data-c="{{ $opt.slug }}"{{ with $opt.hex }} style="background:{{ . }}"{{ end }}></span>
+                  {{ end }}
+                  {{ $opt.label }}
+                </span>
               </label>
               {{ end }}
             </div>
@@ -115,16 +122,10 @@
         {{/* ---- grid ---- */}}
         <div class="ct-grid" id="ct-grid">
           {{ range $products }}
-          {{ $p := . }}
-          {{ $colourNames := slice }}
-          {{ range .colours }}{{ $colourNames = $colourNames | append .name }}{{ end }}
-          {{ $sizePlain := "" }}
-          {{ if .hasSize }}{{ $sizePlain = printf "%v x %v inch" .w .h }}{{ end }}
-          {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s%s. Please send your best rate and minimum order."
-              .name
-              (cond .hasSize (printf " (%s" $sizePlain) "")
-              (cond .hasSize (printf "%s%s)" (cond (gt .gsm 0) (printf ", %d GSM" .gsm) "") (cond (ne .print "") (printf ", %s" .print) "")) "") }}
-          {{ $askLink := printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}
+          {{ $sizeLabels := slice }}{{ range .sizes }}{{ $sizeLabels = $sizeLabels | append .label }}{{ end }}
+          {{ $sizePlains := slice }}{{ range .sizes }}{{ $sizePlains = $sizePlains | append .plain }}{{ end }}
+          {{ $gsmVals := slice }}{{ range .gsms }}{{ $gsmVals = $gsmVals | append (string .value) }}{{ end }}
+          {{ $colourNames := slice }}{{ range .colours }}{{ $colourNames = $colourNames | append .name }}{{ end }}
 
           <article class="ct-card" id="p-{{ .id }}"
             data-id="{{ .id }}"
@@ -132,18 +133,18 @@
             data-name="{{ .name }}"
             data-type="{{ .bagType }}"
             data-print="{{ .print }}"
-            data-size="{{ .sizeClass }}"
-            data-gsm="{{ .gsm }}"
-            data-shop="{{ .shopType }}"
+            data-size="{{ delimit .buckets "|" }}"
+            data-gsm="{{ delimit $gsmVals "|" }}"
+            data-shop="{{ delimit .shops "|" }}"
             data-colour="{{ delimit $colourNames "|" }}"
-            data-area="{{ .area }}"
-            data-rate="{{ if .hasRate }}{{ .rate }}{{ end }}"
+            data-area-min="{{ .areaMin }}"
+            data-area-max="{{ .areaMax }}"
+            data-rate-min="{{ if .hasRate }}{{ .rateMin }}{{ end }}"
+            data-rate-max="{{ if .hasRate }}{{ .rateMax }}{{ end }}"
             data-moq="{{ if .hasMoq }}{{ .moq }}{{ end }}"
-            data-pcs="{{ if .hasPcs }}{{ .pcs }}{{ end }}"
             data-start="{{ .startKg }}"
             data-step="{{ $c.stepKg }}"
-            data-sizeplain="{{ $sizePlain }}"
-            data-search="{{ lower (printf "%s %s %s %s %s %d gsm %s" .name .bagType .print .shopType $sizePlain .gsm (delimit $colourNames " ")) }}">
+            data-search="{{ lower (printf "%s %s %s %s %s %s gsm %s" .name .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
 
             <div class="ct-thumb">
               <button type="button" class="ct-open js-only" data-open="{{ .id }}">
@@ -161,21 +162,39 @@
                 <img src="{{ .img }}" width="320" height="320" alt="{{ .name }}" loading="lazy">
                 {{ end }}
               </noscript>
-              {{ with .badge }}<span class="ct-badge">{{ . }}</span>{{ end }}
+              {{ with .badges }}
+              <span class="ct-badges">
+                {{ range . }}<span class="ct-badge">{{ . }}</span>{{ end }}
+              </span>
+              {{ end }}
               {{ with .print }}<span class="ct-flag">{{ . }}</span>{{ end }}
+              {{/* The card stays a single image — 16 carousels would be noise,
+                   and this is the cue that there is more to see inside. */}}
+              {{ if gt (len .imgs) 1 }}<span class="ct-photon">{{ len .imgs }} photos</span>{{ end }}
             </div>
 
             <div class="ct-body">
               <h2 class="ct-name">{{ .name }}</h2>
 
+              {{/* Sizes are the thing a shopkeeper scans for, so up to two are
+                   shown in full and the rest counted rather than truncated. */}}
               <p class="ct-specs">
-                {{ with .sizeLabel }}<span>{{ . }}</span>{{ end }}
-                {{ if gt .gsm 0 }}<span>{{ .gsm }} GSM</span>{{ end }}
+                {{ range first 2 .sizes }}<span>{{ .label }}</span>{{ end }}
+                {{ if gt (len .sizes) 2 }}
+                {{ $n := sub (len .sizes) 2 }}
+                <span class="ct-more">+{{ $n }} {{ cond (eq $n 1) "size" "sizes" }}</span>
+                {{ end }}
+                {{ with .gsms }}
+                <span>
+                  {{- $lo := (index . 0).value }}{{ $hi := (index (last 1 .) 0).value -}}
+                  {{ if eq $lo $hi }}{{ $lo }}{{ else }}{{ $lo }}–{{ $hi }}{{ end }} GSM
+                </span>
+                {{ end }}
               </p>
 
               {{ with .colours }}
               <p class="ct-colours">
-                {{ range . }}
+                {{ range first 5 . }}
                 <span class="ct-sw" data-c="{{ .slug }}" title="{{ .name }}"
                   {{ with .hex }}style="background:{{ . }}"{{ end }}></span>
                 {{ end }}
@@ -185,7 +204,11 @@
 
               <p class="ct-rate">
                 {{ if .hasRate }}
-                <strong>₹{{ lang.FormatNumberCustom 0 .rate }}/kg</strong>
+                  {{ if eq .rateMin .rateMax }}
+                  <strong>₹{{ lang.FormatNumberCustom 0 .rateMin }}/kg</strong>
+                  {{ else }}
+                  <strong><span class="ct-from">from</span> ₹{{ lang.FormatNumberCustom 0 .rateMin }}/kg</strong>
+                  {{ end }}
                 {{ else }}
                 <strong class="ct-rate-ask">Rate on request</strong>
                 {{ end }}
@@ -197,7 +220,9 @@
                   <span class="ct-add-off">+ Add to enquiry</span>
                   <span class="ct-add-on">✓ In enquiry</span>
                 </button>
-                <a class="ct-btn ct-wa nojs-only" href="{{ $askLink }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+                {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order."
+                    .name (cond (gt (len .sizes) 0) (printf " (%s)" (index .sizes 0).plain) "") }}
+                <a class="ct-btn ct-wa nojs-only" href="{{ printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
               </div>
             </div>
           </article>
@@ -241,22 +266,45 @@
 
 {{ if $products }}
 {{/* ---- per-product detail dialogs ----
-     Rendered into the page rather than built by JS, so the notes and specs are
-     part of the document a crawler sees. A <dialog> without [open] is hidden by
-     the UA, so this costs no layout. */}}
+     Rendered into the page rather than built by JS, so the notes, every size
+     and every GSM are part of the document a crawler sees. A <dialog> without
+     [open] is hidden by the UA, so this costs no layout. */}}
 {{ range $products }}
-{{ $sizePlain := "" }}
-{{ if .hasSize }}{{ $sizePlain = printf "%v x %v inch" .w .h }}{{ end }}
+{{ $first := "" }}{{ if .sizes }}{{ $first = index .sizes 0 }}{{ end }}
+{{ $firstGsm := "" }}{{ if .gsms }}{{ $firstGsm = index .gsms 0 }}{{ end }}
 {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order."
-    .name (cond .hasSize (printf " (%s)" $sizePlain) "") }}
-<dialog class="ct-dialog" id="d-{{ .id }}" aria-labelledby="dt-{{ .id }}">
+    .name (cond (gt (len .sizes) 0) (printf " (%s)" $first.plain) "") }}
+<dialog class="ct-dialog" id="d-{{ .id }}" aria-labelledby="dt-{{ .id }}" data-product="{{ .id }}">
   <div class="ct-dialog-inner">
     <button type="button" class="ct-dialog-x" data-close aria-label="Close">×</button>
 
     <div class="ct-dialog-grid">
+      {{/* Photo carousel. The strip is a scroll-snap container, so swiping on a
+           phone and arrow keys on a focused strip both work with no script at
+           all; the arrows and dots are enhancements layered on top. Every photo
+           is a real <img> in the markup, so all of them are crawlable. */}}
+      {{ $pname := .name }}
       <div class="ct-dialog-img">
-        {{ if .img }}
-        <img src="{{ .img2x }}" width="640" height="640" alt="{{ .name }}" loading="lazy" decoding="async">
+        {{ if .imgs }}
+        <div class="ct-carousel" data-carousel>
+          <div class="ct-slides" tabindex="0" role="group" aria-label="Photos of {{ $pname }}">
+            {{ range $i, $im := .imgs }}
+            <img src="{{ $im.full }}" width="900" height="900"
+                 alt="{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}"
+                 loading="lazy" decoding="async">
+            {{ end }}
+          </div>
+          {{ if gt (len .imgs) 1 }}
+          <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo">‹</button>
+          <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo">›</button>
+          <div class="ct-dots js-only">
+            {{ range $i, $im := .imgs }}
+            <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
+                    aria-label="Photo {{ add $i 1 }}"></button>
+            {{ end }}
+          </div>
+          {{ end }}
+        </div>
         {{ else }}
         <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
         {{ end }}
@@ -266,23 +314,62 @@
         <p class="ct-tags">
           {{ with .bagType }}<span>{{ . }}</span>{{ end }}
           {{ with .print }}<span>{{ . }}</span>{{ end }}
+          {{ range .badges }}<span class="ct-tag-badge">{{ . }}</span>{{ end }}
         </p>
         <h2 id="dt-{{ .id }}">{{ .name }}</h2>
 
+        {{/* Rate tracks the selected GSM. Server-rendered with the first GSM so
+             it reads correctly before any script runs. */}}
+        {{/* The machine-readable value rides along in data-rate so the script
+             never has to parse the formatted text back into a number. */}}
         <p class="ct-dialog-rate">
-          {{ if .hasRate }}
-          <strong>₹{{ lang.FormatNumberCustom 0 .rate }}/kg</strong>
+          {{ if and $firstGsm $firstGsm.hasRate }}
+          <strong class="ct-d-rate" data-rate="{{ $firstGsm.rate }}">₹{{ lang.FormatNumberCustom 0 $firstGsm.rate }}/kg</strong>
           {{ else }}
-          <strong class="ct-rate-ask">Rate on request</strong>
+          <strong class="ct-d-rate ct-rate-ask" data-rate="">Rate on request</strong>
           {{ end }}
           {{ if .hasMoq }}<span>· minimum order {{ .moq }} kg</span>{{ end }}
         </p>
 
+        {{/* ---- variant pickers ---- */}}
+        {{ if gt (len .sizes) 1 }}
+        <h3 class="ct-dialog-h3">Size</h3>
+        <div class="ct-picker js-only" data-picker="size">
+          {{ range $i, $s := .sizes }}
+          <button type="button" class="ct-pick{{ if eq $i 0 }} is-on{{ end }}"
+            data-label="{{ $s.label }}" data-plain="{{ $s.plain }}" data-pcs="{{ if $s.hasPcs }}{{ $s.pcs }}{{ end }}"
+            aria-pressed="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ $s.label }}</button>
+          {{ end }}
+        </div>
+        {{/* The same list as plain text, so no-JS readers and crawlers still see
+             every size we make this bag in. */}}
+        <p class="ct-variant-text nojs-only">
+          {{ $l := slice }}{{ range .sizes }}{{ $l = $l | append .label }}{{ end }}{{ delimit $l ", " }}
+        </p>
+        {{ end }}
+
+        {{ if gt (len .gsms) 1 }}
+        <h3 class="ct-dialog-h3">Fabric GSM</h3>
+        <div class="ct-picker js-only" data-picker="gsm">
+          {{ range $i, $g := .gsms }}
+          <button type="button" class="ct-pick{{ if eq $i 0 }} is-on{{ end }}"
+            data-value="{{ $g.value }}" data-rate="{{ if $g.hasRate }}{{ $g.rate }}{{ end }}"
+            aria-pressed="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ $g.value }} GSM</button>
+          {{ end }}
+        </div>
+        <p class="ct-variant-text nojs-only">
+          {{ $l := slice }}{{ range .gsms }}{{ $l = $l | append (printf "%d GSM" .value) }}{{ end }}{{ delimit $l ", " }}
+        </p>
+        {{ end }}
+
         <dl class="ct-dl">
-          {{ with .sizeLabel }}<div><dt>Size</dt><dd>{{ . }}</dd></div>{{ end }}
-          {{ if gt .gsm 0 }}<div><dt>Fabric</dt><dd>{{ .gsm }} GSM</dd></div>{{ end }}
-          {{ if .hasPcs }}<div><dt>Approx. pcs / kg</dt><dd>~{{ .pcs }} bags</dd></div>{{ end }}
-          {{ with .shopType }}<div><dt>Best for</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ if $first }}<div><dt>Size</dt><dd class="ct-d-size" data-plain="{{ $first.plain }}">{{ $first.label }}</dd></div>{{ end }}
+          {{ if $firstGsm }}<div><dt>Fabric</dt><dd class="ct-d-gsm" data-value="{{ $firstGsm.value }}">{{ $firstGsm.value }} GSM</dd></div>{{ end }}
+          <div class="ct-d-pcs-wrap"{{ if not (and $first $first.hasPcs) }} hidden{{ end }}>
+            <dt>Approx. pcs / kg</dt>
+            <dd class="ct-d-pcs" data-pcs="{{ if and $first $first.hasPcs }}{{ $first.pcs }}{{ end }}">{{ if and $first $first.hasPcs }}~{{ $first.pcs }} bags{{ end }}</dd>
+          </div>
+          {{ with .shops }}<div><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
         </dl>
 
         {{ with .colours }}
@@ -295,22 +382,20 @@
         {{ end }}
 
         {{/* Quantity is useful with or without a published rate — it is what
-             goes into the WhatsApp message. The value line only appears when
-             the sheet actually carries a rate for this bag. */}}
+             goes into the WhatsApp message. The pcs and value lines appear only
+             when the sheet carries those numbers for the selected variant. */}}
         <div class="ct-qty js-only" data-qty-for="{{ .id }}">
           <h3 class="ct-dialog-h3">Quantity</h3>
           <div class="ct-qty-row">
             <button type="button" class="ct-qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
             <div class="ct-qty-val">
               <output class="ct-qty-kg">{{ .startKg }} kg</output>
-              {{ if .hasPcs }}<span class="ct-qty-pcs"></span>{{ end }}
+              <span class="ct-qty-pcs"></span>
             </div>
             <button type="button" class="ct-qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
           </div>
-          {{ if .hasRate }}
-          <p class="ct-qty-total"><span>Indicative value</span><strong class="ct-qty-sum"></strong></p>
-          <p class="ct-fine">Ex-factory, before GST and freight. Printing charges quoted separately on artwork.</p>
-          {{ end }}
+          <p class="ct-qty-total" hidden><span>Indicative value</span><strong class="ct-qty-sum"></strong></p>
+          <p class="ct-fine ct-qty-fine" hidden>Ex-factory, before GST and freight. Printing charges quoted separately on artwork.</p>
         </div>
 
         {{ with .note }}<p class="ct-note">{{ . }}</p>{{ end }}
@@ -347,7 +432,10 @@
 {{/* ---- sticky dock ---- */}}
 <div class="ct-dock js-only" id="ct-dock">
   <button type="button" class="ct-btn ct-dock-filter" id="ct-dock-filter">Filter &amp; sort</button>
-  <button type="button" class="ct-btn ct-wa ct-dock-cart" id="ct-dock-cart" hidden>Send <span id="ct-dock-n">0</span> on WhatsApp</button>
+  {{/* The label is wrapped in a single span on purpose: .ct-btn is a flex
+       container, so bare text either side of the count would become separate
+       flex items and pick up the button's gap between every word. */}}
+  <button type="button" class="ct-btn ct-wa ct-dock-cart" id="ct-dock-cart" hidden><span>Send <span id="ct-dock-n">0</span> on WhatsApp</span></button>
   <a class="ct-btn ct-wa ct-dock-ask" id="ct-dock-ask" href="{{ $waCustom }}" target="_blank" rel="noopener">WhatsApp us</a>
 </div>
 
@@ -385,27 +473,27 @@
   function selected(key) {
     return boxes(key).filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
   }
+  function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
+  function money(n) { return "₹" + Math.round(n).toLocaleString("en-IN"); }
+  function list(v) { return (v || "").split("|").filter(Boolean); }
 
-  /* ---- filtering ---- */
+  /* ---- filtering ----
+     Every facet is treated as multi-valued: a product matches a group if ANY
+     of its values is selected. A bag offered in 12X16 and 10X14 therefore
+     answers to both the Medium and the Small filter, which is the whole point
+     of holding variants on one row. */
 
   function matches(card) {
     for (var i = 0; i < KEYS.length; i++) {
       var key = KEYS[i], want = selected(key);
       if (!want.length) continue;
-      if (key === "colour") {
-        // Multi-valued: a bag matches if it comes in ANY of the chosen colours.
-        var have = (card.dataset.colour || "").split("|");
-        if (!want.some(function (v) { return have.indexOf(v) >= 0; })) return false;
-      } else if (want.indexOf(card.dataset[key] || "") < 0) {
-        return false;
-      }
+      var have = list(card.dataset[key]);
+      if (!want.some(function (v) { return have.indexOf(v) >= 0; })) return false;
     }
     var q = (search && search.value || "").trim().toLowerCase();
     if (q && (card.dataset.search || "").indexOf(q) < 0) return false;
     return true;
   }
-
-  function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
 
   function apply() {
     var shown = 0;
@@ -415,12 +503,16 @@
       if (ok) shown++;
     });
 
-    // Sort the visible set. Rows with no value for the sort key sink to the
-    // bottom instead of sorting as zero — an unpriced bag is not the cheapest.
+    // Sort the visible set. A product spanning a range sorts by the end of that
+    // range the buyer asked for: smallest-first uses its smallest size, and
+    // cheapest-first its cheapest GSM. Rows with no value sink to the bottom
+    // rather than sorting as zero — an unpriced bag is not the cheapest.
     var mode = sortSel ? sortSel.value : "curated";
-    var key = mode === "rate-asc" || mode === "rate-desc" ? "rate"
-            : mode === "moq-asc" ? "moq"
-            : mode === "size-asc" || mode === "size-desc" ? "area" : "order";
+    var key = mode === "rate-asc" ? "rateMin"
+            : mode === "rate-desc" ? "rateMax"
+            : mode === "size-asc" ? "areaMin"
+            : mode === "size-desc" ? "areaMax"
+            : mode === "moq-asc" ? "moq" : "order";
     var desc = mode === "rate-desc" || mode === "size-desc";
     var ordered = cards.slice().sort(function (a, b) {
       var x = num(a.dataset[key]), y = num(b.dataset[key]);
@@ -438,7 +530,6 @@
     if (filterN) { filterN.textContent = n; filterN.hidden = n === 0; }
     if (noRes) noRes.hidden = shown !== 0;
 
-    // One shop type selected reads as a page about that shop type.
     var shops = selected("shop");
     heading.textContent = shops.length === 1 ? "Bags for " + shops[0].toLowerCase() : heading.dataset.default;
 
@@ -491,21 +582,62 @@
     if (sortSel && p.get("sort")) sortSel.value = p.get("sort");
   }
 
-  /* ---- enquiry list ---- */
+  /* ---- variant state ----
+     One entry per product holding the size and GSM currently chosen in its
+     dialog. The card's own "add" button has no pickers, so it falls back to
+     this same default — the first size and GSM in the sheet. */
 
-  var saved = {};
-  try { saved = JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { saved = {}; }
-
-  function persist() {
-    try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {}
-  }
+  var variant = {};
+  function dialogOf(id) { return document.getElementById("d-" + id); }
   function cardOf(id) { return document.getElementById("p-" + id); }
   function startOf(c) { return num(c.dataset.start) || 25; }
   function stepOf(c) { return num(c.dataset.step) || 25; }
 
+  document.querySelectorAll("[data-product]").forEach(function (dlg) {
+    var id = dlg.dataset.product;
+    // A product with one size or one GSM has no picker for it; the rendered
+    // spec cells carry the same values as data attributes, so both cases read
+    // the same way and nothing has to parse formatted text.
+    var s = dlg.querySelector('[data-picker="size"] .ct-pick');
+    var g = dlg.querySelector('[data-picker="gsm"] .ct-pick');
+    var sizeCell = dlg.querySelector(".ct-d-size");
+    var gsmCell = dlg.querySelector(".ct-d-gsm");
+    var pcsCell = dlg.querySelector(".ct-d-pcs");
+    var rateEl = dlg.querySelector(".ct-d-rate");
+    variant[id] = {
+      label: s ? s.dataset.label : (sizeCell ? sizeCell.textContent.trim() : ""),
+      plain: s ? s.dataset.plain : (sizeCell ? sizeCell.dataset.plain : ""),
+      pcs: s ? num(s.dataset.pcs) : (pcsCell ? num(pcsCell.dataset.pcs) : null),
+      gsm: g ? num(g.dataset.value) : (gsmCell ? num(gsmCell.dataset.value) : null),
+      rate: g ? num(g.dataset.rate) : (rateEl ? num(rateEl.dataset.rate) : null),
+      // Quantity lives here rather than in the stepper's closure so that
+      // "Add to enquiry" saves the amount the buyer actually dialled in.
+      qty: startOf(cardOf(id))
+    };
+  });
+
+  function describe(id) {
+    var v = variant[id], c = cardOf(id);
+    return [v.plain, v.gsm ? v.gsm + " GSM" : "", c.dataset.print].filter(Boolean).join(", ");
+  }
+
+  /* ---- enquiry list ---- */
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { saved = {}; }
+  // Older entries stored only a quantity; normalise so the shapes never mix.
+  Object.keys(saved).forEach(function (id) {
+    if (typeof saved[id] === "number") saved[id] = { kg: saved[id] };
+  });
+
+  function persist() { try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {} }
+
   function toggleSave(id) {
     if (saved[id]) delete saved[id];
-    else saved[id] = startOf(cardOf(id));
+    else {
+      var v = variant[id];
+      saved[id] = { kg: v.qty, size: v.plain, gsm: v.gsm, rate: v.rate };
+    }
     persist();
     refreshSaved();
   }
@@ -522,16 +654,14 @@
     renderCart();
   }
 
-  function money(n) { return "₹" + Math.round(n).toLocaleString("en-IN"); }
-
   function renderCart() {
-    var list = document.getElementById("ct-cart-list");
-    if (!list) return;
+    var listEl = document.getElementById("ct-cart-list");
+    if (!listEl) return;
     var ids = Object.keys(saved), kg = 0, value = 0, priced = 0;
-    list.innerHTML = "";
+    listEl.innerHTML = "";
 
     if (!ids.length) {
-      list.innerHTML = '<p class="ct-cart-empty">Nothing added yet. Add the bags you want and send us one WhatsApp message with sizes and quantities.</p>';
+      listEl.innerHTML = '<p class="ct-cart-empty">Nothing added yet. Add the bags you want and send us one WhatsApp message with sizes and quantities.</p>';
       document.getElementById("ct-cart-sub").textContent = "";
       document.getElementById("ct-cart-wa").hidden = true;
       return;
@@ -541,22 +671,20 @@
     ids.forEach(function (id) {
       var c = cardOf(id);
       if (!c) { delete saved[id]; return; }
-      var q = saved[id];
-      kg += q;
-      var rate = num(c.dataset.rate);
-      if (rate !== null) { value += rate * q; priced++; }
+      var e = saved[id];
+      kg += e.kg;
+      if (e.rate !== null && e.rate !== undefined) { value += e.rate * e.kg; priced++; }
 
       var row = document.createElement("div");
       row.className = "ct-cart-row";
       var img = c.querySelector("img");
-      var meta = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print]
-        .filter(Boolean).join(" · ");
+      var meta = [e.size, e.gsm ? e.gsm + " GSM" : "", c.dataset.print].filter(Boolean).join(" · ");
       row.innerHTML =
         (img ? '<img src="' + img.getAttribute("src") + '" alt="" width="64" height="64">' : '<span class="ct-cart-noimg"></span>') +
         '<div class="ct-cart-info"><p class="ct-cart-name"></p><p class="ct-cart-meta"></p>' +
         '<div class="ct-cart-qty">' +
         '<button type="button" class="ct-qty-btn" data-cart="-1">−</button>' +
-        '<span class="ct-cart-kg">' + q + ' kg</span>' +
+        '<span class="ct-cart-kg">' + e.kg + ' kg</span>' +
         '<button type="button" class="ct-qty-btn" data-cart="1">+</button>' +
         '<button type="button" class="ct-link-btn ct-cart-rm">Remove</button>' +
         '</div></div>';
@@ -564,14 +692,19 @@
       row.querySelector(".ct-cart-meta").textContent = meta;
       row.querySelectorAll("[data-cart]").forEach(function (b) {
         b.addEventListener("click", function () {
-          saved[id] = Math.max(stepOf(c), saved[id] + stepOf(c) * parseInt(b.dataset.cart, 10));
+          e.kg = Math.max(stepOf(c), e.kg + stepOf(c) * parseInt(b.dataset.cart, 10));
+          // Feed the change back to the dialog, or reopening it would show the
+          // old figure and overwrite this one on the next redraw.
+          if (variant[id]) variant[id].qty = e.kg;
+          var kgOut = dialogOf(id) && dialogOf(id).querySelector(".ct-qty-kg");
+          if (kgOut) kgOut.textContent = e.kg + " kg";
           persist(); refreshSaved();
         });
       });
       row.querySelector(".ct-cart-rm").addEventListener("click", function () {
         delete saved[id]; persist(); refreshSaved();
       });
-      list.appendChild(row);
+      listEl.appendChild(row);
     });
 
     document.getElementById("ct-cart-sub").textContent =
@@ -587,12 +720,12 @@
           '<p class="ct-fine">Final rate confirmed on WhatsApp after we see the print and delivery town.</p>'
         : '<p><span>Rate</span><strong class="ct-rate-ask">On request</strong></p>' +
           '<p class="ct-fine">We will send the rate for each bag on WhatsApp.</p>');
-    list.appendChild(tot);
+    listEl.appendChild(tot);
 
     var lines = ids.map(function (id, i) {
-      var c = cardOf(id);
-      var bits = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print].filter(Boolean);
-      return (i + 1) + ". " + c.dataset.name + (bits.length ? " — " + bits.join(", ") : "") + " — " + saved[id] + " kg";
+      var c = cardOf(id), e = saved[id];
+      var bits = [e.size, e.gsm ? e.gsm + " GSM" : "", c.dataset.print].filter(Boolean);
+      return (i + 1) + ". " + c.dataset.name + (bits.length ? " — " + bits.join(", ") : "") + " — " + e.kg + " kg";
     });
     var msg = "Hello Sri Raja Bags, I would like a quote for:\n\n" + lines.join("\n") +
       "\n\nTotal " + kg + " kg. Please send final rate, printing charges and delivery time.";
@@ -602,56 +735,157 @@
 
   /* ---- detail dialogs ---- */
 
+  /* ---- photo carousel ----
+     The strip scrolls and snaps on its own; this only adds the arrows, the
+     dots and the disabled-at-the-ends state. */
+
+  document.querySelectorAll("[data-carousel]").forEach(function (car) {
+    var strip = car.querySelector(".ct-slides");
+    var slides = car.querySelectorAll(".ct-slides img");
+    var dots = car.querySelectorAll("[data-cdot]");
+    var prev = car.querySelector('[data-cnav="-1"]');
+    var next = car.querySelector('[data-cnav="1"]');
+    if (slides.length < 2) return;
+
+    // Every carousel lives inside a closed <dialog>, which has no layout until
+    // it opens — so width-based maths has to be guarded until then.
+    function width() { return strip.clientWidth || 0; }
+    function index() { return width() ? Math.round(strip.scrollLeft / width()) : 0; }
+
+    function go(i) {
+      if (!width()) return;
+      i = Math.max(0, Math.min(slides.length - 1, i));
+      strip.scrollTo({ left: i * width(), behavior: "smooth" });
+    }
+    function sync() {
+      var i = index();
+      dots.forEach(function (dt, n) {
+        dt.classList.toggle("is-on", n === i);
+        dt.setAttribute("aria-current", String(n === i));
+      });
+      if (prev) prev.disabled = i <= 0;
+      if (next) next.disabled = i >= slides.length - 1;
+    }
+
+    if (prev) prev.addEventListener("click", function () { go(index() - 1); });
+    if (next) next.addEventListener("click", function () { go(index() + 1); });
+    dots.forEach(function (dt) {
+      dt.addEventListener("click", function () { go(parseInt(dt.dataset.cdot, 10)); });
+    });
+
+    var timer;
+    strip.addEventListener("scroll", function () {
+      clearTimeout(timer);
+      timer = setTimeout(sync, 60);
+    });
+
+    car._sync = sync;
+    car._reset = function () { strip.scrollLeft = 0; sync(); };
+    sync();
+  });
+
   function openDialog(d) {
     if (!d) return;
     if (typeof d.showModal === "function") d.showModal();
     else d.setAttribute("open", "");
+    // The carousel had no width while the dialog was closed, so its arrow
+    // states were computed against zero. Re-run them now it is on screen.
+    var car = d.querySelector("[data-carousel]");
+    if (car && car._reset) car._reset();
   }
-
   document.querySelectorAll("[data-open]").forEach(function (b) {
-    b.addEventListener("click", function () { openDialog(document.getElementById("d-" + b.dataset.open)); });
+    b.addEventListener("click", function () { openDialog(dialogOf(b.dataset.open)); });
   });
   document.querySelectorAll("[data-close]").forEach(function (b) {
     b.addEventListener("click", function () { b.closest("dialog").close(); });
   });
-  // Click on the backdrop closes, matching what a phone user expects.
   document.querySelectorAll("dialog").forEach(function (d) {
     d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
   });
-
   document.querySelectorAll("[data-add]").forEach(function (b) {
     b.addEventListener("click", function () { toggleSave(b.dataset.add); });
   });
 
-  // Quantity steppers inside each detail dialog.
+  /* ---- pickers + quantity, per dialog ---- */
+
   document.querySelectorAll("[data-qty-for]").forEach(function (box) {
-    var id = box.dataset.qtyFor, c = cardOf(id);
-    if (!c) return;
-    var qty = startOf(c);
+    var id = box.dataset.qtyFor, c = cardOf(id), dlg = dialogOf(id);
+    if (!c || !dlg) return;
     var kgEl = box.querySelector(".ct-qty-kg");
     var pcsEl = box.querySelector(".ct-qty-pcs");
     var sumEl = box.querySelector(".ct-qty-sum");
-    var ask = document.querySelector('[data-ask="' + id + '"]');
+    var totEl = box.querySelector(".ct-qty-total");
+    var fineEl = box.querySelector(".ct-qty-fine");
+    var ask = dlg.querySelector("[data-ask]");
+    var rateEl = dlg.querySelector(".ct-d-rate");
+    var sizeCell = dlg.querySelector(".ct-d-size");
+    var gsmCell = dlg.querySelector(".ct-d-gsm");
+    var pcsCell = dlg.querySelector(".ct-d-pcs");
+    var pcsWrap = dlg.querySelector(".ct-d-pcs-wrap");
 
     function draw() {
-      kgEl.textContent = qty + " kg";
-      var pcs = num(c.dataset.pcs);
-      if (pcsEl && pcs !== null) pcsEl.textContent = "≈ " + (qty * pcs).toLocaleString("en-IN") + " bags";
-      var rate = num(c.dataset.rate);
-      if (sumEl && rate !== null) sumEl.textContent = money(qty * rate);
+      var v = variant[id];
+
+      if (sizeCell && v.label) sizeCell.textContent = v.label;
+      if (gsmCell && v.gsm) gsmCell.textContent = v.gsm + " GSM";
+
+      // pcs/kg belongs to the chosen SIZE, so it appears and disappears as the
+      // buyer switches between sizes the sheet does and does not carry.
+      var hasPcs = v.pcs !== null && !isNaN(v.pcs) && v.pcs > 0;
+      if (pcsWrap) pcsWrap.hidden = !hasPcs;
+      if (pcsCell && hasPcs) pcsCell.textContent = "~" + v.pcs + " bags";
+      if (pcsEl) pcsEl.textContent = hasPcs ? "≈ " + (v.qty * v.pcs).toLocaleString("en-IN") + " bags" : "";
+
+      // Rate belongs to the chosen GSM.
+      var hasRate = v.rate !== null && !isNaN(v.rate) && v.rate > 0;
+      if (rateEl) {
+        rateEl.textContent = hasRate ? money(v.rate) + "/kg" : "Rate on request";
+        rateEl.classList.toggle("ct-rate-ask", !hasRate);
+      }
+      if (totEl) totEl.hidden = !hasRate;
+      if (fineEl) fineEl.hidden = !hasRate;
+      // Cleared rather than left behind, so switching to an unpriced GSM cannot
+      // flash a stale figure if the line is shown again.
+      if (sumEl) sumEl.textContent = hasRate ? money(v.qty * v.rate) : "";
+
+      kgEl.textContent = v.qty + " kg";
+
       if (ask) {
-        var bits = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print].filter(Boolean);
         var msg = "Hello Sri Raja Bags, I am interested in " + c.dataset.name +
-          (bits.length ? " (" + bits.join(", ") + ")" : "") +
-          ". Quantity around " + qty + " kg. Please send your best rate.";
+          " (" + describe(id) + "). Quantity around " + v.qty + " kg. Please send your best rate.";
         ask.href = "https://api.whatsapp.com/send/?phone=" + PHONE + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
       }
-      // Keep the saved quantity in step with what the buyer is looking at.
-      if (saved[id]) { saved[id] = qty; persist(); renderCart(); }
+
+      // Keep a saved entry in step with what the buyer is looking at.
+      if (saved[id]) {
+        saved[id] = { kg: v.qty, size: v.plain, gsm: v.gsm, rate: hasRate ? v.rate : null };
+        persist(); renderCart();
+      }
     }
+
+    dlg.querySelectorAll('[data-picker] .ct-pick').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var group = btn.closest("[data-picker]");
+        group.querySelectorAll(".ct-pick").forEach(function (o) {
+          o.classList.toggle("is-on", o === btn);
+          o.setAttribute("aria-pressed", String(o === btn));
+        });
+        if (group.dataset.picker === "size") {
+          variant[id].label = btn.dataset.label;
+          variant[id].plain = btn.dataset.plain;
+          variant[id].pcs = num(btn.dataset.pcs);
+        } else {
+          variant[id].gsm = num(btn.dataset.value);
+          variant[id].rate = num(btn.dataset.rate);
+        }
+        draw();
+      });
+    });
+
     box.querySelectorAll("[data-qty]").forEach(function (b) {
       b.addEventListener("click", function () {
-        qty = Math.max(stepOf(c), qty + stepOf(c) * parseInt(b.dataset.qty, 10));
+        var step = stepOf(c);
+        variant[id].qty = Math.max(step, variant[id].qty + step * parseInt(b.dataset.qty, 10));
         draw();
       });
     });
