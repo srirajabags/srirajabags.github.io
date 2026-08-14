@@ -9,6 +9,9 @@
   <title>{{ $title }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
   <link rel="canonical" href="{{ .Permalink }}">
+  {{/* Utility pages have nothing to rank for. "follow" so link equity still
+       flows back to the pages that do. */}}
+  {{ if .Params.noindex }}<meta name="robots" content="noindex,follow">{{ end }}
   {{/* Square, white-backed crop of the logo — the original has wide transparent
        margins that made it near-invisible at favicon sizes. */}}
   {{ $icon := resources.Get "images/logo-square.png" }}
