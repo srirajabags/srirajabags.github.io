@@ -157,7 +157,7 @@
       <div class="map">
         <iframe src="{{ $map }}"
                 title="Sri Raja Bags {{ lower .label }} location, {{ .streetAddress }}, {{ .locality }}"
-                loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+                loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       {{ end }}
     </div>
