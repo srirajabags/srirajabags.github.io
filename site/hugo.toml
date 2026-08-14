@@ -44,6 +44,11 @@ disableKinds = ["taxonomy", "term"]
   gtag = "G-PEF5RMYG3G"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
+  # Public URL of the verified Google Business Profile. Added to schema sameAs,
+  # which is the standard way to tie this site's entity to that listing.
+  # Get it from the profile's "Share" option — it looks like https://g.co/kgs/…
+  # or a maps.app.goo.gl/… link. Optional; skipped while empty.
+  googleProfile = ""
 
 # Canonical NAP. The Google Business Profile is registered at the office, so
 # `primary` points there — the schema address and the profile have to agree
@@ -72,6 +77,12 @@ disableKinds = ["taxonomy", "term"]
   # string must stay identical to what the profile shows.
   # GBP store code 03454079842909153724.
   # Coordinates are the exact place pin from Google Maps, not a geocode.
+  #
+  # mapEmbed: optional. Paste the src URL from Google Maps → Share → Embed a map
+  # on the VERIFIED BUSINESS PROFILE (not the postal address entity — they are
+  # different records). With it, the map shows the business card and, once
+  # reviews exist, the star rating. Without it, the map falls back to a plain
+  # coordinate pin, so clearing this string is always a safe rollback.
   [params.address.office]
     label = "Office"
     streetAddress = "9/74-1, KVS Colony, Kothapeta"
@@ -79,6 +90,7 @@ disableKinds = ["taxonomy", "term"]
     postalCode = "518222"
     latitude = 15.3977683
     longitude = 77.8754492
+    mapEmbed = ""
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"
