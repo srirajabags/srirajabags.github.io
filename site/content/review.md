@@ -13,6 +13,8 @@ products:
   - "W-cut bags"
   - "Loop handle bags"
   - "Side-patty stitched bags"
+  - "Digital multicolor bags"
+  - "BOPP Multicolor Bags"
   - "Printed bags with our shop design"
 
 # Step 2 — what went well. Multi select.
