@@ -146,35 +146,52 @@
             data-step="{{ $c.stepKg }}"
             data-search="{{ lower (printf "%s %s %s %s %s %s gsm %s" .name .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
 
+            {{ $pname := .name }}{{ $nimg := len .imgs }}
             <div class="ct-thumb">
-              <button type="button" class="ct-open js-only" data-open="{{ .id }}">
-                <span class="rv-sr">View details for {{ .name }}</span>
-                {{ if .img }}
-                <img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 260px"
-                     width="320" height="320" alt="{{ .name }}" loading="lazy" decoding="async">
-                {{ else }}
-                <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
+              {{/* Slides are plain <img>, never buttons. Wrapping each one would
+                   put a tab stop on every photo of every card, and marking them
+                   js-only would hide the photos outright when the script does
+                   not run. Tapping a slide opens the detail view via a
+                   delegated handler that ignores swipes; the keyboard and
+                   screen-reader route in is the card title below. */}}
+              {{ if .imgs }}
+              <div class="ct-carousel" data-carousel data-open-target="{{ .id }}">
+                <div class="ct-slides" role="group" aria-label="Photos of {{ $pname }}">
+                  {{ range $i, $im := .imgs }}
+                  <img src="{{ $im.src }}" srcset="{{ $im.src }} 320w, {{ $im.src2x }} 640w"
+                       sizes="(max-width: 700px) 45vw, 260px"
+                       width="320" height="320"
+                       alt="{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}"
+                       loading="lazy" decoding="async">
+                  {{ end }}
+                </div>
+                {{ if gt $nimg 1 }}
+                <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo of {{ $pname }}">‹</button>
+                <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo of {{ $pname }}">›</button>
+                <div class="ct-dots js-only">
+                  {{ range $i, $im := .imgs }}
+                  <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
+                          aria-label="Photo {{ add $i 1 }} of {{ $nimg }}"></button>
+                  {{ end }}
+                </div>
                 {{ end }}
-              </button>
-              {{/* Without JS the image is not a button, so it still renders. */}}
-              <noscript>
-                {{ if .img }}
-                <img src="{{ .img }}" width="320" height="320" alt="{{ .name }}" loading="lazy">
-                {{ end }}
-              </noscript>
+              </div>
+              {{ else }}
+              <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
+              {{ end }}
               {{ with .badges }}
               <span class="ct-badges">
                 {{ range . }}<span class="ct-badge">{{ . }}</span>{{ end }}
               </span>
               {{ end }}
               {{ with .print }}<span class="ct-flag">{{ . }}</span>{{ end }}
-              {{/* The card stays a single image — 16 carousels would be noise,
-                   and this is the cue that there is more to see inside. */}}
-              {{ if gt (len .imgs) 1 }}<span class="ct-photon">{{ len .imgs }} photos</span>{{ end }}
             </div>
 
             <div class="ct-body">
-              <h2 class="ct-name">{{ .name }}</h2>
+              {{/* The title is the accessible way into the detail view — one tab
+                   stop per card rather than one per photo. Without JS it is
+                   inert and simply reads as the heading it already was. */}}
+              <h2 class="ct-name"><button type="button" class="ct-open-title" data-open="{{ .id }}">{{ .name }}</button></h2>
 
               {{/* Sizes are the thing a shopkeeper scans for, so up to two are
                    shown in full and the rest counted rather than truncated. */}}
@@ -782,6 +799,21 @@
     car._sync = sync;
     car._reset = function () { strip.scrollLeft = 0; sync(); };
     sync();
+  });
+
+  // Card carousels open the detail view when a slide is tapped. A swipe ends
+  // in a click event too, so movement since pointerdown is measured and
+  // anything past a few pixels is treated as a scroll, not a tap.
+  document.querySelectorAll("[data-open-target]").forEach(function (car) {
+    var strip = car.querySelector(".ct-slides");
+    var x = 0, y = 0, dragged = false;
+    strip.addEventListener("pointerdown", function (e) { x = e.clientX; y = e.clientY; dragged = false; });
+    strip.addEventListener("pointermove", function (e) {
+      if (Math.abs(e.clientX - x) > 8 || Math.abs(e.clientY - y) > 8) dragged = true;
+    });
+    strip.addEventListener("click", function () {
+      if (!dragged) openDialog(dialogOf(car.dataset.openTarget));
+    });
   });
 
   function openDialog(d) {
