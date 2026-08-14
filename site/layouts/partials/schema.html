@@ -24,6 +24,7 @@
   "foundingDate" .Site.Params.foundingYear
   "address" $addr
   "geo" (dict "@type" "GeoCoordinates" "latitude" $p.latitude "longitude" $p.longitude)
+  "hasMap" (printf "https://www.google.com/maps/search/?api=1&query=%v,%v" $p.latitude $p.longitude)
   "areaServed" (slice
     (dict "@type" "State" "name" "Andhra Pradesh")
     (dict "@type" "State" "name" "Telangana")
