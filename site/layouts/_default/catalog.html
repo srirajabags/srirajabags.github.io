@@ -1,0 +1,700 @@
+{{ define "main" }}
+{{/* Catalogue. Every product is rendered into the HTML at build time — the
+     filtering, sorting and enquiry list are a layer on top of that markup, not
+     the thing that produces it. So the page is fully readable to a crawler and
+     to a phone whose JavaScript never arrives, which is the whole point of a
+     page meant to rank for "non woven carry bag manufacturers".
+
+     Product data comes from assets/data/catalog.csv via the catalog-data
+     partial. Nothing below hard-codes a bag. */}}
+
+{{/* Set before the grid parses, so no-JS-only controls never flash. */}}
+<script>document.documentElement.className += " js";</script>
+
+{{/* Cached: the schema partial reads the same catalogue in <head>, and the CSV
+     does not vary by page. */}}
+{{ $c := partialCached "catalog-data.html" . }}
+{{ $products := $c.products }}
+{{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+{{ $waSuffix := "&type=phone_number&app_absent=0" }}
+
+{{/* The message a buyer sends when nothing in the list fits. */}}
+{{ $customText := "Hello Sri Raja Bags, I need non woven carry bags. Size: __ x __ inch, printing: __, quantity: __ kg. Please send rates." }}
+{{ $waCustom := printf "%s&text=%s%s" $wa (urlquery $customText) $waSuffix }}
+
+{{ $hasAnyMoq := false }}
+{{ range $products }}{{ if .hasMoq }}{{ $hasAnyMoq = true }}{{ end }}{{ end }}
+
+<main class="page ct">
+  <div class="container">
+
+    <nav class="ct-crumbs" aria-label="Breadcrumb">
+      <a href="{{ "/" | relURL }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
+
+    <h1 class="page-title" id="ct-heading" data-default="{{ .Title }}">{{ .Title }}</h1>
+    {{ with .Params.lede }}<p class="lede">{{ . }}</p>{{ end }}
+
+    {{/* An empty or unreadable CSV is a content problem, not a build failure.
+         The page degrades to the enquiry CTA rather than showing a bare grid. */}}
+    {{ if not $products }}
+    <div class="ct-empty">
+      <p><strong>Our catalogue is being updated.</strong></p>
+      <p>Tell us the size, printing and quantity you need and we will send rates the same day.</p>
+      <a class="ct-wa" href="{{ $waCustom }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+    </div>
+    {{ else }}
+
+    {{/* ---- quick browse by shop type ---- */}}
+    {{ with $c.shopTiles }}
+    <div class="ct-chips" role="group" aria-label="Browse by shop type">
+      <button type="button" class="ct-chip" data-shop="" aria-pressed="true">All shops</button>
+      {{ range . }}
+      <button type="button" class="ct-chip" data-shop="{{ .name }}" aria-pressed="false">{{ .name }}</button>
+      {{ end }}
+    </div>
+    {{ end }}
+
+    {{/* ---- toolbar ---- */}}
+    <div class="ct-bar">
+      <p class="ct-count" id="ct-count" role="status">{{ len $products }} bags</p>
+      <div class="ct-tools js-only">
+        <label class="rv-sr" for="ct-search">Search the catalogue</label>
+        <input type="search" id="ct-search" class="ct-search" placeholder="Search size, GSM, bag type…" autocomplete="off">
+        <label class="rv-sr" for="ct-sort">Sort by</label>
+        <select id="ct-sort" class="ct-select">
+          <option value="curated">Most ordered</option>
+          {{ if $c.hasAnyRate }}
+          <option value="rate-asc">Rate: low to high</option>
+          <option value="rate-desc">Rate: high to low</option>
+          {{ end }}
+          <option value="size-asc">Size: small to large</option>
+          <option value="size-desc">Size: large to small</option>
+          {{ if $hasAnyMoq }}<option value="moq-asc">Lowest min order</option>{{ end }}
+        </select>
+        <button type="button" class="ct-filter-btn" id="ct-filter-open" aria-expanded="false" aria-controls="ct-filters">
+          Filters <span class="ct-filter-n" id="ct-filter-n" hidden>0</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="ct-layout">
+
+      {{/* ---- filters: one form, sidebar on desktop, bottom sheet on phone ---- */}}
+      <form class="ct-filters js-only" id="ct-filters" aria-label="Filter bags">
+        <div class="ct-filters-head">
+          <strong>Filter</strong>
+          <button type="button" class="ct-link-btn" id="ct-clear">Clear all</button>
+          <button type="button" class="ct-sheet-close" id="ct-filter-close" aria-label="Close filters">×</button>
+        </div>
+        <div class="ct-filters-body">
+          {{ range $c.facets }}
+          {{ $k := .key }}
+          <fieldset class="ct-group">
+            <legend>{{ .title }}</legend>
+            <div class="ct-opts">
+              {{ range .options }}
+              <label class="ct-opt">
+                <input type="checkbox" name="{{ $k }}" value="{{ .value }}">
+                <span>{{ .label }}</span>
+              </label>
+              {{ end }}
+            </div>
+          </fieldset>
+          {{ end }}
+        </div>
+        <div class="ct-filters-foot">
+          <button type="button" class="ct-btn ct-btn-navy" id="ct-apply">Show <span id="ct-apply-n">{{ len $products }}</span> bags</button>
+        </div>
+      </form>
+
+      <div class="ct-main">
+
+        {{/* ---- grid ---- */}}
+        <div class="ct-grid" id="ct-grid">
+          {{ range $products }}
+          {{ $p := . }}
+          {{ $colourNames := slice }}
+          {{ range .colours }}{{ $colourNames = $colourNames | append .name }}{{ end }}
+          {{ $sizePlain := "" }}
+          {{ if .hasSize }}{{ $sizePlain = printf "%v x %v inch" .w .h }}{{ end }}
+          {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s%s. Please send your best rate and minimum order."
+              .name
+              (cond .hasSize (printf " (%s" $sizePlain) "")
+              (cond .hasSize (printf "%s%s)" (cond (gt .gsm 0) (printf ", %d GSM" .gsm) "") (cond (ne .print "") (printf ", %s" .print) "")) "") }}
+          {{ $askLink := printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}
+
+          <article class="ct-card" id="p-{{ .id }}"
+            data-id="{{ .id }}"
+            data-order="{{ .order }}"
+            data-name="{{ .name }}"
+            data-type="{{ .bagType }}"
+            data-print="{{ .print }}"
+            data-size="{{ .sizeClass }}"
+            data-gsm="{{ .gsm }}"
+            data-shop="{{ .shopType }}"
+            data-colour="{{ delimit $colourNames "|" }}"
+            data-area="{{ .area }}"
+            data-rate="{{ if .hasRate }}{{ .rate }}{{ end }}"
+            data-moq="{{ if .hasMoq }}{{ .moq }}{{ end }}"
+            data-pcs="{{ if .hasPcs }}{{ .pcs }}{{ end }}"
+            data-start="{{ .startKg }}"
+            data-step="{{ $c.stepKg }}"
+            data-sizeplain="{{ $sizePlain }}"
+            data-search="{{ lower (printf "%s %s %s %s %s %d gsm %s" .name .bagType .print .shopType $sizePlain .gsm (delimit $colourNames " ")) }}">
+
+            <div class="ct-thumb">
+              <button type="button" class="ct-open js-only" data-open="{{ .id }}">
+                <span class="rv-sr">View details for {{ .name }}</span>
+                {{ if .img }}
+                <img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 260px"
+                     width="320" height="320" alt="{{ .name }}" loading="lazy" decoding="async">
+                {{ else }}
+                <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
+                {{ end }}
+              </button>
+              {{/* Without JS the image is not a button, so it still renders. */}}
+              <noscript>
+                {{ if .img }}
+                <img src="{{ .img }}" width="320" height="320" alt="{{ .name }}" loading="lazy">
+                {{ end }}
+              </noscript>
+              {{ with .badge }}<span class="ct-badge">{{ . }}</span>{{ end }}
+              {{ with .print }}<span class="ct-flag">{{ . }}</span>{{ end }}
+            </div>
+
+            <div class="ct-body">
+              <h2 class="ct-name">{{ .name }}</h2>
+
+              <p class="ct-specs">
+                {{ with .sizeLabel }}<span>{{ . }}</span>{{ end }}
+                {{ if gt .gsm 0 }}<span>{{ .gsm }} GSM</span>{{ end }}
+              </p>
+
+              {{ with .colours }}
+              <p class="ct-colours">
+                {{ range . }}
+                <span class="ct-sw" data-c="{{ .slug }}" title="{{ .name }}"
+                  {{ with .hex }}style="background:{{ . }}"{{ end }}></span>
+                {{ end }}
+                <span class="ct-colour-n">{{ if gt (len .) 1 }}{{ len . }} colours{{ else }}{{ (index . 0).name }}{{ end }}</span>
+              </p>
+              {{ end }}
+
+              <p class="ct-rate">
+                {{ if .hasRate }}
+                <strong>₹{{ lang.FormatNumberCustom 0 .rate }}/kg</strong>
+                {{ else }}
+                <strong class="ct-rate-ask">Rate on request</strong>
+                {{ end }}
+                {{ if .hasMoq }}<span>Min {{ .moq }} kg</span>{{ end }}
+              </p>
+
+              <div class="ct-actions">
+                <button type="button" class="ct-btn ct-add js-only" data-add="{{ .id }}">
+                  <span class="ct-add-off">+ Add to enquiry</span>
+                  <span class="ct-add-on">✓ In enquiry</span>
+                </button>
+                <a class="ct-btn ct-wa nojs-only" href="{{ $askLink }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
+              </div>
+            </div>
+          </article>
+          {{ end }}
+        </div>
+
+        {{/* Shown by JS when filters exclude everything. */}}
+        <div class="ct-noresults" id="ct-noresults" hidden>
+          <p><strong>No bags match these filters</strong></p>
+          <p>We make custom sizes and prints to order — tell us what you need.</p>
+          <button type="button" class="ct-btn ct-btn-navy" id="ct-clear-2">Clear filters</button>
+        </div>
+
+        {{/* ---- custom order ---- */}}
+        {{ with .Params.custom }}
+        <section class="ct-cta">
+          <h2>{{ .title }}</h2>
+          <p>{{ .body }}</p>
+          <a class="ct-wa" href="{{ $waCustom }}" target="_blank" rel="noopener">{{ .button }}</a>
+        </section>
+        {{ end }}
+
+        {{ with .Params.stats }}
+        <dl class="ct-stats">
+          {{ range . }}<div><dt>{{ .value }}</dt><dd>{{ .label }}</dd></div>{{ end }}
+        </dl>
+        {{ end }}
+
+        {{ with .Params.about }}
+        <section class="ct-about">
+          <h2>{{ $.Params.aboutTitle | default "About non woven carry bags" }}</h2>
+          {{ range . }}<p>{{ . }}</p>{{ end }}
+        </section>
+        {{ end }}
+
+      </div>
+    </div>
+    {{ end }}
+  </div>
+</main>
+
+{{ if $products }}
+{{/* ---- per-product detail dialogs ----
+     Rendered into the page rather than built by JS, so the notes and specs are
+     part of the document a crawler sees. A <dialog> without [open] is hidden by
+     the UA, so this costs no layout. */}}
+{{ range $products }}
+{{ $sizePlain := "" }}
+{{ if .hasSize }}{{ $sizePlain = printf "%v x %v inch" .w .h }}{{ end }}
+{{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order."
+    .name (cond .hasSize (printf " (%s)" $sizePlain) "") }}
+<dialog class="ct-dialog" id="d-{{ .id }}" aria-labelledby="dt-{{ .id }}">
+  <div class="ct-dialog-inner">
+    <button type="button" class="ct-dialog-x" data-close aria-label="Close">×</button>
+
+    <div class="ct-dialog-grid">
+      <div class="ct-dialog-img">
+        {{ if .img }}
+        <img src="{{ .img2x }}" width="640" height="640" alt="{{ .name }}" loading="lazy" decoding="async">
+        {{ else }}
+        <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
+        {{ end }}
+      </div>
+
+      <div class="ct-dialog-info">
+        <p class="ct-tags">
+          {{ with .bagType }}<span>{{ . }}</span>{{ end }}
+          {{ with .print }}<span>{{ . }}</span>{{ end }}
+        </p>
+        <h2 id="dt-{{ .id }}">{{ .name }}</h2>
+
+        <p class="ct-dialog-rate">
+          {{ if .hasRate }}
+          <strong>₹{{ lang.FormatNumberCustom 0 .rate }}/kg</strong>
+          {{ else }}
+          <strong class="ct-rate-ask">Rate on request</strong>
+          {{ end }}
+          {{ if .hasMoq }}<span>· minimum order {{ .moq }} kg</span>{{ end }}
+        </p>
+
+        <dl class="ct-dl">
+          {{ with .sizeLabel }}<div><dt>Size</dt><dd>{{ . }}</dd></div>{{ end }}
+          {{ if gt .gsm 0 }}<div><dt>Fabric</dt><dd>{{ .gsm }} GSM</dd></div>{{ end }}
+          {{ if .hasPcs }}<div><dt>Approx. pcs / kg</dt><dd>~{{ .pcs }} bags</dd></div>{{ end }}
+          {{ with .shopType }}<div><dt>Best for</dt><dd>{{ . }}</dd></div>{{ end }}
+        </dl>
+
+        {{ with .colours }}
+        <h3 class="ct-dialog-h3">Fabric colour</h3>
+        <ul class="ct-colour-list">
+          {{ range . }}
+          <li><span class="ct-sw" data-c="{{ .slug }}"{{ with .hex }} style="background:{{ . }}"{{ end }}></span>{{ .name }}</li>
+          {{ end }}
+        </ul>
+        {{ end }}
+
+        {{/* Quantity is useful with or without a published rate — it is what
+             goes into the WhatsApp message. The value line only appears when
+             the sheet actually carries a rate for this bag. */}}
+        <div class="ct-qty js-only" data-qty-for="{{ .id }}">
+          <h3 class="ct-dialog-h3">Quantity</h3>
+          <div class="ct-qty-row">
+            <button type="button" class="ct-qty-btn" data-qty="-1" aria-label="Decrease quantity">−</button>
+            <div class="ct-qty-val">
+              <output class="ct-qty-kg">{{ .startKg }} kg</output>
+              {{ if .hasPcs }}<span class="ct-qty-pcs"></span>{{ end }}
+            </div>
+            <button type="button" class="ct-qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
+          </div>
+          {{ if .hasRate }}
+          <p class="ct-qty-total"><span>Indicative value</span><strong class="ct-qty-sum"></strong></p>
+          <p class="ct-fine">Ex-factory, before GST and freight. Printing charges quoted separately on artwork.</p>
+          {{ end }}
+        </div>
+
+        {{ with .note }}<p class="ct-note">{{ . }}</p>{{ end }}
+      </div>
+    </div>
+
+    <div class="ct-dialog-foot">
+      <button type="button" class="ct-btn ct-add js-only" data-add="{{ .id }}">
+        <span class="ct-add-off">+ Add to enquiry</span>
+        <span class="ct-add-on">✓ In enquiry</span>
+      </button>
+      <a class="ct-btn ct-wa" data-ask="{{ .id }}"
+         href="{{ printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}"
+         target="_blank" rel="noopener">Ask about this bag</a>
+    </div>
+  </div>
+</dialog>
+{{ end }}
+
+{{/* ---- enquiry list ---- */}}
+<dialog class="ct-dialog ct-cart" id="ct-cart" aria-labelledby="ct-cart-title">
+  <div class="ct-dialog-inner">
+    <button type="button" class="ct-dialog-x" data-close aria-label="Close">×</button>
+    <h2 id="ct-cart-title">Your enquiry</h2>
+    <p class="ct-cart-sub" id="ct-cart-sub"></p>
+    <div id="ct-cart-list"></div>
+    <div class="ct-cart-foot">
+      <a class="ct-btn ct-wa" id="ct-cart-wa" href="{{ $waCustom }}" target="_blank" rel="noopener">Send enquiry on WhatsApp</a>
+      <p class="ct-fine">Opens WhatsApp with your list filled in · {{ .Site.Params.phone }}</p>
+    </div>
+  </div>
+</dialog>
+
+{{/* ---- sticky dock ---- */}}
+<div class="ct-dock js-only" id="ct-dock">
+  <button type="button" class="ct-btn ct-dock-filter" id="ct-dock-filter">Filter &amp; sort</button>
+  <button type="button" class="ct-btn ct-wa ct-dock-cart" id="ct-dock-cart" hidden>Send <span id="ct-dock-n">0</span> on WhatsApp</button>
+  <a class="ct-btn ct-wa ct-dock-ask" id="ct-dock-ask" href="{{ $waCustom }}" target="_blank" rel="noopener">WhatsApp us</a>
+</div>
+
+<script>
+(function () {
+  var grid = document.getElementById("ct-grid");
+  if (!grid) return;
+
+  var cards   = Array.prototype.slice.call(grid.querySelectorAll(".ct-card"));
+  var form    = document.getElementById("ct-filters");
+  var search  = document.getElementById("ct-search");
+  var sortSel = document.getElementById("ct-sort");
+  var countEl = document.getElementById("ct-count");
+  var applyN  = document.getElementById("ct-apply-n");
+  var filterN = document.getElementById("ct-filter-n");
+  var heading = document.getElementById("ct-heading");
+  var noRes   = document.getElementById("ct-noresults");
+  var dockN   = document.getElementById("ct-dock-n");
+  var dockCart= document.getElementById("ct-dock-cart");
+  var dockAsk = document.getElementById("ct-dock-ask");
+  var cart    = document.getElementById("ct-cart");
+  var PHONE   = {{ .Site.Params.phoneRaw }};
+  var STORE   = "srb-enquiry";
+
+  // Facet keys are whatever the sheet produced, so read them off the form
+  // rather than listing them here — a new column becomes a new filter for free.
+  var KEYS = [];
+  Array.prototype.forEach.call(form ? form.querySelectorAll("input[type=checkbox]") : [], function (i) {
+    if (KEYS.indexOf(i.name) < 0) KEYS.push(i.name);
+  });
+
+  function boxes(key) {
+    return form ? Array.prototype.slice.call(form.querySelectorAll('input[name="' + key + '"]')) : [];
+  }
+  function selected(key) {
+    return boxes(key).filter(function (b) { return b.checked; }).map(function (b) { return b.value; });
+  }
+
+  /* ---- filtering ---- */
+
+  function matches(card) {
+    for (var i = 0; i < KEYS.length; i++) {
+      var key = KEYS[i], want = selected(key);
+      if (!want.length) continue;
+      if (key === "colour") {
+        // Multi-valued: a bag matches if it comes in ANY of the chosen colours.
+        var have = (card.dataset.colour || "").split("|");
+        if (!want.some(function (v) { return have.indexOf(v) >= 0; })) return false;
+      } else if (want.indexOf(card.dataset[key] || "") < 0) {
+        return false;
+      }
+    }
+    var q = (search && search.value || "").trim().toLowerCase();
+    if (q && (card.dataset.search || "").indexOf(q) < 0) return false;
+    return true;
+  }
+
+  function num(v) { var n = parseFloat(v); return isNaN(n) ? null : n; }
+
+  function apply() {
+    var shown = 0;
+    cards.forEach(function (card) {
+      var ok = matches(card);
+      card.hidden = !ok;
+      if (ok) shown++;
+    });
+
+    // Sort the visible set. Rows with no value for the sort key sink to the
+    // bottom instead of sorting as zero — an unpriced bag is not the cheapest.
+    var mode = sortSel ? sortSel.value : "curated";
+    var key = mode === "rate-asc" || mode === "rate-desc" ? "rate"
+            : mode === "moq-asc" ? "moq"
+            : mode === "size-asc" || mode === "size-desc" ? "area" : "order";
+    var desc = mode === "rate-desc" || mode === "size-desc";
+    var ordered = cards.slice().sort(function (a, b) {
+      var x = num(a.dataset[key]), y = num(b.dataset[key]);
+      if (x === null && y === null) return num(a.dataset.order) - num(b.dataset.order);
+      if (x === null) return 1;
+      if (y === null) return -1;
+      return desc ? y - x : x - y;
+    });
+    ordered.forEach(function (c) { grid.appendChild(c); });
+
+    var n = 0;
+    KEYS.forEach(function (k) { n += selected(k).length; });
+    countEl.textContent = shown + (shown === 1 ? " bag" : " bags") + (n ? " · " + n + (n === 1 ? " filter" : " filters") : "");
+    if (applyN) applyN.textContent = shown;
+    if (filterN) { filterN.textContent = n; filterN.hidden = n === 0; }
+    if (noRes) noRes.hidden = shown !== 0;
+
+    // One shop type selected reads as a page about that shop type.
+    var shops = selected("shop");
+    heading.textContent = shops.length === 1 ? "Bags for " + shops[0].toLowerCase() : heading.dataset.default;
+
+    syncChips();
+    writeURL();
+  }
+
+  /* ---- shop-type chips mirror the shop checkboxes ---- */
+
+  var chips = Array.prototype.slice.call(document.querySelectorAll(".ct-chip"));
+  function syncChips() {
+    var shops = selected("shop");
+    chips.forEach(function (chip) {
+      var v = chip.dataset.shop;
+      chip.setAttribute("aria-pressed", String(v ? shops.indexOf(v) >= 0 : shops.length === 0));
+    });
+  }
+  chips.forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var v = chip.dataset.shop;
+      if (!v) { boxes("shop").forEach(function (b) { b.checked = false; }); }
+      else {
+        boxes("shop").forEach(function (b) { if (b.value !== v) b.checked = false; });
+        var box = boxes("shop").filter(function (b) { return b.value === v; })[0];
+        if (box) box.checked = chip.getAttribute("aria-pressed") !== "true";
+      }
+      apply();
+    });
+  });
+
+  /* ---- URL round-trip, so a filtered view can be shared or bookmarked ---- */
+
+  function writeURL() {
+    var p = new URLSearchParams();
+    KEYS.forEach(function (k) { selected(k).forEach(function (v) { p.append(k, v); }); });
+    if (search && search.value.trim()) p.set("q", search.value.trim());
+    if (sortSel && sortSel.value !== "curated") p.set("sort", sortSel.value);
+    var qs = p.toString();
+    history.replaceState(null, "", qs ? "?" + qs : location.pathname);
+  }
+
+  function readURL() {
+    var p = new URLSearchParams(location.search);
+    KEYS.forEach(function (k) {
+      var want = p.getAll(k);
+      if (!want.length) return;
+      boxes(k).forEach(function (b) { if (want.indexOf(b.value) >= 0) b.checked = true; });
+    });
+    if (search && p.get("q")) search.value = p.get("q");
+    if (sortSel && p.get("sort")) sortSel.value = p.get("sort");
+  }
+
+  /* ---- enquiry list ---- */
+
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(STORE)) || {}; } catch (e) { saved = {}; }
+
+  function persist() {
+    try { localStorage.setItem(STORE, JSON.stringify(saved)); } catch (e) {}
+  }
+  function cardOf(id) { return document.getElementById("p-" + id); }
+  function startOf(c) { return num(c.dataset.start) || 25; }
+  function stepOf(c) { return num(c.dataset.step) || 25; }
+
+  function toggleSave(id) {
+    if (saved[id]) delete saved[id];
+    else saved[id] = startOf(cardOf(id));
+    persist();
+    refreshSaved();
+  }
+
+  function refreshSaved() {
+    var ids = Object.keys(saved);
+    document.querySelectorAll("[data-add]").forEach(function (b) {
+      b.classList.toggle("is-on", !!saved[b.dataset.add]);
+      b.setAttribute("aria-pressed", String(!!saved[b.dataset.add]));
+    });
+    if (dockN) dockN.textContent = ids.length;
+    if (dockCart) dockCart.hidden = ids.length === 0;
+    if (dockAsk) dockAsk.hidden = ids.length > 0;
+    renderCart();
+  }
+
+  function money(n) { return "₹" + Math.round(n).toLocaleString("en-IN"); }
+
+  function renderCart() {
+    var list = document.getElementById("ct-cart-list");
+    if (!list) return;
+    var ids = Object.keys(saved), kg = 0, value = 0, priced = 0;
+    list.innerHTML = "";
+
+    if (!ids.length) {
+      list.innerHTML = '<p class="ct-cart-empty">Nothing added yet. Add the bags you want and send us one WhatsApp message with sizes and quantities.</p>';
+      document.getElementById("ct-cart-sub").textContent = "";
+      document.getElementById("ct-cart-wa").hidden = true;
+      return;
+    }
+    document.getElementById("ct-cart-wa").hidden = false;
+
+    ids.forEach(function (id) {
+      var c = cardOf(id);
+      if (!c) { delete saved[id]; return; }
+      var q = saved[id];
+      kg += q;
+      var rate = num(c.dataset.rate);
+      if (rate !== null) { value += rate * q; priced++; }
+
+      var row = document.createElement("div");
+      row.className = "ct-cart-row";
+      var img = c.querySelector("img");
+      var meta = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print]
+        .filter(Boolean).join(" · ");
+      row.innerHTML =
+        (img ? '<img src="' + img.getAttribute("src") + '" alt="" width="64" height="64">' : '<span class="ct-cart-noimg"></span>') +
+        '<div class="ct-cart-info"><p class="ct-cart-name"></p><p class="ct-cart-meta"></p>' +
+        '<div class="ct-cart-qty">' +
+        '<button type="button" class="ct-qty-btn" data-cart="-1">−</button>' +
+        '<span class="ct-cart-kg">' + q + ' kg</span>' +
+        '<button type="button" class="ct-qty-btn" data-cart="1">+</button>' +
+        '<button type="button" class="ct-link-btn ct-cart-rm">Remove</button>' +
+        '</div></div>';
+      row.querySelector(".ct-cart-name").textContent = c.dataset.name;
+      row.querySelector(".ct-cart-meta").textContent = meta;
+      row.querySelectorAll("[data-cart]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          saved[id] = Math.max(stepOf(c), saved[id] + stepOf(c) * parseInt(b.dataset.cart, 10));
+          persist(); refreshSaved();
+        });
+      });
+      row.querySelector(".ct-cart-rm").addEventListener("click", function () {
+        delete saved[id]; persist(); refreshSaved();
+      });
+      list.appendChild(row);
+    });
+
+    document.getElementById("ct-cart-sub").textContent =
+      ids.length + (ids.length === 1 ? " bag" : " bags") + " · " + kg + " kg";
+
+    // The total is only shown when every saved bag carries a rate. A partial
+    // total silently understates the order, which is worse than none at all.
+    var tot = document.createElement("div");
+    tot.className = "ct-cart-total";
+    tot.innerHTML = '<p><span>Total quantity</span><strong>' + kg + ' kg</strong></p>' +
+      (priced === ids.length
+        ? '<p><span>Indicative value</span><strong>' + money(value) + '</strong></p>' +
+          '<p class="ct-fine">Final rate confirmed on WhatsApp after we see the print and delivery town.</p>'
+        : '<p><span>Rate</span><strong class="ct-rate-ask">On request</strong></p>' +
+          '<p class="ct-fine">We will send the rate for each bag on WhatsApp.</p>');
+    list.appendChild(tot);
+
+    var lines = ids.map(function (id, i) {
+      var c = cardOf(id);
+      var bits = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print].filter(Boolean);
+      return (i + 1) + ". " + c.dataset.name + (bits.length ? " — " + bits.join(", ") : "") + " — " + saved[id] + " kg";
+    });
+    var msg = "Hello Sri Raja Bags, I would like a quote for:\n\n" + lines.join("\n") +
+      "\n\nTotal " + kg + " kg. Please send final rate, printing charges and delivery time.";
+    document.getElementById("ct-cart-wa").href =
+      "https://api.whatsapp.com/send/?phone=" + PHONE + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
+  }
+
+  /* ---- detail dialogs ---- */
+
+  function openDialog(d) {
+    if (!d) return;
+    if (typeof d.showModal === "function") d.showModal();
+    else d.setAttribute("open", "");
+  }
+
+  document.querySelectorAll("[data-open]").forEach(function (b) {
+    b.addEventListener("click", function () { openDialog(document.getElementById("d-" + b.dataset.open)); });
+  });
+  document.querySelectorAll("[data-close]").forEach(function (b) {
+    b.addEventListener("click", function () { b.closest("dialog").close(); });
+  });
+  // Click on the backdrop closes, matching what a phone user expects.
+  document.querySelectorAll("dialog").forEach(function (d) {
+    d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
+  });
+
+  document.querySelectorAll("[data-add]").forEach(function (b) {
+    b.addEventListener("click", function () { toggleSave(b.dataset.add); });
+  });
+
+  // Quantity steppers inside each detail dialog.
+  document.querySelectorAll("[data-qty-for]").forEach(function (box) {
+    var id = box.dataset.qtyFor, c = cardOf(id);
+    if (!c) return;
+    var qty = startOf(c);
+    var kgEl = box.querySelector(".ct-qty-kg");
+    var pcsEl = box.querySelector(".ct-qty-pcs");
+    var sumEl = box.querySelector(".ct-qty-sum");
+    var ask = document.querySelector('[data-ask="' + id + '"]');
+
+    function draw() {
+      kgEl.textContent = qty + " kg";
+      var pcs = num(c.dataset.pcs);
+      if (pcsEl && pcs !== null) pcsEl.textContent = "≈ " + (qty * pcs).toLocaleString("en-IN") + " bags";
+      var rate = num(c.dataset.rate);
+      if (sumEl && rate !== null) sumEl.textContent = money(qty * rate);
+      if (ask) {
+        var bits = [c.dataset.sizeplain, c.dataset.gsm > 0 ? c.dataset.gsm + " GSM" : "", c.dataset.print].filter(Boolean);
+        var msg = "Hello Sri Raja Bags, I am interested in " + c.dataset.name +
+          (bits.length ? " (" + bits.join(", ") + ")" : "") +
+          ". Quantity around " + qty + " kg. Please send your best rate.";
+        ask.href = "https://api.whatsapp.com/send/?phone=" + PHONE + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
+      }
+      // Keep the saved quantity in step with what the buyer is looking at.
+      if (saved[id]) { saved[id] = qty; persist(); renderCart(); }
+    }
+    box.querySelectorAll("[data-qty]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        qty = Math.max(stepOf(c), qty + stepOf(c) * parseInt(b.dataset.qty, 10));
+        draw();
+      });
+    });
+    draw();
+  });
+
+  /* ---- filter sheet (phone) ---- */
+
+  var openBtn = document.getElementById("ct-filter-open");
+  function sheet(on) {
+    document.body.classList.toggle("ct-sheet-open", on);
+    if (openBtn) openBtn.setAttribute("aria-expanded", String(on));
+  }
+  if (openBtn) openBtn.addEventListener("click", function () { sheet(true); });
+  ["ct-filter-close", "ct-apply"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("click", function () { sheet(false); });
+  });
+  var dockFilter = document.getElementById("ct-dock-filter");
+  if (dockFilter) dockFilter.addEventListener("click", function () { sheet(true); });
+  if (dockCart) dockCart.addEventListener("click", function () { openDialog(cart); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && document.body.classList.contains("ct-sheet-open")) sheet(false);
+  });
+
+  /* ---- wiring ---- */
+
+  if (form) form.addEventListener("change", apply);
+  if (search) search.addEventListener("input", apply);
+  if (sortSel) sortSel.addEventListener("change", apply);
+  ["ct-clear", "ct-clear-2"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener("click", function () {
+      if (form) form.reset();
+      if (search) search.value = "";
+      apply();
+    });
+  });
+
+  readURL();
+  apply();
+  refreshSaved();
+})();
+</script>
+{{ end }}
+{{ end }}
