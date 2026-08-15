@@ -12,11 +12,13 @@ enableGitInfo = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
-  # Search Console / Bing Webmaster ownership tokens. Take the value out of the
-  # content="..." attribute of the "HTML tag" verification method and paste it
-  # here — not the whole tag. Empty means no tag renders, so these are safe to
-  # leave blank; fill them in and the next deploy carries the proof.
-  googleSiteVerification = ""
+  # Bing Webmaster Tools ownership token: the content="..." value from its
+  # "Meta tag" method, not the whole tag. Empty renders nothing, so this is safe
+  # to leave blank. Bing is worth verifying because Copilot answers from it.
+  #
+  # Google needs no equivalent — Search Console is a domain property, verified
+  # by DNS TXT at the registrar, which is the only method domain properties
+  # accept.
   bingSiteVerification = ""
 
   # Homepage <title>. "Sri Raja Bags" alone matches nothing buyers actually
