@@ -16,7 +16,11 @@
 {{ $lg := $b.Resize "1378x webp q85" }}
 <section class="badges">
   <div class="container">
+    {{/* The only sizeable image above the fold, so it is the likely LCP element
+         on a phone. fetchpriority=high pulls it out of the queue behind the CSS
+         and font rather than leaving it to compete at default priority. */}}
     <img src="{{ $lg.RelPermalink }}" width="{{ $lg.Width }}" height="{{ $lg.Height }}"
+         fetchpriority="high" decoding="async"
          srcset="{{ $sm.RelPermalink }} 700w, {{ $lg.RelPermalink }} 1378w"
          sizes="(max-width: 896px) 100vw, 896px"
          alt="10,000 happy customers · 10 years in business since 2011 · Customer care support · Well structured sales team">
@@ -135,6 +139,10 @@
 {{/* ---------------- about ---------------- */}}
 {{ with .Params.about }}
 {{ $a := resources.Get .image }}
+{{/* Two widths: the about image sits in one column of a two-column grid on wide
+     screens and full-bleed on a phone, so 700px is oversized in both cases more
+     often than not. */}}
+{{ $a0 := $a.Resize "400x webp q82" }}
 {{ $a1 := $a.Resize "700x webp q82" }}
 <section class="section section-alt" id="about">
   <div class="container about-grid">
@@ -145,7 +153,10 @@
     </div>
     <div class="about-img">
       <img src="{{ $a1.RelPermalink }}" width="{{ $a1.Width }}" height="{{ $a1.Height }}"
-           loading="lazy" alt="The Sri Raja Bags manufacturing unit at Dorapalli, Dhone">
+           srcset="{{ $a0.RelPermalink }} 400w, {{ $a1.RelPermalink }} 700w"
+           sizes="(max-width: 800px) 100vw, 400px"
+           loading="lazy" decoding="async"
+           alt="The Sri Raja Bags manufacturing unit at Dorapalli, Dhone">
     </div>
   </div>
 </section>
@@ -159,11 +170,19 @@
     <div class="gallery-grid">
       {{ range .images }}
       {{ $g := resources.Get .src }}
+      {{/* The grid is repeat(auto-fill, minmax(11rem, 1fr)), so a cell is never
+           much wider than ~200 CSS px — two columns on a phone, six on a wide
+           screen. Shipping a single 500px file to every device was most of the
+           844 KiB Lighthouse flagged as excess image bytes: without `sizes` the
+           browser has to assume 100vw and take the largest candidate. */}}
+      {{ $sm := $g.Fill "250x250 Center webp q72" }}
       {{ $thumb := $g.Fill "500x500 Center webp q72" }}
       {{ $full := $g.Resize "1200x webp q80" }}
       <a href="{{ $full.RelPermalink }}" target="_blank" rel="noopener">
         <img src="{{ $thumb.RelPermalink }}" width="500" height="500" loading="lazy"
-             alt="{{ .alt }}">
+             srcset="{{ $sm.RelPermalink }} 250w, {{ $thumb.RelPermalink }} 500w"
+             sizes="(max-width: 700px) 45vw, 12rem"
+             decoding="async" alt="{{ .alt }}">
       </a>
       {{ end }}
     </div>

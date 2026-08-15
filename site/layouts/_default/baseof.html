@@ -68,7 +68,13 @@
 </head>
 <body>
   {{ partial "navbar.html" . }}
-  {{ block "main" . }}{{ end }}
+  {{/* A real <main> element, not just the Hugo block of the same name — the two
+       are unrelated, and the absence of the HTML landmark is what Lighthouse
+       reports as "document does not have a main landmark". Screen readers use it
+       to skip the nav. */}}
+  <main id="main">
+    {{ block "main" . }}{{ end }}
+  </main>
   {{ partial "footer.html" . }}
 </body>
 </html>
