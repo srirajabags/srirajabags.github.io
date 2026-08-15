@@ -65,7 +65,6 @@
   "@type" "Product"
   "name" $p.name
   "url" (printf "%s#p-%s" $.Permalink $p.id)
-  "material" "Non-woven polypropylene"
   "brand" (dict "@type" "Brand" "name" $.Site.Title)
   "manufacturer" (dict "@type" "Organization" "@id" (printf "%s#business" $.Site.BaseURL))
 }}
@@ -84,10 +83,17 @@
      and a page anchor, so splitting them would put near-duplicate entries in the
      list for no gain. */}}
 {{ $props := slice }}
+{{/* Material comes from the row. It used to be hardcoded as non-woven
+     polypropylene, which was wrong the moment plastic and bio-degradable covers
+     joined the sheet. */}}
+{{ with $p.materials }}
+  {{ $props = $props | append (dict
+      "@type" "PropertyValue" "name" "Material" "value" (delimit . ", ")) }}
+{{ end }}
 {{ with $p.gsms }}
   {{ $g := slice }}{{ range . }}{{ $g = $g | append (string .value) }}{{ end }}
   {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Fabric GSM" "value" (delimit $g ", ") "unitText" "GSM") }}
+      "@type" "PropertyValue" "name" "GSM" "value" (delimit $g ", ") "unitText" "GSM") }}
 {{ end }}
 {{ if gt (len $p.sizes) 1 }}
   {{ $s := slice }}{{ range $p.sizes }}{{ $s = $s | append .plain }}{{ end }}
@@ -97,7 +103,7 @@
 {{ with $p.colours }}
   {{ $cl := slice }}{{ range . }}{{ $cl = $cl | append .name }}{{ end }}
   {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Fabric colour" "value" (delimit $cl ", ")) }}
+      "@type" "PropertyValue" "name" "Colour" "value" (delimit $cl ", ")) }}
 {{ end }}
 {{ with $props }}{{ $prod = merge $prod (dict "additionalProperty" .) }}{{ end }}
 
@@ -154,7 +160,7 @@
   "@type" "BreadcrumbList"
   "itemListElement" (slice
     (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
-    (dict "@type" "ListItem" "position" 2 "name" .Title "item" .Permalink))
+    (dict "@type" "ListItem" "position" 2 "name" (.Params.breadcrumb | default .Title) "item" .Permalink))
 }}
 <script type="application/ld+json">{{ $crumbs | jsonify | safeJS }}</script>
 {{ end }}

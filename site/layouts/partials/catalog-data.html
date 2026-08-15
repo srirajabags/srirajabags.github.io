@@ -124,6 +124,9 @@
 
       {{- $badges := partial "catalog-list" (index $m "badges" | default "") -}}
       {{- $shops := partial "catalog-list" (index $m "shop_types" | default "") -}}
+      {{/* What the bag is actually made of — non woven, plastic, bio-degradable.
+           Read as a list like the rest, so a row could carry more than one. */}}
+      {{- $materials := partial "catalog-list" (index $m "material" | default "") -}}
 
       {{- $moq := 0 }}{{ $hasMoq := false -}}
       {{- $mq := partial "catalog-num" (index $m "min_order_kg" | default "") -}}
@@ -136,17 +139,31 @@
       {{- $areaMin := 0.0 }}{{ $areaMax := 0.0 -}}
       {{- $buckets := slice -}}
       {{- range $i, $s := $sizeRaw -}}
-        {{/* "12X16", "12x16", "12 x 16" and "12×16" all mean the same thing. */}}
-        {{- $norm := lower $s -}}
-        {{- $norm = replaceRE "[×✕✖*]" "x" $norm -}}
-        {{- $norm = replaceRE "\\s*x\\s*" "x" $norm -}}
-        {{- $parts := split $norm "x" -}}
-        {{- $w := 0.0 }}{{ $h := 0.0 -}}
-        {{- if eq (len $parts) 2 -}}
+        {{/* "12X16", "12x16", "12 x 16" and "12×16" all mean the same thing.
+             Anything trailing the two numbers is a qualifier the office wrote
+             deliberately — "16x19 (Stick Bag)" — so it is carried through to
+             the label rather than parsed away. */}}
+        {{- $norm := replaceRE "[×✕✖*]" "x" (lower $s) -}}
+        {{- $dims := replaceRE "^\\s*([0-9.]+)\\s*x\\s*([0-9.]+).*$" "$1|$2" $norm -}}
+        {{- $w := 0.0 }}{{ $h := 0.0 }}{{ $suffix := "" -}}
+        {{- if ne $dims $norm -}}
+          {{- $parts := split $dims "|" -}}
           {{- $w = partial "catalog-num" (index $parts 0) -}}
           {{- $h = partial "catalog-num" (index $parts 1) -}}
+          {{/* Taken off the ORIGINAL string so the qualifier keeps its case. */}}
+          {{- $suffix = trim (replaceRE "(?i)^\\s*[0-9.]+\\s*[x×✕✖*]\\s*[0-9.]+\\s*" "" $s) " " -}}
         {{- end -}}
         {{- $ok := and (gt $w 0.0) (gt $h 0.0) -}}
+
+        {{- $label := $s }}{{ $plain := $s -}}
+        {{- if $ok -}}
+          {{- $label = printf "%v″ × %v″" $w $h -}}
+          {{- $plain = printf "%v x %v inch" $w $h -}}
+          {{- with $suffix -}}
+            {{- $label = printf "%s %s" $label . -}}
+            {{- $plain = printf "%s %s" $plain . -}}
+          {{- end -}}
+        {{- end -}}
 
         {{/* Bucketed on height — the dimension a shopkeeper judges a bag by.
              A product offered in several sizes belongs to several buckets. */}}
@@ -170,8 +187,8 @@
         {{- end -}}
 
         {{- $sizes = $sizes | append (dict
-            "label" (cond $ok (printf "%v″ × %v″" $w $h) $s)
-            "plain" (cond $ok (printf "%v x %v inch" $w $h) $s)
+            "label" $label
+            "plain" $plain
             "w" $w "h" $h "ok" $ok
             "area" (mul $w $h)
             "bucket" $bucket
@@ -249,6 +266,7 @@
           "gsms" $gsms
           "colours" $cols
           "shops" $shops
+          "materials" $materials
           "badges" $badges
           "rateMin" $rateMin "rateMax" $rateMax "hasRate" $hasRate
           "moq" $moq "hasMoq" $hasMoq
@@ -261,8 +279,10 @@
 {{- end -}}
 
 {{/* ---- facets, derived from the rows above ----------------------------- */}}
-{{- $types := slice }}{{ $prints := slice }}{{ $gsmVals := slice }}{{ $shopVals := slice }}{{ $colNames := slice -}}
+{{- $types := slice }}{{ $prints := slice }}{{ $gsmVals := slice }}{{ $shopVals := slice }}{{ $colNames := slice }}{{ $matVals := slice }}{{ $badgeVals := slice -}}
 {{- range $products -}}
+  {{- range .materials }}{{ if not (in $matVals .) }}{{ $matVals = $matVals | append . }}{{ end }}{{ end -}}
+  {{- range .badges }}{{ if not (in $badgeVals .) }}{{ $badgeVals = $badgeVals | append . }}{{ end }}{{ end -}}
   {{- with .bagType }}{{ if not (in $types .) }}{{ $types = $types | append . }}{{ end }}{{ end -}}
   {{- with .print }}{{ if not (in $prints .) }}{{ $prints = $prints | append . }}{{ end }}{{ end -}}
   {{- range .gsms }}{{ if not (in $gsmVals .value) }}{{ $gsmVals = $gsmVals | append .value }}{{ end }}{{ end -}}
@@ -285,9 +305,23 @@
 {{- end -}}
 
 {{- $facets := slice -}}
+{{/* Highlights lead the panel. They cut across every other facet — a Bestseller
+     can be any material or shape — so they work as a quick way in before the
+     buyer narrows by what the bag actually is. Sorted, so the list does not
+     reshuffle when a row is edited. */}}
+{{- if $badgeVals -}}
+  {{- $o := slice }}{{ range (sort $badgeVals) }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "badge" "title" "Highlights" "options" $o) -}}
+{{- end -}}
+{{/* Then material: whether a buyer wants a non woven bag or a plastic cover
+     is the widest cut through the catalog, ahead of shape or print. */}}
+{{- if $matVals -}}
+  {{- $o := slice }}{{ range $matVals }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
+  {{- $facets = $facets | append (dict "key" "material" "title" "Material" "options" $o) -}}
+{{- end -}}
 {{- if $types -}}
   {{- $o := slice }}{{ range $types }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
-  {{- $facets = $facets | append (dict "key" "type" "title" "Bag type" "options" $o) -}}
+  {{- $facets = $facets | append (dict "key" "type" "title" "Bag / cover type" "options" $o) -}}
 {{- end -}}
 {{- if $prints -}}
   {{- $o := slice }}{{ range $prints }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
@@ -298,7 +332,7 @@
 {{- end -}}
 {{- if $gsmVals -}}
   {{- $o := slice }}{{ range $gsmVals }}{{ $o = $o | append (dict "value" (string .) "label" (printf "%d GSM" .)) }}{{ end -}}
-  {{- $facets = $facets | append (dict "key" "gsm" "title" "Fabric GSM" "options" $o) -}}
+  {{- $facets = $facets | append (dict "key" "gsm" "title" "GSM" "options" $o) -}}
 {{- end -}}
 {{/* Colour options carry their swatch, so the filter can show the fabric rather
      than just name it — "Turquoise" and "Pink" mean little to a buyer choosing
@@ -311,12 +345,13 @@
         "slug" (urlize .)
         "hex" (index $colours (lower .) | default "")) -}}
   {{- end -}}
-  {{- $facets = $facets | append (dict "key" "colour" "title" "Fabric colour" "options" $o) -}}
+  {{- $facets = $facets | append (dict "key" "colour" "title" "Colour" "options" $o) -}}
 {{- end -}}
 {{- if $shopVals -}}
   {{- $o := slice }}{{ range $shopVals }}{{ $o = $o | append (dict "value" . "label" .) }}{{ end -}}
   {{- $facets = $facets | append (dict "key" "shop" "title" "Shop type" "options" $o) -}}
 {{- end -}}
+
 
 {{/* Shop-type tiles. The representative image is the first product carrying
      that shop type, so the strip needs no curation and cannot reference an
