@@ -18,7 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # Every actions/* below is pinned to a major that runs on Node 24.
+      # Node 20 was deprecated on the runners in Sept 2025 and the older majors
+      # now emit a warning on every run:
+      # https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+      - uses: actions/checkout@v7
         with:
           # Full history, not the default shallow clone: enableGitInfo reads
           # each file's last commit date to build sitemap <lastmod>.
@@ -31,7 +35,7 @@ jobs:
           extended: true
 
       - name: Cache processed images
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: site/resources
           key: hugo-resources-${{ hashFiles('site/assets/images/**') }}
@@ -44,10 +48,10 @@ jobs:
         run: cp CNAME _site/CNAME
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./_site
 
@@ -59,4 +63,4 @@ jobs:
     needs: build
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
