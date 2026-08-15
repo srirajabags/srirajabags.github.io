@@ -2,6 +2,11 @@ baseURL = "https://www.srirajabags.in/"
 languageCode = "en-in"
 title = "Sri Raja Bags"
 enableRobotsTXT = true
+# Makes .Lastmod the file's last git commit date, so sitemap <lastmod> stays
+# true on its own. Without it none of the dateless pages (/catalog/, /about/)
+# emit one at all. Requires the full history at build time — the deploy
+# workflow sets fetch-depth: 0 for exactly this reason.
+enableGitInfo = true
 # No tag/category archive pages yet — re-enable by removing this and adding
 # layouts/_default/{taxonomy,term}.html
 disableKinds = ["taxonomy", "term"]

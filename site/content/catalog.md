@@ -3,7 +3,10 @@ title: "Non Woven Bags & Plastic Covers"
 # Shown in the breadcrumb and its schema, where the full title is too long to be
 # useful. Falls back to `title` if removed.
 breadcrumb: "Catalog"
-description: "Every carry bag and cover we manufacture at Dhone — non woven D-cut, U-cut, handle and stitched bags, digital and BOPP laminated printing, plus HM, LD and bio-degradable plastic covers. Pick what you need and send the list on WhatsApp for a same-day rate."
+# Keep this under ~155 characters. Google truncates around there, and the
+# same-day-rate promise at the end is the part that earns the click — it has to
+# survive the cut. The full material list lives on the products themselves.
+description: "Non woven D-cut, U-cut, handle and stitched bags, plus HM, LD and bio-degradable covers, made at Dhone. Send your list on WhatsApp for a same-day rate."
 layout: "catalog"
 
 # Indexable. There is deliberately no `noindex` here: the sitemap template
