@@ -10,25 +10,16 @@ hero:
 
 products:
   heading: "Our Products"
-  items:
-    - name: "D-Cut Plain Bags"
-      image: "images/untitled-3-copy-712x712.jpg"
-      enquiry: "D-Cut Plain bags"
-    - name: "D-Cut Printed bags"
-      image: "images/untitled-1.1-copy-594x594.jpg"
-      enquiry: "D-Cut Printed bags"
-    - name: "W-Cut Plain bags"
-      image: "images/untitled-2.1-copy-594x594.jpg"
-      enquiry: "W-Cut Plain bags"
-    - name: "Stitching bags with sidepatty"
-      image: "images/untitled-6.1-copy-712x712.jpg"
-      enquiry: "Stitching bags with sidepatty"
-    - name: "Loop Handle stitching bags"
-      image: "images/untitled-4.1-copy-594x594.jpg"
-      enquiry: "Loop Handle Stitching bags"
-    - name: "Stitching bags with sidepatty printing"
-      image: "images/untitled-5.1-copy-594x594.jpg"
-      enquiry: "Stitching bags with Sidepatty Printing"
+  # This rail is drawn from assets/data/catalog.csv, not from a list kept here.
+  # There used to be a hand-written `items:` block and it had already drifted
+  # from what we actually make ("W-Cut Plain bags" is not in the catalog).
+  #
+  # Rows carrying `featureBadge` lead the rail; the rest of the sheet follows in
+  # its own order, up to `limit`. If no row carries the badge the rail is simply
+  # the first `limit` rows, so the section can never come out empty.
+  featureBadge: "Bestseller"
+  limit: 12
+  cta: "See the full catalog"
 
 about:
   heading: "About Our Factory"

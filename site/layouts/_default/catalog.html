@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{/* Catalog. Every product is rendered into the HTML at build time — the
-     filtering, sorting and enquiry list are a layer on top of that markup, not
-     the thing that produces it. So the page is fully readable to a crawler and
+     filtering and enquiry list are a layer on top of that markup, not the
+     thing that produces it. So the page is fully readable to a crawler and
      to a phone whose JavaScript never arrives, which is the whole point of a
      page meant to rank for "non woven carry bag manufacturers".
 
@@ -22,7 +22,7 @@
 {{ $waSuffix := "&type=phone_number&app_absent=0" }}
 
 {{/* The message a buyer sends when nothing in the list fits. */}}
-{{ $customText := "Hello Sri Raja Bags, I need non woven carry bags. Size: __ x __ inch, printing: __, quantity: __ kg. Please send rates." }}
+{{ $customText := "Hello Sri Raja Bags, I need carry bags / covers. Type: __, size: __ x __ inch, printing: __, quantity: __ kg. Please send rates." }}
 {{ $waCustom := printf "%s&text=%s%s" $wa (urlquery $customText) $waSuffix }}
 
 <main class="page ct">
@@ -31,7 +31,7 @@
     <nav class="ct-crumbs" aria-label="Breadcrumb">
       <a href="{{ "/" | relURL }}">Home</a>
       <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ .Title }}</span>
+      <span aria-current="page">{{ .Params.breadcrumb | default .Title }}</span>
     </nav>
 
     <h1 class="page-title" id="ct-heading" data-default="{{ .Title }}">{{ .Title }}</h1>
@@ -59,21 +59,10 @@
 
     {{/* ---- toolbar ---- */}}
     <div class="ct-bar">
-      <p class="ct-count" id="ct-count" role="status">{{ len $products }} bags</p>
+      <p class="ct-count" id="ct-count" role="status">{{ len $products }} products</p>
       <div class="ct-tools js-only">
         <label class="rv-sr" for="ct-search">Search the catalog</label>
-        <input type="search" id="ct-search" class="ct-search" placeholder="Search size, GSM, bag type…" autocomplete="off">
-        <label class="rv-sr" for="ct-sort">Sort by</label>
-        <select id="ct-sort" class="ct-select">
-          <option value="curated">Most ordered</option>
-          {{ if $c.hasAnyRate }}
-          <option value="rate-asc">Rate: low to high</option>
-          <option value="rate-desc">Rate: high to low</option>
-          {{ end }}
-          <option value="size-asc">Size: small to large</option>
-          <option value="size-desc">Size: large to small</option>
-          {{ if $c.hasAnyMoq }}<option value="moq-asc">Lowest min order</option>{{ end }}
-        </select>
+        <input type="search" id="ct-search" class="ct-search" placeholder="Search size, GSM, type…" autocomplete="off">
         <button type="button" class="ct-filter-btn" id="ct-filter-open" aria-expanded="false" aria-controls="ct-filters">
           Filters <span class="ct-filter-n" id="ct-filter-n" hidden>0</span>
         </button>
@@ -83,29 +72,31 @@
     <div class="ct-layout">
 
       {{/* ---- filters: one form, sidebar on desktop, bottom sheet on phone ---- */}}
-      <form class="ct-filters js-only" id="ct-filters" aria-label="Filter bags">
+      <form class="ct-filters js-only" id="ct-filters" aria-label="Filter products">
         <div class="ct-filters-head">
           <strong>Filter</strong>
           <button type="button" class="ct-link-btn" id="ct-clear">Clear all</button>
           <button type="button" class="ct-sheet-close" id="ct-filter-close" aria-label="Close filters">×</button>
         </div>
         <div class="ct-filters-body">
+
           {{ range $c.facets }}
           {{ $k := .key }}
           <fieldset class="ct-group{{ if eq $k "colour" }} ct-group-colour{{ end }}">
             <legend>{{ .title }}</legend>
-            <div class="ct-opts">
+            {{/* Long facets scroll inside their own box so one twenty-entry list
+                 cannot push everything below it off the panel. Short ones are
+                 left alone — a scrollbar on four options is noise. */}}
+            <div class="ct-opts{{ if gt (len .options) 6 }} ct-opts-scroll{{ end }}">
               {{ range .options }}
               {{ $opt := . }}
               <label class="ct-opt{{ if $opt.slug }} ct-opt-colour{{ end }}">
                 <input type="checkbox" name="{{ $k }}" value="{{ $opt.value }}">
                 {{/* Colour options carry a swatch; every other facet is text. */}}
-                <span>
-                  {{ if $opt.slug }}
-                  <span class="ct-sw" data-c="{{ $opt.slug }}"{{ with $opt.hex }} style="background:{{ . }}"{{ end }}></span>
-                  {{ end }}
-                  {{ $opt.label }}
-                </span>
+                {{ if $opt.slug }}
+                <span class="ct-sw" data-c="{{ $opt.slug }}"{{ with $opt.hex }} style="background:{{ . }}"{{ end }}></span>
+                {{ end }}
+                <span>{{ $opt.label }}</span>
               </label>
               {{ end }}
             </div>
@@ -113,7 +104,7 @@
           {{ end }}
         </div>
         <div class="ct-filters-foot">
-          <button type="button" class="ct-btn ct-btn-navy" id="ct-apply">Show <span id="ct-apply-n">{{ len $products }}</span> bags</button>
+          <button type="button" class="ct-btn ct-btn-navy" id="ct-apply">Show <span id="ct-apply-n">{{ len $products }}</span> products</button>
         </div>
       </form>
 
@@ -129,22 +120,18 @@
 
           <article class="ct-card" id="p-{{ .id }}"
             data-id="{{ .id }}"
-            data-order="{{ .order }}"
             data-name="{{ .name }}"
+            data-material="{{ delimit .materials "|" }}"
+            data-badge="{{ delimit .badges "|" }}"
             data-type="{{ .bagType }}"
             data-print="{{ .print }}"
             data-size="{{ delimit .buckets "|" }}"
             data-gsm="{{ delimit $gsmVals "|" }}"
             data-shop="{{ delimit .shops "|" }}"
             data-colour="{{ delimit $colourNames "|" }}"
-            data-area-min="{{ .areaMin }}"
-            data-area-max="{{ .areaMax }}"
-            data-rate-min="{{ if .hasRate }}{{ .rateMin }}{{ end }}"
-            data-rate-max="{{ if .hasRate }}{{ .rateMax }}{{ end }}"
-            data-moq="{{ if .hasMoq }}{{ .moq }}{{ end }}"
             data-start="{{ .startKg }}"
             data-step="{{ $c.stepKg }}"
-            data-search="{{ lower (printf "%s %s %s %s %s %s gsm %s" .name .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
+            data-search="{{ lower (printf "%s %s %s %s %s %s %s gsm %s" .name (delimit .materials " ") .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
 
             {{ $pname := .name }}{{ $nimg := len .imgs }}
             <div class="ct-thumb">
@@ -237,8 +224,12 @@
                   <span class="ct-add-off">+ Add to enquiry</span>
                   <span class="ct-add-on">✓ In enquiry</span>
                 </button>
-                {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order."
-                    .name (cond (gt (len .sizes) 0) (printf " (%s)" (index .sizes 0).plain) "") }}
+                {{/* Built with an if rather than `cond`: cond evaluates both of
+                     its branches, and a row with no sizes — the misprint lines —
+                     has no sizes[0] to index. */}}
+                {{ $askSize := "" }}
+                {{ with .sizes }}{{ $askSize = printf " (%s)" (index . 0).plain }}{{ end }}
+                {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order." .name $askSize }}
                 <a class="ct-btn ct-wa nojs-only" href="{{ printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
               </div>
             </div>
@@ -248,7 +239,7 @@
 
         {{/* Shown by JS when filters exclude everything. */}}
         <div class="ct-noresults" id="ct-noresults" hidden>
-          <p><strong>No bags match these filters</strong></p>
+          <p><strong>No products match these filters</strong></p>
           <p>We make custom sizes and prints to order — tell us what you need.</p>
           <button type="button" class="ct-btn ct-btn-navy" id="ct-clear-2">Clear filters</button>
         </div>
@@ -289,8 +280,9 @@
 {{ range $products }}
 {{ $first := "" }}{{ if .sizes }}{{ $first = index .sizes 0 }}{{ end }}
 {{ $firstGsm := "" }}{{ if .gsms }}{{ $firstGsm = index .gsms 0 }}{{ end }}
-{{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order."
-    .name (cond (gt (len .sizes) 0) (printf " (%s)" $first.plain) "") }}
+{{ $askSize := "" }}
+{{ with .sizes }}{{ $askSize = printf " (%s)" (index . 0).plain }}{{ end }}
+{{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order." .name $askSize }}
 <dialog class="ct-dialog" id="d-{{ .id }}" aria-labelledby="dt-{{ .id }}" data-product="{{ .id }}">
   <div class="ct-dialog-inner">
     <button type="button" class="ct-dialog-x" data-close aria-label="Close">×</button>
@@ -381,16 +373,16 @@
 
         <dl class="ct-dl">
           {{ if $first }}<div><dt>Size</dt><dd class="ct-d-size" data-plain="{{ $first.plain }}">{{ $first.label }}</dd></div>{{ end }}
-          {{ if $firstGsm }}<div><dt>Fabric</dt><dd class="ct-d-gsm" data-value="{{ $firstGsm.value }}">{{ $firstGsm.value }} GSM</dd></div>{{ end }}
+          {{ if $firstGsm }}<div><dt>GSM</dt><dd class="ct-d-gsm" data-value="{{ $firstGsm.value }}">{{ $firstGsm.value }} GSM</dd></div>{{ end }}
           <div class="ct-d-pcs-wrap"{{ if not (and $first $first.hasPcs) }} hidden{{ end }}>
             <dt>Approx. pcs / kg</dt>
-            <dd class="ct-d-pcs" data-pcs="{{ if and $first $first.hasPcs }}{{ $first.pcs }}{{ end }}">{{ if and $first $first.hasPcs }}~{{ $first.pcs }} bags{{ end }}</dd>
+            <dd class="ct-d-pcs" data-pcs="{{ if and $first $first.hasPcs }}{{ $first.pcs }}{{ end }}">{{ if and $first $first.hasPcs }}~{{ $first.pcs }} pieces{{ end }}</dd>
           </div>
           {{ with .shops }}<div><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
         </dl>
 
         {{ with .colours }}
-        <h3 class="ct-dialog-h3">Fabric colour</h3>
+        <h3 class="ct-dialog-h3">Colour</h3>
         <ul class="ct-colour-list">
           {{ range . }}
           <li><span class="ct-sw" data-c="{{ .slug }}"{{ with .hex }} style="background:{{ . }}"{{ end }}></span>{{ .name }}</li>
@@ -426,7 +418,7 @@
       </button>
       <a class="ct-btn ct-wa" data-ask="{{ .id }}"
          href="{{ printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}"
-         target="_blank" rel="noopener">Ask about this bag</a>
+         target="_blank" rel="noopener">Ask about this product</a>
     </div>
   </div>
 </dialog>
@@ -448,7 +440,7 @@
 
 {{/* ---- sticky dock ---- */}}
 <div class="ct-dock js-only" id="ct-dock">
-  <button type="button" class="ct-btn ct-dock-filter" id="ct-dock-filter">Filter &amp; sort</button>
+  <button type="button" class="ct-btn ct-dock-filter" id="ct-dock-filter">Filters</button>
   {{/* The label is wrapped in a single span on purpose: .ct-btn is a flex
        container, so bare text either side of the count would become separate
        flex items and pick up the button's gap between every word. */}}
@@ -464,7 +456,6 @@
   var cards   = Array.prototype.slice.call(grid.querySelectorAll(".ct-card"));
   var form    = document.getElementById("ct-filters");
   var search  = document.getElementById("ct-search");
-  var sortSel = document.getElementById("ct-sort");
   var countEl = document.getElementById("ct-count");
   var applyN  = document.getElementById("ct-apply-n");
   var filterN = document.getElementById("ct-filter-n");
@@ -520,35 +511,18 @@
       if (ok) shown++;
     });
 
-    // Sort the visible set. A product spanning a range sorts by the end of that
-    // range the buyer asked for: smallest-first uses its smallest size, and
-    // cheapest-first its cheapest GSM. Rows with no value sink to the bottom
-    // rather than sorting as zero — an unpriced bag is not the cheapest.
-    var mode = sortSel ? sortSel.value : "curated";
-    var key = mode === "rate-asc" ? "rateMin"
-            : mode === "rate-desc" ? "rateMax"
-            : mode === "size-asc" ? "areaMin"
-            : mode === "size-desc" ? "areaMax"
-            : mode === "moq-asc" ? "moq" : "order";
-    var desc = mode === "rate-desc" || mode === "size-desc";
-    var ordered = cards.slice().sort(function (a, b) {
-      var x = num(a.dataset[key]), y = num(b.dataset[key]);
-      if (x === null && y === null) return num(a.dataset.order) - num(b.dataset.order);
-      if (x === null) return 1;
-      if (y === null) return -1;
-      return desc ? y - x : x - y;
-    });
-    ordered.forEach(function (c) { grid.appendChild(c); });
+    // No reordering: cards render in sheet order and stay there. Filtering only
+    // hides rows, so the order the office curated in the CSV is what shows.
 
     var n = 0;
     KEYS.forEach(function (k) { n += selected(k).length; });
-    countEl.textContent = shown + (shown === 1 ? " bag" : " bags") + (n ? " · " + n + (n === 1 ? " filter" : " filters") : "");
+    countEl.textContent = shown + (shown === 1 ? " product" : " products") + (n ? " · " + n + (n === 1 ? " filter" : " filters") : "");
     if (applyN) applyN.textContent = shown;
     if (filterN) { filterN.textContent = n; filterN.hidden = n === 0; }
     if (noRes) noRes.hidden = shown !== 0;
 
     var shops = selected("shop");
-    heading.textContent = shops.length === 1 ? "Bags for " + shops[0].toLowerCase() : heading.dataset.default;
+    heading.textContent = shops.length === 1 ? "Bags & covers for " + shops[0].toLowerCase() : heading.dataset.default;
 
     syncChips();
     writeURL();
@@ -583,9 +557,10 @@
     var p = new URLSearchParams();
     KEYS.forEach(function (k) { selected(k).forEach(function (v) { p.append(k, v); }); });
     if (search && search.value.trim()) p.set("q", search.value.trim());
-    if (sortSel && sortSel.value !== "curated") p.set("sort", sortSel.value);
     var qs = p.toString();
-    history.replaceState(null, "", qs ? "?" + qs : location.pathname);
+    // location.hash is preserved: a #p-<id> deep link from the homepage rail
+    // would otherwise be stripped by the first apply() on load.
+    history.replaceState(null, "", (qs ? "?" + qs : location.pathname) + location.hash);
   }
 
   function readURL() {
@@ -596,7 +571,6 @@
       boxes(k).forEach(function (b) { if (want.indexOf(b.value) >= 0) b.checked = true; });
     });
     if (search && p.get("q")) search.value = p.get("q");
-    if (sortSel && p.get("sort")) sortSel.value = p.get("sort");
   }
 
   /* ---- variant state ----
@@ -678,7 +652,7 @@
     listEl.innerHTML = "";
 
     if (!ids.length) {
-      listEl.innerHTML = '<p class="ct-cart-empty">Nothing added yet. Add the bags you want and send us one WhatsApp message with sizes and quantities.</p>';
+      listEl.innerHTML = '<p class="ct-cart-empty">Nothing added yet. Add what you need and send us one WhatsApp message with sizes and quantities.</p>';
       document.getElementById("ct-cart-sub").textContent = "";
       document.getElementById("ct-cart-wa").hidden = true;
       return;
@@ -725,7 +699,7 @@
     });
 
     document.getElementById("ct-cart-sub").textContent =
-      ids.length + (ids.length === 1 ? " bag" : " bags") + " · " + kg + " kg";
+      ids.length + (ids.length === 1 ? " product" : " products") + " · " + kg + " kg";
 
     // The total is only shown when every saved bag carries a rate. A partial
     // total silently understates the order, which is worse than none at all.
@@ -865,8 +839,8 @@
       // buyer switches between sizes the sheet does and does not carry.
       var hasPcs = v.pcs !== null && !isNaN(v.pcs) && v.pcs > 0;
       if (pcsWrap) pcsWrap.hidden = !hasPcs;
-      if (pcsCell && hasPcs) pcsCell.textContent = "~" + v.pcs + " bags";
-      if (pcsEl) pcsEl.textContent = hasPcs ? "≈ " + (v.qty * v.pcs).toLocaleString("en-IN") + " bags" : "";
+      if (pcsCell && hasPcs) pcsCell.textContent = "~" + v.pcs + " pieces";
+      if (pcsEl) pcsEl.textContent = hasPcs ? "≈ " + (v.qty * v.pcs).toLocaleString("en-IN") + " pieces" : "";
 
       // Rate belongs to the chosen GSM.
       var hasRate = v.rate !== null && !isNaN(v.rate) && v.rate > 0;
@@ -947,7 +921,6 @@
 
   if (form) form.addEventListener("change", apply);
   if (search) search.addEventListener("input", apply);
-  if (sortSel) sortSel.addEventListener("change", apply);
   ["ct-clear", "ct-clear-2"].forEach(function (id) {
     var el = document.getElementById(id);
     if (el) el.addEventListener("click", function () {
@@ -960,6 +933,15 @@
   readURL();
   apply();
   refreshSaved();
+
+  // Arriving from the homepage rail as /catalog/#p-<id>. The browser scrolls to
+  // the card on its own; opening the detail is what the buyer actually asked
+  // for by clicking that specific product.
+  var deep = (location.hash || "").match(/^#p-(.+)$/);
+  if (deep) {
+    var target = dialogOf(deep[1]);
+    if (target) openDialog(target);
+  }
 })();
 </script>
 {{ end }}

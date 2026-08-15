@@ -201,24 +201,65 @@ a { color: var(--navy); }
 
 /* products */
 
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 1.75rem;
+.section-cta { text-align: center; margin: 2rem 0 0; }
+
+/* Homepage product rail. Cards are read from the catalog CSV and link through
+   to that product on /catalog/, so the homepage and the catalog cannot drift.
+   Scroll-snap carries the interaction; the arrows are added by script. */
+.rail-wrap { position: relative; }
+.rail {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding: 0 0.25rem;
+  padding: 0.25rem 0.25rem 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--navy-soft) var(--rule);
 }
-.product-card {
-  background: #fff;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  overflow: hidden;
+.rail::-webkit-scrollbar { height: 8px; }
+.rail::-webkit-scrollbar-track { background: var(--rule); border-radius: 999px; }
+.rail::-webkit-scrollbar-thumb { background: var(--navy-soft); border-radius: 999px; }
+.rail:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; border-radius: 10px; }
+
+.rail-card {
+  flex: 0 0 15rem;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--ink);
   transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
-.product-card:hover { box-shadow: 0 8px 26px rgba(5,56,107,0.13); transform: translateY(-2px); }
-.product-card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
-.product-body { padding: 1.15rem 1.25rem 1.4rem; text-align: center; margin-top: auto; }
-.product-body h3 { font-size: 1.05rem; color: var(--navy); margin: 0 0 1rem; }
+.rail-card:hover { box-shadow: 0 8px 26px rgba(5,56,107,0.13); transform: translateY(-2px); }
+.rail-card:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+.rail-thumb { position: relative; display: block; background: var(--paper-alt); }
+.rail-thumb img { width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.rail-flag { right: 0.5rem; left: auto; background: rgba(17,24,32,0.62); color: #fff; }
+
+.rail-body { display: flex; flex-direction: column; gap: 0.45rem; padding: 0.8rem 0.85rem 0.95rem; }
+.rail-name {
+  font-size: 0.92rem; font-weight: 600; line-height: 1.35; color: var(--navy);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  min-height: 2.5em;
+}
+
+/* Arrows sit over the rail edges; hidden where there is nothing to hover. */
+.rail-nav { top: 40%; }
+.rail-nav.ct-cprev { left: -0.75rem; }
+.rail-nav.ct-cnext { right: -0.75rem; }
+@media (hover: none) {
+  .rail-nav { display: none; }
+}
+@media (max-width: 800px) {
+  .rail-card { flex-basis: 60vw; max-width: 15rem; }
+  .rail-nav { display: none; }
+}
 
 /* about */
 
@@ -681,11 +722,15 @@ html:not(.js) .js-only { display: none !important; }
 .ct-filters {
   position: sticky;
   top: calc(var(--nav-h) + 1rem);
+  max-height: calc(100vh - var(--nav-h) - 3rem);
+  display: flex;
+  flex-direction: column;
   background: #fff;
   border: 1px solid var(--rule);
   border-radius: 10px;
   padding: 1rem 1.1rem 1.1rem;
 }
+.ct-filters-body { flex: 1; min-height: 0; }
 .ct-filters-head {
   display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
   padding-bottom: 0.75rem;
@@ -710,42 +755,79 @@ html:not(.js) .js-only { display: none !important; }
   text-transform: uppercase; color: var(--ink-soft);
   padding: 0; margin: 0 0 0.6rem;
 }
-.ct-opts { clear: both; display: flex; flex-wrap: wrap; gap: 0.4rem; }
-.ct-opt { position: relative; }
-.ct-opt input {
-  position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer;
-}
-/* Direct child only. A colour option nests a swatch <span> inside this one, and
-   an unscoped `.ct-opt span` would style the swatch as a second pill — padding,
-   min-height, border and all. */
-.ct-opt > span {
+/* Options are a vertical list of real checkboxes and radios rather than a wrap
+   of pill toggles. A pill that is navy when on and grey when off relies on the
+   reader learning the convention; a ticked box does not, and a radio says "one
+   of these" before it is touched. */
+.ct-opts { clear: both; display: flex; flex-direction: column; }
+.ct-opt {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  font-size: 0.82rem;
-  line-height: 1.2;
-  padding: 0.5rem 0.7rem;
-  min-height: 2.4rem;
-  background: var(--paper-alt);
-  border: 1px solid var(--rule);
-  border-radius: 7px;
-  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  gap: 0.6rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0.2rem;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.ct-opt input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; }
-.ct-opt input:focus-visible + span { outline: 2px solid var(--navy); outline-offset: 2px; }
-.ct-opt:hover > span { border-color: var(--navy-soft); }
+.ct-opt:hover { background: var(--paper-alt); }
+.ct-opt input {
+  flex: 0 0 auto;
+  width: 1.05rem; height: 1.05rem;
+  margin: 0;
+  accent-color: var(--navy);
+  cursor: pointer;
+}
+.ct-opt > span:last-child {
+  font-size: 0.86rem;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.ct-opt input:checked ~ span:last-child { font-weight: 600; color: var(--navy); }
+.ct-opt:has(input:focus-visible) { outline: 2px solid var(--navy); outline-offset: 1px; }
 
-/* Colour filters show the fabric, not just its name. The swatch keeps its own
-   inset ring so a white or cream chip stays visible against the navy selected
-   state as well as the pale unselected one. */
+/* Colour filters show the fabric, not just its name. */
 .ct-opt-colour .ct-sw { width: 1rem; height: 1rem; }
-.ct-opt input:checked + span .ct-sw { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55); }
 
-/* Colour names vary in length far more than the other facets, so ragged
-   flex-wrap leaves the swatches on staggered left edges. A grid puts every
-   swatch on the same column. */
-.ct-group-colour .ct-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(6.75rem, 1fr)); }
-.ct-group-colour .ct-opt > span { width: 100%; }
+/* Only long lists scroll. A twenty-entry shop-type facet would otherwise push
+   everything after it off the panel; four bag types do not need a scrollbar. */
+.ct-opts-scroll { max-height: 12.5rem; }
+
+/* Anywhere the filter panel scrolls, the scrollbar stays on screen rather than
+   fading in on touch. It is the only thing telling a buyer the list continues,
+   so it has to be legible before anyone interacts with it.
+   Three parts make that true:
+     overflow-y: scroll   — reserves the gutter even before it is needed, so
+                            nothing reflows the moment the list overflows;
+     scrollbar-color      — Firefox, which otherwise auto-hides thin bars;
+     ::-webkit-scrollbar  — styling it at all opts Blink and WebKit out of the
+                            overlay scrollbars that only appear while scrolling.
+   Deliberately NOT masked or faded: a gradient over the container dims the
+   scrollbar along with the content, which is what it was doing before. */
+.ct-opts-scroll,
+.ct-filters-body {
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--navy-soft) var(--rule);
+}
+.ct-opts-scroll { padding-right: 0.5rem; }
+
+.ct-opts-scroll::-webkit-scrollbar,
+.ct-filters-body::-webkit-scrollbar { width: 8px; }
+
+.ct-opts-scroll::-webkit-scrollbar-track,
+.ct-filters-body::-webkit-scrollbar-track {
+  background: var(--rule);
+  border-radius: 999px;
+}
+.ct-opts-scroll::-webkit-scrollbar-thumb,
+.ct-filters-body::-webkit-scrollbar-thumb {
+  background: var(--navy-soft);
+  border-radius: 999px;
+  /* A minimum length keeps the thumb grabbable on the twenty-entry shop list. */
+  min-height: 2rem;
+}
+.ct-opts-scroll::-webkit-scrollbar-thumb:hover,
+.ct-filters-body::-webkit-scrollbar-thumb:hover { background: var(--navy); }
 
 /* product grid */
 .ct-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 1rem; }
@@ -807,9 +889,11 @@ html:not(.js) .js-only { display: none !important; }
   box-shadow: inset 0 0 0 1px rgba(0,0,0,0.18);
   background: repeating-linear-gradient(45deg, #eee 0 3px, #ddd 3px 6px);
 }
-/* Multicolour has no single hex, so the swatch is defined here rather than in
-   the data file — the CSV stays plain data with no CSS in it. */
-.ct-sw[data-c="multicolour"] { background: linear-gradient(135deg, #b8322c, #e8c341 45%, #1f6b4a); }
+/* Colours that are not one colour — Multicolour print, Mixed for the misprint
+   lines — have no hex to store, so their swatch is defined here rather than in
+   the data file. The CSV stays plain data with no CSS in it. */
+.ct-sw[data-c="multicolour"],
+.ct-sw[data-c="mixed"] { background: linear-gradient(135deg, #b8322c, #e8c341 45%, #1f6b4a); }
 .ct-colour-n { font-size: 0.7rem; color: var(--ink-soft); margin-left: 0.15rem; }
 
 .ct-rate { margin: auto 0 0; display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
@@ -1123,7 +1207,8 @@ html:not(.js) .js-only { display: none !important; }
     border: 0;
     box-shadow: none;
   }
-  .ct-dock-filter { display: none; }
+  .ct-dock-filter,
+  .ct-filter-btn { display: none; }
   .ct-dock-cart, .ct-dock-ask { flex: 0 0 auto; }
   .ct-dock .ct-btn {
     padding: 0.85rem 1.6rem;
@@ -1165,7 +1250,8 @@ html:not(.js) .js-only { display: none !important; }
     border-bottom: 1px solid var(--rule);
   }
   .ct-filters-head strong { font-size: 0.95rem; text-transform: none; letter-spacing: 0; }
-  .ct-filters-body { flex: 1; overflow-y: auto; padding: 0 1.1rem 1rem; }
+  /* overflow-y is set once, with the always-visible scrollbar rules. */
+  .ct-filters-body { flex: 1; padding: 0 1.1rem 1rem; }
   .ct-sheet-close {
     display: block;
     width: 2.25rem; height: 2.25rem;
