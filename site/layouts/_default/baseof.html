@@ -12,6 +12,15 @@
   {{/* Utility pages have nothing to rank for. "follow" so link equity still
        flows back to the pages that do. */}}
   {{ if .Params.noindex }}<meta name="robots" content="noindex,follow">{{ end }}
+  {{/* Search Console ownership. Paste the token from the "HTML tag" method into
+       params.googleSiteVerification in hugo.toml — the content="..." value only,
+       not the whole tag. Nothing renders until it is set, so this is safe to
+       leave empty. Verifying the property is what turns every estimate in the
+       SEO audit into real field data, and what lets you submit /catalog/ for
+       indexing instead of waiting to be discovered. */}}
+  {{ with .Site.Params.googleSiteVerification }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+  {{/* Same idea for Bing Webmaster Tools, which also feeds Copilot. */}}
+  {{ with .Site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
   {{/* Square, white-backed crop of the logo — the original has wide transparent
        margins that made it near-invisible at favicon sizes. */}}
   {{ $icon := resources.Get "images/logo-square.png" }}

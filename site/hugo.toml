@@ -12,6 +12,13 @@ enableGitInfo = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
+  # Search Console / Bing Webmaster ownership tokens. Take the value out of the
+  # content="..." attribute of the "HTML tag" verification method and paste it
+  # here — not the whole tag. Empty means no tag renders, so these are safe to
+  # leave blank; fill them in and the next deploy carries the proof.
+  googleSiteVerification = ""
+  bingSiteVerification = ""
+
   # Homepage <title>. "Sri Raja Bags" alone matches nothing buyers actually
   # search for — the product term and the district have to be in here.
   homeTitle = "Non Woven Carry Bag Manufacturers in Kurnool, AP · Sri Raja Bags"
