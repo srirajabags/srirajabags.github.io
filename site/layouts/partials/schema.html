@@ -10,6 +10,9 @@
 {{ $addr := dict "@type" "PostalAddress" "addressLocality" $p.locality "addressRegion" $a.region "addressCountry" $a.country }}
 {{ with $p.streetAddress }}{{ $addr = merge $addr (dict "streetAddress" .) }}{{ end }}
 {{ with $p.postalCode }}{{ $addr = merge $addr (dict "postalCode" .) }}{{ end }}
+{{/* knowsAbout is kept in step with what the catalog actually lists. It used to
+     say W-cut, which we no longer make, and named no covers at all — so the
+     entity graph had us down as a non-woven-only manufacturer. */}}
 {{ $biz := dict
   "@context" "https://schema.org"
   "@type" "LocalBusiness"
@@ -31,9 +34,12 @@
     (dict "@type" "State" "name" "Karnataka"))
   "knowsAbout" (slice
     "Non-woven carry bag manufacturing"
-    "D-cut and W-cut bags"
+    "D-cut and U-cut bags"
     "Loop handle stitched bags"
-    "Bag printing")
+    "BOPP laminated digital printing"
+    "HM and LD plastic carry covers"
+    "Bio-degradable carry covers"
+    "Bag and cover printing")
   "sameAs" (slice .Site.Params.instagram .Site.Params.facebook)
 }}
 {{/* The verified Business Profile, once its share URL is known. */}}
