@@ -64,3 +64,34 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+
+      # Tell IndexNow the site changed, so Bing (and therefore Copilot), Yandex,
+      # Seznam and Naver recrawl in hours instead of whenever they next wander
+      # past. Google does not participate in IndexNow — Search Console is the
+      # only lever there, and it needs a human to verify the property once.
+      #
+      # The key is published at /<key>.txt from site/static/, which is how the
+      # endpoint proves the request came from someone who controls the domain.
+      # Never fail the deploy over this: the site is already live by now, and a
+      # missed ping only costs a slower recrawl.
+      - name: Ping IndexNow
+        continue-on-error: true
+        env:
+          KEY: 01c1e7960107c43c2d1c0cce22f7ab8b
+        run: |
+          urls=$(curl -sS --fail https://www.srirajabags.in/sitemap.xml \
+                 | grep -o '<loc>[^<]*</loc>' | sed 's|</\?loc>||g')
+          echo "Submitting $(echo "$urls" | wc -l) URLs"
+          payload=$(jq -n --arg host www.srirajabags.in --arg key "$KEY" \
+            --arg loc "https://www.srirajabags.in/$KEY.txt" \
+            --argjson list "$(echo "$urls" | jq -R . | jq -s .)" \
+            '{host:$host, key:$key, keyLocation:$loc, urlList:$list}')
+          code=$(curl -sS -o /tmp/indexnow.out -w '%{http_code}' \
+            -X POST https://api.indexnow.org/IndexNow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d "$payload")
+          echo "IndexNow responded $code"
+          cat /tmp/indexnow.out || true
+          # 200 accepted, 202 accepted pending key validation. Anything else is
+          # informational only — see the body above.
+          case "$code" in 200|202) echo "ok" ;; *) echo "not accepted (non-fatal)" ;; esac

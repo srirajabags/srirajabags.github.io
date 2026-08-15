@@ -12,6 +12,16 @@
   {{/* Utility pages have nothing to rank for. "follow" so link equity still
        flows back to the pages that do. */}}
   {{ if .Params.noindex }}<meta name="robots" content="noindex,follow">{{ end }}
+  {{/* Bing Webmaster Tools ownership. Paste the token from its "Meta tag" method
+       into params.bingSiteVerification — the content="..." value only, not the
+       whole tag. Nothing renders while it is empty. Worth doing beyond Bing
+       itself: Copilot answers from the Bing index.
+
+       There is deliberately no Google equivalent here. Search Console is set up
+       as a *domain* property (srirajabags.in), which is verified by DNS TXT at
+       the registrar and supports no other method — a meta tag would do nothing.
+       Only add one if a URL-prefix property is ever created alongside it. */}}
+  {{ with .Site.Params.bingSiteVerification }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
   {{/* Square, white-backed crop of the logo — the original has wide transparent
        margins that made it near-invisible at favicon sizes. */}}
   {{ $icon := resources.Get "images/logo-square.png" }}

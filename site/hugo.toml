@@ -12,6 +12,15 @@ enableGitInfo = true
 disableKinds = ["taxonomy", "term"]
 
 [params]
+  # Bing Webmaster Tools ownership token: the content="..." value from its
+  # "Meta tag" method, not the whole tag. Empty renders nothing, so this is safe
+  # to leave blank. Bing is worth verifying because Copilot answers from it.
+  #
+  # Google needs no equivalent — Search Console is a domain property, verified
+  # by DNS TXT at the registrar, which is the only method domain properties
+  # accept.
+  bingSiteVerification = ""
+
   # Homepage <title>. "Sri Raja Bags" alone matches nothing buyers actually
   # search for — the product term and the district have to be in here.
   homeTitle = "Non Woven Carry Bag Manufacturers in Kurnool, AP · Sri Raja Bags"
