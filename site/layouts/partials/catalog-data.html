@@ -1,8 +1,12 @@
 {{/* Catalog data layer.
 
-     Reads assets/data/catalog.csv — the one file the office edits. It is plain
+     Reads assets/data/catalog.csv — the sheet the office edits. It is plain
      CSV precisely so it can be opened in Google Sheets, filled in, exported and
      dropped back here unchanged. Nothing else in the build hard-codes a product.
+
+     Photos live in a SECOND sheet, assets/data/catalog-images.csv, one row per
+     photo rather than one cell per product — see the block that reads it below
+     for why.
 
      Three rules follow from that:
 
@@ -10,10 +14,8 @@
         the sheet, or adding a column we do not read yet, cannot break the page.
 
      2. LIST COLUMNS hold several values separated by "|" — sizes, gsms,
-        colours, shop_types, badges, images. One row is one product, however
-        many variants it comes in, so the sheet never needs a row per size.
-        The first image is the one the card shows; the rest become the
-        carousel on the product's detail view.
+        colours, shop_types, badges. One row is one product, however many
+        variants it comes in, so the sheet never needs a row per size.
 
      3. ALIGNED COLUMNS carry one value per entry of the list they belong to:
           pcs_per_kg  aligns to sizes   ("44|58"      against "12X16|10X14")
@@ -84,6 +86,72 @@
       {{/* Only a literal hex colour is allowed through to a style attribute. */}}
       {{- if not (findRE "^#[0-9a-fA-F]{3,8}$" $hex) }}{{ $hex = "" }}{{ end -}}
       {{- if $name }}{{ $colours = merge $colours (dict (lower $name) $hex) }}{{ end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* ---- photos: catalog id -> list of images ----------------------------- */}}
+{{/* Photos are their own sheet, one ROW PER PHOTO, because a photo carries its
+     own facts and a product's `images` cell had nowhere to put them. The one
+     that matters is shop_types: the same D-cut bag is photographed printed for
+     a textile shop, a medical shop, a sweet stall. Those are the same product
+     but they are not interchangeable pictures — a buyer filtering for medical
+     shops should see the medical bag first, not whichever photo happened to be
+     typed first in the cell.
+
+     Columns: catalog_id, image, shop_types, alt.
+
+       catalog_id  matches the id column in catalog.csv.
+       image       filename under assets/images/.
+       shop_types  "|" list, and OPTIONAL. Blank means the photo is generic —
+                   it shows a bag rather than a bag for a trade — so it never
+                   gets promoted and never gets buried either. Most photos are
+                   this, and that is the right default: claiming a photo is a
+                   medical-shop photo when it is not is worse than claiming
+                   nothing.
+       alt         optional. Given, it is the alt text; blank falls back to the
+                   product name, which is what the single-cell version did.
+
+     ORDER WITHIN A PRODUCT IS THE OFFICE'S. Rows appear in the carousel in the
+     order they are written, and the first is the photo the card and the
+     homepage rail show. Shop filtering reorders the carousel in the browser
+     (catalog.html); it never changes what is baked into the page, so the
+     unfiltered catalog, the crawler and the schema all still see the curated
+     order. Add rows freely — the point of the split is that a product can carry
+     twenty photos without its catalog row growing a twenty-entry cell. */}}
+{{- $photos := dict -}}
+{{- with resources.Get "data/catalog-images.csv" -}}
+  {{- $rows := . | transform.Unmarshal -}}
+  {{- if gt (len $rows) 1 -}}
+    {{- $head := slice -}}
+    {{- range index $rows 0 -}}
+      {{- $head = $head | append (lower (trim . " ﻿")) -}}
+    {{- end -}}
+    {{- range after 1 $rows -}}
+      {{- $r := . -}}
+      {{- $m := dict -}}
+      {{- range $i, $k := $head -}}
+        {{- if and $k (lt $i (len $r)) -}}
+          {{- $m = merge $m (dict $k (trim (index $r $i) " ")) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $id := index $m "catalog_id" | default "" -}}
+      {{- $file := index $m "image" | default "" -}}
+      {{/* A misspelled filename costs that photo and not the page — the same
+           rule the single cell had. A row naming no product is skipped too,
+           which is what a trailing blank line from a sheet export looks like. */}}
+      {{- if and $id $file -}}
+        {{- with resources.Get (printf "images/%s" $file) -}}
+          {{- $img := dict
+              "src" (.Fill "320x320 Smart webp q80").RelPermalink
+              "src2x" (.Fill "640x640 Smart webp q80").RelPermalink
+              "full" (.Fill "900x900 Smart webp q82").RelPermalink
+              "shops" (partial "catalog-list" (index $m "shop_types" | default ""))
+              "alt" (index $m "alt" | default "") -}}
+          {{- $have := index $photos $id | default slice -}}
+          {{- $photos = merge $photos (dict $id ($have | append $img)) -}}
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -227,22 +295,24 @@
             "hex" (index $colours (lower .) | default "")) -}}
       {{- end -}}
 
-      {{/* Images. A pipe-separated list, first entry is the one the card shows
-           and the rest fill the detail carousel. A missing or misspelled
-           filename is skipped rather than failing the build, so one bad name
-           costs that photo and not the page; a row whose names are all bad
-           falls back to a placeholder tile.
-           "image" is still read as a fallback so a sheet exported before the
-           column was renamed keeps working. */}}
-      {{- $imgCell := index $m "images" | default "" -}}
-      {{- if not $imgCell }}{{ $imgCell = index $m "image" | default "" }}{{ end -}}
-      {{- $imgs := slice -}}
-      {{- range partial "catalog-list" $imgCell -}}
-        {{- with resources.Get (printf "images/%s" .) -}}
-          {{- $imgs = $imgs | append (dict
-              "src" (.Fill "320x320 Smart webp q80").RelPermalink
-              "src2x" (.Fill "640x640 Smart webp q80").RelPermalink
-              "full" (.Fill "900x900 Smart webp q82").RelPermalink) -}}
+      {{/* Photos, looked up by id in the sheet read above. A product with no
+           rows there has no photos and falls back to a placeholder tile, which
+           is the normal state for a line we have not shot yet.
+           An "images" cell left in catalog.csv is still honoured so a sheet
+           exported before the split keeps working; those photos carry no shop
+           types, so they simply never reorder. */}}
+      {{- $imgs := index $photos $id | default slice -}}
+      {{- if not $imgs -}}
+        {{- $imgCell := index $m "images" | default (index $m "image" | default "") -}}
+        {{- range partial "catalog-list" $imgCell -}}
+          {{- with resources.Get (printf "images/%s" .) -}}
+            {{- $imgs = $imgs | append (dict
+                "src" (.Fill "320x320 Smart webp q80").RelPermalink
+                "src2x" (.Fill "640x640 Smart webp q80").RelPermalink
+                "full" (.Fill "900x900 Smart webp q82").RelPermalink
+                "shops" slice
+                "alt" "") -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
       {{/* The card and anything else wanting "the" photo use the first. */}}

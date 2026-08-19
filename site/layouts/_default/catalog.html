@@ -145,10 +145,14 @@
               <div class="ct-carousel" data-carousel data-open-target="{{ .id }}">
                 <div class="ct-slides" role="group" aria-label="Photos of {{ $pname }}">
                   {{ range $i, $im := .imgs }}
+                  {{/* data-shop is what lets the script float the photos shot
+                       for the selected trade to the front of the strip. Blank
+                       on a generic photo, which is most of them. */}}
                   <img src="{{ $im.src }}" srcset="{{ $im.src }} 320w, {{ $im.src2x }} 640w"
                        sizes="(max-width: 700px) 45vw, 260px"
                        width="320" height="320"
-                       alt="{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}"
+                       data-shop="{{ delimit $im.shops "|" }}"
+                       alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}{{ end }}"
                        loading="lazy" decoding="async">
                   {{ end }}
                 </div>
@@ -299,7 +303,8 @@
           <div class="ct-slides" tabindex="0" role="group" aria-label="Photos of {{ $pname }}">
             {{ range $i, $im := .imgs }}
             <img src="{{ $im.full }}" width="900" height="900"
-                 alt="{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}"
+                 data-shop="{{ delimit $im.shops "|" }}"
+                 alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}{{ end }}"
                  loading="lazy" decoding="async">
             {{ end }}
           </div>
@@ -525,6 +530,7 @@
     heading.textContent = shops.length === 1 ? "Bags & covers for " + shops[0].toLowerCase() : heading.dataset.default;
 
     syncChips();
+    prioritisePhotos();
     writeURL();
   }
 
@@ -550,6 +556,65 @@
       apply();
     });
   });
+
+  /* ---- shop-aware photo order ----
+
+     A product is one row but many photographs: the same D-cut bag printed for
+     a textile shop, a medical shop, a sweet stall. Each slide carries the shop
+     types it was shot for (data-shop, from catalog-images.csv). When the buyer
+     narrows to a trade, the photos shot for that trade move to the front of
+     every strip, so the first thing they see is a bag from their own line of
+     business rather than whichever photo the office typed first.
+
+     It is a STABLE PARTITION, not a sort: matching photos keep their order and
+     so do the rest, so clearing the filter puts the strip back exactly as the
+     sheet wrote it. Photos with no shop types are neither promoted nor buried —
+     they sit in the second group in sheet order, which is where a generic
+     product shot belongs.
+
+     This only reorders what is already in the page. The server-rendered order
+     is the sheet's, so crawlers, the schema block and the homepage rail all
+     still see the curated first photo. */
+
+  var strips = Array.prototype.slice.call(document.querySelectorAll(".ct-slides"));
+  strips.forEach(function (s) { s._order = Array.prototype.slice.call(s.children); });
+  var photoKey = null;
+
+  function prioritisePhotos() {
+    var shops = selected("shop");
+    // Reordering every strip is only worth doing when the trade actually
+    // changed — apply() also runs on every keystroke in the search box.
+    var key = shops.join("|");
+    if (key === photoKey) return;
+    photoKey = key;
+
+    strips.forEach(function (strip) {
+      var order = strip._order;
+      if (order.length < 2) return;
+
+      var next = order;
+      if (shops.length) {
+        var hit = [], miss = [];
+        order.forEach(function (im) {
+          var have = list(im.dataset.shop);
+          (shops.some(function (v) { return have.indexOf(v) >= 0; }) ? hit : miss).push(im);
+        });
+        next = hit.concat(miss);
+      }
+
+      // Nothing to do if the strip already reads that way — the common case,
+      // since most photos are generic and most filters move nothing.
+      var same = next.every(function (im, i) { return strip.children[i] === im; });
+      if (same) return;
+
+      next.forEach(function (im) { strip.appendChild(im); });
+      // The strip was scrolled to whatever slide the buyer had reached; after a
+      // reshuffle that position means nothing, so go back to the new first.
+      strip.scrollLeft = 0;
+      var car = strip.closest("[data-carousel]");
+      if (car && car._sync) car._sync();
+    });
+  }
 
   /* ---- URL round-trip, so a filtered view can be shared or bookmarked ---- */
 
