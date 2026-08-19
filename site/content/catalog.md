@@ -23,6 +23,13 @@ layout: "catalog"
 # CSV and drop it back. Blank rate / min order / pcs-per-kg cells are expected
 # and render as "Rate on request"; nothing breaks while they are empty.
 #
+# PHOTOS live in a second sheet, assets/data/catalog-images.csv — one row per
+# photo: catalog_id, image, shop_types, alt. Add as many rows per product as we
+# have pictures. A row's shop_types is what makes it a MEDICAL SHOP photo rather
+# than just another photo: when a buyer filters by that trade, those photos move
+# to the front of the product's carousel. Leave shop_types blank for a plain
+# product shot — blank means "generic", and generic is the honest default.
+#
 # The title, description and the About paragraphs name the materials we make.
 # They are written by hand, not derived from the sheet, so adding a new material
 # column value will NOT update them — check them when the range changes.
