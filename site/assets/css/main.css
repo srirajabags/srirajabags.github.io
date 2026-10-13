@@ -1105,8 +1105,12 @@ html:not(.js) .js-only { display: none !important; }
   .ct-dot, .ct-cnav { transition: none; }
 }
 .ct-dialog-info { padding: 1.25rem 1.4rem 1.5rem; }
-.ct-tags { display: flex; gap: 0.35rem; margin: 0 0 0.6rem; }
+/* Chips wrap as a row rather than squeezing: "D-CUT" broke over two lines
+   when four chips shared the width. The right padding keeps the last chip
+   clear of the close button. */
+.ct-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0 0 0.6rem; padding-right: 2.5rem; }
 .ct-tags span {
+  white-space: nowrap;
   font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--navy); background: var(--mint-pale); padding: 0.3rem 0.5rem; border-radius: 4px;
 }
@@ -1119,6 +1123,10 @@ html:not(.js) .js-only { display: none !important; }
 .ct-dl div { background: var(--paper-alt); border-radius: 8px; padding: 0.65rem 0.75rem; }
 .ct-dl dt { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-soft); }
 .ct-dl dd { margin: 0.25rem 0 0; font-size: 0.88rem; font-weight: 700; }
+/* "Best for" is a list of a dozen trades: across both columns it reads as a
+   paragraph instead of a narrow column of two words a line. */
+.ct-dl .ct-dl-wide { grid-column: 1 / -1; }
+.ct-dl .ct-dl-wide dd { font-weight: 600; line-height: 1.5; }
 
 .ct-dialog-h3 {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.09em;
