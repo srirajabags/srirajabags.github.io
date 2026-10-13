@@ -109,11 +109,15 @@ disableKinds = ["taxonomy", "term"]
   # reviews exist, the star rating. Without it, the map falls back to a plain
   # coordinate pin, so clearing this string is always a safe rollback.
   #
-  # Framing lives in the pb string: !1d is the view's span in metres and
-  # !2d/!3d its centre (lng/lat). The profile's own embed was framed at 264 m on
-  # the office itself; it is set to ~10 km centred on the town so the whole of
-  # Dhone is in view, as asked. The business card and pin come from !1s (the
-  # place id), not the centre, so moving the view does not move the pin.
+  # Framing: Google's "Share → Embed a map" (pb=...) URL cannot be panned. With
+  # a business in it, it always centres on the business and ignores the centre
+  # in the URL (tested 2026-10-13). So this uses the older output=embed form,
+  # which honours ll (centre) and z (zoom) and still shows the profile's card
+  # and star rating when q names the business. It is framed at zoom 14 with the
+  # centre north-west of the office, so the whole of Dhone town is in view with
+  # the pin to its right — matched against the framing the owner picked.
+  # If the card ever stops appearing, q is the thing to check: it must keep
+  # resolving to the verified profile.
   [params.address.office]
     label = "Office"
     streetAddress = "9/74-1, KVS Colony, Kothapeta"
@@ -121,7 +125,7 @@ disableKinds = ["taxonomy", "term"]
     postalCode = "518222"
     latitude = 15.3976443
     longitude = 77.8750319
-    mapEmbed = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10000!2d77.8690!3d15.3990!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bb6811f3ccc2d4b%3A0x5c911be97256d48c!2sSri%20Raja%20Bags!5e0!3m2!1sen!2sin!4v1786679451089!5m2!1sen!2sin"
+    mapEmbed = "https://maps.google.com/maps?q=Sri%20Raja%20Bags,%20KVS%20Colony,%20Kothapeta,%20Dhone&ll=15.4075,77.8580&z=14&output=embed"
 
 [permalinks]
   blog = "/blog/:year/:month/:day/:slug/"
