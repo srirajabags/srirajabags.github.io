@@ -42,6 +42,11 @@ disableKinds = ["taxonomy", "term"]
   # and shows people actually making bags — the strongest "real manufacturer" signal.
   ogImage = "images/factory-production-line.jpg"
   foundingYear = "2011"
+  # Shown on product pages under "How ordering works". From the Oct 2026
+  # pricelist note: "Delivery 15 to 20 days, also depending on customer".
+  leadTime = "15–20 days"
+  # The states the trust line on product pages names.
+  servedStates = "Andhra Pradesh, Telangana and Karnataka"
 
   # "Sri Raja Bags" is the brand the three registered units trade under. There
   # is no single legal name, so the schema carries the brand as `name` and lists

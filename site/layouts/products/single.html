@@ -4,15 +4,24 @@
      the catalog-data partial, the same numbers the catalog dialog shows, so
      the two can never disagree.
 
-     Where the catalog dialog shows one GSM x side-patty table at a time behind
-     pickers, this page shows them all: it is the page that answers "what does
-     a 14x18 digital bag with a 6 inch patty cost", for a buyer and for search. */}}
+     Order of the page, top to bottom, is the order a first-time bulk buyer
+     needs it: what it is and roughly what it costs, why trust us, the exact
+     rate for their size, how ordering works, the questions they would ask on
+     WhatsApp anyway, and other bags to compare. */}}
+{{/* Set before the page parses, so the JS-only controls (photo arrows, the
+     price-list selector) never flash, and the no-JS layout never shows to a
+     browser that runs scripts. */}}
+<script>document.documentElement.className += " js";</script>
 {{ $c := partialCached "catalog-data.html" . }}
 {{ $id := .Params.productId }}
 {{ $p := "" }}{{ range $c.products }}{{ if eq .id $id }}{{ $p = . }}{{ end }}{{ end }}
 {{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+{{ $site := .Site }}
 {{ with $p }}
 {{ $askText := printf "Hello Sri Raja Bags, I saw %s on your website. Please send your rate for my size and quantity." .name }}
+{{ $waLink := printf "%s&text=%s&type=phone_number&app_absent=0" $wa (urlquery $askText) }}
+{{ $per := cond (eq .unit "pc") "piece" "kg" }}
+{{ $top := index $c.priceTypes 0 }}
 <div class="page pd">
   <div class="container">
     <nav class="ct-crumbs" aria-label="Breadcrumb">
@@ -21,75 +30,107 @@
       <span aria-current="page">{{ .name }}</span>
     </nav>
 
-    <div class="pd-grid">
-      {{/* Photos: the big one, and every photo as a thumbnail under it. Without
-           JS each thumbnail is a link to that photo; with it, it swaps the
-           big one in place. */}}
+    {{/* No photos yet: no empty placeholder square at the top of the page —
+         the summary takes the full width until the office adds one. */}}
+    <div class="pd-grid{{ if not .imgs }} pd-grid-nophoto{{ end }}">
+      {{/* ---- photos ----
+           The big photo with previous / next and a counter, and every photo as
+           one scrolling row of thumbnails underneath. Without JS each thumbnail
+           is a plain link to that photo. */}}
+      {{ if .imgs }}
       <div class="pd-photos">
-        {{ if .imgs }}
         {{ $first := index .imgs 0 }}
-        <img class="pd-main" src="{{ $first.full }}" width="{{ $first.fullW }}" height="{{ $first.fullH }}"
-             alt="{{ with $first.alt }}{{ . }}{{ else }}{{ $p.name }}{{ end }}" fetchpriority="high" decoding="async">
-        {{ if gt (len .imgs) 1 }}
+        {{ $n := len .imgs }}
+        <div class="pd-stage">
+          <img class="pd-main" src="{{ $first.full }}" width="{{ $first.fullW }}" height="{{ $first.fullH }}"
+               alt="{{ with $first.alt }}{{ . }}{{ else }}{{ $p.name }}{{ end }}" fetchpriority="high" decoding="async">
+          {{ if gt $n 1 }}
+          <button type="button" class="ct-cnav ct-cprev js-only" data-step="-1" aria-label="Previous photo">‹</button>
+          <button type="button" class="ct-cnav ct-cnext js-only" data-step="1" aria-label="Next photo">›</button>
+          <span class="ct-counter js-only" aria-live="polite">1 / {{ $n }}</span>
+          {{ end }}
+        </div>
+        {{ if gt $n 1 }}
         <div class="ct-film pd-film" role="group" aria-label="All photos of {{ .name }}">
           {{ range $i, $im := .imgs }}
           <a class="ct-film-btn{{ if eq $i 0 }} is-on{{ end }}" href="{{ $im.full }}"
              data-full="{{ $im.full }}" data-w="{{ $im.fullW }}" data-h="{{ $im.fullH }}"
              data-alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $p.name }} — photo {{ add $i 1 }}{{ end }}"
-             aria-label="Photo {{ add $i 1 }} of {{ len $p.imgs }}"{{ if eq $i 0 }} aria-current="true"{{ end }}>
+             aria-label="Photo {{ add $i 1 }} of {{ $n }}"{{ if eq $i 0 }} aria-current="true"{{ end }}>
             <img src="{{ $im.src }}" alt="" width="64" height="64" loading="lazy" decoding="async">
           </a>
           {{ end }}
         </div>
         {{ end }}
-        {{ else }}
-        <span class="ct-noimg pd-noimg" aria-hidden="true">Sri Raja Bags</span>
-        {{ end }}
       </div>
+      {{ end }}
 
+      {{/* ---- summary ---- */}}
       <div class="pd-info">
         <p class="ct-tags">
-          {{ range .materials }}<span>{{ . }}</span>{{ end }}
           {{ with .bagType }}<span>{{ . }}</span>{{ end }}
           {{ with .print }}<span>{{ . }}</span>{{ end }}
           {{ range .badges }}<span class="ct-tag-badge">{{ . }}</span>{{ end }}
         </p>
         <h1 class="pd-title">{{ .name }}</h1>
 
-        <p class="ct-dialog-rate">
+        <div class="pd-price">
           {{ if .hasRate }}
-          <strong>{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}<span class="ct-per">/{{ .unit }}</span></strong>
+          <p class="pd-price-big">{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}<span class="ct-per">/{{ .unit }}</span></p>
+          {{/* The range needs its reason next to it, or it reads as vague. */}}
+          <p class="pd-price-why">{{ if ne .rateMin .rateMax }}Depends on size{{ if .patties }}, side patty{{ end }} and order value — the lowest rates are for orders {{ lower $top.label }}.{{ else }}One rate per {{ $per }}, whatever the order value.{{ end }}</p>
           {{ else }}
-          <strong class="ct-rate-ask">Rate on request</strong>
+          <p class="pd-price-big pd-price-ask">Rate on request</p>
+          <p class="pd-price-why">Tell us the size and quantity on WhatsApp and we send the rate the same day.</p>
           {{ end }}
-          {{ if .hasMoq }}<span>· minimum order {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</span>{{ end }}
-        </p>
+        </div>
 
         <div class="pd-cta">
-          <a class="ct-btn ct-wa" href="{{ printf "%s&text=%s&type=phone_number&app_absent=0" $wa (urlquery $askText) }}" target="_blank" rel="noopener">Ask for a quote on WhatsApp</a>
+          <a class="ct-btn ct-wa" href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote on WhatsApp</span></a>
           <a class="ct-btn pd-btn-2" href="{{ printf "/catalog/#p-%s" .id | relURL }}">Add to an enquiry list</a>
         </div>
 
+        <ul class="pd-trust">
+          <li><strong>Manufacturer since {{ $site.Params.foundingYear }}</strong> — made at our own unit in Dhone</li>
+          <li><strong>Same-day quote</strong> on WhatsApp, from your artwork or a photo of your old bag</li>
+          <li><strong>Supplying</strong> {{ $site.Params.servedStates }}</li>
+        </ul>
+
         {{ with $.Content }}<div class="pd-desc">{{ . }}</div>{{ end }}
 
-        <dl class="ct-dl pd-dl">
-          {{ with .sizes }}<div class="ct-dl-wide"><dt>Sizes</dt><dd>{{ range $i, $s := . }}{{ if $i }} · {{ end }}<span class="nw">{{ $s.label }}</span>{{ end }}</dd></div>{{ end }}
+        {{/* Specs as a plain two-column list: label left, value right. */}}
+        <dl class="pd-specs">
+          {{ with .sizes }}<div><dt>Sizes</dt><dd>{{ range $i, $s := . }}{{ if $i }}<span class="pd-sep" aria-hidden="true"> · </span>{{ end }}<span class="nw">{{ $s.label }}</span>{{ end }}</dd></div>{{ end }}
+          {{ with .materials }}<div><dt>Material</dt><dd>{{ delimit . ", " }}</dd></div>{{ end }}
           {{ with .gsms }}<div><dt>{{ cond (eq $p.thickness "micron") "Thickness" "Fabric" }}</dt><dd>{{ $l := slice }}{{ range . }}{{ $l = $l | append .label }}{{ end }}{{ delimit $l ", " }}</dd></div>{{ end }}
+          {{ with .patties }}<div><dt>Side patty</dt><dd>{{ range $i, $s := . }}{{ if $i }}<span class="pd-sep" aria-hidden="true"> · </span>{{ end }}<span class="nw">{{ $s }}</span>{{ end }}</dd></div>{{ end }}
           {{ if .hasMoq }}<div><dt>Minimum order</dt><dd>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</dd></div>{{ end }}
-          {{ with .patties }}<div class="ct-dl-wide"><dt>Side patty</dt><dd>{{ range $i, $s := . }}{{ if $i }} · {{ end }}<span class="nw">{{ $s }}</span>{{ end }}</dd></div>{{ end }}
-          {{ with .colours }}<div class="ct-dl-wide"><dt>Colours</dt><dd>{{ $l := slice }}{{ range . }}{{ $l = $l | append .name }}{{ end }}{{ delimit $l " · " }}</dd></div>{{ end }}
-          {{ with .shops }}<div class="ct-dl-wide"><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
+          {{ with .colours }}<div><dt>Colours</dt><dd class="pd-swatches">{{ range . }}<span class="nw"><span class="ct-sw" data-c="{{ .slug }}"{{ with .hex }} style="background:{{ . }}"{{ end }}></span>{{ .name }}</span>{{ end }}</dd></div>{{ end }}
+          {{ with .shops }}<div><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
         </dl>
       </div>
     </div>
 
+    {{/* ---- price list ----
+         Every table is in the page, so every rate is readable without JS and
+         by search engines. With JS, a selector shows one GSM x side-patty
+         table at a time — five 12-row tables stacked is a wall, not a price
+         list. */}}
     {{ if .hasRate }}
-    <section class="pd-prices" aria-labelledby="pd-prices-h">
+    <section class="pd-section pd-prices" aria-labelledby="pd-prices-h">
       <h2 id="pd-prices-h">{{ .name }} price list</h2>
-      <p class="pd-lede">Rates per {{ cond (eq .unit "pc") "piece" "kg" }}, by the value of your whole order: the more you order, the lower the rate. For 50% advance and the balance at billing; ex-factory, before GST and freight.{{ with .priceNotes }} {{ . }}{{ end }}</p>
+      <p class="pd-lede">Rates per {{ $per }}, by the value of your whole order: the bigger the order, the lower the rate. For 50% advance and the balance at billing; ex-factory, before GST and freight.{{ with .priceNotes }} {{ . }}{{ end }}</p>
+      {{ if gt (len .groups) 1 }}
+      <div class="pd-switch js-only" role="group" aria-label="Choose {{ if .patties }}side patty{{ else }}thickness{{ end }}">
+        <span class="pd-switch-label">{{ if .patties }}Side patty{{ else }}{{ cond (eq .thickness "micron") "Thickness" "GSM" }}{{ end }}</span>
+        {{ range $i, $g := .groups }}
+        <button type="button" class="ct-pick{{ if eq $i 0 }} is-on{{ end }}" data-g="{{ $i }}" aria-pressed="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ with $g.patty }}{{ . }}{{ else }}{{ $g.gsm }} {{ $p.thickness }}{{ end }}</button>
+        {{ end }}
+      </div>
+      {{ end }}
       <div class="pd-tables">
-        {{ range $g := .groups }}
-        <table class="ct-ptable">
+        {{ range $i, $g := .groups }}
+        <table class="ct-ptable" data-g="{{ $i }}">
           {{ with $g.caption }}<caption>{{ . }}</caption>{{ end }}
           <thead><tr><th scope="col">Size</th>{{ range $c.priceTypes }}<th scope="col">{{ replace .label " – " " – " }}</th>{{ end }}</tr></thead>
           <tbody>
@@ -111,16 +152,54 @@
     </section>
     {{ end }}
 
-    {{/* Related: the same shape first, then the same material, so a D-cut page
-         offers other D-cuts before plastic covers. */}}
-    {{/* Products with a photo first: four placeholder tiles sell nothing. */}}
+    {{/* ---- how ordering works ---- */}}
+    <section class="pd-section" aria-labelledby="pd-how-h">
+      <h2 id="pd-how-h">How ordering works</h2>
+      <ol class="pd-steps">
+        <li><strong>Send your design</strong><span>Artwork in any format, or a photo of the bag you use now, with the size and quantity.</span></li>
+        <li><strong>Get a quote the same day</strong><span>We confirm the rate, printing and delivery on WhatsApp{{ if .hasMoq }}. Minimum order {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ end }}.</span></li>
+        <li><strong>Approve and we print</strong><span>{{ with $site.Params.leadTime }}Typically {{ . }} after you approve the proof{{ else }}Production starts once you approve the proof{{ end }}, with 50% advance and the balance at billing.</span></li>
+      </ol>
+    </section>
+
+    {{/* ---- questions ----
+         Answered from this product's own data, so each page says something
+         specific rather than repeating boilerplate. */}}
+    <section class="pd-section" aria-labelledby="pd-faq-h">
+      <h2 id="pd-faq-h">Common questions</h2>
+      <div class="pd-faq">
+        {{ if .hasMoq }}
+        <details><summary>What is the minimum order for {{ .name }}?</summary>
+          <p>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ with .priceNotes }}{{ if strings.Contains . "per size" }} per size{{ end }}{{ end }}. Smaller trial orders can sometimes be arranged — ask on WhatsApp.</p></details>
+        {{ end }}
+        {{ if .hasRate }}
+        <details><summary>How is the price decided?</summary>
+          {{ $n := len $c.priceTypes }}
+          <p>Per {{ $per }}, by size{{ if .patties }} and side-patty width{{ end }}, and by the total value of your order. Orders {{ range $i, $t := $c.priceTypes }}{{ if and $i (eq (add $i 1) $n) }} and {{ else if $i }}, {{ end }}{{ lower $t.label }}{{ end }} each have their own rate, shown in the price list above. Rates are for 50% advance; GST and freight are extra.</p></details>
+        {{ end }}
+        {{ with .sizes }}
+        <details><summary>Which sizes do you make?</summary>
+          <p>{{ $l := slice }}{{ range . }}{{ $l = $l | append .plain }}{{ end }}{{ delimit $l ", " }}. Other sizes can be made to order.</p></details>
+        {{ end }}
+        {{ if eq .print "Printed" }}
+        <details><summary>Can you print my shop name and logo?</summary>
+          <p>Yes — every printed bag is made to your design. Send your artwork or a photo of your current bag and we prepare a proof before printing.{{ if eq .unit "kg" }} Printing block charges are quoted with the order.{{ end }}</p></details>
+        {{ end }}
+        <details><summary>Where do you deliver?</summary>
+          <p>We manufacture at Dhone, Andhra Pradesh and supply shops across {{ $site.Params.servedStates }}. Rates are ex-factory; freight is quoted for your town.</p></details>
+      </div>
+    </section>
+
+    {{/* ---- similar bags ----
+         The same shape first, then the same material; products with a photo
+         before placeholders — four placeholder tiles sell nothing. */}}
     {{ $rel := slice }}{{ $relIds := slice }}
     {{ range $needImg := slice true false }}
       {{ range $c.products }}{{ if and (ne .id $p.id) (not (in $relIds .id)) (eq .bagType $p.bagType) (or (not $needImg) .img) (lt (len $rel) 4) }}{{ $rel = $rel | append . }}{{ $relIds = $relIds | append .id }}{{ end }}{{ end }}
       {{ range $c.products }}{{ if and (ne .id $p.id) (not (in $relIds .id)) (eq (index .materials 0) (index $p.materials 0)) (or (not $needImg) .img) (lt (len $rel) 4) }}{{ $rel = $rel | append . }}{{ $relIds = $relIds | append .id }}{{ end }}{{ end }}
     {{ end }}
     {{ with $rel }}
-    <section class="pd-related" aria-labelledby="pd-rel-h">
+    <section class="pd-section pd-related" aria-labelledby="pd-rel-h">
       <h2 id="pd-rel-h">Similar bags</h2>
       <div class="pd-rel-grid">
         {{ range . }}
@@ -137,20 +216,63 @@
     <p class="pd-back"><a href="{{ "/catalog/" | relURL }}">← All non woven bags and plastic covers</a></p>
   </div>
 </div>
+
+{{/* Phone: the quote button stays on screen while the buyer reads the price
+     list. Desktop has it beside the photo already. */}}
+<div class="pd-dock">
+  <a class="ct-btn ct-wa" href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote</span></a>
+</div>
+
 <script>
 (function () {
+  /* Photos: thumbnails, arrows and counter drive the one big image. */
   var main = document.querySelector(".pd-main"), film = document.querySelector(".pd-film");
-  if (!main || !film) return;
-  film.addEventListener("click", function (e) {
-    var a = e.target.closest(".ct-film-btn");
-    if (!a) return;
-    e.preventDefault();
-    main.src = a.dataset.full; main.width = a.dataset.w; main.height = a.dataset.h; main.alt = a.dataset.alt;
-    film.querySelectorAll(".ct-film-btn").forEach(function (b) {
-      b.classList.toggle("is-on", b === a);
-      if (b === a) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+  if (main && film) {
+    var thumbs = Array.prototype.slice.call(film.querySelectorAll(".ct-film-btn"));
+    var counter = document.querySelector(".pd-stage .ct-counter"), at = 0;
+    function show(i) {
+      at = (i + thumbs.length) % thumbs.length;
+      var a = thumbs[at];
+      main.src = a.dataset.full; main.width = a.dataset.w; main.height = a.dataset.h; main.alt = a.dataset.alt;
+      thumbs.forEach(function (b, n) {
+        b.classList.toggle("is-on", n === at);
+        if (n === at) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+      });
+      if (counter) counter.textContent = (at + 1) + " / " + thumbs.length;
+      // Keep the outlined thumbnail in view, scrolling only the strip.
+      var l = a.offsetLeft - film.offsetLeft, r = l + a.offsetWidth;
+      if (l < film.scrollLeft) film.scrollLeft = l - 8;
+      else if (r > film.scrollLeft + film.clientWidth) film.scrollLeft = r - film.clientWidth + 8;
+    }
+    film.addEventListener("click", function (e) {
+      var a = e.target.closest(".ct-film-btn");
+      if (!a) return;
+      e.preventDefault();
+      show(thumbs.indexOf(a));
     });
-  });
+    document.querySelectorAll(".pd-stage [data-step]").forEach(function (b) {
+      b.addEventListener("click", function () { show(at + parseInt(b.dataset.step, 10)); });
+    });
+  }
+
+  /* Price list: one table at a time. */
+  var sw = document.querySelector(".pd-switch");
+  if (sw) {
+    var tables = document.querySelectorAll(".pd-tables .ct-ptable");
+    function pick(g) {
+      tables.forEach(function (t) { t.hidden = t.dataset.g !== g; });
+      sw.querySelectorAll("[data-g]").forEach(function (b) {
+        var on = b.dataset.g === g;
+        b.classList.toggle("is-on", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+    }
+    sw.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-g]");
+      if (b) pick(b.dataset.g);
+    });
+    pick("0");
+  }
 })();
 </script>
 {{ end }}
