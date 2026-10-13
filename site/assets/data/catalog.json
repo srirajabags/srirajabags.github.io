@@ -1222,6 +1222,116 @@
      "pcsPerKg": null
     },
     {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
      "size": "16x20",
      "gsm": 110,
      "patty": "4″",
@@ -1865,6 +1975,116 @@
      "pcsPerKg": null
     },
     {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
      "size": "16x20",
      "gsm": 110,
      "patty": "4″",
@@ -2465,7 +2685,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "4″ (3″ printed)",
      "rates": [
@@ -2476,7 +2696,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "6″ (5″ printed)",
      "rates": [
@@ -2487,7 +2707,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "8″ (7″ printed)",
      "rates": [
@@ -2498,7 +2718,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "10″ (9″ printed)",
      "rates": [
@@ -2509,7 +2729,62 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      27.5,
+      28.5,
+      29.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
      "gsm": 110,
      "patty": "12″ (11″ printed)",
      "rates": [
@@ -3159,7 +3434,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "5″",
      "rates": [
@@ -3170,7 +3445,7 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
      "gsm": 110,
      "patty": "7″",
      "rates": [
@@ -3181,7 +3456,40 @@
      "pcsPerKg": null
     },
     {
-     "size": "16x18 (Stick Bag)",
+     "size": "16x18_stick",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      28.5,
+      29.5,
+      30.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      25,
+      26,
+      27
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      26.5,
+      27.5,
+      28.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18_zip",
      "gsm": 110,
      "patty": "9″",
      "rates": [

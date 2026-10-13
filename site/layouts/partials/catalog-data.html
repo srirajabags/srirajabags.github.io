@@ -35,7 +35,8 @@
 {{/* A size string -> its parts. "12X16", "12x16", "12 x 16" and "12×16" all
      mean the same thing. Anything trailing the two numbers is a qualifier the
      office wrote deliberately — "16x18 (Stick Bag)" — so it is carried through
-     to the label rather than parsed away. */}}
+     to the label rather than parsed away. The office's own shorthand for a
+     closure variant, "16x18_stick" / "16x18_zip", reads as "16″ × 18″ Stick". */}}
 {{- define "partials/catalog-size" -}}
   {{- $s := . -}}
   {{- $norm := replaceRE "[×✕✖*]" "x" (lower $s) -}}
@@ -47,6 +48,7 @@
     {{- $h = float (index $parts 1) -}}
     {{/* Taken off the ORIGINAL string so the qualifier keeps its case. */}}
     {{- $suffix = trim (replaceRE "(?i)^\\s*[0-9.]+\\s*[x×✕✖*]\\s*[0-9.]+\\s*" "" $s) " " -}}
+    {{- if hasPrefix $suffix "_" }}{{ $suffix = humanize (strings.TrimLeft "_" $suffix) }}{{ end -}}
   {{- end -}}
   {{- $ok := and (gt $w 0.0) (gt $h 0.0) -}}
   {{- $label := $s }}{{ $plain := $s -}}

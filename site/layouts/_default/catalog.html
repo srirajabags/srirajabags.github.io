@@ -313,7 +313,7 @@
         <div class="ct-carousel" data-carousel>
           <div class="ct-slides" tabindex="0" role="group" aria-label="Photos of {{ $pname }}">
             {{ range $i, $im := .imgs }}
-            <img src="{{ $im.full }}" width="{{ $im.fullW }}" height="{{ $im.fullH }}"
+            <img src="{{ $im.full }}" width="{{ $im.fullW }}" height="{{ $im.fullH }}" data-k="{{ $i }}"
                  data-shop="{{ delimit $im.shops "|" }}"
                  alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}{{ end }}"
                  loading="lazy" decoding="async">
@@ -322,20 +322,22 @@
           {{ if gt (len .imgs) 1 }}
           <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo">‹</button>
           <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo">›</button>
-          {{/* Dots stop being readable past a handful; a long strip gets a
-               "3 / 49" counter instead. */}}
-          {{ if gt (len .imgs) 8 }}
           <span class="ct-counter js-only" aria-live="polite">1 / {{ len .imgs }}</span>
-          {{ else }}
-          <div class="ct-dots js-only">
-            {{ range $i, $im := .imgs }}
-            <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
-                    aria-label="Photo {{ add $i 1 }}"></button>
-            {{ end }}
-          </div>
-          {{ end }}
           {{ end }}
         </div>
+        {{/* Film strip: every photo as a small thumbnail under the main one,
+             the one on screen outlined. It uses the card-size image the page
+             already has, so it costs no extra files. */}}
+        {{ if gt (len .imgs) 1 }}
+        <div class="ct-film js-only" role="group" aria-label="All photos of {{ $pname }}">
+          {{ range $i, $im := .imgs }}
+          <button type="button" class="ct-film-btn{{ if eq $i 0 }} is-on{{ end }}" data-k="{{ $i }}"
+                  aria-label="Show photo {{ add $i 1 }}"{{ if eq $i 0 }} aria-current="true"{{ end }}>
+            <img src="{{ $im.src }}" alt="" width="64" height="64" loading="lazy" decoding="async">
+          </button>
+          {{ end }}
+        </div>
+        {{ end }}
         {{ else }}
         <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
         {{ end }}
@@ -683,6 +685,11 @@
       if (same) return;
 
       next.forEach(function (im) { strip.appendChild(im); });
+      var film = strip.closest(".ct-dialog-img") && strip.closest(".ct-dialog-img").querySelector(".ct-film");
+      if (film) next.forEach(function (im) {
+        var b = film.querySelector('.ct-film-btn[data-k="' + im.dataset.k + '"]');
+        if (b) film.appendChild(b);
+      });
       // The strip was scrolled to whatever slide the buyer had reached; after a
       // reshuffle that position means nothing, so go back to the new first.
       strip.scrollLeft = 0;
@@ -925,6 +932,7 @@
     var prev = car.querySelector('[data-cnav="-1"]');
     var next = car.querySelector('[data-cnav="1"]');
     var counter = car.querySelector(".ct-counter");
+    var film = car.parentElement.querySelector(".ct-film");
     if (slides.length < 2) return;
 
     // Every carousel lives inside a closed <dialog>, which has no layout until
@@ -944,6 +952,27 @@
         dt.setAttribute("aria-current", String(n === i));
       });
       if (counter) counter.textContent = (i + 1) + " / " + slides.length;
+      if (film) {
+        // Slides can be reordered by the shop filter, so the strip is matched
+        // by each photo's original position, not by index.
+        var k = strip.children[i] && strip.children[i].dataset.k;
+        film.querySelectorAll(".ct-film-btn").forEach(function (b) {
+          var on = b.dataset.k === k;
+          b.classList.toggle("is-on", on);
+          if (on) {
+            b.setAttribute("aria-current", "true");
+            // Keep the outlined thumbnail in view, scrolling only the strip —
+            // scrollIntoView would also move the dialog. Sideways on a phone,
+            // where the strip is one row; down on desktop, where it wraps.
+            var l = b.offsetLeft - film.offsetLeft, r = l + b.offsetWidth;
+            if (l < film.scrollLeft) film.scrollLeft = l - 8;
+            else if (r > film.scrollLeft + film.clientWidth) film.scrollLeft = r - film.clientWidth + 8;
+            var t = b.offsetTop - film.offsetTop, btm = t + b.offsetHeight;
+            if (t < film.scrollTop) film.scrollTop = t - 8;
+            else if (btm > film.scrollTop + film.clientHeight) film.scrollTop = btm - film.clientHeight + 8;
+          } else b.removeAttribute("aria-current");
+        });
+      }
       if (prev) prev.disabled = i <= 0;
       if (next) next.disabled = i >= slides.length - 1;
     }
@@ -952,6 +981,12 @@
     if (next) next.addEventListener("click", function () { go(index() + 1); });
     dots.forEach(function (dt) {
       dt.addEventListener("click", function () { go(parseInt(dt.dataset.cdot, 10)); });
+    });
+    if (film) film.addEventListener("click", function (e) {
+      var b = e.target.closest(".ct-film-btn");
+      if (!b) return;
+      var kids = Array.prototype.slice.call(strip.children);
+      go(kids.findIndex(function (im) { return im.dataset.k === b.dataset.k; }));
     });
 
     var timer;
