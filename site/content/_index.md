@@ -10,7 +10,8 @@ hero:
 
 products:
   heading: "Our Products"
-  # This rail is drawn from assets/data/catalog.csv, not from a list kept here.
+  # This rail is drawn from the catalog in Grist (synced to
+  # assets/data/catalog.json at build time), not from a list kept here.
   # There used to be a hand-written `items:` block and it had already drifted
   # from what we actually make ("W-Cut Plain bags" is not in the catalog).
   #

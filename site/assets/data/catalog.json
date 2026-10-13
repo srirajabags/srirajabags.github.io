@@ -1,0 +1,4130 @@
+{
+ "priceTypes": [
+  {
+   "type": "Type 1",
+   "label": "Above ₹40,000",
+   "minOrderValue": 40000
+  },
+  {
+   "type": "Type 2",
+   "label": "₹20,000 – ₹40,000",
+   "minOrderValue": 20000
+  },
+  {
+   "type": "Type 3",
+   "label": "Below ₹20,000",
+   "minOrderValue": 0
+  }
+ ],
+ "colours": [
+  {
+   "name": "White",
+   "hex": "#f4f2ee"
+  },
+  {
+   "name": "Red",
+   "hex": "#e22d1b"
+  },
+  {
+   "name": "Reliance Green",
+   "hex": "#30aec4"
+  },
+  {
+   "name": "Ivory",
+   "hex": "#dfca64"
+  },
+  {
+   "name": "Multicolour",
+   "hex": ""
+  },
+  {
+   "name": "Mixed",
+   "hex": ""
+  }
+ ],
+ "products": [
+  {
+   "id": "dcut-single-color",
+   "name": "D-Cut Single Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "D-Cut",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Function",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors",
+    "Medical Shops"
+   ],
+   "badges": [
+    "Bestseller",
+    "Budget Friendly"
+   ],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "One colour screen print on 80 GSM non woven fabric, with the handle punched into the body. The most economical printed bag we make, and where most shops start.",
+   "priceNotes": "9x11 is printed on one side; both sides add ₹30/kg. Full background or multi-colour printing adds ₹20/kg.",
+   "variants": [
+    {
+     "size": "9x11",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/7975b03ee475ad7f6249a32c81889052a1b07371.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/ae0478d567acbd163b67b2ec09d1089d9b89eb5a.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/ce89d76eada607855882709de0fbd97c76ded138.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/2ce24c9c17bc5e3fa51734f82ef5a85aa375d31b.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "dcut-double-color",
+   "name": "D-Cut Double Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "D-Cut",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Function",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors",
+    "Medical Shops"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "Two colour screen print — usually the shop name in one colour and the address strip in another. Same 80 GSM D-cut body as the single colour bag.",
+   "priceNotes": "9x11 is printed on one side; both sides add ₹30/kg. Full background or multi-colour printing adds ₹20/kg.",
+   "variants": [
+    {
+     "size": "9x11",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      245,
+      255,
+      266
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/6a768aafd73af2c00c40ee5a8def425856325fe6.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/ccc3fdd1eb007996bf74a8de569b20c235b9815e.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/b469417257e6451e6c8250855cbffc1d08ab357f.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/a90e29e8502db7d654ffcfab3a10ff30a72425ef.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "dcut-bopp-single-color",
+   "name": "D-Cut BOPP Single Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "D-Cut",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Function",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors",
+    "Medical Shops"
+   ],
+   "badges": [
+    "New",
+    "Premium",
+    "Bestseller"
+   ],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "BOPP laminated D-cut with a single colour print. The lamination gives a glossy, wipe-clean surface and keeps the print sharp in the rain.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/a90e29e8502db7d654ffcfab3a10ff30a72425ef.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "handle-single-color",
+   "name": "Handle Single Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Handle",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Jewellery",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "Sewn loop handle stitched to the body, single colour print. The handle takes more weight than a punched D-cut, so this is the pick for heavier garments.",
+   "priceNotes": "Full background or multi-colour printing adds ₹20/kg.",
+   "variants": [
+    {
+     "size": "12x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/ca0da255056fea9738433973b762f07a0fd18d2c.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "handle-double-color",
+   "name": "Handle Double Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Handle",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Jewellery",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "Loop handle bag with a two colour print, shop name and contact strip in separate colours. Handle colour can be matched to your brand.",
+   "priceNotes": "Full background or multi-colour printing adds ₹20/kg.",
+   "variants": [
+    {
+     "size": "12x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": [
+      265,
+      275,
+      286
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/ca0da255056fea9738433973b762f07a0fd18d2c.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "stitching-single-color",
+   "name": "Stitching Single Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Stitching",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Kirana Store"
+   ],
+   "badges": [],
+   "unit": "pc",
+   "minOrder": 200,
+   "thickness": "GSM",
+   "description": "Stitched body with a side patty for depth, single colour print. Folded sarees and dress materials sit flat inside instead of creasing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "8x10",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      11.5,
+      12.5,
+      13.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      13,
+      14,
+      15
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      14,
+      15,
+      16
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      16.5,
+      17.5,
+      18.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      13.5,
+      14.5,
+      15.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      14.5,
+      15.5,
+      16.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      15.5,
+      16.5,
+      17.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      13.5,
+      14.5,
+      15.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      14.5,
+      15.5,
+      16.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      25,
+      26,
+      27
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      21,
+      22,
+      23
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      22.5,
+      23.5,
+      24.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      24,
+      25,
+      26
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/3e8e2bdb04d134a6ab04c81917aa43517d6301e5.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "stitching-double-color",
+   "name": "Stitching Double Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Stitching",
+   "print": "Printed",
+   "colours": [
+    "White",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Kirana Store"
+   ],
+   "badges": [],
+   "unit": "pc",
+   "minOrder": 200,
+   "thickness": "GSM",
+   "description": "Stitched side-patty bag with a two colour print. The patty is normally run in a contrast colour to frame the front panel.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "8x10",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      11.5,
+      12.5,
+      13.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      13,
+      14,
+      15
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      14,
+      15,
+      16
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      16.5,
+      17.5,
+      18.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      13.5,
+      14.5,
+      15.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      14.5,
+      15.5,
+      16.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      15.5,
+      16.5,
+      17.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      13.5,
+      14.5,
+      15.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      14.5,
+      15.5,
+      16.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      25,
+      26,
+      27
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "4″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "6″",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "8″",
+     "rates": [
+      21,
+      22,
+      23
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "10″",
+     "rates": [
+      22.5,
+      23.5,
+      24.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "12″",
+     "rates": [
+      24,
+      25,
+      26
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/3e8e2bdb04d134a6ab04c81917aa43517d6301e5.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/a7c5de83a92a272a9c174bb614cf5c82df1de50d.jpeg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "digital-multi-color",
+   "name": "Digital Multi Color Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Digital",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Jewellery",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Fertilizers",
+    "Tailors",
+    "Wine Shop"
+   ],
+   "badges": [
+    "Bestseller"
+   ],
+   "unit": "pc",
+   "minOrder": 1000,
+   "thickness": "GSM",
+   "description": "Full colour digital print, so photographs, gradients and fine Telugu type all reproduce cleanly. Send artwork in any format and we proof it with you before printing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      13,
+      14,
+      15
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      14,
+      15,
+      16
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      16.5,
+      17.5,
+      18.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      15,
+      16,
+      17
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      20.5,
+      21.5,
+      22.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      14.5,
+      15.5,
+      16.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      16,
+      17,
+      18
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      18.5,
+      19.5,
+      20.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      26,
+      27,
+      28
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      27.5,
+      28.5,
+      29.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      21,
+      22,
+      23
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      26.5,
+      27.5,
+      28.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      20,
+      21,
+      22
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      23,
+      24,
+      25
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      24.5,
+      25.5,
+      26.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "4″ (3″ printed)",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "6″ (5″ printed)",
+     "rates": [
+      21,
+      22,
+      23
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "8″ (7″ printed)",
+     "rates": [
+      22.5,
+      23.5,
+      24.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "10″ (9″ printed)",
+     "rates": [
+      24,
+      25,
+      26
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "12″ (11″ printed)",
+     "rates": [
+      25.5,
+      26.5,
+      27.5
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/15bf0936163f6467baa1ffc3502549d00a0bc248.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/e1e484b119dbac085a633599ef040030367f2441.jpeg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/5315c383a1fbd451bda9f1b6b12ec66e1f346bdf.jpeg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "digital-model",
+   "name": "Digital Model Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Digital",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Jewellery"
+   ],
+   "badges": [
+    "Budget Friendly"
+   ],
+   "unit": "pc",
+   "minOrder": 200,
+   "thickness": "GSM",
+   "description": "Digital printed bag in our standard model shapes, full colour on both panels. A quicker route than custom artwork when you want a ready design.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x19 (Stick Bag)",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/d18c8f0c330c5cdf49e32a158c79ff726810ef77.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "digital-handle",
+   "name": "Digital Handle Bag",
+   "material": "Non Woven Bag",
+   "bagType": "Digital",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Jewellery",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Fertilizers",
+    "Tailors",
+    "Wine Shop"
+   ],
+   "badges": [
+    "Budget Friendly"
+   ],
+   "unit": "pc",
+   "minOrder": null,
+   "thickness": "GSM",
+   "description": "Full colour digital print with a sewn loop handle. Dark full-surface designs hold flat on this fabric with no show-through.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "15x17",
+     "gsm": 110,
+     "patty": "",
+     "rates": [
+      15,
+      15,
+      15
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/64f6da9f0ad575fc2b3d33fed7c8497a0a9a51ca.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/d18c8f0c330c5cdf49e32a158c79ff726810ef77.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/08af187ba6e82e731b243efb16f302474f587473.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "digital-bopp",
+   "name": "BOPP Laminated Digital Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Digital Laminated",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "School",
+    "Function",
+    "Kirana Store",
+    "Super Market",
+    "Real Estate"
+   ],
+   "badges": [
+    "New",
+    "Premium",
+    "Bestseller"
+   ],
+   "unit": "pc",
+   "minOrder": 1000,
+   "thickness": "GSM",
+   "description": "BOPP film laminated over a full colour digital print. The film protects the ink and wipes clean, which is why these get reused for months.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      15.5,
+      16.5,
+      17.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      17,
+      18,
+      19
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      18,
+      19,
+      20
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      19.5,
+      20.5,
+      21.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      21,
+      22,
+      23
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      20.5,
+      21.5,
+      22.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      22.5,
+      23.5,
+      24.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      20.5,
+      21.5,
+      22.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      22,
+      23,
+      24
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      24,
+      25,
+      26
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      17.5,
+      18.5,
+      19.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      19,
+      20,
+      21
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      20.5,
+      21.5,
+      22.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      22,
+      23,
+      24
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      23.5,
+      24.5,
+      25.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      25.5,
+      26.5,
+      27.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      25,
+      26,
+      27
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      26.5,
+      27.5,
+      28.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18 (Stick Bag)",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      28.5,
+      29.5,
+      30.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "5″",
+     "rates": [
+      21.5,
+      22.5,
+      23.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "7″",
+     "rates": [
+      23.5,
+      24.5,
+      25.5
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "9″",
+     "rates": [
+      25,
+      26,
+      27
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/a7c5de83a92a272a9c174bb614cf5c82df1de50d.jpeg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/05f6eaed9beaf2e8f80f7bdf0a9ca15a3ca380a3.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "digital-bopp-handle",
+   "name": "BOPP Laminated Digital Handle Bag",
+   "material": "Non Woven Bag",
+   "bagType": "Digital Laminated",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "School",
+    "Function",
+    "Kirana Store",
+    "Super Market",
+    "Real Estate"
+   ],
+   "badges": [
+    "New",
+    "Premium",
+    "Bestseller"
+   ],
+   "unit": "pc",
+   "minOrder": null,
+   "thickness": "GSM",
+   "description": "BOPP laminated digital print with a sewn loop handle — the most premium bag we make. Wedding season and jewellery showroom orders mostly go out in this.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "15x17",
+     "gsm": 110,
+     "patty": "",
+     "rates": [
+      17,
+      17,
+      17
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/730b27dbd12a9e605c5319b94c76e1496615e4e9.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/a2352cc76b4e6c8819b7172039f043528f7e5adc.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/05f6eaed9beaf2e8f80f7bdf0a9ca15a3ca380a3.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "hm-plastic-dcut",
+   "name": "HM Plastic D-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "D-Cut",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles"
+   ],
+   "badges": [
+    "Bestseller",
+    "Budget Friendly"
+   ],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "micron",
+   "description": "HM plastic carry cover with a punched D-cut handle, printed to your design.",
+   "priceNotes": "9x11 is printed on one side.",
+   "variants": [
+    {
+     "size": "9x11",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 160
+    },
+    {
+     "size": "10x14",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 110
+    },
+    {
+     "size": "12x16",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 66
+    },
+    {
+     "size": "14x16",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 56
+    },
+    {
+     "size": "16x20",
+     "gsm": 55,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 48
+    },
+    {
+     "size": "10x14",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 79
+    },
+    {
+     "size": "12x18",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 50
+    },
+    {
+     "size": "14x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      185,
+      195,
+      205
+     ],
+     "pcsPerKg": 34
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "ld-plastic-dcut",
+   "name": "LD Plastic D-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "D-Cut",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles"
+   ],
+   "badges": [
+    "Bestseller",
+    "Premium"
+   ],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "micron",
+   "description": "LD plastic carry cover — softer and clearer than HM — with a punched D-cut handle.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 79
+    },
+    {
+     "size": "12x18",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 50
+    },
+    {
+     "size": "14x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 34
+    },
+    {
+     "size": "10x14",
+     "gsm": 90,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 61
+    },
+    {
+     "size": "12x18",
+     "gsm": 90,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 39
+    },
+    {
+     "size": "14x20",
+     "gsm": 90,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 90,
+     "patty": "",
+     "rates": [
+      210,
+      220,
+      230
+     ],
+     "pcsPerKg": 34
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "plastic-ucut",
+   "name": "U-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "U-Cut",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Hotel",
+    "Bakery",
+    "Kirana Store",
+    "Wine Shop",
+    "Super Market",
+    "Medical Shops"
+   ],
+   "badges": [
+    "High Capacity"
+   ],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "micron",
+   "description": "U-cut plastic cover, gusseted so it opens wide and stands on the counter. Sized for hotel, bakery and kirana counters.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      195,
+      205,
+      215
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "13x16",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      195,
+      205,
+      215
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      195,
+      205,
+      215
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x22",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      195,
+      205,
+      215
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x26",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      195,
+      205,
+      215
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "ucut",
+   "name": "Non Woven U-CUT Bags",
+   "material": "Non Woven Bag",
+   "bagType": "U-Cut",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Hotel",
+    "Bakery",
+    "Kirana Store",
+    "Wine Shop",
+    "Super Market",
+    "Medical Shops"
+   ],
+   "badges": [
+    "High Capacity"
+   ],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "GSM",
+   "description": "Non woven U-cut bag in the gusseted vest shape. Opens wide, stands on the counter and is the cheapest per piece of anything we make.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      260,
+      270,
+      280
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "13x16",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      260,
+      270,
+      280
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      260,
+      270,
+      280
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      260,
+      270,
+      280
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/d6ffba263ad13d80d05580312c63d57a2711d01e.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "bio-ucut",
+   "name": "Bio Degradable U-CUT Covers",
+   "material": "Bio-degradable Cover",
+   "bagType": "U-Cut",
+   "print": "Printed",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Hotel",
+    "Bakery",
+    "Kirana Store",
+    "Wine Shop",
+    "Super Market",
+    "Medical Shops"
+   ],
+   "badges": [
+    "Eco Friendly",
+    "High Capacity"
+   ],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "micron",
+   "description": "Bio-degradable U-cut cover, a compostable replacement for the plastic version in the same sizes.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      240,
+      250,
+      260
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "13x16",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      240,
+      250,
+      260
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      240,
+      250,
+      260
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x22",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      240,
+      250,
+      260
+     ],
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x26",
+     "gsm": 60,
+     "patty": "",
+     "rates": [
+      240,
+      250,
+      260
+     ],
+     "pcsPerKg": null
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "misprint-nw",
+   "name": "Misprint Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Misprints",
+   "print": "",
+   "colours": [
+    "Mixed"
+   ],
+   "shopTypes": [],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": null,
+   "thickness": "GSM",
+   "description": "Overruns and misprints from earlier jobs, sold by weight in assorted sizes and prints. The cheapest way to stock up when the print on the bag does not matter.",
+   "priceNotes": "",
+   "variants": [],
+   "photos": [
+    {
+     "file": "catalog/2ce24c9c17bc5e3fa51734f82ef5a85aa375d31b.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "misprint-plastic",
+   "name": "Misprint Covers",
+   "material": "Plastic Cover",
+   "bagType": "Misprints",
+   "print": "",
+   "colours": [
+    "Mixed"
+   ],
+   "shopTypes": [],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": null,
+   "thickness": "micron",
+   "description": "Overrun and misprinted plastic covers, sold by weight in assorted sizes and prints.",
+   "priceNotes": "",
+   "variants": [],
+   "photos": []
+  },
+  {
+   "id": "dcut-plain",
+   "name": "Plain D-Cut Bags",
+   "material": "Non Woven Bag",
+   "bagType": "D-Cut",
+   "print": "Plain",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Function",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors",
+    "Medical Shops"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "Plain 80 GSM D-cut bag with no printing, stocked in white and a range of fabric colours for immediate dispatch.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "9x11",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/8f46b94750c02bad00a9dea4881b8940d3821edb.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  },
+  {
+   "id": "handle-plain",
+   "name": "Plain Handle Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Handle",
+   "print": "Plain",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Footwear",
+    "Jewellery",
+    "Mobile Shop",
+    "Ladies Corner",
+    "Tailors"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "GSM",
+   "description": "Plain loop handle bag with no printing. Handle colour can be matched to your brand.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "12x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 80,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "stitching-plain",
+   "name": "Plain Stitching Bags",
+   "material": "Non Woven Bag",
+   "bagType": "Stitching",
+   "print": "Plain",
+   "colours": [
+    "White",
+    "Red",
+    "Reliance Green",
+    "Ivory"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles",
+    "Kirana Store"
+   ],
+   "badges": [],
+   "unit": "pc",
+   "minOrder": 200,
+   "thickness": "GSM",
+   "description": "Plain stitched bag with a side patty, no printing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "8x10",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "10x14",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x16",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x16",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x12",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x18",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "18x16",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x16",
+     "gsm": 110,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "hm-plastic-dcut-plain",
+   "name": "Plain HM D-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "D-Cut",
+   "print": "Plain",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 10,
+   "thickness": "micron",
+   "description": "Plain HM plastic cover with a punched D-cut handle, no printing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "9x11",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 160
+    },
+    {
+     "size": "10x14",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 110
+    },
+    {
+     "size": "12x16",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "12x18",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 66
+    },
+    {
+     "size": "14x16",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x18",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "14x20",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 56
+    },
+    {
+     "size": "16x20",
+     "gsm": 55,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 48
+    },
+    {
+     "size": "10x14",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 79
+    },
+    {
+     "size": "12x18",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 50
+    },
+    {
+     "size": "14x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 34
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "ld-plastic-dcut-plain",
+   "name": "Plain LD D-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "D-Cut",
+   "print": "Plain",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Womens wear",
+    "Mens Wear",
+    "Family wear",
+    "Kids Wear",
+    "Textiles"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "micron",
+   "description": "Plain LD plastic cover with a punched D-cut handle, no printing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 79
+    },
+    {
+     "size": "12x18",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 50
+    },
+    {
+     "size": "14x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 70,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 34
+    },
+    {
+     "size": "10x14",
+     "gsm": 90,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 61
+    },
+    {
+     "size": "12x18",
+     "gsm": 90,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 39
+    },
+    {
+     "size": "14x20",
+     "gsm": 90,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 39
+    },
+    {
+     "size": "16x20",
+     "gsm": 90,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": 34
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "plastic-ucut-plain",
+   "name": "Plain U-Cut Covers",
+   "material": "Plastic Cover",
+   "bagType": "U-Cut",
+   "print": "Plain",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Hotel",
+    "Bakery",
+    "Kirana Store",
+    "Wine Shop",
+    "Super Market",
+    "Medical Shops"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "micron",
+   "description": "Plain U-cut plastic cover, no printing.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "13x16",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x22",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x26",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": []
+  },
+  {
+   "id": "ucut-plain",
+   "name": "Plain Non Woven U-CUT Bags",
+   "material": "Non Woven Bag",
+   "bagType": "U-Cut",
+   "print": "Plain",
+   "colours": [
+    "White"
+   ],
+   "shopTypes": [
+    "Hotel",
+    "Bakery",
+    "Kirana Store",
+    "Wine Shop",
+    "Super Market",
+    "Medical Shops"
+   ],
+   "badges": [],
+   "unit": "kg",
+   "minOrder": 30,
+   "thickness": "GSM",
+   "description": "Plain non woven U-cut bag, no printing. Gusseted vest shape, stocked for immediate dispatch.",
+   "priceNotes": "",
+   "variants": [
+    {
+     "size": "10x14",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "13x16",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "16x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    },
+    {
+     "size": "20x20",
+     "gsm": 60,
+     "patty": "",
+     "rates": null,
+     "pcsPerKg": null
+    }
+   ],
+   "photos": [
+    {
+     "file": "catalog/d6ffba263ad13d80d05580312c63d57a2711d01e.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
+  }
+ ]
+}

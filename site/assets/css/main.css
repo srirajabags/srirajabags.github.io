@@ -203,7 +203,7 @@ a { color: var(--navy); }
 
 .section-cta { text-align: center; margin: 2rem 0 0; }
 
-/* Homepage product rail. Cards are read from the catalog CSV and link through
+/* Homepage product rail. Cards are read from the catalog data and link through
    to that product on /catalog/, so the homepage and the catalog cannot drift.
    Scroll-snap carries the interaction; the arrows are added by script. */
 .rail-wrap { position: relative; }
@@ -891,7 +891,7 @@ html:not(.js) .js-only { display: none !important; }
 }
 /* Colours that are not one colour — Multicolour print, Mixed for the misprint
    lines — have no hex to store, so their swatch is defined here rather than in
-   the data file. The CSV stays plain data with no CSS in it. */
+   the data file. The catalog stays plain data with no CSS in it. */
 .ct-sw[data-c="multicolour"],
 .ct-sw[data-c="mixed"] { background: linear-gradient(135deg, #b8322c, #e8c341 45%, #1f6b4a); }
 .ct-colour-n { font-size: 0.7rem; color: var(--ink-soft); margin-left: 0.15rem; }
@@ -1129,7 +1129,17 @@ html:not(.js) .js-only { display: none !important; }
 .ct-qty-btn:hover { border-color: var(--navy-soft); }
 .ct-qty-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .ct-qty-val { flex: 1; text-align: center; }
-.ct-qty-kg { display: block; font-size: 1.15rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.ct-qty-input {
+  display: block; width: 100%; max-width: 9rem; margin: 0 auto;
+  font: inherit; font-size: 1.15rem; font-weight: 800; text-align: center; font-variant-numeric: tabular-nums;
+  color: var(--ink); background: #fff;
+  border: 1px solid var(--rule); border-radius: 8px; padding: 0.45rem 0.5rem;
+  -moz-appearance: textfield; appearance: textfield;
+}
+.ct-qty-input::-webkit-outer-spin-button,
+.ct-qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.ct-qty-input:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.ct-qty-min { color: #a4430b; text-align: center; }
 .ct-qty-pcs { display: block; font-size: 0.75rem; color: var(--ink-soft); margin-top: 0.15rem; }
 .ct-qty-total {
   display: flex; justify-content: space-between; align-items: baseline;
@@ -1139,6 +1149,33 @@ html:not(.js) .js-only { display: none !important; }
 .ct-qty-total strong { font-size: 1.05rem; color: var(--navy); font-variant-numeric: tabular-nums; }
 .ct-fine { font-size: 0.72rem; line-height: 1.5; color: var(--ink-soft); margin: 0.5rem 0 0; }
 .ct-note { font-size: 0.88rem; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+
+/* Price table: sizes down the side, one column per order-value slab. The
+   table for the chosen GSM and side patty is shown; the chosen size's row is
+   tinted. Narrow enough for four columns on a 320px phone. */
+.ct-per { font-size: 0.6em; font-weight: 600; color: var(--ink-soft); margin-left: 0.1em; }
+.ct-prices { margin: 0 0 1.1rem; }
+.ct-ptable {
+  width: 100%; border-collapse: collapse; margin: 0 0 0.6rem;
+  font-size: 0.82rem; font-variant-numeric: tabular-nums;
+  border: 1px solid var(--rule); border-radius: 8px; overflow: hidden;
+}
+.ct-ptable caption {
+  caption-side: top; text-align: left; padding: 0 0 0.35rem;
+  font-size: 0.72rem; font-weight: 600; color: var(--ink-soft);
+}
+.ct-ptable th, .ct-ptable td { padding: 0.5rem 0.45rem; text-align: right; border-top: 1px solid var(--rule); }
+.ct-ptable thead th {
+  border-top: 0; background: var(--paper-alt);
+  font-size: 0.66rem; font-weight: 600; line-height: 1.3; letter-spacing: 0.02em; color: var(--ink-soft);
+  vertical-align: bottom;
+}
+.ct-ptable th:first-child { text-align: left; }
+.ct-ptable tbody th { font-weight: 600; white-space: nowrap; }
+.ct-ptable td { font-weight: 700; color: var(--navy); }
+.ct-ptable td.ct-rate-ask { text-align: left; font-weight: 600; }
+.js .ct-ptable tbody tr.is-on { background: var(--mint-pale); }
+.ct-ptable[hidden] { display: none; }
 
 .ct-dialog-foot {
   display: flex; gap: 0.5rem;

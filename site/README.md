@@ -14,7 +14,7 @@ ever needed.
 site/
   hugo.toml              site config + contact details in [params]
   content/
-    _index.md            ALL landing page content (hero, products, about, gallery)
+    _index.md            landing page content (hero, about, gallery)
     blog/
       _index.md          blog index page
       *.md               blog posts
@@ -29,10 +29,19 @@ site/
 
 ## Editing content
 
-**Landing page** — everything is in `content/_index.md` front matter. To change
-a product name, the hero text, or the gallery, edit that file; no templates
-involved. To add a product, add an entry under `products.items` with a `name`,
-an `image` under `images/`, and the `enquiry` text used in its WhatsApp link.
+**Landing page** — hero text, about and gallery are in `content/_index.md`
+front matter; no templates involved.
+
+**Catalog** — products, sizes, rates and photos live in Grist, in the
+`Catalog_Products`, `Catalog_Prices`, `Catalog_Photos`, `Catalog_Colours` and
+`Catalog_Price_Types` tables. The deploy workflow runs
+`scripts/catalog/sync-from-grist.mjs` before every build, which writes `assets/data/catalog.json` and
+`assets/images/catalog/` and commits them. Grist edits are not published on
+their own: open Actions → Deploy Pages → Run workflow (any push to `main`
+also picks them up). Never edit those files by
+hand — the next sync overwrites them. The homepage product rail reads the same
+data. The sync needs the `GRIST_URL`, `GRIST_API_KEY` and `GRIST_DOC_ID` repo
+secrets; without them the build uses the catalog last committed.
 
 **Contact details** — phone, email, social links and the Google Maps embed all
 live in `[params]` in `hugo.toml`, so they are set in one place and used by
