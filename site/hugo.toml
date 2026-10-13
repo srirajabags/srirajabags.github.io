@@ -7,6 +7,10 @@ enableRobotsTXT = true
 # emit one at all. Requires the full history at build time — the deploy
 # workflow sets fetch-depth: 0 for exactly this reason.
 enableGitInfo = true
+# The catalog cuts three sizes from every product photo. On a cold image cache
+# (a fresh runner, or a batch of new photos from Grist) that takes well over
+# Hugo's 30s default for a single template. Cached builds take seconds.
+timeout = "10m"
 # No tag/category archive pages yet — re-enable by removing this and adding
 # layouts/_default/{taxonomy,term}.html
 disableKinds = ["taxonomy", "term"]

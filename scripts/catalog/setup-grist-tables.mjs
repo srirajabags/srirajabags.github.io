@@ -110,6 +110,8 @@ const TABLES = [
             col("Photo", "Attachments"),
             choices("Shop_Types", SHOP_TYPES),
             col("Alt_Text", "Text"),
+            // Ticked: kept here but not shown on the website.
+            col("Hidden", "Bool"),
         ],
     },
 ];

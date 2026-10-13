@@ -990,6 +990,10 @@ html:not(.js) .js-only { display: none !important; }
 }
 .ct-dialog-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .ct-dialog-img { background: var(--paper-alt); }
+/* The dialog shows the whole photo inside the square, letterboxed on the panel
+   colour, where the card crops it. Landscape group shots would otherwise lose
+   the bags at either end. */
+.ct-dialog-img .ct-slides img { object-fit: contain; height: auto; aspect-ratio: 1/1; }
 
 /* Photo carousel. Scroll-snap does the actual work, so swipe and keyboard
    scrolling behave natively and the thing still functions with no JS — the
@@ -1028,6 +1032,12 @@ html:not(.js) .js-only { display: none !important; }
 .ct-cprev { left: 0.5rem; }
 .ct-cnext { right: 0.5rem; }
 
+.ct-counter {
+  position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
+  padding: 0.2rem 0.55rem; border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55); color: #fff;
+  font-size: 0.72rem; font-weight: 600; font-variant-numeric: tabular-nums;
+}
 .ct-dots {
   position: absolute; bottom: 0.6rem; left: 50%; transform: translateX(-50%);
   display: flex; gap: 0.3rem;

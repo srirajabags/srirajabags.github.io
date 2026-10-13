@@ -1,0 +1,10 @@
+{
+  "name": "srb-catalog-sync",
+  "private": true,
+  "description": "Pulls the website catalog out of Grist before the Hugo build. See sync-from-grist.mjs.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "sharp": "0.34.5"
+  }
+}

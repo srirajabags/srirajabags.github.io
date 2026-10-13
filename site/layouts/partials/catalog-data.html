@@ -208,10 +208,17 @@
   {{- range $m.photos | default slice -}}
     {{- $ph := . -}}
     {{- with resources.Get (printf "images/%s" $ph.file) -}}
+      {{/* Cards are square crops (Smart keeps the bag, not the wall behind
+           it). The dialog photo is FIT, never cropped: a group shot of four
+           bags shows all four. Nothing is ever enlarged — a 474px phone photo
+           is served at 474px rather than blown up to a soft 640. */}}
+      {{- $short := math.Min .Width .Height -}}
+      {{- $c1 := int (math.Min 320 $short) }}{{ $c2 := int (math.Min 640 $short) -}}
+      {{- $full := .Fit "900x900 webp q82" -}}
       {{- $imgs = $imgs | append (dict
-          "src" (.Fill "320x320 Smart webp q80").RelPermalink
-          "src2x" (.Fill "640x640 Smart webp q80").RelPermalink
-          "full" (.Fill "900x900 Smart webp q82").RelPermalink
+          "src" (.Fill (printf "%dx%d Smart webp q80" $c1 $c1)).RelPermalink
+          "src2x" (.Fill (printf "%dx%d Smart webp q80" $c2 $c2)).RelPermalink
+          "full" $full.RelPermalink "fullW" $full.Width "fullH" $full.Height
           "shops" ($ph.shopTypes | default slice)
           "alt" ($ph.alt | default "")) -}}
     {{- end -}}

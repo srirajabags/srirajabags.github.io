@@ -44,7 +44,9 @@ jobs:
           GRIST_URL: ${{ secrets.GRIST_URL }}
           GRIST_API_KEY: ${{ secrets.GRIST_API_KEY }}
           GRIST_DOC_ID: ${{ secrets.GRIST_DOC_ID }}
-        run: node scripts/catalog/sync-from-grist.mjs
+        run: |
+          npm ci --prefix scripts/catalog --no-audit --no-fund
+          node scripts/catalog/sync-from-grist.mjs
 
       - name: Warn if the sync failed
         if: steps.sync.outcome == 'failure'

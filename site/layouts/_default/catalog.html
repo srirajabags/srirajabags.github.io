@@ -137,7 +137,10 @@
             data-unit="{{ .qtyUnit }}"
             data-search="{{ lower (printf "%s %s %s %s %s %s %s %s" .name (delimit .materials " ") .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
 
-            {{ $pname := .name }}{{ $nimg := len .imgs }}
+            {{/* A card carries its first 8 photos; the dialog has them all. A
+                 strip of 49 thumbnails would cost every visitor the bytes for a
+                 carousel almost nobody swipes to the end of. */}}
+            {{ $pname := .name }}{{ $cardImgs := first 8 .imgs }}{{ $nimg := len $cardImgs }}
             <div class="ct-thumb">
               {{/* Slides are plain <img>, never buttons. Wrapping each one would
                    put a tab stop on every photo of every card, and marking them
@@ -145,10 +148,10 @@
                    not run. Tapping a slide opens the detail view via a
                    delegated handler that ignores swipes; the keyboard and
                    screen-reader route in is the card title below. */}}
-              {{ if .imgs }}
+              {{ if $cardImgs }}
               <div class="ct-carousel" data-carousel data-open-target="{{ .id }}">
                 <div class="ct-slides" role="group" aria-label="Photos of {{ $pname }}">
-                  {{ range $i, $im := .imgs }}
+                  {{ range $i, $im := $cardImgs }}
                   {{/* data-shop is what lets the script float the photos shot
                        for the selected trade to the front of the strip. Blank
                        on a generic photo, which is most of them. */}}
@@ -164,7 +167,7 @@
                 <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo of {{ $pname }}">‹</button>
                 <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo of {{ $pname }}">›</button>
                 <div class="ct-dots js-only">
-                  {{ range $i, $im := .imgs }}
+                  {{ range $i, $im := $cardImgs }}
                   <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
                           aria-label="Photo {{ add $i 1 }} of {{ $nimg }}"></button>
                   {{ end }}
@@ -310,7 +313,7 @@
         <div class="ct-carousel" data-carousel>
           <div class="ct-slides" tabindex="0" role="group" aria-label="Photos of {{ $pname }}">
             {{ range $i, $im := .imgs }}
-            <img src="{{ $im.full }}" width="900" height="900"
+            <img src="{{ $im.full }}" width="{{ $im.fullW }}" height="{{ $im.fullH }}"
                  data-shop="{{ delimit $im.shops "|" }}"
                  alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}{{ end }}"
                  loading="lazy" decoding="async">
@@ -319,12 +322,18 @@
           {{ if gt (len .imgs) 1 }}
           <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo">‹</button>
           <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo">›</button>
+          {{/* Dots stop being readable past a handful; a long strip gets a
+               "3 / 49" counter instead. */}}
+          {{ if gt (len .imgs) 8 }}
+          <span class="ct-counter js-only" aria-live="polite">1 / {{ len .imgs }}</span>
+          {{ else }}
           <div class="ct-dots js-only">
             {{ range $i, $im := .imgs }}
             <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
                     aria-label="Photo {{ add $i 1 }}"></button>
             {{ end }}
           </div>
+          {{ end }}
           {{ end }}
         </div>
         {{ else }}
@@ -915,6 +924,7 @@
     var dots = car.querySelectorAll("[data-cdot]");
     var prev = car.querySelector('[data-cnav="-1"]');
     var next = car.querySelector('[data-cnav="1"]');
+    var counter = car.querySelector(".ct-counter");
     if (slides.length < 2) return;
 
     // Every carousel lives inside a closed <dialog>, which has no layout until
@@ -933,6 +943,7 @@
         dt.classList.toggle("is-on", n === i);
         dt.setAttribute("aria-current", String(n === i));
       });
+      if (counter) counter.textContent = (i + 1) + " / " + slides.length;
       if (prev) prev.disabled = i <= 0;
       if (next) next.disabled = i >= slides.length - 1;
     }

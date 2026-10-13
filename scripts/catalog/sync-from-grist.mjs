@@ -14,6 +14,15 @@
 // hash Grist keeps for its content, so a photo already on disk is skipped, a
 // replaced photo arrives under a new name, and one no longer used is deleted.
 //
+// Grist keeps the ORIGINALS — a 24-megapixel camera JPEG, a PNG straight off
+// a phone. What lands in the repo is a web master made from it: turned upright
+// from its EXIF orientation, flattened onto white, at most MASTER_EDGE pixels
+// on the long side, re-encoded as JPEG, metadata stripped. Hugo cuts the card
+// and dialog sizes from that, so the repo never carries a 16 MB photo and the
+// build never has to decode one.
+//
+// Needs sharp: `npm ci --prefix scripts/catalog` (the workflow does this).
+//
 // The output has no timestamps and a fixed key order, so a sync that finds
 // nothing changed leaves the working tree untouched and the workflow commits
 // nothing.
@@ -22,20 +31,32 @@ import { createHash } from "node:crypto";
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { dirname, extname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 
 const SITE = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "site");
 const DATA_FILE = join(SITE, "assets", "data", "catalog.json");
 const PHOTO_DIR = join(SITE, "assets", "images", "catalog");
 const IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+// Twice the largest size the page shows (the 900px dialog photo), with room to
+// spare. The 2x card is 640px.
+const MASTER_EDGE = 1600;
 
 // ---- sources ---------------------------------------------------------------
 
 function gristSource({ GRIST_URL, GRIST_API_KEY, GRIST_DOC_ID }) {
     const base = `${GRIST_URL.replace(/\/$/, "")}/api/docs/${GRIST_DOC_ID}`;
+    // A dropped connection or DNS hiccup mid-sync is retried rather than
+    // failing the run; a 4xx (bad key, missing table) is not worth retrying.
     const get = async (path) => {
-        const res = await fetch(base + path, { headers: { Authorization: `Bearer ${GRIST_API_KEY}` } });
-        if (!res.ok) throw new Error(`GET ${path}: ${res.status} ${(await res.text()).slice(0, 300)}`);
-        return res;
+        for (let attempt = 1; ; attempt++) {
+            let res, err;
+            try { res = await fetch(base + path, { headers: { Authorization: `Bearer ${GRIST_API_KEY}` } }); } catch (e) { err = e; }
+            if (res?.ok) return res;
+            const detail = err ? err.cause?.code ?? err.message : `${res.status} ${(await res.text()).slice(0, 300)}`;
+            if (attempt >= 4 || (res && res.status < 500)) throw new Error(`GET ${path}: ${detail}`);
+            console.log(`retrying GET ${path} (${detail})`);
+            await new Promise((r) => setTimeout(r, 3000 * attempt));
+        }
     };
     return {
         // manualSort is the order rows are dragged into in Grist.
@@ -73,12 +94,14 @@ const list = (v) => (Array.isArray(v) ? v.slice(v[0] === "L" ? 1 : 0) : []).map(
 const refs = (v) => (Array.isArray(v) ? v.slice(v[0] === "L" ? 1 : 0) : []).filter((x) => typeof x === "number");
 
 function photoName(meta, id) {
+    // The source type decides whether we can read it; the web master is
+    // always a JPEG.
     const ext = (extname(text(meta.fileName)) || extname(text(meta.fileIdent))).toLowerCase();
     // fileIdent is "<sha>.<ext>". Without one (an old or unusual Grist), fall
     // back to the attachment id plus what would change if the file did.
     const key = text(meta.fileIdent).replace(/\.[^.]*$/, "") ||
         createHash("sha1").update(`${id}:${meta.fileSize}:${meta.timeUploaded}`).digest("hex");
-    return { name: `${key.slice(0, 40)}${ext}`, ext };
+    return { name: `${key.slice(0, 40)}.jpg`, ext };
 }
 
 // ---- build ------------------------------------------------------------------
@@ -158,7 +181,9 @@ export async function buildCatalog(source, { log = console.log } = {}) {
     const wanted = new Map(); // file name -> attachment id
     for (const ph of photos) {
         const product = byId.get(ph.fields.Product);
-        if (!product) continue;
+        // Hidden: kept in Grist (an AI mock-up, a rate flyer, a duplicate) but
+        // not shown on the website. No product: not assigned to one yet.
+        if (!product || ph.fields.Hidden) continue;
         for (const attId of refs(ph.fields.Photo)) {
             const meta = attachments.get(attId);
             if (!meta) { problems.push(`photo row ${ph.id}: attachment ${attId} not found`); continue; }
@@ -173,13 +198,23 @@ export async function buildCatalog(source, { log = console.log } = {}) {
     return { catalog: out, wanted };
 }
 
+export async function webMaster(original) {
+    return sharp(original, { failOn: "none" })
+        .rotate()                                   // EXIF orientation, then drop it
+        .resize(MASTER_EDGE, MASTER_EDGE, { fit: "inside", withoutEnlargement: true })
+        .flatten({ background: "#ffffff" })         // transparent PNGs onto white
+        .toColourspace("srgb")
+        .jpeg({ quality: 82, mozjpeg: true })
+        .toBuffer();                                // no withMetadata(): EXIF/GPS stripped
+}
+
 async function syncPhotos(source, wanted, log) {
     await mkdir(PHOTO_DIR, { recursive: true });
     const have = new Set(await readdir(PHOTO_DIR));
     let added = 0, removed = 0;
     for (const [name, attId] of wanted) {
         if (have.has(name)) continue;
-        await writeFile(join(PHOTO_DIR, name), await source.download(attId));
+        await writeFile(join(PHOTO_DIR, name), await webMaster(await source.download(attId)));
         added++;
     }
     for (const name of have) {
