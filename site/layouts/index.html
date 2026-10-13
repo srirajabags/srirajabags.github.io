@@ -30,7 +30,7 @@
 {{ end }}
 
 {{/* ---------------- products ---------------- */}}
-{{/* A rail of cards read from the same CSV the catalog page uses, so the two
+{{/* A rail of cards read from the same catalog data the catalog page uses, so the two
      can never disagree, and a link through to the full list. Previously this
      was a second product list maintained by hand in content/_index.md, which
      had already drifted from what we make. */}}
@@ -40,7 +40,7 @@
 {{ $badge := .featureBadge | default "Bestseller" }}
 {{/* Badged rows lead, then everything else in sheet order — so the rail opens
      on the bestsellers but still shows the breadth of the range behind them.
-     Both halves keep the order the office set in the CSV. */}}
+     Both halves keep the order the office set in Grist. */}}
 {{ $lead := slice }}{{ $rest := slice }}
 {{ range $cat.products }}
   {{ if in .badges $badge }}{{ $lead = $lead | append . }}{{ else }}{{ $rest = $rest | append . }}{{ end }}
@@ -58,6 +58,7 @@
       <div class="rail" id="home-rail" tabindex="0" role="group" aria-label="{{ $.Params.products.heading }}">
         {{ range . }}
         {{ $sizeLabels := slice }}{{ range .sizes }}{{ $sizeLabels = $sizeLabels | append .label }}{{ end }}
+        {{ $thick := .thickness }}
         <a class="rail-card" href="{{ printf "/catalog/#p-%s" .id | relURL }}">
           <span class="rail-thumb">
             {{ if .img }}
@@ -83,7 +84,7 @@
               {{ with .gsms }}
               <span>
                 {{- $lo := (index . 0).value }}{{ $hi := (index (last 1 .) 0).value -}}
-                {{ if eq $lo $hi }}{{ $lo }}{{ else }}{{ $lo }}–{{ $hi }}{{ end }} GSM
+                {{ if eq $lo $hi }}{{ $lo }}{{ else }}{{ $lo }}–{{ $hi }}{{ end }} {{ $thick }}
               </span>
               {{ end }}
             </span>

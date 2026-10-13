@@ -18,21 +18,23 @@ layout: "catalog"
 # canonical in the head partial points at the bare /catalog/ regardless. That is
 # why robots.txt does not need to disallow the query strings.
 
-# Everything below is page copy. The PRODUCTS themselves live in
-# assets/data/catalog.csv — open that in Google Sheets, fill it in, export as
-# CSV and drop it back. Blank rate / min order / pcs-per-kg cells are expected
+# Everything below is page copy. The PRODUCTS themselves live in Grist, in the
+# Catalog_Products / Catalog_Prices / Catalog_Photos tables (plus
+# Catalog_Colours and Catalog_Price_Types). The deploy workflow pulls them into
+# assets/data/catalog.json and assets/images/catalog/ before every build — on
+# every push to main and whenever "Run workflow" is pressed in GitHub Actions.
+# Never edit those files by hand; the next sync overwrites them. Blank rates are expected
 # and render as "Rate on request"; nothing breaks while they are empty.
 #
-# PHOTOS live in a second sheet, assets/data/catalog-images.csv — one row per
-# photo: catalog_id, image, shop_types, alt. Add as many rows per product as we
-# have pictures. A row's shop_types is what makes it a MEDICAL SHOP photo rather
-# than just another photo: when a buyer filters by that trade, those photos move
-# to the front of the product's carousel. Leave shop_types blank for a plain
-# product shot — blank means "generic", and generic is the honest default.
+# PHOTOS are one row per photo in Catalog_Photos. A row's Shop_Types is what
+# makes it a MEDICAL SHOP photo rather than just another photo: when a buyer
+# filters by that trade, those photos move to the front of the product's
+# carousel. Leave Shop_Types blank for a plain product shot — blank means
+# "generic", and generic is the honest default.
 #
 # The title, description and the About paragraphs name the materials we make.
-# They are written by hand, not derived from the sheet, so adding a new material
-# column value will NOT update them — check them when the range changes.
+# They are written by hand, not derived from Grist, so adding a new material
+# value will NOT update them — check them when the range changes.
 
 lede: "Everything we manufacture at our Dhone unit — non woven carry bags in D-cut, U-cut, handle and stitched shapes, digital and BOPP laminated printing, and HM, LD and bio-degradable plastic covers. Add what you need to an enquiry list and send it to us in one WhatsApp message."
 

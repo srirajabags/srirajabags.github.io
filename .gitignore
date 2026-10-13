@@ -5,3 +5,4 @@ site/public/
 site/resources/
 site/.hugo_build.lock
 project.mobirise-tmp
+scripts/catalog/node_modules/

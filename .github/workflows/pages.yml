@@ -3,10 +3,14 @@ name: Deploy Pages
 on:
   push:
     branches: [main]
+  # "Run workflow" in the Actions tab is how Grist catalog edits are
+  # published: it syncs the catalog, commits it and deploys.
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # write: the catalog sync commits what it pulled from Grist back to main, so
+  # every price change is in git history and the next build starts from it.
+  contents: write
   pages: write
   id-token: write
 
@@ -27,6 +31,49 @@ jobs:
           # Full history, not the default shallow clone: enableGitInfo reads
           # each file's last commit date to build sitemap <lastmod>.
           fetch-depth: 0
+
+      # The catalog lives in Grist. Pull it into site/assets/data/catalog.json
+      # and site/assets/images/catalog/ before building, so the page is static
+      # HTML with every product and rate in it. If Grist cannot be reached, the
+      # build carries on with the catalog last committed — a stale price list
+      # beats no catalog — and the run is flagged with a warning.
+      - name: Sync catalog from Grist
+        id: sync
+        continue-on-error: true
+        env:
+          GRIST_URL: ${{ secrets.GRIST_URL }}
+          GRIST_API_KEY: ${{ secrets.GRIST_API_KEY }}
+          GRIST_DOC_ID: ${{ secrets.GRIST_DOC_ID }}
+        run: |
+          npm ci --prefix scripts/catalog --no-audit --no-fund
+          node scripts/catalog/sync-from-grist.mjs
+
+      - name: Warn if the sync failed
+        if: steps.sync.outcome == 'failure'
+        run: echo "::warning::Catalog sync from Grist failed; building with the last committed catalog."
+
+      # Only main is written to: a sync on any other ref is used for that build
+      # and thrown away. A push made with GITHUB_TOKEN does not start another
+      # run, so this cannot loop.
+      - name: Commit catalog changes
+        id: commit
+        if: steps.sync.outcome == 'success' && github.ref == 'refs/heads/main'
+        run: |
+          git add -A site/assets/data/catalog.json site/assets/images/catalog
+          if git diff --cached --quiet; then
+            echo "Catalog unchanged."
+            exit 0
+          fi
+          # Whatever happens to the push, this build has the new catalog in its
+          # working tree and deploys it.
+          git -c user.name="github-actions[bot]" -c user.email="41898182+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Sync catalog from Grist"
+          git show --stat --format='%h %s' HEAD
+          # main may have moved while this ran; the sync only touches its own
+          # files, so replaying it on top is always clean.
+          if ! { git pull -q --rebase origin main && git push -q origin HEAD:main; }; then
+            echo "::warning::Could not push the catalog sync to main (is main protected?). This deploy has it; git history does not."
+          fi
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
