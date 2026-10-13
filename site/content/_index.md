@@ -32,7 +32,7 @@ about:
   cta: "About our factory"
 
 gallery:
-  heading: "Watch Our Gallery"
+  heading: "Bags Gallery"
   # The photos are the catalog's own, synced from Grist (Catalog_Photos) — this
   # section keeps no list of its own, so it can never show a photo the catalog
   # has dropped. It takes up to `limit` of them, one product at a time (every
