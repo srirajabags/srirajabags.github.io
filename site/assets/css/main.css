@@ -592,14 +592,13 @@ html:not(.js) .pd-tables { max-width: none; grid-template-columns: repeat(auto-f
 .share-btn:hover { border-color: var(--navy-soft); }
 .share-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 .share-btn svg { width: 1.05rem; height: 1.05rem; flex: none; }
+.share-copy svg { width: 1.25rem; height: 1.25rem; }
 .share-btn.share-wa { background: #25d366; border-color: #25d366; color: #0b3d1f; }
 .share-btn.is-done { border-color: var(--navy); background: var(--mint-pale); }
 .share-btn[hidden] { display: none; }
 .share-top { margin: -0.4rem 0 1.6rem; }
 .share-top .share-btn { padding: 0; width: 2.5rem; }
-.share-top .share-btn.share-native { width: auto; padding: 0 0.8rem; }
-.share-top .share-copy-label:empty { display: none; }
-.share-top .share-copy.is-done { width: auto; padding: 0 0.8rem; }
+.share-top .share-btn.share-native, .share-top .share-btn.share-copy { width: auto; padding: 0 0.8rem; }
 .share-end { margin: 2.6rem 0 1.4rem; padding: 1.2rem 1.25rem; background: var(--paper-alt); border-radius: 12px; }
 .share-title { margin: 0 0 0.8rem !important; font-weight: 700; color: var(--ink); }
 .post-photo { margin: 1.6rem 0; }
