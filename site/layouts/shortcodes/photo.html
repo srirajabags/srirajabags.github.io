@@ -1,0 +1,20 @@
+{{/* A photo from the post's own folder, resized like every other photo on
+     the site and never enlarged.
+
+       {{< photo src="bopp-bag.jpg" alt="..." caption="..." >}}
+
+     The post keeps its own copies rather than pointing at catalog photos, so
+     an article does not change when the office swaps a catalog photo in Grist. */}}
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src -}}
+  {{- $w1 := int (math.Min 720 .Width) }}{{ $w2 := int (math.Min 1440 .Width) -}}
+  {{- $one := .Resize (printf "%dx webp q80" $w1) }}{{ $two := .Resize (printf "%dx webp q76" $w2) -}}
+  <figure class="post-photo">
+    <img src="{{ $one.RelPermalink }}" srcset="{{ $one.RelPermalink }} {{ $one.Width }}w, {{ $two.RelPermalink }} {{ $two.Width }}w"
+         sizes="(max-width: 760px) 100vw, 720px" width="{{ $one.Width }}" height="{{ $one.Height }}"
+         alt="{{ $.Get "alt" }}" loading="lazy" decoding="async">
+    {{- with $.Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+  </figure>
+{{- else -}}
+  {{- errorf "photo shortcode: %q not found next to %s" $src $.Page.File.Path -}}
+{{- end -}}

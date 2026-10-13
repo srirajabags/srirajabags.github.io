@@ -579,6 +579,16 @@ html:not(.js) .pd-tables { max-width: none; grid-template-columns: repeat(auto-f
 .post ul, .post ol { padding-left: 1.3rem; }
 .post li { margin-bottom: 0.4rem; }
 .post img { border-radius: 6px; }
+.post-author { font-weight: 600; color: var(--ink); }
+.post-photo { margin: 1.6rem 0; }
+.post-photo img { display: block; width: 100%; height: auto; border-radius: 10px; background: var(--paper-alt); }
+.post-photo figcaption { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ink-soft); }
+/* Tables scroll inside their own box on a phone instead of widening the page. */
+.post table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; margin: 0 0 1.4rem; font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.post th, .post td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.post thead th { background: var(--paper-alt); font-size: 0.78rem; font-weight: 700; color: var(--ink-soft); border-bottom: 2px solid var(--rule); }
+.post td[style*="right"], .post th[style*="right"] { text-align: right; }
+.post tbody td:first-child { white-space: nowrap; font-weight: 600; }
 .post blockquote {
   margin: 1.6rem 0;
   padding: 0.85rem 1.25rem;

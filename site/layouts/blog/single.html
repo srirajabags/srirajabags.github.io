@@ -1,13 +1,15 @@
 {{ define "main" }}
-<main class="page">
+{{/* baseof.html already provides the <main> landmark; a second one inside
+     it is invalid HTML and confuses screen readers. */}}
+<div class="page">
   <article class="container narrow post">
     <h1 class="page-title">{{ .Title }}</h1>
     <p class="meta">
-      {{ .Date.Format "2 January 2006" }}
+      {{ with .Params.author }}By <span class="post-author">{{ . }}</span> · {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
       {{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}
     </p>
     {{ .Content }}
     <p class="back"><a href="{{ "/blog/" | relURL }}">← All posts</a></p>
   </article>
-</main>
+</div>
 {{ end }}

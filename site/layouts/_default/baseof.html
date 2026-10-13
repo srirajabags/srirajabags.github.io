@@ -51,6 +51,8 @@
   {{/* A page's own ogImage wins: a product page shares its product photo, so
        a link sent on WhatsApp shows the bag rather than the factory. */}}
   {{ $ogSrc := resources.Get (.Params.ogImage | default .Site.Params.ogImage | default "images/factory-production-line.jpg") }}
+  {{/* A blog post's lead image lives in its own folder. */}}
+  {{ with .Params.image }}{{ with $.Resources.Get . }}{{ $ogSrc = . }}{{ end }}{{ end }}
   {{ with $ogSrc }}
   {{ $og := .Fill "1200x630 Smart jpg q85" }}
   <meta property="og:image" content="{{ $og.Permalink }}">

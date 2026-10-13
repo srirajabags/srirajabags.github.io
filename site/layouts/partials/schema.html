@@ -84,9 +84,14 @@
   "url" .Permalink
   "wordCount" .WordCount
   "inLanguage" .Site.LanguageCode
-  "author" (dict "@type" "Organization" "name" .Site.Title "url" .Site.BaseURL)
+  "author" (cond (ne (.Params.author | default "") "") (dict "@type" "Person" "name" .Params.author "worksFor" (dict "@type" "Organization" "@id" (printf "%s#business" .Site.BaseURL))) (dict "@type" "Organization" "name" .Site.Title "url" .Site.BaseURL))
   "publisher" (dict "@type" "Organization" "name" .Site.Title "@id" (printf "%s#business" .Site.BaseURL))
 }}
+{{/* The lead image, from the post's own folder, as Google asks for in
+     article markup. */}}
+{{ with .Params.image }}{{ with $.Resources.Get . }}
+{{ $post = merge $post (dict "image" (slice ((.Resize "1200x webp q80").Permalink))) }}
+{{ end }}{{ end }}
 <script type="application/ld+json">{{ $post | jsonify | safeJS }}</script>
 
 {{/* Breadcrumbs: Home › Blog › this post */}}
