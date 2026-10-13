@@ -43,7 +43,7 @@
   {{/* Social preview. Without this, every WhatsApp and Facebook share renders a
        blank card — and WhatsApp is where the enquiries actually come from.
        Absolute URLs are required; scrapers do not resolve relative paths. */}}
-  {{ $ogSrc := resources.Get (default "images/img-1891.jpg" .Site.Params.ogImage) }}
+  {{ $ogSrc := resources.Get (default "images/factory-production-line.jpg" .Site.Params.ogImage) }}
   {{ with $ogSrc }}
   {{ $og := .Fill "1200x630 Smart jpg q85" }}
   <meta property="og:image" content="{{ $og.Permalink }}">

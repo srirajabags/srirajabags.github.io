@@ -163,32 +163,81 @@
 </section>
 {{ end }}
 
-{{/* ---------------- gallery ---------------- */}}
+{{/* ---------------- gallery ----------------
+     Two rows of catalog photos drifting slowly in opposite directions. Photos
+     keep their own shape (a portrait bag, a landscape group shot) at one
+     height, which reads as a wall of real orders rather than a grid of crops.
+
+     Motion is CSS only: each row holds its photos twice and slides by exactly
+     one copy, so the loop has no seam. It pauses while the pointer or keyboard
+     focus is on it, and the Pause button stops it for everyone else — touch
+     screens have no hover, and moving content needs a way to stop it. With
+     reduced motion requested it does not move at all: the rows become plain
+     scrollable strips. The second copy is aria-hidden and out of the tab
+     order, so screen readers and keyboards meet each photo once. */}}
+{{ $cat := partialCached "catalog-data.html" $ }}
 {{ with .Params.gallery }}
-<section class="section" id="gallery">
-  <div class="container">
+{{ $limit := .limit | default 24 }}
+{{ $picked := slice }}
+{{ range $round := seq 0 11 }}
+  {{ range $cat.products }}
+    {{ if and (lt (len $picked) $limit) (gt (len .imgs) $round) }}
+      {{ $picked = $picked | append (dict "im" (index .imgs $round) "id" .id "name" .name) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ if $picked }}
+{{ $a := slice }}{{ $b := slice }}
+{{ range $i, $p := $picked }}{{ if modBool $i 2 }}{{ $a = $a | append $p }}{{ else }}{{ $b = $b | append $p }}{{ end }}{{ end }}
+<section class="section mq-section" id="gallery">
+  <div class="container mq-head">
     <h2 class="section-title">{{ .heading }}</h2>
-    <div class="gallery-grid">
-      {{ range .images }}
-      {{ $g := resources.Get .src }}
-      {{/* The grid is repeat(auto-fill, minmax(11rem, 1fr)), so a cell is never
-           much wider than ~200 CSS px — two columns on a phone, six on a wide
-           screen. Shipping a single 500px file to every device was most of the
-           844 KiB Lighthouse flagged as excess image bytes: without `sizes` the
-           browser has to assume 100vw and take the largest candidate. */}}
-      {{ $sm := $g.Fill "250x250 Center webp q72" }}
-      {{ $thumb := $g.Fill "500x500 Center webp q72" }}
-      {{ $full := $g.Resize "1200x webp q80" }}
-      <a href="{{ $full.RelPermalink }}" target="_blank" rel="noopener">
-        <img src="{{ $thumb.RelPermalink }}" width="500" height="500" loading="lazy"
-             srcset="{{ $sm.RelPermalink }} 250w, {{ $thumb.RelPermalink }} 500w"
-             sizes="(max-width: 700px) 45vw, 12rem"
-             decoding="async" alt="{{ .alt }}">
-      </a>
-      {{ end }}
-    </div>
+    <button type="button" class="mq-pause js-only" aria-pressed="false" aria-controls="gallery-rows">
+      <span class="mq-pause-on">Pause</span><span class="mq-pause-off">Play</span>
+    </button>
   </div>
+  <div class="mq" id="gallery-rows">
+    {{ range $r, $row := slice $a $b }}
+    {{ if $row }}
+    <div class="mq-row mq-row-{{ $r }}">
+      <ul class="mq-track">
+        {{ range $copy := slice 0 1 }}
+        {{ range $row }}
+        {{/* 220px tall at 1x, 440px for sharp phones; widths follow the photo.
+             Never enlarged past the master. */}}
+        {{ $h1 := int (math.Min 220 .im.res.Height) }}{{ $h2 := int (math.Min 440 .im.res.Height) }}
+        {{ $one := .im.res.Resize (printf "x%d webp q74" $h1) }}
+        {{ $two := .im.res.Resize (printf "x%d webp q70" $h2) }}
+        <li{{ if $copy }} aria-hidden="true"{{ end }}>
+          <a class="mq-tile" href="{{ printf "/catalog/#p-%s" .id | relURL }}"{{ if $copy }} tabindex="-1"{{ end }}>
+            <img src="{{ $one.RelPermalink }}" srcset="{{ $one.RelPermalink }} 1x, {{ $two.RelPermalink }} 2x"
+                 width="{{ $one.Width }}" height="{{ $one.Height }}"
+                 alt="{{ with .im.alt }}{{ . }}{{ else }}{{ .name }}{{ end }}" loading="lazy" decoding="async">
+            <span class="mq-cap">{{ .name }}</span>
+          </a>
+        </li>
+        {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+    {{ end }}
+  </div>
+  {{ with .cta }}
+  <p class="container mq-cta"><a href="{{ "/catalog/" | relURL }}">{{ . }} <span aria-hidden="true">→</span></a></p>
+  {{ end }}
 </section>
+<script>
+(function () {
+  var b = document.querySelector(".mq-pause"), s = document.querySelector(".mq-section");
+  if (!b || !s) return;
+  b.addEventListener("click", function () {
+    var on = s.classList.toggle("is-paused");
+    b.setAttribute("aria-pressed", String(on));
+  });
+})();
+</script>
+{{ end }}
 {{ end }}
 
 {{/* ---------------- contact ---------------- */}}

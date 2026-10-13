@@ -33,41 +33,14 @@ about:
 
 gallery:
   heading: "Watch Our Gallery"
-  # Every image previously shared one generic alt string. These describe the
-  # actual bag type and print job in each photo — all are real customer orders.
-  images:
-    - src: "images/12x16.jpg"
-      alt: "D-cut non woven carry bag, 12 x 16 inch, single colour black printing on white fabric"
-    - src: "images/digital-1.jpg"
-      alt: "Loop handle non woven bag with full colour digital printing and red handles, made for a jewellery shop"
-    - src: "images/10-1-566x755.jpg"
-      alt: "Loop handle non woven bag with dark full surface printing, made for a menswear store in Guntur"
-    - src: "images/3-1.jpg"
-      alt: "D-cut white non woven carry bag with two colour red and black printing"
-    - src: "images/2-1.jpg"
-      alt: "D-cut white non woven carry bag with blue and red printing, made for a clothing shop in Guntur"
-    - src: "images/6.jpg"
-      alt: "Laminated loop handle shopping bag with full colour photographic printing, made for a womenswear store"
-    - src: "images/img-1891.jpg"
-      alt: "Three D-cut non woven carry bags in white and yellow with single colour printing, made for shops in Kurnool"
-    - src: "images/1-1.jpg"
-      alt: "Two D-cut non woven bags, one white with maroon printing and one turquoise with black printing"
-    - src: "images/img-1886.jpg"
-      alt: "D-cut non woven carry bag in cream with red printing, made for a family clothing store in Bellary"
-    - src: "images/img-1905.jpg"
-      alt: "D-cut white non woven carry bag with two colour green and red printing, made for a menswear shop"
-    - src: "images/digital-3.jpeg"
-      alt: "Box style loop handle bag with black side panels and green laminated full colour printing"
-    - src: "images/img-1381.jpg"
-      alt: "Loop handle non woven bag with full colour Telugu printing, made for a textile shop"
-    - src: "images/img-1383.jpg"
-      alt: "Flat non woven carry bag with full colour floral printing, made for a family clothing store in Ballari"
-    - src: "images/img-1387.jpeg"
-      alt: "Full colour printed non woven seed packing bag, front panel with brand logo"
-    - src: "images/img-1386.jpeg"
-      alt: "Reverse of a printed non woven seed packing bag showing the crop and batch details panel"
-    - src: "images/img-1385.jpg"
-      alt: "Loop handle non woven bag with full colour printing and red handles, made for a readymade clothing shop"
+  # The photos are the catalog's own, synced from Grist (Catalog_Photos) — this
+  # section keeps no list of its own, so it can never show a photo the catalog
+  # has dropped. It takes up to `limit` of them, one product at a time (every
+  # product's first photo, then every product's second, ...), so the strip mixes
+  # bag types instead of running twenty plastic covers in a row. Hidden photos
+  # never appear. Each one links to its product on /catalog/.
+  limit: 24
+  cta: "Browse the full catalog"
 
 contact:
   heading: "Contact us"

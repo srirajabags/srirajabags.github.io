@@ -222,7 +222,8 @@
           "src2x" (.Fill (printf "%dx%d Smart webp q80" $c2 $c2)).RelPermalink
           "full" $full.RelPermalink "fullW" $full.Width "fullH" $full.Height
           "shops" ($ph.shopTypes | default slice)
-          "alt" ($ph.alt | default "")) -}}
+          "alt" ($ph.alt | default "")
+          "res" .) -}}
     {{- end -}}
   {{- end -}}
   {{- $img := "" }}{{ $img2x := "" -}}

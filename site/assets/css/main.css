@@ -276,19 +276,67 @@ a { color: var(--navy); }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
-/* gallery */
+/* gallery — a slow two-row marquee of catalog photos (see layouts/index.html) */
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
-  gap: 0.9rem;
+.mq-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
+.mq-pause {
+  font: inherit; font-size: 0.8rem; font-weight: 600; color: var(--navy);
+  background: #fff; border: 1px solid var(--rule); border-radius: 999px;
+  padding: 0.35rem 0.9rem; cursor: pointer;
 }
-.gallery-grid a { display: block; overflow: hidden; border-radius: 6px; }
-.gallery-grid img {
-  width: 100%; aspect-ratio: 1/1; object-fit: cover;
-  transition: transform 0.25s ease;
+.mq-pause:hover { border-color: var(--navy-soft); }
+.mq-pause:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.mq-pause-off, .is-paused .mq-pause-on { display: none; }
+.is-paused .mq-pause-off { display: inline; }
+
+.mq { display: grid; gap: 0.9rem; }
+.mq-row {
+  overflow: hidden;
+  /* Photos fade in and out at the edges instead of being sliced off. */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
 }
-.gallery-grid a:hover img { transform: scale(1.05); }
+.mq-track {
+  display: flex; width: max-content; margin: 0; padding: 0; list-style: none;
+  animation: mq-slide 200s linear infinite;
+}
+/* Gap as a margin on every tile, not `gap`, so the two copies are exactly the
+   same width and the -50% loop lands seamlessly. */
+.mq-track li { margin-right: 0.9rem; }
+.mq-row-1 .mq-track { animation-duration: 240s; animation-direction: reverse; }
+.mq:hover .mq-track,
+.mq:focus-within .mq-track,
+.is-paused .mq-track { animation-play-state: paused; }
+@keyframes mq-slide { to { transform: translateX(-50%); } }
+
+.mq-tile {
+  position: relative; display: block; height: 13.75rem;
+  border-radius: 8px; overflow: hidden; background: var(--paper-alt);
+}
+.mq-tile img { display: block; height: 100%; width: auto; }
+.mq-cap {
+  position: absolute; inset: auto 0 0 0;
+  padding: 1.6rem 0.7rem 0.55rem;
+  font-size: 0.78rem; font-weight: 600; color: #fff;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  opacity: 0; transition: opacity 0.2s ease;
+}
+.mq-tile:hover .mq-cap, .mq-tile:focus-visible .mq-cap { opacity: 1; }
+.mq-tile:focus-visible { outline: 3px solid var(--navy); outline-offset: -3px; }
+.mq-cta { margin-top: 1.4rem; text-align: center; }
+.mq-cta a { font-weight: 700; color: var(--navy); }
+
+@media (max-width: 700px) {
+  .mq-tile { height: 9.5rem; }
+  /* No hover on a phone: keep the product name on screen. */
+  .mq-cap { opacity: 1; font-size: 0.7rem; padding-top: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mq-track { animation: none; }
+  .mq-row { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .mq-track li[aria-hidden] { display: none; }
+  .mq-pause { display: none; }
+}
 
 /* contact */
 
