@@ -397,6 +397,11 @@
      "file": "catalog/1c928558468e7c7389c20f819904d1ef8836e0d8.jpg",
      "shopTypes": [],
      "alt": ""
+    },
+    {
+     "file": "catalog/951be382721c75f9377af7e05c2707ae90f47533.jpg",
+     "shopTypes": [],
+     "alt": ""
     }
    ]
   },
@@ -1540,11 +1545,6 @@
     },
     {
      "file": "catalog/6f3d56d99112ab33d51b6ff762a418239aedfecf.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/d70535e02f7d75e31b3bbcfde294bfcd890e9ea9.jpg",
      "shopTypes": [],
      "alt": ""
     }
@@ -3100,6 +3100,11 @@
      "file": "catalog/53f872da72b14996bf270a11604552ba06ce36c4.jpg",
      "shopTypes": [],
      "alt": ""
+    },
+    {
+     "file": "catalog/d70535e02f7d75e31b3bbcfde294bfcd890e9ea9.jpg",
+     "shopTypes": [],
+     "alt": ""
     }
    ]
   },
@@ -3540,11 +3545,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/c9c0ab6c8fa5d680fc0a793ecde735c555114c68.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/bbb48abb140d3244ff1c64fb164047692438daf7.jpg",
      "shopTypes": [],
      "alt": ""
@@ -3565,11 +3565,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/b3c8684c04126886a84b9780a93d67e38950e124.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/3c1bf206fe877f255e87d23eb9c29c47f67c647e.jpg",
      "shopTypes": [],
      "alt": ""
@@ -3586,11 +3581,6 @@
     },
     {
      "file": "catalog/554cc3905212c9cfd1217b809acd3ec653037278.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f45ea170cf6f407a659ba18445302890798aa94a.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -3621,11 +3611,6 @@
     },
     {
      "file": "catalog/4dab6ebc3a9ad18df5a6b9e4fd0993524d366db3.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/b31e4abf9fcec4bf72f61608d7c9e9e10473de1b.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -3700,7 +3685,18 @@
      "pcsPerKg": null
     }
    ],
-   "photos": []
+   "photos": [
+    {
+     "file": "catalog/c9c0ab6c8fa5d680fc0a793ecde735c555114c68.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/b31e4abf9fcec4bf72f61608d7c9e9e10473de1b.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
   },
   {
    "id": "hm-plastic-dcut",
@@ -3888,67 +3884,7 @@
      "alt": ""
     },
     {
-     "file": "catalog/1467e7ceac8f91b64ddf3dc0bcdc5e0e32c45bfe.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/aa386307b5fee762e2e20cb6a55f7b5a6b76fc08.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f4855801ce854729e819429fee8e73f230999c72.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/79059f8b4179bf76ec857d0b22651a2917120071.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/df47c6c3250ed6996d6067fc7d8cd382359e51a0.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/452503eb0b1c86f07132979651b902356b16e80d.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/82412c3531050448158b7a23e9fdc5aeff729ab3.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/a3c8dfb32bce865c8329e9fa4e297c40eff8ef0f.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/91a558c22e8151e01fa11c3076df0b1c126bd847.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/5089d88503e35a4f9d5ab52f28b8722da6bccedf.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/c320513e0044c5215e9f555b97626133287ca481.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/bfa9a792a2cc98fccbb844c71dd0932a93e43231.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/9985242094436e693e86780c628558ae4a8d33a0.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -3958,47 +3894,12 @@
      "alt": ""
     },
     {
-     "file": "catalog/fc1ed2c156fd6d66124c42c540e261587ee37f12.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/3594249d80355b098ae3c0ec3fe5e1c04a46da31.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/f5fd9d7eedac70f00588cd3b3be933e14059e3bd.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/deb8c48b1982c5dfba6ff0c60cc15ee520eaa727.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/118ef10cc652f9145383d19f4e5896dc96e4e1be.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/82649470be2be56bacef1a5c194fe60d25950a48.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/383a7a08226f7d1b180500d6c6053d310eae34bd.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/5f2a79e100de7cb8abe07a5baba9bb0f2bfbf830.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/fe056d8cbd90c5e5129ff3690cda75d1eb175dd9.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4014,11 +3915,6 @@
     },
     {
      "file": "catalog/80ef2fe745180279b21d418bf650621051bf0b1c.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f119b7f24be0536b8690bba857fe8e10baf3741c.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4063,47 +3959,37 @@
      "alt": ""
     },
     {
-     "file": "catalog/64d026bb123eede23a20a4d169b4f5992b54d243.jpg",
+     "file": "catalog/e51e1b207072c5f766b5d17adbb0becc2b65924e.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/624d506140b67dbf482243134ec547d57c0dfddb.jpg",
+     "file": "catalog/e96e9bc2929c4abf62e008198976f3eabf203951.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/fd6584cc37e6e5c133b10079a28237570a114eb8.jpg",
+     "file": "catalog/d7f801d3dc60dab97a9ec13e3999a69c71f7c2a8.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/f019da904d67b5e99c58e7b67b308df166d9397e.jpg",
+     "file": "catalog/b9a99f44b914c86c0fabaeff0bcbaf459a2f35e4.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/636be6879e5891136451de525ccb8705b83e9859.jpg",
+     "file": "catalog/87c5056397037b26f251a2ea4fbb57553d5bcbd2.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/542c9fa6336159d909dcabe3805282d0ed64f934.jpg",
+     "file": "catalog/1467e7ceac8f91b64ddf3dc0bcdc5e0e32c45bfe.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/89bb3649f1181a021aa8819bba68d7c8b18356a9.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/dd11b8e1a60b3640b3f21b19848c1d14e8114e09.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/2c59ce9f82a3408922ba322d5369b01681acd232.jpg",
+     "file": "catalog/aa386307b5fee762e2e20cb6a55f7b5a6b76fc08.jpg",
      "shopTypes": [],
      "alt": ""
     }
@@ -4226,37 +4112,7 @@
    ],
    "photos": [
     {
-     "file": "catalog/e51e1b207072c5f766b5d17adbb0becc2b65924e.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/e96e9bc2929c4abf62e008198976f3eabf203951.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/d7f801d3dc60dab97a9ec13e3999a69c71f7c2a8.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/b9a99f44b914c86c0fabaeff0bcbaf459a2f35e4.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/87c5056397037b26f251a2ea4fbb57553d5bcbd2.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/1467e7ceac8f91b64ddf3dc0bcdc5e0e32c45bfe.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/aa386307b5fee762e2e20cb6a55f7b5a6b76fc08.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4316,11 +4172,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/c2fda806569a4a7a09141ca14c88b324c6ce4ef9.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/fc1ed2c156fd6d66124c42c540e261587ee37f12.jpg",
      "shopTypes": [],
      "alt": ""
@@ -4331,17 +4182,7 @@
      "alt": ""
     },
     {
-     "file": "catalog/f5fd9d7eedac70f00588cd3b3be933e14059e3bd.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/deb8c48b1982c5dfba6ff0c60cc15ee520eaa727.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/118ef10cc652f9145383d19f4e5896dc96e4e1be.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4366,62 +4207,7 @@
      "alt": ""
     },
     {
-     "file": "catalog/fef720951e13d26f4ec0a6f463c98887b40d9191.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/cbb96cd6deea93aef77398fd81c1a389b8760c08.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/80ef2fe745180279b21d418bf650621051bf0b1c.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/f119b7f24be0536b8690bba857fe8e10baf3741c.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/849b40d1eeba433f789e3f0e89a90feed649515b.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/995ecff6e72e2672574a719a50dc61d7b904266d.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/bd4a227edeff19a929453719ca5e3a5731e27e84.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/bfe49f1ccac10f305a2896e2f1acf0cee40b8237.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/64eecc95ac4aa3b6a3aabf497b5ab2bff9d512b4.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/e1295228b20e0a98ee6fc31b7eba56322355809c.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/a3299f27f1a288a52e2a31e598bc23605089002e.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/021f13a58ea5409410de0baff5e3760765b39b3a.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4431,17 +4217,7 @@
      "alt": ""
     },
     {
-     "file": "catalog/624d506140b67dbf482243134ec547d57c0dfddb.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
      "file": "catalog/fd6584cc37e6e5c133b10079a28237570a114eb8.jpg",
-     "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f019da904d67b5e99c58e7b67b308df166d9397e.jpg",
      "shopTypes": [],
      "alt": ""
     },
@@ -4461,12 +4237,22 @@
      "alt": ""
     },
     {
-     "file": "catalog/dd11b8e1a60b3640b3f21b19848c1d14e8114e09.jpg",
+     "file": "catalog/0c94c034738189e399c0d7ee507f55516d90926f.jpg",
      "shopTypes": [],
      "alt": ""
     },
     {
-     "file": "catalog/2c59ce9f82a3408922ba322d5369b01681acd232.jpg",
+     "file": "catalog/2dfa09fe1dc9259e253e5a1445693b60a628ff57.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/3bd5438502a68f3293fb3d4f6e1bb36e581b028f.jpg",
+     "shopTypes": [],
+     "alt": ""
+    },
+    {
+     "file": "catalog/95dfecf6e37c3263e6fd50329236116925112c8c.jpg",
      "shopTypes": [],
      "alt": ""
     }
