@@ -444,6 +444,47 @@ a { color: var(--navy); }
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
 }
 
+/* ---------------- product pages (/products/<id>/) ----------------
+   The catalog dialog's pieces — price tables, spec grid, chips, buttons — laid
+   out as a page: photos left, details right; one column on a phone. */
+
+.pd { padding-bottom: 3rem; }
+.pd-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 2.5rem; align-items: start; margin-top: 1rem; }
+/* Not sticky: with a few dozen thumbnails the column is taller than the
+   screen, and a sticky column that tall hides its own last rows. */
+.pd-photos { min-width: 0; }
+.pd-dl dd .nw { white-space: nowrap; }
+.pd-main, .pd-noimg {
+  display: block; width: 100%; height: auto; aspect-ratio: 1/1;
+  object-fit: contain; background: var(--paper-alt); border-radius: 10px;
+}
+.pd-noimg { display: flex; align-items: center; justify-content: center; }
+.pd-film { padding: 0.65rem 0 0; flex-wrap: wrap; overflow: visible; }
+.pd-title { margin: 0 0 0.6rem; font-size: clamp(1.6rem, 3.5vw, 2.2rem); line-height: 1.15; color: var(--navy); }
+.pd-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0 0 1.4rem; }
+.pd-cta .ct-btn { flex: 1 1 14rem; }
+.pd-btn-2 { background: #fff; color: var(--navy); border: 1px solid var(--navy); }
+.pd-desc { font-size: 0.98rem; line-height: 1.7; color: var(--ink); margin: 0 0 1.25rem; }
+.pd-desc p { margin: 0 0 0.8rem; }
+.pd-prices, .pd-related { margin-top: 3rem; }
+.pd-prices h2, .pd-related h2 { font-size: 1.35rem; color: var(--navy); margin: 0 0 0.5rem; }
+.pd-lede { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.6; max-width: 46rem; margin: 0 0 1.2rem; }
+.pd-tables { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: 1.25rem; align-items: start; }
+.pd-tables .ct-ptable { margin: 0; }
+.pd-rel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr)); gap: 1rem; }
+.pd-rel { display: block; color: inherit; text-decoration: none; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: #fff; }
+.pd-rel:hover { border-color: var(--navy-soft); }
+.pd-rel img, .pd-rel .ct-noimg { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; }
+.pd-rel-name { display: block; padding: 0.7rem 0.8rem 0.15rem; font-weight: 700; font-size: 0.92rem; }
+.pd-rel-rate { display: block; padding: 0 0.8rem 0.8rem; font-size: 0.82rem; color: var(--navy); font-weight: 600; }
+.pd-back { margin-top: 2.5rem; }
+.pd-back a { font-weight: 600; color: var(--navy); }
+
+@media (max-width: 800px) {
+  .pd-grid { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .pd-film { flex-wrap: nowrap; overflow-x: auto; }
+}
+
 /* ---------------- blog ---------------- */
 
 .page { padding: calc(var(--nav-h) + 3rem) 0 4rem; }
@@ -949,6 +990,9 @@ html:not(.js) .js-only { display: none !important; }
 /* "from ₹165/kg" — the qualifier must not read as part of the number. */
 .ct-from { font-size: 0.7rem; font-weight: 600; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; }
 .ct-more { background: transparent !important; color: var(--ink-soft) !important; padding-left: 0 !important; }
+.ct-details { display: inline-block; margin: 0.45rem 0 0.1rem; font-size: 0.8rem; font-weight: 600; color: var(--navy); }
+.ct-details-d { margin: -0.2rem 0 0.8rem; font-size: 0.85rem; }
+.ct-details-d a { font-weight: 600; color: var(--navy); }
 .ct-rate-ask { font-size: 0.86rem !important; font-weight: 600; color: var(--ink-soft) !important; }
 .ct-rate span { font-size: 0.7rem; color: var(--ink-soft); }
 

@@ -38,7 +38,7 @@ gallery:
   # has dropped. It takes up to `limit` of them, one product at a time (every
   # product's first photo, then every product's second, ...), so the strip mixes
   # bag types instead of running twenty plastic covers in a row. Hidden photos
-  # never appear. Each one links to its product on /catalog/.
+  # never appear. Each one links to its product page under /products/.
   limit: 24
   cta: "Browse the full catalog"
 

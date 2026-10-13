@@ -1,0 +1,157 @@
+{{ define "main" }}
+{{/* A product's own page, /products/<id>/ — generated for every published
+     product by content/products/_content.gotmpl. Everything shown comes from
+     the catalog-data partial, the same numbers the catalog dialog shows, so
+     the two can never disagree.
+
+     Where the catalog dialog shows one GSM x side-patty table at a time behind
+     pickers, this page shows them all: it is the page that answers "what does
+     a 14x18 digital bag with a 6 inch patty cost", for a buyer and for search. */}}
+{{ $c := partialCached "catalog-data.html" . }}
+{{ $id := .Params.productId }}
+{{ $p := "" }}{{ range $c.products }}{{ if eq .id $id }}{{ $p = . }}{{ end }}{{ end }}
+{{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
+{{ with $p }}
+{{ $askText := printf "Hello Sri Raja Bags, I saw %s on your website. Please send your rate for my size and quantity." .name }}
+<div class="page pd">
+  <div class="container">
+    <nav class="ct-crumbs" aria-label="Breadcrumb">
+      <a href="{{ "/" | relURL }}">Home</a><span aria-hidden="true">/</span>
+      <a href="{{ "/catalog/" | relURL }}">Catalog</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{{ .name }}</span>
+    </nav>
+
+    <div class="pd-grid">
+      {{/* Photos: the big one, and every photo as a thumbnail under it. Without
+           JS each thumbnail is a link to that photo; with it, it swaps the
+           big one in place. */}}
+      <div class="pd-photos">
+        {{ if .imgs }}
+        {{ $first := index .imgs 0 }}
+        <img class="pd-main" src="{{ $first.full }}" width="{{ $first.fullW }}" height="{{ $first.fullH }}"
+             alt="{{ with $first.alt }}{{ . }}{{ else }}{{ $p.name }}{{ end }}" fetchpriority="high" decoding="async">
+        {{ if gt (len .imgs) 1 }}
+        <div class="ct-film pd-film" role="group" aria-label="All photos of {{ .name }}">
+          {{ range $i, $im := .imgs }}
+          <a class="ct-film-btn{{ if eq $i 0 }} is-on{{ end }}" href="{{ $im.full }}"
+             data-full="{{ $im.full }}" data-w="{{ $im.fullW }}" data-h="{{ $im.fullH }}"
+             data-alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $p.name }} — photo {{ add $i 1 }}{{ end }}"
+             aria-label="Photo {{ add $i 1 }} of {{ len $p.imgs }}"{{ if eq $i 0 }} aria-current="true"{{ end }}>
+            <img src="{{ $im.src }}" alt="" width="64" height="64" loading="lazy" decoding="async">
+          </a>
+          {{ end }}
+        </div>
+        {{ end }}
+        {{ else }}
+        <span class="ct-noimg pd-noimg" aria-hidden="true">Sri Raja Bags</span>
+        {{ end }}
+      </div>
+
+      <div class="pd-info">
+        <p class="ct-tags">
+          {{ range .materials }}<span>{{ . }}</span>{{ end }}
+          {{ with .bagType }}<span>{{ . }}</span>{{ end }}
+          {{ with .print }}<span>{{ . }}</span>{{ end }}
+          {{ range .badges }}<span class="ct-tag-badge">{{ . }}</span>{{ end }}
+        </p>
+        <h1 class="pd-title">{{ .name }}</h1>
+
+        <p class="ct-dialog-rate">
+          {{ if .hasRate }}
+          <strong>{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}<span class="ct-per">/{{ .unit }}</span></strong>
+          {{ else }}
+          <strong class="ct-rate-ask">Rate on request</strong>
+          {{ end }}
+          {{ if .hasMoq }}<span>· minimum order {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</span>{{ end }}
+        </p>
+
+        <div class="pd-cta">
+          <a class="ct-btn ct-wa" href="{{ printf "%s&text=%s&type=phone_number&app_absent=0" $wa (urlquery $askText) }}" target="_blank" rel="noopener">Ask for a quote on WhatsApp</a>
+          <a class="ct-btn pd-btn-2" href="{{ printf "/catalog/#p-%s" .id | relURL }}">Add to an enquiry list</a>
+        </div>
+
+        {{ with $.Content }}<div class="pd-desc">{{ . }}</div>{{ end }}
+
+        <dl class="ct-dl pd-dl">
+          {{ with .sizes }}<div class="ct-dl-wide"><dt>Sizes</dt><dd>{{ range $i, $s := . }}{{ if $i }} · {{ end }}<span class="nw">{{ $s.label }}</span>{{ end }}</dd></div>{{ end }}
+          {{ with .gsms }}<div><dt>{{ cond (eq $p.thickness "micron") "Thickness" "Fabric" }}</dt><dd>{{ $l := slice }}{{ range . }}{{ $l = $l | append .label }}{{ end }}{{ delimit $l ", " }}</dd></div>{{ end }}
+          {{ if .hasMoq }}<div><dt>Minimum order</dt><dd>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</dd></div>{{ end }}
+          {{ with .patties }}<div class="ct-dl-wide"><dt>Side patty</dt><dd>{{ range $i, $s := . }}{{ if $i }} · {{ end }}<span class="nw">{{ $s }}</span>{{ end }}</dd></div>{{ end }}
+          {{ with .colours }}<div class="ct-dl-wide"><dt>Colours</dt><dd>{{ $l := slice }}{{ range . }}{{ $l = $l | append .name }}{{ end }}{{ delimit $l " · " }}</dd></div>{{ end }}
+          {{ with .shops }}<div class="ct-dl-wide"><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
+        </dl>
+      </div>
+    </div>
+
+    {{ if .hasRate }}
+    <section class="pd-prices" aria-labelledby="pd-prices-h">
+      <h2 id="pd-prices-h">{{ .name }} price list</h2>
+      <p class="pd-lede">Rates per {{ cond (eq .unit "pc") "piece" "kg" }}, by the value of your whole order: the more you order, the lower the rate. For 50% advance and the balance at billing; ex-factory, before GST and freight.{{ with .priceNotes }} {{ . }}{{ end }}</p>
+      <div class="pd-tables">
+        {{ range $g := .groups }}
+        <table class="ct-ptable">
+          {{ with $g.caption }}<caption>{{ . }}</caption>{{ end }}
+          <thead><tr><th scope="col">Size</th>{{ range $c.priceTypes }}<th scope="col">{{ replace .label " – " " – " }}</th>{{ end }}</tr></thead>
+          <tbody>
+            {{ if $g.collapsed }}
+            {{ $r := index $g.rows 0 }}
+            <tr><th scope="row">All sizes</th>{{ range $r.rates }}<td>{{ partial "catalog-money" . }}</td>{{ end }}</tr>
+            {{ else }}
+            {{ range $g.rows }}
+            <tr><th scope="row">{{ .label }}</th>
+              {{ if .has }}{{ range .rates }}<td>{{ partial "catalog-money" . }}</td>{{ end }}
+              {{ else }}<td colspan="{{ len $c.priceTypes }}" class="ct-rate-ask">On request</td>{{ end }}
+            </tr>
+            {{ end }}
+            {{ end }}
+          </tbody>
+        </table>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    {{/* Related: the same shape first, then the same material, so a D-cut page
+         offers other D-cuts before plastic covers. */}}
+    {{/* Products with a photo first: four placeholder tiles sell nothing. */}}
+    {{ $rel := slice }}{{ $relIds := slice }}
+    {{ range $needImg := slice true false }}
+      {{ range $c.products }}{{ if and (ne .id $p.id) (not (in $relIds .id)) (eq .bagType $p.bagType) (or (not $needImg) .img) (lt (len $rel) 4) }}{{ $rel = $rel | append . }}{{ $relIds = $relIds | append .id }}{{ end }}{{ end }}
+      {{ range $c.products }}{{ if and (ne .id $p.id) (not (in $relIds .id)) (eq (index .materials 0) (index $p.materials 0)) (or (not $needImg) .img) (lt (len $rel) 4) }}{{ $rel = $rel | append . }}{{ $relIds = $relIds | append .id }}{{ end }}{{ end }}
+    {{ end }}
+    {{ with $rel }}
+    <section class="pd-related" aria-labelledby="pd-rel-h">
+      <h2 id="pd-rel-h">Similar bags</h2>
+      <div class="pd-rel-grid">
+        {{ range . }}
+        <a class="pd-rel" href="{{ printf "/products/%s/" .id | relURL }}">
+          {{ if .img }}<img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 240px" width="320" height="320" alt="" loading="lazy" decoding="async">{{ else }}<span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>{{ end }}
+          <span class="pd-rel-name">{{ .name }}</span>
+          <span class="pd-rel-rate">{{ if .hasRate }}{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}/{{ .unit }}{{ else }}Rate on request{{ end }}</span>
+        </a>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+
+    <p class="pd-back"><a href="{{ "/catalog/" | relURL }}">← All non woven bags and plastic covers</a></p>
+  </div>
+</div>
+<script>
+(function () {
+  var main = document.querySelector(".pd-main"), film = document.querySelector(".pd-film");
+  if (!main || !film) return;
+  film.addEventListener("click", function (e) {
+    var a = e.target.closest(".ct-film-btn");
+    if (!a) return;
+    e.preventDefault();
+    main.src = a.dataset.full; main.width = a.dataset.w; main.height = a.dataset.h; main.alt = a.dataset.alt;
+    film.querySelectorAll(".ct-film-btn").forEach(function (b) {
+      b.classList.toggle("is-on", b === a);
+      if (b === a) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
+    });
+  });
+})();
+</script>
+{{ end }}
+{{ end }}

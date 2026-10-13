@@ -1,0 +1,13 @@
+<!doctype html>
+{{/* /products/ is not a page of its own: the browsable list is /catalog/. A
+     visitor who trims a product URL back lands there instead of on a 404. */}}
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <title>Products · {{ .Site.Title }}</title>
+  <meta name="robots" content="noindex,follow">
+  <link rel="canonical" href="{{ "/catalog/" | absURL }}">
+  <meta http-equiv="refresh" content="0; url={{ "/catalog/" | relURL }}">
+</head>
+<body><p><a href="{{ "/catalog/" | relURL }}">See all our products in the catalog</a>.</p></body>
+</html>

@@ -59,7 +59,7 @@
         {{ range . }}
         {{ $sizeLabels := slice }}{{ range .sizes }}{{ $sizeLabels = $sizeLabels | append .label }}{{ end }}
         {{ $thick := .thickness }}
-        <a class="rail-card" href="{{ printf "/catalog/#p-%s" .id | relURL }}">
+        <a class="rail-card" href="{{ printf "/products/%s/" .id | relURL }}">
           <span class="rail-thumb">
             {{ if .img }}
             <img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w"
@@ -209,7 +209,7 @@
         {{ $one := .im.res.Resize (printf "x%d webp q74" $h1) }}
         {{ $two := .im.res.Resize (printf "x%d webp q70" $h2) }}
         <li{{ if $copy }} aria-hidden="true"{{ end }}>
-          <a class="mq-tile" href="{{ printf "/catalog/#p-%s" .id | relURL }}"{{ if $copy }} tabindex="-1"{{ end }}>
+          <a class="mq-tile" href="{{ printf "/products/%s/" .id | relURL }}"{{ if $copy }} tabindex="-1"{{ end }}>
             <img src="{{ $one.RelPermalink }}" srcset="{{ $one.RelPermalink }} 1x, {{ $two.RelPermalink }} 2x"
                  width="{{ $one.Width }}" height="{{ $one.Height }}"
                  alt="{{ with .im.alt }}{{ . }}{{ else }}{{ .name }}{{ end }}" loading="lazy" decoding="async">

@@ -57,124 +57,11 @@
 <script type="application/ld+json">{{ $biz | jsonify | safeJS }}</script>
 {{ end }}
 
-{{/* Catalog: the products are the reason this page exists, so each one is
-     published as a Product rather than left as unlabelled markup.
-
-     Only PRICED lines are marked up. Google's product snippets require one of
-     offers / review / aggregateRating on every Product, and the honest one for
-     us is offers — so a line we quote on request gets no markup at all. (When
-     every row was a Product with no price, all 26 were "invalid items" in
-     Search Console.) A fabricated price is never the fix.
-
-     They are a plain @graph, NOT an ItemList. An ItemList on a page makes
-     Google judge it as a carousel, and a list that mixes full Products with
-     name-and-link entries fails that check ("Carousels: 1 invalid item").
-     Product carousels are a shopping feature this catalog does not qualify
-     for anyway, so the list earned nothing and only produced an error. */}}
+{{/* Catalog: just the breadcrumb. Each product's Product markup lives on its
+     own page under /products/ — Google's product snippets are for a page about
+     one product, and that is where it can show the price in results. (Before
+     the product pages existed, all of them sat here.) */}}
 {{ if eq .Layout "catalog" }}
-{{ $c := partialCached "catalog-data.html" . }}
-{{ with $c.products }}
-{{ $items := slice }}
-{{ range $i, $p := . }}
-{{ if not $p.hasRate }}
-{{ continue }}
-{{ end }}
-{{ $prod := dict
-  "@type" "Product"
-  "name" $p.name
-  "url" (printf "%s#p-%s" $.Permalink $p.id)
-  "brand" (dict "@type" "Brand" "name" $.Site.Title)
-  "manufacturer" (dict "@type" "Organization" "@id" (printf "%s#business" $.Site.BaseURL))
-}}
-{{ with $p.note }}{{ $prod = merge $prod (dict "description" .) }}{{ end }}
-{{/* All photos, not just the card one — Google accepts an array and prefers
-     several angles of the same product. */}}
-{{ with $p.imgs }}
-  {{ $urls := slice }}
-  {{ range . }}{{ $urls = $urls | append (.full | absURL) }}{{ end }}
-  {{ $prod = merge $prod (dict "image" $urls) }}
-{{ end }}
-{{ with $p.shops }}{{ $prod = merge $prod (dict "category" (delimit . ", ")) }}{{ end }}
-
-{{/* One row can be several variants. The GSMs and the extra sizes are published
-     as properties rather than as separate Products: they share a name, an image
-     and a page anchor, so splitting them would put near-duplicate entries in the
-     list for no gain. */}}
-{{ $props := slice }}
-{{/* Material comes from the row. It used to be hardcoded as non-woven
-     polypropylene, which was wrong the moment plastic and bio-degradable covers
-     joined the sheet. */}}
-{{ with $p.materials }}
-  {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Material" "value" (delimit . ", ")) }}
-{{ end }}
-{{ with $p.gsms }}
-  {{ $g := slice }}{{ range . }}{{ $g = $g | append (string .value) }}{{ end }}
-  {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" (cond (eq $p.thickness "micron") "Thickness" "GSM") "value" (delimit $g ", ") "unitText" $p.thickness) }}
-{{ end }}
-{{ with $p.patties }}
-  {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Side patty" "value" (delimit . ", ")) }}
-{{ end }}
-{{ if gt (len $p.sizes) 1 }}
-  {{ $s := slice }}{{ range $p.sizes }}{{ $s = $s | append .plain }}{{ end }}
-  {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Available sizes" "value" (delimit $s ", ")) }}
-{{ end }}
-{{ with $p.colours }}
-  {{ $cl := slice }}{{ range . }}{{ $cl = $cl | append .name }}{{ end }}
-  {{ $props = $props | append (dict
-      "@type" "PropertyValue" "name" "Colour" "value" (delimit $cl ", ")) }}
-{{ end }}
-{{ with $props }}{{ $prod = merge $prod (dict "additionalProperty" .) }}{{ end }}
-
-{{/* width/height describe a single artefact, so they are only emitted when the
-     row really is one size. */}}
-{{ if eq (len $p.sizes) 1 }}
-  {{ $s := index $p.sizes 0 }}
-  {{ if $s.ok }}
-    {{ $prod = merge $prod (dict
-        "width" (dict "@type" "QuantitativeValue" "value" $s.w "unitCode" "INH")
-        "height" (dict "@type" "QuantitativeValue" "value" $s.h "unitCode" "INH")) }}
-  {{ end }}
-{{ end }}
-
-{{/* Rates vary by size, GSM, side patty and order value. A product with one
-     rate gets an Offer with that price; one with a spread gets an
-     AggregateOffer from its lowest rate to its highest, which is what Google
-     reads for a price range. The unit — per kg or per piece — rides along as a
-     UnitPriceSpecification, and the minimum order as eligibleQuantity. */}}
-{{ $unitCode := cond (eq $p.unit "pc") "H87" "KGM" }}
-{{ $spec := dict
-  "@type" "UnitPriceSpecification"
-  "priceCurrency" "INR"
-  "referenceQuantity" (dict "@type" "QuantitativeValue" "value" 1 "unitCode" $unitCode) }}
-{{ $offer := dict
-  "priceCurrency" "INR"
-  "availability" "https://schema.org/InStock"
-  "url" (printf "%s#p-%s" $.Permalink $p.id)
-  "seller" (dict "@type" "Organization" "@id" (printf "%s#business" $.Site.BaseURL)) }}
-{{ if eq $p.rateMin $p.rateMax }}
-  {{ $offer = merge $offer (dict "@type" "Offer" "price" $p.rateMin
-      "priceSpecification" (merge $spec (dict "price" $p.rateMin))) }}
-{{ else }}
-  {{ $n := 0 }}{{ range $p.variants }}{{ if .has }}{{ $n = add $n 1 }}{{ end }}{{ end }}
-  {{ $offer = merge $offer (dict "@type" "AggregateOffer" "lowPrice" $p.rateMin "highPrice" $p.rateMax "offerCount" $n
-      "priceSpecification" (merge $spec (dict "minPrice" $p.rateMin "maxPrice" $p.rateMax))) }}
-{{ end }}
-{{ if $p.hasMoq }}
-  {{ $offer = merge $offer (dict "eligibleQuantity" (dict
-      "@type" "QuantitativeValue" "minValue" $p.moq "unitCode" $unitCode)) }}
-{{ end }}
-{{ $prod = merge $prod (dict "offers" $offer) }}
-{{ $items = $items | append $prod }}
-{{ end }}
-{{ with $items }}
-<script type="application/ld+json">{{ dict "@context" "https://schema.org" "@graph" . | jsonify | safeJS }}</script>
-{{ end }}
-{{ end }}
-
 {{ $crumbs := dict
   "@context" "https://schema.org"
   "@type" "BreadcrumbList"
@@ -213,3 +100,22 @@
 }}
 <script type="application/ld+json">{{ $crumbs | jsonify | safeJS }}</script>
 {{ end }}{{ end }}
+
+{{/* Product pages: the Product (priced ones only) and Home › Catalog › Product. */}}
+{{ if and (eq .Section "products") .IsPage }}
+{{ $c := partialCached "catalog-data.html" . }}
+{{ $id := .Params.productId }}
+{{ range $c.products }}{{ if and (eq .id $id) .hasRate }}
+{{ $prod := partial "product-schema.html" (dict "page" $ "p" . "url" $.Permalink) }}
+<script type="application/ld+json">{{ merge (dict "@context" "https://schema.org") $prod | jsonify | safeJS }}</script>
+{{ end }}{{ end }}
+{{ $crumbs := dict
+  "@context" "https://schema.org"
+  "@type" "BreadcrumbList"
+  "itemListElement" (slice
+    (dict "@type" "ListItem" "position" 1 "name" "Home" "item" .Site.BaseURL)
+    (dict "@type" "ListItem" "position" 2 "name" "Catalog" "item" (printf "%scatalog/" .Site.BaseURL))
+    (dict "@type" "ListItem" "position" 3 "name" .Title "item" .Permalink))
+}}
+<script type="application/ld+json">{{ $crumbs | jsonify | safeJS }}</script>
+{{ end }}

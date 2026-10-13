@@ -231,6 +231,9 @@
                 {{ end }}
                 {{ if .hasMoq }}<span>Min {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</span>{{ end }}
               </p>
+              {{/* A plain link to the product's own page: the way in for a
+                   crawler, and for a buyer who wants the whole price list. */}}
+              <a class="ct-details" href="{{ printf "/products/%s/" .id | relURL }}">Full price list &amp; details <span aria-hidden="true">→</span></a>
 
               <div class="ct-actions">
                 <button type="button" class="ct-btn ct-add js-only" data-add="{{ .id }}">
@@ -350,6 +353,7 @@
           {{ range .badges }}<span class="ct-tag-badge">{{ . }}</span>{{ end }}
         </p>
         <h2 id="dt-{{ .id }}">{{ .name }}</h2>
+        <p class="ct-details-d"><a href="{{ printf "/products/%s/" .id | relURL }}">Open the full product page <span aria-hidden="true">→</span></a></p>
 
         {{/* The selected variant's spread, Type 1 to Type 3. Server-rendered for
              the first variant so it reads correctly before any script runs. */}}

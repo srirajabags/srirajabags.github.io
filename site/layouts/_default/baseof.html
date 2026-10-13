@@ -5,9 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {{/* The home title carries the product term and location — "Sri Raja Bags" alone
        matches nothing anyone searches for. Editable via params.homeTitle. */}}
-  {{ $title := cond .IsHome (default .Site.Title .Site.Params.homeTitle) (printf "%s · %s" .Title .Site.Title) }}
+  {{/* A page can set metaTitle to search with a longer title than its H1 — the
+       product pages do: "D-Cut Single Color Bags — Price, Sizes & Minimum Order". */}}
+  {{ $title := cond .IsHome (default .Site.Title .Site.Params.homeTitle) (printf "%s · %s" (.Params.metaTitle | default .Title) .Site.Title) }}
   <title>{{ $title }}</title>
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  {{/* .Description is front matter; pages built by a content adapter (the
+       product pages) carry theirs in params instead. */}}
+  {{ $desc := .Description | default .Params.description | default .Site.Params.description }}
+  <meta name="description" content="{{ $desc }}">
   <link rel="canonical" href="{{ .Permalink }}">
   {{/* Utility pages have nothing to rank for. "follow" so link equity still
        flows back to the pages that do. */}}
@@ -33,7 +38,7 @@
   <meta name="theme-color" content="#05386b">
 
   <meta property="og:title" content="{{ $title }}">
-  <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.description }}{{ end }}">
+  <meta property="og:description" content="{{ $desc }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:site_name" content="{{ .Site.Title }}">
@@ -43,7 +48,9 @@
   {{/* Social preview. Without this, every WhatsApp and Facebook share renders a
        blank card — and WhatsApp is where the enquiries actually come from.
        Absolute URLs are required; scrapers do not resolve relative paths. */}}
-  {{ $ogSrc := resources.Get (default "images/factory-production-line.jpg" .Site.Params.ogImage) }}
+  {{/* A page's own ogImage wins: a product page shares its product photo, so
+       a link sent on WhatsApp shows the bag rather than the factory. */}}
+  {{ $ogSrc := resources.Get (.Params.ogImage | default .Site.Params.ogImage | default "images/factory-production-line.jpg") }}
   {{ with $ogSrc }}
   {{ $og := .Fill "1200x630 Smart jpg q85" }}
   <meta property="og:image" content="{{ $og.Permalink }}">

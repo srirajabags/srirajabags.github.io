@@ -1,0 +1,64 @@
+{{/* One page per published catalog product, at /products/<id>/.
+
+     Built from assets/data/catalog.json — the same file the catalog reads, which
+     the deploy syncs from Grist — so a product added, renamed or repriced in
+     Grist gets, changes or updates its page on the next publish with no file to
+     edit here. The URL uses Product_ID, which Grist documents as never changing
+     once published, so renaming a product never breaks a link or a ranking.
+
+     The page itself (layouts/products/single.html) looks the product up in the
+     catalog-data partial by id, so prices, sizes and photos are worked out in
+     exactly one place. What is set here is only what <head> needs before the
+     layout runs: the search title, the description, the share image, and
+     noindex for a page with nothing yet to show. */}}
+
+{{ $data := dict }}
+{{ with resources.Get "data/catalog.json" }}{{ $data = . | transform.Unmarshal }}{{ end }}
+
+{{ range $data.products }}
+  {{ $p := . }}
+  {{ $unit := cond (eq $p.unit "pc") "pc" "kg" }}
+  {{ $qtyUnit := cond (eq $p.unit "pc") "pcs" "kg" }}
+
+  {{/* Price spread across every variant and order-value column. */}}
+  {{ $lo := 0.0 }}{{ $hi := 0.0 }}
+  {{ $sizes := slice }}{{ $gsms := slice }}
+  {{ range $p.variants }}
+    {{ if not (in $sizes .size) }}{{ $sizes = $sizes | append .size }}{{ end }}
+    {{ with .gsm }}{{ if not (in $gsms (int .)) }}{{ $gsms = $gsms | append (int .) }}{{ end }}{{ end }}
+    {{ range .rates }}
+      {{ if or (eq $lo 0.0) (lt (float .) $lo) }}{{ $lo = float . }}{{ end }}
+      {{ if gt (float .) $hi }}{{ $hi = float . }}{{ end }}
+    {{ end }}
+  {{ end }}
+
+  {{/* The meta description is what a searcher reads under the title. Price,
+       thickness, size range and minimum are the four things a bulk buyer
+       compares, so they lead; it stays under ~160 characters. */}}
+  {{ $bits := slice }}
+  {{ if gt $hi 0.0 }}
+    {{ $bits = $bits | append (cond (eq $lo $hi) (printf "₹%s/%s" (lang.FormatNumberCustom 2 $lo | replaceRE "\\.00$" "") $unit) (printf "₹%s–₹%s/%s" (lang.FormatNumberCustom 2 $lo | replaceRE "\\.00$" "") (lang.FormatNumberCustom 2 $hi | replaceRE "\\.00$" "") $unit)) }}
+  {{ end }}
+  {{ with $gsms }}{{ $bits = $bits | append (printf "%s %s" (delimit (sort .) "/") (cond (eq $p.thickness "micron") "micron" "GSM")) }}{{ end }}
+  {{ with $sizes }}{{ $bits = $bits | append (printf "%d %s" (len .) (cond (eq (len .) 1) "size" "sizes")) }}{{ end }}
+  {{ with $p.minOrder }}{{ $bits = $bits | append (printf "min %v %s" (lang.FormatNumberCustom 0 .) $qtyUnit) }}{{ end }}
+  {{ $desc := printf "%s from Sri Raja Bags, Dhone: %s. %s" $p.name (delimit $bits ", ") (cond (gt $hi 0.0) "Send your design on WhatsApp for a quote." "Rate on request — send your design on WhatsApp.") }}
+
+  {{/* Search title: the product plus what people search alongside it. */}}
+  {{ $metaTitle := cond (gt $hi 0.0) (printf "%s — Price, Sizes & Minimum Order" $p.name) (printf "%s — Sizes & Quote" $p.name) }}
+
+  {{ $params := dict "productId" $p.id "metaTitle" $metaTitle "description" $desc }}
+  {{ with $p.photos }}{{ $params = merge $params (dict "ogImage" (printf "images/%s" (index . 0).file)) }}{{ end }}
+  {{/* Quality gate: no price and no photo is a page with nothing a buyer or a
+       search engine can use yet. It is still built and linked for visitors,
+       but kept out of the index and the sitemap until it has one or the other. */}}
+  {{ if and (eq $hi 0.0) (not $p.photos) }}{{ $params = merge $params (dict "noindex" true) }}{{ end }}
+
+  {{ $.AddPage (dict
+      "path" $p.id
+      "kind" "page"
+      "title" $p.name
+      "params" $params
+      "content" (dict "mediaType" "text/markdown" "value" ($p.description | default "")))
+  }}
+{{ end }}
