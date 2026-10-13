@@ -580,6 +580,28 @@ html:not(.js) .pd-tables { max-width: none; grid-template-columns: repeat(auto-f
 .post li { margin-bottom: 0.4rem; }
 .post img { border-radius: 6px; }
 .post-author { font-weight: 600; color: var(--ink); }
+/* Share buttons on blog posts (partials/share.html): icons under the title,
+   a labelled block at the end. */
+.share-row { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+.share-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem;
+  min-width: 2.5rem; height: 2.5rem; padding: 0 0.7rem;
+  font: inherit; font-size: 0.85rem; font-weight: 600; color: var(--navy); text-decoration: none;
+  background: #fff; border: 1px solid var(--rule); border-radius: 999px; cursor: pointer;
+}
+.share-btn:hover { border-color: var(--navy-soft); }
+.share-btn:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+.share-btn svg { width: 1.05rem; height: 1.05rem; flex: none; }
+.share-btn.share-wa { background: #25d366; border-color: #25d366; color: #0b3d1f; }
+.share-btn.is-done { border-color: var(--navy); background: var(--mint-pale); }
+.share-btn[hidden] { display: none; }
+.share-top { margin: -0.4rem 0 1.6rem; }
+.share-top .share-btn { padding: 0; width: 2.5rem; }
+.share-top .share-btn.share-native { width: auto; padding: 0 0.8rem; }
+.share-top .share-copy-label:empty { display: none; }
+.share-top .share-copy.is-done { width: auto; padding: 0 0.8rem; }
+.share-end { margin: 2.6rem 0 1.4rem; padding: 1.2rem 1.25rem; background: var(--paper-alt); border-radius: 12px; }
+.share-title { margin: 0 0 0.8rem !important; font-weight: 700; color: var(--ink); }
 .post-photo { margin: 1.6rem 0; }
 .post-photo img { display: block; width: 100%; height: auto; border-radius: 10px; background: var(--paper-alt); }
 .post-photo figcaption { margin-top: 0.5rem; font-size: 0.82rem; color: var(--ink-soft); }

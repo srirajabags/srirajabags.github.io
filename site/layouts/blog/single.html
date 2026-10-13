@@ -1,4 +1,6 @@
 {{ define "main" }}
+{{/* Set before the page parses, so the JS-only share buttons never flash. */}}
+<script>document.documentElement.className += " js";</script>
 {{/* baseof.html already provides the <main> landmark; a second one inside
      it is invalid HTML and confuses screen readers. */}}
 <div class="page">
@@ -8,8 +10,43 @@
       {{ with .Params.author }}By <span class="post-author">{{ . }}</span> · {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>
       {{ with .Params.tags }} · {{ delimit . ", " }}{{ end }}
     </p>
+    {{ partial "share.html" (dict "page" . "variant" "top") }}
     {{ .Content }}
+    {{ partial "share.html" (dict "page" . "variant" "end") }}
     <p class="back"><a href="{{ "/blog/" | relURL }}">← All posts</a></p>
   </article>
 </div>
+<script>
+(function () {
+  function track(method, url) {
+    if (typeof gtag === "function") gtag("event", "share", { method: method, content_type: "article", item_id: url });
+  }
+  document.querySelectorAll(".share").forEach(function (box) {
+    var url = box.dataset.shareUrl, title = box.dataset.shareTitle;
+    // The phone's own share sheet, where the browser has one.
+    var nat = box.querySelector(".share-native");
+    if (nat && navigator.share) {
+      nat.hidden = false;
+      nat.addEventListener("click", function () {
+        navigator.share({ title: title, url: url }).then(function () { track("native", url); }).catch(function () {});
+      });
+    }
+    box.querySelectorAll("a.share-btn").forEach(function (a) {
+      a.addEventListener("click", function () { track(a.dataset.method, url); });
+    });
+    var copy = box.querySelector(".share-copy");
+    if (copy) copy.addEventListener("click", function () {
+      var label = copy.querySelector(".share-copy-label"), was = label.textContent;
+      function done(ok) {
+        label.textContent = ok ? "Copied!" : "Copy failed";
+        copy.classList.toggle("is-done", ok);
+        setTimeout(function () { label.textContent = was; copy.classList.remove("is-done"); }, 2000);
+        if (ok) track("copy_link", url);
+      }
+      if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+      else done(false);
+    });
+  });
+})();
+</script>
 {{ end }}
