@@ -58,13 +58,13 @@ A normal non woven bag is the better buy when cost per bag matters more than fin
 
 | Size | Normal digital | BOPP laminated | Difference |
 |---|---:|---:|---:|
-| 10 × 14 in | ₹15 | ₹16.50 | +₹1.50 |
-| 12 × 16 in | ₹17 | ₹19 | +₹2 |
-| 14 × 16 in | ₹18.50 | ₹20 | +₹1.50 |
-| 14 × 18 in | ₹19.50 | ₹21.50 | +₹2 |
-| 16 × 12 in | ₹17 | ₹18.50 | +₹1.50 |
-| 16 × 18 in | ₹21 | ₹23 | +₹2 |
-| 18 × 16 in | ₹21 | ₹22.50 | +₹1.50 |
+| 10 × 14 in | ₹15 | ₹16.50 | +₹1.50 |
+| 12 × 16 in | ₹17 | ₹19 | +₹2 |
+| 14 × 16 in | ₹18.50 | ₹20 | +₹1.50 |
+| 14 × 18 in | ₹19.50 | ₹21.50 | +₹2 |
+| 16 × 12 in | ₹17 | ₹18.50 | +₹1.50 |
+| 16 × 18 in | ₹21 | ₹23 | +₹2 |
+| 18 × 16 in | ₹21 | ₹22.50 | +₹1.50 |
 
 Orders above ₹40,000 get a lower rate and orders below ₹20,000 a slightly higher one. Wider side panels, stick and zip versions are also listed on the product page. The minimum order is 1,000 bags. Rates are ex-factory, for 50% advance, before GST and freight.
 

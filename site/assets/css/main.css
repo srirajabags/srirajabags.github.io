@@ -609,7 +609,11 @@ html:not(.js) .pd-tables { max-width: none; grid-template-columns: repeat(auto-f
 .post th, .post td { padding: 0.55rem 0.7rem; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
 .post thead th { background: var(--paper-alt); font-size: 0.78rem; font-weight: 700; color: var(--ink-soft); border-bottom: 2px solid var(--rule); }
 .post td[style*="right"], .post th[style*="right"] { text-align: right; }
-.post tbody td:first-child { white-space: nowrap; font-weight: 600; }
+.post tbody td:first-child { font-weight: 600; }
+@media (max-width: 480px) {
+  .post table { font-size: 0.82rem; }
+  .post th, .post td { padding: 0.5rem 0.4rem; }
+}
 .post blockquote {
   margin: 1.6rem 0;
   padding: 0.85rem 1.25rem;
