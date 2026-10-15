@@ -15,13 +15,13 @@ draft: false
 
 This guide explains what decides the price, what to send us, and how to keep the cost down — from a manufacturer that has been printing bags for shops in Andhra Pradesh, Telangana and Karnataka since 2011.
 
-{{< photo src="single-colour-telugu.jpg" alt="White D-cut non woven bag printed in one colour, blue, with a boutique's name and address in Telugu" caption="Single-colour screen print in Telugu on a white D-cut bag — the most economical way to put your shop name on a bag." >}}
+{{< photo src="single-colour-telugu.jpg" alt="White D-cut non woven bag printed in one colour, blue, with a boutique's name and address in Telugu" caption="Single-colour offset print in Telugu on a white D-cut bag — the most economical way to put your shop name on a bag." >}}
 
 ## Step 1: Choose how your bag is printed
 
 There are three ways to print a shop name, and the right one depends on your design and budget.
 
-| | Screen print (1–3 colours) | Full-colour digital | BOPP laminated |
+| | Offset print (1–3 colours) | Full-colour digital | BOPP laminated |
 |---|---|---|---|
 | Looks like | Clean solid colours | Photographs, gradients, any design | Digital print under a glossy film |
 | Best for | Name, logo, address, phone | Photos of models, jewellery, products | Premium showrooms, wedding season |
@@ -29,7 +29,7 @@ There are three ways to print a shop name, and the right one depends on your des
 | Priced | Per kg (D-cut, handle) or per bag (stitched) | Per bag | Per bag |
 | Minimum order | 10 kg / 200 bags | 1,000 bags | 1,000 bags |
 
-If your design is your shop name, logo and phone number, screen print is the economical choice. If it is a photograph, choose digital. For more on the laminated option, see our guide to [BOPP bags](/blog/2026/10/13/what-are-bopp-bags/).
+If your design is your shop name, logo and phone number, offset print is the economical choice. If it is a photograph, choose digital. For more on the laminated option, see our guide to [BOPP bags](/blog/2026/10/13/what-are-bopp-bags/).
 
 ## Step 2: What it costs
 
@@ -56,13 +56,13 @@ Within each range, the rate depends on three things:
 
 ## Step 3: Block charges, and how to pay them only once
 
-For screen printing, each colour in your design needs a printing block (plate), which is a one-time charge on top of the bag price:
+For offset printing, each colour in your design needs a printing block (plate), which is a one-time charge on top of the bag price:
 
 | Design | One-time use | Kept for a year |
 |---|---|---|
 | Single colour | ₹150 | ₹300 |
 | Double colour | ₹400 | ₹800 |
-| Three colour | ₹500 | — |
+| Three colour | ₹600 | — |
 | Multi-colour design | ₹800 | ₹1,600 |
 | BOPP laminated | ₹800 | — |
 
