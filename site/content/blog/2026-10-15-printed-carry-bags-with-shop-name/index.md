@@ -63,10 +63,10 @@ For offset printing, each colour in your design needs a printing block (plate), 
 | Single colour | ₹150 | ₹300 |
 | Double colour | ₹400 | ₹800 |
 | Three colour | ₹600 | — |
-| Multi-colour design | ₹800 | ₹1,600 |
+| Multi-colour or full-colour digital | ₹800 | ₹1,600 |
 | BOPP laminated | ₹800 | — |
 
-The charge covers the same design printed on both sides. Three ways to save:
+The charge covers the same design printed on both sides. A different design on each side costs extra — ask us for a quote. Three ways to save:
 
 - **Keep your block for a year** if you reorder often — you pay once and every reorder is block-free. A single-colour design can also be made permanent for ₹500, as long as the size and design do not change.
 - **Share one block across sizes.** Sizes of similar width with the same print colour can use the same block: 10 and 12 inch, 12 and 14 inch, or 14 and 16 inch.
