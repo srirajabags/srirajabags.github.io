@@ -28,7 +28,7 @@
     if (nat && navigator.share) {
       nat.hidden = false;
       nat.addEventListener("click", function () {
-        navigator.share({ title: title, url: url }).then(function () { track("native", url); }).catch(function () {});
+        navigator.share({ title: title, url: box.dataset.urlNative || url }).then(function () { track("native", url); }).catch(function () {});
       });
     }
     box.querySelectorAll("a.share-btn").forEach(function (a) {
@@ -43,7 +43,7 @@
         setTimeout(function () { label.textContent = was; copy.classList.remove("is-done"); }, 2000);
         if (ok) track("copy_link", url);
       }
-      if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () { done(true); }, function () { done(false); });
+      if (navigator.clipboard) navigator.clipboard.writeText(box.dataset.urlCopy || url).then(function () { done(true); }, function () { done(false); });
       else done(false);
     });
   });

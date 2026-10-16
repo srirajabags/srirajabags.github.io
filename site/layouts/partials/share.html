@@ -7,16 +7,25 @@
 
      With JS: "Copy link", and "Share…" for the phone's own share sheet,
      shown only where the browser supports it. Each click sends a GA4
-     "share" event, so the analytics show which posts get shared, and where. */}}
+     "share" event, so the analytics show which posts get shared, and where.
+
+     Every shared link carries UTM tags naming where it was shared
+     (utm_source = whatsapp, facebook, x, linkedin, share_sheet or copy_link;
+     utm_medium = social; utm_campaign = blog_share), so visits it brings back
+     show up in Analytics under that source instead of as "Direct" — WhatsApp
+     in particular hides the referrer. The page's canonical tag still names the
+     clean URL, so search engines index the untagged address. */}}
 {{- $p := .page -}}
 {{- $end := eq .variant "end" -}}
 {{- $url := $p.Permalink -}}
 {{- $title := $p.Title -}}
-{{- $wa := printf "https://api.whatsapp.com/send?text=%s" (urlquery (printf "%s %s" $title $url)) -}}
-{{- $fb := printf "https://www.facebook.com/sharer/sharer.php?u=%s" (urlquery $url) -}}
-{{- $x := printf "https://twitter.com/intent/tweet?url=%s&text=%s" (urlquery $url) (urlquery $title) -}}
-{{- $li := printf "https://www.linkedin.com/sharing/share-offsite/?url=%s" (urlquery $url) -}}
-<div class="share share-{{ .variant }}" data-share-url="{{ $url }}" data-share-title="{{ $title }}">
+{{- $tag := printf "%s?utm_source=%%s&utm_medium=social&utm_campaign=blog_share" $url -}}
+{{- $wa := printf "https://api.whatsapp.com/send?text=%s" (urlquery (printf "%s %s" $title (printf $tag "whatsapp"))) -}}
+{{- $fb := printf "https://www.facebook.com/sharer/sharer.php?u=%s" (urlquery (printf $tag "facebook")) -}}
+{{- $x := printf "https://twitter.com/intent/tweet?url=%s&text=%s" (urlquery (printf $tag "x")) (urlquery $title) -}}
+{{- $li := printf "https://www.linkedin.com/sharing/share-offsite/?url=%s" (urlquery (printf $tag "linkedin")) -}}
+<div class="share share-{{ .variant }}" data-share-url="{{ $url }}" data-share-title="{{ $title }}"
+     data-url-native="{{ printf $tag "share_sheet" }}" data-url-copy="{{ printf $tag "copy_link" }}">
   {{ if $end }}<p class="share-title">Found this useful? Share it with another shop owner.</p>{{ end }}
   <div class="share-row" role="group" aria-label="Share this article">
     <button type="button" class="share-btn share-native js-only" data-method="native" hidden>
