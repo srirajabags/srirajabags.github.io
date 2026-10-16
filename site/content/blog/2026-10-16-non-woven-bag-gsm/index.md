@@ -38,6 +38,8 @@ Since 30 September 2021, India's Plastic Waste Management rules require non wove
 
 It is also a false saving. Fabric under 60 GSM is thin enough to see through and tears at the handle, so the bag fails in front of your customer — with your shop's name on it. All our non woven bags are 60 GSM or heavier.
 
+*Source: [Plastic Waste Management (Amendment) Rules, 2021](https://tnpcb.gov.in/owems/pdf/regulations/Plastic%20Waste%20Management%20Rules,%202016,%20(Second%20Amendments),%202021.pdf), Gazette of India notification G.S.R. 571(E), 12 August 2021, rule 4(1)(j): "non-woven plastic carry bag shall not be less than 60 Gram Per Square Meter (GSM) with effect from the 30th September, 2021."*
+
 ## How GSM affects the price
 
 Most non woven bags are priced per kg, so a heavier fabric does not always mean a higher rate per kg — but it always means fewer bags in each kg.
