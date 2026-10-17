@@ -85,8 +85,38 @@
           {{ end }}
         </div>
 
+        {{/* ---- what to quote for ----
+             Size and side patty (or thickness) chips next to the button, so the
+             WhatsApp message names the bag the buyer wants and the office can
+             quote from the first message. Nothing is chosen at first: a default
+             size in the message would be a size the buyer never asked for.
+             Script-only; without it the button sends the general message. */}}
+        {{ if or (gt (len .sizes) 1) (gt (len .gsms) 1) (gt (len .patties) 1) }}
+        <div class="pd-choose js-only">
+          {{ if gt (len .sizes) 1 }}
+          <p class="ct-dialog-h3" id="pd-size-h">Size</p>
+          <div class="ct-picker" data-picker="size" role="group" aria-labelledby="pd-size-h">
+            {{ range .sizes }}<button type="button" class="ct-pick" data-value="{{ .raw }}" data-text="{{ .plain }}" aria-pressed="false">{{ .label }}</button>{{ end }}
+          </div>
+          {{ end }}
+          {{ if gt (len .gsms) 1 }}
+          <p class="ct-dialog-h3" id="pd-gsm-h">{{ cond (eq .thickness "micron") "Thickness" "Fabric" }}</p>
+          <div class="ct-picker" data-picker="gsm" role="group" aria-labelledby="pd-gsm-h">
+            {{ range .gsms }}<button type="button" class="ct-pick" data-value="{{ .value }}" data-text="{{ .label }}" aria-pressed="false">{{ .label }}</button>{{ end }}
+          </div>
+          {{ end }}
+          {{ if gt (len .patties) 1 }}
+          <p class="ct-dialog-h3" id="pd-patty-h">Side patty</p>
+          <div class="ct-picker" data-picker="patty" role="group" aria-labelledby="pd-patty-h">
+            {{ range .patties }}<button type="button" class="ct-pick" data-value="{{ . }}" data-text="{{ . }} side patty" aria-pressed="false">{{ . }}</button>{{ end }}
+          </div>
+          {{ end }}
+          <p class="pd-choose-note" aria-live="polite">Choose {{ if gt (len .sizes) 1 }}a size{{ else if gt (len .patties) 1 }}a side patty{{ else }}a thickness{{ end }} and we put it in your WhatsApp message.</p>
+        </div>
+        {{ end }}
+
         <div class="pd-cta">
-          <a class="ct-btn ct-wa" href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote on WhatsApp</span></a>
+          <a class="ct-btn ct-wa" data-quote href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote on WhatsApp</span></a>
           <a class="ct-btn pd-btn-2" href="{{ printf "/catalog/#p-%s" .id | relURL }}">Add to an enquiry list</a>
         </div>
 
@@ -124,7 +154,7 @@
       <div class="pd-switch js-only" role="group" aria-label="Choose {{ if .patties }}side patty{{ else }}thickness{{ end }}">
         <span class="pd-switch-label">{{ if .patties }}Side patty{{ else }}{{ cond (eq .thickness "micron") "Thickness" "GSM" }}{{ end }}</span>
         {{ range $i, $g := .groups }}
-        <button type="button" class="ct-pick{{ if eq $i 0 }} is-on{{ end }}" data-g="{{ $i }}" aria-pressed="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ with $g.patty }}{{ . }}{{ else }}{{ $g.gsm }} {{ $p.thickness }}{{ end }}</button>
+        <button type="button" class="ct-pick{{ if eq $i 0 }} is-on{{ end }}" data-g="{{ $i }}" data-gsm="{{ $g.gsm }}" data-patty="{{ $g.patty }}" aria-pressed="{{ if eq $i 0 }}true{{ else }}false{{ end }}">{{ with $g.patty }}{{ . }}{{ else }}{{ $g.gsm }} {{ $p.thickness }}{{ end }}</button>
         {{ end }}
       </div>
       {{ end }}
@@ -139,7 +169,7 @@
             <tr><th scope="row">All sizes</th>{{ range $r.rates }}<td>{{ partial "catalog-money" . }}</td>{{ end }}</tr>
             {{ else }}
             {{ range $g.rows }}
-            <tr><th scope="row">{{ .label }}</th>
+            <tr data-size="{{ .size }}"><th scope="row">{{ .label }}</th>
               {{ if .has }}{{ range .rates }}<td>{{ partial "catalog-money" . }}</td>{{ end }}
               {{ else }}<td colspan="{{ len $c.priceTypes }}" class="ct-rate-ask">On request</td>{{ end }}
             </tr>
@@ -220,8 +250,19 @@
 {{/* Phone: the quote button stays on screen while the buyer reads the price
      list. Desktop has it beside the photo already. */}}
 <div class="pd-dock">
-  <a class="ct-btn ct-wa" href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote</span></a>
+  <a class="ct-btn ct-wa" data-quote href="{{ $waLink }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Ask for a quote</span></a>
 </div>
+
+{{/* For the quote chips: every variant's rates, and the parts of the message
+     that never change. A dimension with one option (the only size this bag is
+     made in) goes into the message as it is. */}}
+{{ $fixed := dict }}
+{{ if eq (len .sizes) 1 }}{{ $fixed = merge $fixed (dict "size" (index .sizes 0).plain) }}{{ end }}
+{{ if eq (len .gsms) 1 }}{{ $fixed = merge $fixed (dict "gsm" (index .gsms 0).label) }}{{ end }}
+{{ if eq (len .patties) 1 }}{{ $fixed = merge $fixed (dict "patty" (printf "%s side patty" (index .patties 0))) }}{{ end }}
+{{ $vs := slice }}
+{{ range .variants }}{{ $vs = $vs | append (dict "size" .size "gsm" .gsm "patty" .patty "rates" (cond .has .rates slice)) }}{{ end }}
+<script type="application/json" id="pd-quote">{{ dict "name" .name "unit" .unit "qtyUnit" .qtyUnit "thick" .thickness "fixed" $fixed "variants" $vs "marker" $site.Params.waMarker "phone" $site.Params.phoneRaw | jsonify | safeJS }}</script>
 
 <script>
 (function () {
@@ -257,22 +298,139 @@
 
   /* Price list: one table at a time. */
   var sw = document.querySelector(".pd-switch");
-  if (sw) {
-    var tables = document.querySelectorAll(".pd-tables .ct-ptable");
-    function pick(g) {
-      tables.forEach(function (t) { t.hidden = t.dataset.g !== g; });
-      sw.querySelectorAll("[data-g]").forEach(function (b) {
-        var on = b.dataset.g === g;
-        b.classList.toggle("is-on", on);
-        b.setAttribute("aria-pressed", String(on));
-      });
-    }
-    sw.addEventListener("click", function (e) {
-      var b = e.target.closest("[data-g]");
-      if (b) pick(b.dataset.g);
+  var tables = document.querySelectorAll(".pd-tables .ct-ptable");
+  function showTable(g) {
+    if (!sw) return;
+    tables.forEach(function (t) { t.hidden = t.dataset.g !== g; });
+    sw.querySelectorAll("[data-g]").forEach(function (b) {
+      var on = b.dataset.g === g;
+      b.classList.toggle("is-on", on);
+      b.setAttribute("aria-pressed", String(on));
     });
-    pick("0");
   }
+  if (sw) showTable("0");
+
+  /* Quote chips: what the buyer chooses goes into every WhatsApp button's
+     message, with placeholders for what they have not chosen yet. Until they
+     choose something the buttons keep the general message. */
+  var Q = null, box = document.querySelector(".pd-choose");
+  try { Q = JSON.parse(document.getElementById("pd-quote").textContent); } catch (e) {}
+  var KEYS = ["size", "gsm", "patty"];
+  var sel = { size: null, gsm: null, patty: null };
+  function picker(key) { return box && box.querySelector('[data-picker="' + key + '"]'); }
+
+  if (Q && box) {
+    var note = box.querySelector(".pd-choose-note"), hint = note.textContent;
+    var links = Array.prototype.slice.call(document.querySelectorAll("a[data-quote]"));
+    links.forEach(function (a) { a.dataset.general = a.href; });
+    var BLANK = { size: "size __ inch", gsm: (Q.thick === "micron" ? "__ micron" : "__ GSM"), patty: "side patty __" };
+
+    function money(r) {
+      return "₹" + r.toLocaleString("en-IN", { minimumFractionDigits: r % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    }
+    function chosenText(key) {
+      var b = picker(key) && picker(key).querySelector('.ct-pick[aria-pressed="true"]');
+      return b ? b.dataset.text : "";
+    }
+    // The one variant the choices name, once every choice is made.
+    function variant() {
+      var m = Q.variants.filter(function (v) {
+        return KEYS.every(function (k) { return !picker(k) || (sel[k] !== null && String(v[k]) === sel[k]); });
+      });
+      return m.length === 1 ? m[0] : null;
+    }
+
+    function draw() {
+      KEYS.forEach(function (k) {
+        if (!picker(k)) return;
+        picker(k).querySelectorAll(".ct-pick").forEach(function (b) {
+          var on = sel[k] === b.dataset.value;
+          b.classList.toggle("is-on", on);
+          b.setAttribute("aria-pressed", String(on));
+          // Faded: not made with the other choices (9 × 11 in 70 micron).
+          // Still tappable; tapping it clears the choice it conflicts with.
+          b.classList.toggle("is-na", !Q.variants.some(function (v) {
+            return String(v[k]) === b.dataset.value && KEYS.every(function (j) { return j === k || sel[j] === null || String(v[j]) === sel[j]; });
+          }));
+        });
+      });
+      // Mark the chosen size in the price list, and show the table for the
+      // chosen side patty or thickness.
+      document.querySelectorAll(".pd-tables tr[data-size]").forEach(function (tr) {
+        tr.classList.toggle("is-on", tr.dataset.size === sel.size);
+      });
+      // The table on screen stays if it fits the choices and has the chosen
+      // size; otherwise the first one that does. ("All sizes" has every size.)
+      if (sw && KEYS.some(function (k) { return sel[k] !== null; })) {
+        var fits = Array.prototype.filter.call(sw.querySelectorAll("[data-g]"), function (b) {
+          return (sel.gsm === null || b.dataset.gsm === sel.gsm) && (sel.patty === null || b.dataset.patty === sel.patty);
+        }).map(function (b) { return b.dataset.g; });
+        var hasSize = function (g) {
+          var t = sw.parentNode.querySelector('.ct-ptable[data-g="' + g + '"]');
+          return sel.size === null || !t.querySelector("tr[data-size]") || !!t.querySelector('tr[data-size="' + sel.size + '"]');
+        };
+        var now = sw.querySelector(".ct-pick.is-on").dataset.g;
+        var g = fits.indexOf(now) >= 0 && hasSize(now) ? now : (fits.filter(hasSize)[0] || fits[0]);
+        if (g !== undefined && g !== now) showTable(g);
+      }
+
+      var any = KEYS.some(function (k) { return sel[k] !== null; });
+      if (!any) {
+        links.forEach(function (a) { a.href = a.dataset.general; });
+        note.textContent = hint;
+        return;
+      }
+      var parts = [], picked = [];
+      KEYS.forEach(function (k) {
+        // A size made without a side patty (8 × 10) needs no patty asked for.
+        // So does the price list's no-patty table, chosen from its switch.
+        if (k === "patty" && (sel.patty === "" || (sel.size !== null && !Q.variants.some(function (v) { return v.size === sel.size && v.patty; })))) return;
+        if (picker(k)) {
+          var t = chosenText(k);
+          parts.push(t || BLANK[k]);
+          if (t) picked.push(t);
+        } else if (Q.fixed[k]) parts.push(Q.fixed[k]);
+      });
+      var msg = "Hello Sri Raja Bags, I saw " + Q.name + " on your website. I need: " + parts.join(", ") +
+        ". Quantity: __ " + Q.qtyUnit + ". Please send your rate. " + Q.marker;
+      var href = "https://api.whatsapp.com/send/?phone=" + Q.phone + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
+      links.forEach(function (a) { a.href = href; });
+
+      var v = variant(), rate = "";
+      if (v && v.rates.length) {
+        var lo = Math.min.apply(null, v.rates), hi = Math.max.apply(null, v.rates);
+        rate = " " + (lo === hi ? money(lo) : money(lo) + "\u00a0–\u00a0" + money(hi)) + "/" + Q.unit + ", by order value.";
+      } else if (v) rate = " Rate on request.";
+      note.textContent = "Your WhatsApp message will ask for " + picked.join(", ") + "." + rate;
+    }
+
+    box.addEventListener("click", function (e) {
+      var b = e.target.closest(".ct-pick");
+      if (!b) return;
+      var k = b.closest("[data-picker]").dataset.picker;
+      sel[k] = sel[k] === b.dataset.value ? null : b.dataset.value;   // a second tap clears it
+      // A combination we do not make (12 × 16 with no side patty): the chip
+      // just tapped wins, and the other choices are cleared.
+      var made = Q.variants.some(function (v) {
+        return KEYS.every(function (j) { return sel[j] === null || String(v[j]) === sel[j]; });
+      });
+      if (!made) KEYS.forEach(function (j) { if (j !== k) sel[j] = null; });
+      draw();
+    });
+  }
+
+  // Browsing the price list chooses that side patty or thickness too, so the
+  // chips never disagree with the table on screen.
+  if (sw) sw.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-g]");
+    if (!b) return;
+    showTable(b.dataset.g);
+    if (Q && box) {
+      if (picker("gsm")) sel.gsm = b.dataset.gsm;
+      if (picker("patty")) sel.patty = b.dataset.patty;
+      draw();
+    }
+  });
 })();
 </script>
 {{ end }}
