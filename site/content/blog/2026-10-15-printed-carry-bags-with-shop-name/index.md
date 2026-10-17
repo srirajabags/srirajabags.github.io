@@ -125,4 +125,4 @@ The minimums are 10 kg for D-cut and handle bags and 200 for stitched bags. Ask 
 
 ## Get your quote
 
-Send your design and quantity on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20want%20carry%20bags%20printed%20with%20my%20shop%20name.%20My%20design%20and%20quantity%3A&type=phone_number&app_absent=0) and we will send a rate the same day. Or browse the [full catalog](/catalog/) with every size and rate.
+Send your design and quantity on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20want%20carry%20bags%20printed%20with%20my%20shop%20name.%20My%20design%20and%20quantity%3A%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0) and we will send a rate the same day. Or browse the [full catalog](/catalog/) with every size and rate.

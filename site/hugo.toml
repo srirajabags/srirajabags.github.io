@@ -45,6 +45,10 @@ disableKinds = ["taxonomy", "term"]
   # Shown on product pages under "How ordering works". From the Oct 2026
   # pricelist note: "Delivery 15 to 20 days, also depending on customer".
   leadTime = "15–20 days"
+  # Appended to every WhatsApp message a website button pre-fills, so the office
+  # can search WhatsApp for it and count website enquiries exactly (goal sheet,
+  # workstream A). Not added to review-page messages or to blog share links.
+  waMarker = "— via srirajabags.in"
   # The states the trust line on product pages names.
   servedStates = "Andhra Pradesh, Telangana and Karnataka"
 

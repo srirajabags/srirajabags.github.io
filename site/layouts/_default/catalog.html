@@ -27,7 +27,7 @@
 {{ $waSuffix := "&type=phone_number&app_absent=0" }}
 
 {{/* The message a buyer sends when nothing in the list fits. */}}
-{{ $customText := "Hello Sri Raja Bags, I need carry bags / covers. Type: __, size: __ x __ inch, printing: __, quantity: __ kg. Please send rates." }}
+{{ $customText := printf "Hello Sri Raja Bags, I need carry bags / covers. Type: __, size: __ x __ inch, printing: __, quantity: __ kg. Please send rates. %s" .Site.Params.waMarker }}
 {{ $waCustom := printf "%s&text=%s%s" $wa (urlquery $customText) $waSuffix }}
 
 <main class="page ct">
@@ -245,7 +245,7 @@
                      has no sizes[0] to index. */}}
                 {{ $askSize := "" }}
                 {{ with .sizes }}{{ $askSize = printf " (%s)" (index . 0).plain }}{{ end }}
-                {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order." .name $askSize }}
+                {{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order. %s" .name $askSize $.Site.Params.waMarker }}
                 <a class="ct-btn ct-wa nojs-only" href="{{ printf "%s&text=%s%s" $wa (urlquery $askText) $waSuffix }}" target="_blank" rel="noopener">Ask on WhatsApp</a>
               </div>
             </div>
@@ -298,7 +298,7 @@
 {{ $first := "" }}{{ if .variants }}{{ $first = index .variants 0 }}{{ end }}
 {{ $askSize := "" }}
 {{ with .sizes }}{{ $askSize = printf " (%s)" (index . 0).plain }}{{ end }}
-{{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order." .name $askSize }}
+{{ $askText := printf "Hello Sri Raja Bags, I am interested in %s%s. Please send your best rate and minimum order. %s" .name $askSize $.Site.Params.waMarker }}
 <dialog class="ct-dialog" id="d-{{ .id }}" aria-labelledby="dt-{{ .id }}" data-product="{{ .id }}"
   data-unit="{{ .unit }}" data-qty-unit="{{ .qtyUnit }}" data-thick="{{ .thickness }}"
   data-start="{{ .start }}" data-step="{{ .step }}" data-moq="{{ if .hasMoq }}{{ .moq }}{{ end }}">
@@ -548,6 +548,7 @@
   var dockAsk = document.getElementById("ct-dock-ask");
   var cart    = document.getElementById("ct-cart");
   var PHONE   = {{ .Site.Params.phoneRaw }};
+  var MARKER  = {{ .Site.Params.waMarker }};
   var STORE   = "srb-enquiry";
 
   // Facet keys are whatever the sheet produced, so read them off the form
@@ -912,7 +913,7 @@
       return (i + 1) + ". " + cardOf(l.id).dataset.name + (bits ? " — " + bits : "") + " — " + qtyText(l.id, l.e.qty);
     });
     var msg = "Hello Sri Raja Bags, I would like a quote for:\n\n" + msgLines.join("\n") +
-      "\n\nTotal " + totals + ". Please send final rate, printing charges and delivery time.";
+      "\n\nTotal " + totals + ". Please send final rate, printing charges and delivery time.\n\n" + MARKER;
     document.getElementById("ct-cart-wa").href =
       "https://api.whatsapp.com/send/?phone=" + PHONE + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
   }
@@ -1115,7 +1116,7 @@
 
       if (ask) {
         var msg = "Hello Sri Raja Bags, I am interested in " + c.dataset.name +
-          " (" + describe(id, v) + "). Quantity around " + qtyText(id, sel.qty) + ". Please send your best rate.";
+          " (" + describe(id, v) + "). Quantity around " + qtyText(id, sel.qty) + ". Please send your best rate. " + MARKER;
         ask.href = "https://api.whatsapp.com/send/?phone=" + PHONE + "&text=" + encodeURIComponent(msg) + "&type=phone_number&app_absent=0";
       }
 

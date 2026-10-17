@@ -19,7 +19,7 @@
       <a href="{{ "/about/" | relURL }}">About</a>
       <a href="{{ "/blog/" | relURL }}">Blog</a>
       <a href="{{ "/#contact" | relURL }}">Contact us</a>
-      <a class="nav-wa" href="https://wa.me/{{ .Site.Params.phoneRaw }}" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <a class="nav-wa" href="https://wa.me/{{ .Site.Params.phoneRaw }}?text={{ urlquery (printf "Hello Sri Raja Bags %s" .Site.Params.waMarker) }}" target="_blank" rel="noopener" aria-label="WhatsApp">
         {{ partial "icon-whatsapp.html" . }}
       </a>
     </nav>

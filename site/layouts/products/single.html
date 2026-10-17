@@ -18,7 +18,7 @@
 {{ $wa := printf "https://api.whatsapp.com/send/?phone=%s" .Site.Params.phoneRaw }}
 {{ $site := .Site }}
 {{ with $p }}
-{{ $askText := printf "Hello Sri Raja Bags, I saw %s on your website. Please send your rate for my size and quantity." .name }}
+{{ $askText := printf "Hello Sri Raja Bags, I saw %s on your website. Please send your rate for my size and quantity. %s" .name $site.Params.waMarker }}
 {{ $waLink := printf "%s&text=%s&type=phone_number&app_absent=0" $wa (urlquery $askText) }}
 {{ $per := cond (eq .unit "pc") "piece" "kg" }}
 {{ $top := index $c.priceTypes 0 }}

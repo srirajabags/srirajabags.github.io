@@ -7,7 +7,7 @@
      that. Checked twice: not at all in `hugo server` (development), and in the
      browser only on a *.srirajabags.in address, which also covers a production
      build opened from localhost. */}}
-{{ if hugo.IsProduction }}{{ with .Site.Params.gtag }}
+{{ if hugo.IsProduction }}{{ with $.Site.Params.gtag }}
 <script>
   (function () {
     if (!/(^|\.)srirajabags\.in$/.test(location.hostname)) return;
@@ -20,5 +20,26 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', '{{ . }}');
+
+  /* "whatsapp_enquiry": a tap on a button that opens a chat with OUR number —
+     the goal-sheet KPI, marked as a key event in GA4. Not fired on /review/
+     (customers sending a photo, not orders) nor for blog share links (those
+     go to other people's numbers). "placement" says which button it was. */
+  (function () {
+    var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ $.Site.Params.phoneRaw }}/;
+    var PLACES = [
+      [".ct-cart", "enquiry_list"], [".ct-dialog", "product_dialog"], [".ct-card", "catalog_card"],
+      [".ct-cta", "catalog_custom"], [".ct-empty", "catalog_custom"], [".ct-dock", "catalog_dock"],
+      [".pd-dock", "product_dock"], [".pd-cta", "product_page"], [".post", "blog_post"],
+      [".nav-wa", "navbar"], ["footer", "footer"], ["#contact", "contact"], [".about-cta, .page", "page"]
+    ];
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (!a || !OURS.test(a.href) || /^\/review\//.test(location.pathname)) return;
+      var place = "other";
+      for (var i = 0; i < PLACES.length; i++) if (a.closest(PLACES[i][0])) { place = PLACES[i][1]; break; }
+      gtag("event", "whatsapp_enquiry", { placement: place, page_path: location.pathname });
+    }, true);
+  })();
 </script>
 {{ end }}{{ end }}

@@ -266,12 +266,12 @@
           </div>
         </div>
         <div class="contact-card">
-          <a href="{{ $wa }}&amp;text=Send%20Me%20More%20Offers.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp us">
+          <a href="{{ $wa }}&amp;text={{ urlquery (printf "Send Me More Offers. %s" $.Site.Params.waMarker) }}&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener" aria-label="WhatsApp us">
             {{ partial "icon-whatsapp.html" $ }}
           </a>
           <div>
             <h3>WhatsApp</h3>
-            <p><a href="{{ $wa }}&amp;text=Send%20Me%20More%20Offers.&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Message us</a></p>
+            <p><a href="{{ $wa }}&amp;text={{ urlquery (printf "Send Me More Offers. %s" $.Site.Params.waMarker) }}&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">Message us</a></p>
           </div>
         </div>
         {{/* Crawlable NAP. Google reads the visible address, not the map iframe. */}}

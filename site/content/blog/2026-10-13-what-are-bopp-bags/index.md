@@ -88,4 +88,4 @@ It depends on what is carried in it, but laminated bags are built for repeated u
 
 ## Get a quote
 
-Send your design — or a photo of the bag you use now — on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20read%20your%20article%20on%20BOPP%20bags.%20Please%20send%20me%20a%20quote.&type=phone_number&app_absent=0) with the size and quantity, and we will send a rate the same day. You can also browse [BOPP laminated digital bags](/products/digital-bopp/), [normal digital bags](/products/digital-multi-color/) or the [full catalog](/catalog/).
+Send your design — or a photo of the bag you use now — on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20read%20your%20article%20on%20BOPP%20bags.%20Please%20send%20me%20a%20quote.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0) with the size and quantity, and we will send a rate the same day. You can also browse [BOPP laminated digital bags](/products/digital-bopp/), [normal digital bags](/products/digital-multi-color/) or the [full catalog](/catalog/).
