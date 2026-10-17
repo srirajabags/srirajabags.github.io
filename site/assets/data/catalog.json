@@ -683,7 +683,13 @@
      "pcsPerKg": null
     }
    ],
-   "photos": []
+   "photos": [
+    {
+     "file": "catalog/9cd81e6d87136766bebd4b9b2e7ee3b7822b96c9.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
   },
   {
    "id": "handle-double-color",
@@ -3155,7 +3161,13 @@
      "pcsPerKg": null
     }
    ],
-   "photos": []
+   "photos": [
+    {
+     "file": "catalog/f94c8fdd2ed9763a7efe7f6711490b2883fe8002.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
   },
   {
    "id": "digital-handle",
@@ -4498,7 +4510,13 @@
      "pcsPerKg": null
     }
    ],
-   "photos": []
+   "photos": [
+    {
+     "file": "catalog/bd974ca2e1806c27b429bdf6a5d7365ad9ced520.jpg",
+     "shopTypes": [],
+     "alt": ""
+    }
+   ]
   },
   {
    "id": "misprint-nw",
