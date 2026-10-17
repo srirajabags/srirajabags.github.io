@@ -1,10 +1,24 @@
-{{ with .Site.Params.gtag }}
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+{{/* Google Analytics (GA4, the same property as refer.srirajabags.in).
+
+     Only the live sites report. Without this guard, every local preview
+     (hugo server), every phone viewing that preview over Wi-Fi, and every
+     automated browser test sent real page views, shares and clicks into the
+     property — 19 sessions and most of the first week's blog "shares" were
+     that. Checked twice: not at all in `hugo server` (development), and in the
+     browser only on a *.srirajabags.in address, which also covers a production
+     build opened from localhost. */}}
+{{ if hugo.IsProduction }}{{ with .Site.Params.gtag }}
 <script>
+  (function () {
+    if (!/(^|\.)srirajabags\.in$/.test(location.hostname)) return;
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id={{ . }}";
+    document.head.appendChild(s);
+  })();
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', '{{ . }}');
 </script>
-{{ end }}
+{{ end }}{{ end }}
