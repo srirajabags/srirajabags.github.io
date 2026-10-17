@@ -7,9 +7,29 @@
   <div class="container hero-inner">
     <h1>{{ .heading }}</h1>
     <p>{{ .text }}</p>
-    <a class="btn" href="#products">{{ .cta }}</a>
+    {{ $quote := printf "https://api.whatsapp.com/send/?phone=%s&text=%s&type=phone_number&app_absent=0" $.Site.Params.phoneRaw (urlquery (printf "%s %s" .quoteText $.Site.Params.waMarker)) }}
+    <div class="hero-ctas">
+      {{ with .ctaQuote }}<a class="btn btn-wa" href="{{ $quote }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" $ }}<span>{{ . }}</span></a>{{ end }}
+      <a class="btn btn-ghost" href="{{ "/catalog/" | relURL }}">{{ .cta }}</a>
+    </div>
+    {{ with .promise }}<p class="hero-promise">{{ . }}</p>{{ end }}
   </div>
 </section>
+{{/* Phone: once the hero has scrolled away, the quote button stays reachable
+     at the bottom of the screen — most visitors are on phones, and the next
+     WhatsApp button is otherwise the contact section at the very end. */}}
+{{ with .ctaQuote }}
+<div class="home-dock" hidden>
+  <a class="btn btn-wa" href="{{ $quote }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" $ }}<span>{{ . }}</span></a>
+</div>
+<script>
+(function () {
+  var dock = document.querySelector(".home-dock"), hero = document.querySelector(".hero");
+  if (!dock || !hero || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(function (e) { dock.hidden = e[0].isIntersecting; }).observe(hero);
+})();
+</script>
+{{ end }}
 {{ with .badges }}
 {{ $b := resources.Get . }}
 {{ $sm := $b.Resize "700x webp q85" }}

@@ -6,7 +6,14 @@ hero:
   badges: "images/trust-badges.png"
   heading: "Non Woven Carry Bags and Plastic Covers Manufacturers"
   text: "A manufacturing and supply unit established in 2011. Sri Raja Bags supplies all types of shopping bags and carry bags across three South Indian states — Andhra Pradesh, Telangana and Karnataka — to more than 10,000 customers."
-  cta: "Our Products"
+  # The first thing on the page is the enquiry button (goal sheet, workstream B):
+  # until Oct 2026 the hero's only button scrolled to the product rail, and the
+  # first WhatsApp button was in the contact section at the bottom.
+  ctaQuote: "Get a quote on WhatsApp"
+  quoteText: "Hello Sri Raja Bags, I need carry bags for my shop. Type: __, size: __ inch, printing: __, quantity: __."
+  cta: "See catalog & prices"
+  # One line under the buttons: what happens when they tap.
+  promise: "Same-day quote on WhatsApp · Delivery across AP, Telangana and Karnataka"
 
 products:
   heading: "Our Products"

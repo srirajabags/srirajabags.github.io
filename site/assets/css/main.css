@@ -173,8 +173,28 @@ a { color: var(--navy); }
   font-size: 1.05rem;
   color: rgba(255,255,255,0.9);
 }
-.hero .btn { background: var(--mint); color: var(--navy); }
-.hero .btn:hover { background: #7ee6ac; }
+.hero-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
+.hero .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; }
+.hero .btn svg, .home-dock .btn svg { width: 1.25rem; height: 1.25rem; flex: none; }
+/* WhatsApp green for the enquiry button, the main action on the page. */
+.btn-wa { background: #25d366; color: #0b3d1f; font-weight: 700; }
+.btn-wa:hover { background: #3ee07a; }
+.hero .btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
+.hero .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+.hero-promise { margin: 1.1rem auto 0 !important; font-size: 0.88rem !important; color: rgba(255,255,255,0.75) !important; }
+.home-dock { display: none; }
+@media (max-width: 700px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; max-width: 22rem; margin: 0 auto; }
+  .home-dock:not([hidden]) {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+    padding: 0.6rem 1.25rem calc(0.6rem + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.97); border-top: 1px solid var(--rule);
+    box-shadow: 0 -4px 16px rgba(17,24,32,0.06);
+  }
+  .home-dock .btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; min-height: 3rem; }
+  /* Room under the footer so the bar never covers its last links. */
+  body:has(.home-dock) footer { padding-bottom: 5.5rem; }
+}
 
 /* Trust-badge strip (10,000 customers / 10 years / support / sales team).
    Source image is pre-cropped to the badges, so it just scales. */

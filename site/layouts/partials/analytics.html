@@ -28,6 +28,7 @@
   (function () {
     var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ $.Site.Params.phoneRaw }}/;
     var PLACES = [
+      [".hero", "home_hero"], [".home-dock", "home_dock"],
       [".ct-cart", "enquiry_list"], [".ct-dialog", "product_dialog"], [".ct-card", "catalog_card"],
       [".ct-cta", "catalog_custom"], [".ct-empty", "catalog_custom"], [".ct-dock", "catalog_dock"],
       [".pd-dock", "product_dock"], [".pd-cta", "product_page"], [".post", "blog_post"],
