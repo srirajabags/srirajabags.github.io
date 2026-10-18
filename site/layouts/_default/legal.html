@@ -1,0 +1,11 @@
+{{ define "main" }}
+{{/* Plain text pages: privacy policy and the like. The same narrow column as
+     a blog post, without the byline or share buttons. */}}
+<div class="page">
+  <article class="container narrow post">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Params.updated }}<p class="meta">Last updated {{ . }}</p>{{ end }}
+    {{ .Content }}
+  </article>
+</div>
+{{ end }}
