@@ -1644,4 +1644,7 @@ html:not(.js) .js-only { display: none !important; }
 .area-photos img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; background: var(--paper-alt); }
 .area-photos a:hover img { filter: brightness(1.05); }
 .area-photos figcaption { font-size: 0.85rem; line-height: 1.45; color: var(--ink-soft); }
-.foot-areas { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--ink-soft); }
+/* On the navy footer: light text, and the area links white like the nav. */
+.foot-areas { margin: -0.4rem 0 1.4rem; font-size: 0.88rem; color: rgba(255,255,255,0.72); }
+.foot-areas a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); text-underline-offset: 3px; }
+.foot-areas a:hover { color: var(--mint); text-decoration-color: currentColor; }
