@@ -2,7 +2,7 @@
 title: "Carry Bag Manufacturer for Shops in Anantapur District"
 # Search-result title, kept under Google's ~60-character cut-off.
 metaTitle: "Carry Bag Manufacturers Near Anantapur"
-description: "Printed non woven carry bags for shops in Anantapur, Guntakal, Tadipatri, Hindupur and across the district, from our Dhone factory. Weekly salesman visits, delivery in 1–2 days."
+description: "Printed non woven carry bags for shops in Anantapur, Guntakal, Tadipatri, Hindupur and across the district, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
 url: "/carry-bags-anantapur/"
 # Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
@@ -25,7 +25,7 @@ photos:
     product: "digital-bopp"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at Dhone, on the Bengaluru–Hyderabad highway about 100 km from Anantapur, and supplies shops across Anantapur and Sri Sathya Sai districts.** In the last year, more than 500 shops in the two districts ordered bags from us. Our salesman for the district visits every week, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at Dhone, on the Bengaluru–Hyderabad highway about 100 km from Anantapur, and supplies shops across Anantapur and Sri Sathya Sai districts.** In the last year, more than 500 shops in the two districts ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
@@ -37,12 +37,12 @@ Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 
 ## How ordering works in the district
 
-1. **Meet our salesman, or send your design on WhatsApp.** Our salesman for the district visits every week. He can show you samples and take your design and order at your shop.
+1. **Send your design on WhatsApp, or call us.** A logo, a visiting card, a photo of your shop board or of the bag you use now is enough, with the size and quantity.
 2. **Get a rate and a design proof** the same day or the next day.
 3. **Approve the proof and pay the 50% advance.** Printing takes about 15–20 days.
 4. **Delivery by transport, 1–2 days** after the bags are ready. Freight is quoted for your town; the balance is paid at billing.
 
-> **Want the salesman to visit your shop?** Send your shop name and town on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20please%20ask%20your%20Anantapur%20district%20salesman%20to%20visit%20my%20shop%3A%20__%20%28shop%20name%29%2C%20__%20%28town%29.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0), and he will include your shop in his next visit.
+> **Get a quote today.** Send your town, the bag you need and roughly how many on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20have%20a%20shop%20in%20__%20%28Anantapur%20district%29.%20I%20need%20__%20bags%2C%20size%20__%20inch%2C%20quantity%20__.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0), or call [+91 91770 56061](tel:+919177056061).
 
 ## Bags we have printed for shops in the district
 
@@ -58,9 +58,6 @@ The only extras are a one-time printing block charge (from ₹150), GST and frei
 
 ## Common questions
 
-**Can your salesman visit my shop?**
-Yes. He covers Anantapur and Sri Sathya Sai districts every week. Send us your shop name and town on WhatsApp and he will come by on his next round.
-
 **How long does delivery take?**
 About 15–20 days for printing after you approve the design proof, then 1–2 days by transport to your town.
 
@@ -72,4 +69,4 @@ No. Rates are ex-factory; we quote the transport charge for your town with your 
 
 ## Get a quote
 
-Tell us your town, the bag you need and roughly how many on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20have%20a%20shop%20in%20__%20%28Anantapur%20district%29.%20I%20need%20__%20bags%2C%20size%20__%20inch%2C%20quantity%20__.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0), and we will send a rate the same day.
+Tell us your town, the bag you need and roughly how many on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20have%20a%20shop%20in%20__%20%28Anantapur%20district%29.%20I%20need%20__%20bags%2C%20size%20__%20inch%2C%20quantity%20__.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0), or call [+91 91770 56061](tel:+919177056061), and we will send a rate the same day.
