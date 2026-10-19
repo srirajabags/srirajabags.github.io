@@ -60,9 +60,11 @@
 {{ $badge := .featureBadge | default "Bestseller" }}
 {{/* Badged rows lead, then everything else in sheet order — so the rail opens
      on the bestsellers but still shows the breadth of the range behind them.
-     Both halves keep the order the office set in Grist. */}}
+     Both halves keep the order the office set in Grist. Products without a
+     photo are left out: a placeholder tile sells nothing on the front page.
+     They still appear in the catalog. */}}
 {{ $lead := slice }}{{ $rest := slice }}
-{{ range $cat.products }}
+{{ range where $cat.products "img" "!=" "" }}
   {{ if in .badges $badge }}{{ $lead = $lead | append . }}{{ else }}{{ $rest = $rest | append . }}{{ end }}
 {{ end }}
 {{ $feature := first $limit ($lead | append $rest) }}
