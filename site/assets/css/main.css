@@ -1233,6 +1233,7 @@ html:not(.js) .js-only { display: none !important; }
   object-fit: cover;
   scroll-snap-align: start;
 }
+.ct-slides img[hidden] { display: none; }
 .ct-slides:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
 
 .ct-cnav {

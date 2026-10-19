@@ -132,15 +132,23 @@
             data-print="{{ .print }}"
             data-size="{{ delimit .buckets "|" }}"
             data-gsm="{{ delimit $gsmVals "|" }}"
-            data-shop="{{ delimit .shops "|" }}"
+            data-shop="{{ delimit .shopsAll "|" }}"
             data-colour="{{ delimit $colourNames "|" }}"
             data-unit="{{ .qtyUnit }}"
-            data-search="{{ lower (printf "%s %s %s %s %s %s %s %s" .name (delimit .materials " ") .bagType .print (delimit .shops " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
+            data-search="{{ lower (printf "%s %s %s %s %s %s %s %s" .name (delimit .materials " ") .bagType .print (delimit .shopsAll " ") (delimit $sizePlains " ") (delimit $gsmVals " ") (delimit $colourNames " ")) }}">
 
             {{/* A card carries its first 8 photos; the dialog has them all. A
                  strip of 49 thumbnails would cost every visitor the bytes for a
                  carousel almost nobody swipes to the end of. */}}
-            {{ $pname := .name }}{{ $cardImgs := first 8 .imgs }}{{ $nimg := len $cardImgs }}
+            {{ $pname := .name }}{{ $baseImgs := first 8 .imgs }}{{ $nimg := len $baseImgs }}
+            {{/* The card shows the first 8 photos. A shop type tagged only on a
+                 later photo would then never reach the card, so the first photo
+                 for each such shop type rides along hidden (data-extra); the
+                 shop filter swaps it to the front when that trade is chosen. */}}
+            {{ $covered := slice }}{{ range $baseImgs }}{{ range .shops }}{{ $covered = $covered | append . }}{{ end }}{{ end }}
+            {{ $extraImgs := slice }}
+            {{ range after 8 .imgs }}{{ $im := . }}{{ $new := false }}{{ range .shops }}{{ if not (in $covered .) }}{{ $new = true }}{{ end }}{{ end }}{{ if $new }}{{ $extraImgs = $extraImgs | append $im }}{{ range .shops }}{{ $covered = $covered | append . }}{{ end }}{{ end }}{{ end }}
+            {{ $cardImgs := $baseImgs | append $extraImgs }}
             <div class="ct-thumb">
               {{/* Slides are plain <img>, never buttons. Wrapping each one would
                    put a tab stop on every photo of every card, and marking them
@@ -158,7 +166,7 @@
                   <img src="{{ $im.src }}" srcset="{{ $im.src }} 320w, {{ $im.src2x }} 640w"
                        sizes="(max-width: 700px) 45vw, 260px"
                        width="320" height="320"
-                       data-shop="{{ delimit $im.shops "|" }}"
+                       data-shop="{{ delimit $im.shops "|" }}"{{ if ge $i $nimg }} data-extra hidden{{ end }}
                        alt="{{ with $im.alt }}{{ . }}{{ else }}{{ $pname }}{{ if gt $i 0 }} — photo {{ add $i 1 }}{{ end }}{{ end }}"
                        loading="lazy" decoding="async">
                   {{ end }}
@@ -167,7 +175,7 @@
                 <button type="button" class="ct-cnav ct-cprev js-only" data-cnav="-1" aria-label="Previous photo of {{ $pname }}">‹</button>
                 <button type="button" class="ct-cnav ct-cnext js-only" data-cnav="1" aria-label="Next photo of {{ $pname }}">›</button>
                 <div class="ct-dots js-only">
-                  {{ range $i, $im := $cardImgs }}
+                  {{ range $i, $im := $baseImgs }}
                   <button type="button" class="ct-dot{{ if eq $i 0 }} is-on{{ end }}" data-cdot="{{ $i }}"
                           aria-label="Photo {{ add $i 1 }} of {{ $nimg }}"></button>
                   {{ end }}
@@ -659,7 +667,11 @@
      still see the curated first photo. */
 
   var strips = Array.prototype.slice.call(document.querySelectorAll(".ct-slides"));
-  strips.forEach(function (s) { s._order = Array.prototype.slice.call(s.children); });
+  strips.forEach(function (s) {
+    s._order = Array.prototype.slice.call(s.children);
+    // How many photos the strip shows; the rest (data-extra) wait off stage.
+    s._shown = s._order.filter(function (im) { return !im.hasAttribute("data-extra"); }).length;
+  });
   var photoKey = null;
 
   function prioritisePhotos() {
@@ -689,7 +701,7 @@
       var same = next.every(function (im, i) { return strip.children[i] === im; });
       if (same) return;
 
-      next.forEach(function (im) { strip.appendChild(im); });
+      next.forEach(function (im, i) { im.hidden = i >= strip._shown; strip.appendChild(im); });
       var film = strip.closest(".ct-dialog-img") && strip.closest(".ct-dialog-img").querySelector(".ct-film");
       if (film) next.forEach(function (im) {
         var b = film.querySelector('.ct-film-btn[data-k="' + im.dataset.k + '"]');
@@ -933,6 +945,8 @@
   document.querySelectorAll("[data-carousel]").forEach(function (car) {
     var strip = car.querySelector(".ct-slides");
     var slides = car.querySelectorAll(".ct-slides img");
+    // Hidden photos (a card's off-stage shop photos) are not slides.
+    function count() { return strip.querySelectorAll("img:not([hidden])").length; }
     var dots = car.querySelectorAll("[data-cdot]");
     var prev = car.querySelector('[data-cnav="-1"]');
     var next = car.querySelector('[data-cnav="1"]');
@@ -947,7 +961,7 @@
 
     function go(i) {
       if (!width()) return;
-      i = Math.max(0, Math.min(slides.length - 1, i));
+      i = Math.max(0, Math.min(count() - 1, i));
       strip.scrollTo({ left: i * width(), behavior: "smooth" });
     }
     function sync() {
@@ -956,7 +970,7 @@
         dt.classList.toggle("is-on", n === i);
         dt.setAttribute("aria-current", String(n === i));
       });
-      if (counter) counter.textContent = (i + 1) + " / " + slides.length;
+      if (counter) counter.textContent = (i + 1) + " / " + count();
       if (film) {
         // Slides can be reordered by the shop filter, so the strip is matched
         // by each photo's original position, not by index.
@@ -979,7 +993,7 @@
         });
       }
       if (prev) prev.disabled = i <= 0;
-      if (next) next.disabled = i >= slides.length - 1;
+      if (next) next.disabled = i >= count() - 1;
     }
 
     if (prev) prev.addEventListener("click", function () { go(index() - 1); });

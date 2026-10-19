@@ -229,6 +229,13 @@
   {{- $img := "" }}{{ $img2x := "" -}}
   {{- with $imgs }}{{ $img = (index . 0).src }}{{ $img2x = (index . 0).src2x }}{{ end -}}
 
+  {{/* Shop types the filter and search match on: the product's own list plus
+       every shop a photo of it was shot for, so a D-cut photo tagged "Sweet
+       Shops" puts the D-cut bag under Sweet Shops. "Best for" keeps showing
+       the product's own list. */}}
+  {{- $shopsAll := $m.shopTypes | default slice -}}
+  {{- range $imgs }}{{ range .shops }}{{ if not (in $shopsAll .) }}{{ $shopsAll = $shopsAll | append . }}{{ end }}{{ end }}{{ end -}}
+
   {{/* ---- quantity ----
        Counted in the unit the product is priced in. The stepper starts at the
        minimum order where there is one, and moves in steps a buyer would
@@ -250,6 +257,7 @@
       "materials" (cond (ne ($m.material | default "") "") (slice $m.material) slice)
       "badges" ($m.badges | default slice)
       "shops" ($m.shopTypes | default slice)
+      "shopsAll" $shopsAll
       "colours" $cols
       "note" ($m.description | default "")
       "priceNotes" ($m.priceNotes | default "")
@@ -273,7 +281,7 @@
   {{- with .bagType }}{{ if not (in $types .) }}{{ $types = $types | append . }}{{ end }}{{ end -}}
   {{- with .print }}{{ if not (in $prints .) }}{{ $prints = $prints | append . }}{{ end }}{{ end -}}
   {{- range .gsms }}{{ if not (in $thickVals .label) }}{{ $thickVals = $thickVals | append .label }}{{ end }}{{ end -}}
-  {{- range .shops }}{{ if not (in $shopVals .) }}{{ $shopVals = $shopVals | append . }}{{ end }}{{ end -}}
+  {{- range .shopsAll }}{{ if not (in $shopVals .) }}{{ $shopVals = $shopVals | append . }}{{ end }}{{ end -}}
   {{- range .colours }}{{ if not (in $colNames .name) }}{{ $colNames = $colNames | append .name }}{{ end }}{{ end -}}
 {{- end -}}
 {{/* Thickness options read "80 GSM", "55 micron": sorted by unit, then number,
@@ -356,11 +364,13 @@
 {{- range $shopVals -}}
   {{- $s := . }}{{ $img := "" }}{{ $n := 0 -}}
   {{- range $products -}}
-    {{- if in .shops $s -}}
+    {{- if in .shopsAll $s -}}
       {{- $n = add $n 1 -}}
-      {{- if not $img }}{{ $img = .img }}{{ end -}}
+      {{/* A photo shot for this shop type if there is one, else the product's. */}}
+      {{- range .imgs }}{{ if and (not $img) (in .shops $s) }}{{ $img = .src }}{{ end }}{{ end -}}
     {{- end -}}
   {{- end -}}
+  {{- if not $img }}{{ range $products }}{{ if and (not $img) (in .shopsAll $s) }}{{ $img = .img }}{{ end }}{{ end }}{{ end -}}
   {{- $shopTiles = $shopTiles | append (dict "name" $s "img" $img "count" $n) -}}
 {{- end -}}
 

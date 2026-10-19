@@ -21,6 +21,10 @@
 // and dialog sizes from that, so the repo never carries a 16 MB photo and the
 // build never has to decode one.
 //
+// Wide shots with empty space either side of the bag are trimmed towards
+// portrait (contentCrop). A photo made before that rule existed is only
+// re-made when its file is deleted, since names follow the original.
+//
 // Needs sharp: `npm ci --prefix scripts/catalog` (the workflow does this).
 //
 // The output has no timestamps and a fixed key order, so a sync that finds
@@ -198,9 +202,56 @@ export async function buildCatalog(source, { log = console.log } = {}) {
     return { catalog: out, wanted };
 }
 
+// Landscape shots of a single bag often carry a metre of empty table either
+// side. The product page and dialog show the whole photo, so that bag ends up
+// small. Find the columns that differ from the background (judged row by row
+// against the colour at the left and right edges, so a wall above a table
+// counts as background too) and trim the sides, never narrower than 4:5.
+// Group shots that fill the frame come back unchanged (null).
+// open() returns a fresh sharp instance of the upright photo.
+export async function contentCrop(open, W, H) {
+    if (!W || !H || W <= H) return null;
+    const w = 240, h = Math.max(1, Math.round((w * H) / W));
+    const data = await open().resize(w, h, { fit: "fill" }).removeAlpha().raw().toBuffer();
+    const at = (x, y, c) => data[(y * w + x) * 3 + c];
+    const edge = Math.max(2, Math.round(w * 0.04));
+    const bg = [];
+    for (let y = 0; y < h; y++) {
+        bg.push([0, 1, 2].map((c) => {
+            const v = [];
+            for (let x = 0; x < edge; x++) v.push(at(x, y, c), at(w - 1 - x, y, c));
+            return v.sort((a, b) => a - b)[v.length >> 1];
+        }));
+    }
+    const busy = [];
+    for (let x = 0; x < w; x++) {
+        let n = 0;
+        for (let y = 0; y < h; y++) {
+            const d = Math.abs(at(x, y, 0) - bg[y][0]) + Math.abs(at(x, y, 1) - bg[y][1]) + Math.abs(at(x, y, 2) - bg[y][2]);
+            if (d > 70) n++;
+        }
+        busy.push(n / h > 0.12);
+    }
+    let x0 = busy.indexOf(true), x1 = busy.lastIndexOf(true);
+    if (x0 < 0) return null;
+    const margin = Math.round((x1 - x0) * 0.06) + 2;   // a little table either side
+    x0 = Math.max(0, x0 - margin); x1 = Math.min(w - 1, x1 + margin);
+    let cw = x1 - x0 + 1;
+    const minW = Math.round(h * 0.8);
+    if (cw < minW) { x0 = Math.round((x0 + x1) / 2 - minW / 2); cw = minW; }
+    x0 = Math.max(0, Math.min(w - cw, x0));
+    if (cw > w * 0.85) return null;                    // content fills the frame already
+    const k = W / w, left = Math.round(x0 * k);
+    return { left, top: 0, width: Math.min(W - left, Math.round(cw * k)), height: H };
+}
+
 export async function webMaster(original) {
-    return sharp(original, { failOn: "none" })
-        .rotate()                                   // EXIF orientation, then drop it
+    // EXIF orientation applied, then dropped. Kept as raw pixels in between, so
+    // the photo is only JPEG-compressed once.
+    const { data, info } = await sharp(original, { failOn: "none" }).rotate().raw().toBuffer({ resolveWithObject: true });
+    const open = () => sharp(data, { raw: { width: info.width, height: info.height, channels: info.channels } });
+    const crop = await contentCrop(open, info.width, info.height);
+    return (crop ? open().extract(crop) : open())
         .resize(MASTER_EDGE, MASTER_EDGE, { fit: "inside", withoutEnlargement: true })
         .flatten({ background: "#ffffff" })         // transparent PNGs onto white
         .toColourspace("srgb")
