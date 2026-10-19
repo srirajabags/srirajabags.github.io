@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{/* A page for one area we genuinely supply (content/carry-bags-<area>.md).
+     Written per area from real orders, never generated from a template: the
+     towns, the delivery arrangement and the photos are that area's own.
+
+     Front matter: towns (groups of {district, names}), photos (catalog photo
+     files with captions, bags printed for shops in the area), quote (the
+     WhatsApp message). The {{< area-photos >}} shortcode places the photos
+     inside the text. */}}
+<div class="page">
+  <article class="container narrow post area">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ .Content }}
+  </article>
+</div>
+
+{{/* Search engines: what we do, for which places. */}}
+{{ $areas := slice }}
+{{ range .Params.towns }}{{ range .names }}{{ $areas = $areas | append (dict "@type" "City" "name" .) }}{{ end }}{{ end }}
+{{ $schema := dict
+  "@context" "https://schema.org"
+  "@type" "Service"
+  "name" .Title
+  "serviceType" "Printed non woven carry bags"
+  "provider" (dict "@type" "Organization" "name" "Sri Raja Bags" "url" (absURL "/"))
+  "areaServed" $areas
+  "url" .Permalink }}
+<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>
+{{ end }}

@@ -1,0 +1,20 @@
+{{/* Bags printed for shops in this area: the catalog's own photos, listed in
+     the page's front matter as photos: [{file, caption, product}]. Each links
+     to the product page for that bag. A photo since dropped from the catalog
+     is skipped, not broken. */}}
+{{ with .Page.Params.photos }}
+<div class="area-photos">
+  {{ range . }}
+  {{ $p := . }}
+  {{ with resources.Get (printf "images/%s" $p.file) }}
+  {{ $im := .Fit "600x600 webp q80" }}
+  <figure>
+    <a href="{{ printf "/products/%s/" $p.product | relURL }}">
+      <img src="{{ $im.RelPermalink }}" width="{{ $im.Width }}" height="{{ $im.Height }}" alt="{{ $p.caption }}" loading="lazy" decoding="async">
+    </a>
+    <figcaption>{{ $p.caption }}</figcaption>
+  </figure>
+  {{ end }}
+  {{ end }}
+</div>
+{{ end }}

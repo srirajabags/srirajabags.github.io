@@ -1637,3 +1637,11 @@ html:not(.js) .js-only { display: none !important; }
 .ig-follow:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(221, 42, 123, 0.32); color: #fff; }
 .ig-follow:focus-visible { outline: 3px solid var(--navy); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) { .ig-follow { transition: none; } .ig-follow:hover { transform: none; } }
+
+/* Area pages (layouts/_default/area.html): bags printed for shops there. */
+.area-photos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: 1rem; margin: 1.25rem 0 1.5rem; }
+.area-photos figure { margin: 0; display: grid; gap: 0.45rem; }
+.area-photos img { display: block; width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px; background: var(--paper-alt); }
+.area-photos a:hover img { filter: brightness(1.05); }
+.area-photos figcaption { font-size: 0.85rem; line-height: 1.45; color: var(--ink-soft); }
+.foot-areas { margin: 0.6rem 0 0; font-size: 0.85rem; color: var(--ink-soft); }
