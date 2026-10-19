@@ -9,6 +9,8 @@ weight: 1
 url: "/carry-bags-kurnool-nandyal/"
 areaName: "Kurnool & Nandyal"
 photos:
+  - file: "areas/maharaj-sarees-dhone.jpg"
+    caption: "BOPP laminated bag for a saree showroom in Dhone"
   - file: "areas/anjali-ladies-corner-pattikonda.jpg"
     caption: "BOPP laminated bag for a ladies corner and gift shop in Pattikonda"
   - file: "catalog/b5b45f71c75e9ec43092bf0e38a5943c6c203a8c.jpg"
