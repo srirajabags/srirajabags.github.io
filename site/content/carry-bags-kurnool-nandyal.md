@@ -4,14 +4,13 @@ title: "Carry Bag Manufacturer for Shops in Kurnool & Nandyal Districts"
 metaTitle: "Carry Bag Manufacturers in Kurnool & Nandyal"
 description: "Printed non woven carry bags for shops in Kurnool, Nandyal, Adoni, Dhone and across both districts, made at our own factory in Dhone. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
+areaKey: "kurnool-nandyal"
 weight: 1
 url: "/carry-bags-kurnool-nandyal/"
 areaName: "Kurnool & Nandyal"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Kurnool & Nandyal districts"
-    names: ["Nandyal", "Kurnool", "Dhone", "Adoni", "Allagadda", "Atmakur", "Nandikotkur", "Betamcherla", "Yemmiganur", "Banaganapalli", "Kodumur", "Pattikonda", "Veldurthi", "Kovelakuntla", "Peapully", "Gadivemula", "Alur", "Velugodu", "Chagalamarri"]
 photos:
+  - file: "areas/anjali-ladies-corner-pattikonda.jpg"
+    caption: "BOPP laminated bag for a ladies corner and gift shop in Pattikonda"
   - file: "catalog/b5b45f71c75e9ec43092bf0e38a5943c6c203a8c.jpg"
     caption: "Stitched bag for a family readymade showroom in Kurnool"
     product: "stitching-single-color"
@@ -23,11 +22,11 @@ photos:
     product: "digital-bopp"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our own factory in Dhone, in the heart of Kurnool and Nandyal districts, and supplies shops across Kurnool & Nandyal districts.** In the last year, more than 650 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at our own factory in Dhone, in the heart of Kurnool and Nandyal districts, and supplies shops across Kurnool & Nandyal districts.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
-Nandyal, Kurnool, Dhone, Adoni, Allagadda, Atmakur, Nandikotkur, Betamcherla, Yemmiganur, Banaganapalli, Kodumur, Pattikonda, Veldurthi, Kovelakuntla, Peapully, Gadivemula, Alur, Velugodu and Chagalamarri.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

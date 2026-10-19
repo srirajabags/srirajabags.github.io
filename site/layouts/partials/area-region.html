@@ -1,0 +1,11 @@
+{{/* The region record for an area page, from assets/data/areas.json (built by
+     scripts/areas/build-areas.mjs). Pass the page; returns the region dict, or
+     nothing when the page has no areaKey or the data has no such region. */}}
+{{ $r := dict }}
+{{ with .Params.areaKey }}
+  {{ $key := . }}
+  {{ with resources.Get "data/areas.json" }}
+    {{ range (. | transform.Unmarshal).regions }}{{ if eq .key $key }}{{ $r = . }}{{ end }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ return $r }}

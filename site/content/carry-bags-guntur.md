@@ -4,14 +4,13 @@ title: "Carry Bag Manufacturer for Shops in Guntur & Palnadu"
 metaTitle: "Carry Bag Manufacturers Near Guntur & Narasaraopet"
 description: "Printed non woven carry bags for shops in Guntur, Narasaraopet, Tenali, Chilakaluripet, Vinukonda and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
-weight: 3
+areaKey: "guntur"
+weight: 4
 url: "/carry-bags-guntur/"
 areaName: "Guntur & Palnadu"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Guntur & Palnadu"
-    names: ["Guntur", "Narasaraopet", "Vinukonda", "Mangalagiri", "Tenali", "Chilakaluripet", "Piduguralla", "Sattenapalle", "Bapatla", "Macherla", "Gurazala", "Ponnur", "Dachepalli", "Repalle", "Krosur", "Karempudi"]
 photos:
+  - file: "areas/kusumaharanath-showroom-narasaraopet.jpg"
+    caption: "BOPP laminated bag for a clothing showroom in Narasaraopet"
   - file: "catalog/3b12da282e12bd61d0ee0e56c88a2fbd4a7bd196.jpg"
     caption: "Full colour digital D-cut bag for a kids' wear shop in Guntur"
     product: "digital-dcut"
@@ -23,11 +22,11 @@ photos:
     product: "digital-multi-color"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Guntur & Palnadu.** In the last year, more than 500 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Guntur & Palnadu.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
-Guntur, Narasaraopet, Vinukonda, Mangalagiri, Tenali, Chilakaluripet, Piduguralla, Sattenapalle, Bapatla, Macherla, Gurazala, Ponnur, Dachepalli, Repalle, Krosur and Karempudi.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

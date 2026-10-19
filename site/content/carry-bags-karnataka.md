@@ -4,33 +4,30 @@ title: "Carry Bag Manufacturer for Shops in Karnataka"
 metaTitle: "Non Woven Carry Bag Manufacturers for Karnataka Shops"
 description: "Printed non woven carry bags for shops in Chintamani, Kolar, Ballari, Raichur, Gangavati, Hoskote and across Karnataka, from our Dhone factory. Quote on WhatsApp, delivery in 3–4 days."
 layout: "area"
-weight: 7
+areaKey: "karnataka"
+weight: 11
 url: "/carry-bags-karnataka/"
 areaName: "Karnataka"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Karnataka"
-    names: ["Chintamani", "Ballari", "Kolar", "Gangavati", "Raichur", "Koppal", "Mulbagal", "Sindhanur", "Ilkal", "Gauribidanur", "Srinivaspur", "Gadag", "Hoskote", "Manvi", "Chikkaballapur", "Vijayapura (Bengaluru Rural)", "Hosapete", "Bagalkot", "Karatagi", "Dharwad", "Bangarapet", "Lingasugur", "Kampli", "Siruguppa", "Doddaballapur", "Bagepalli", "Pavagada", "Tumakuru", "Chitradurga", "KGF", "Bengaluru", "Devanahalli", "Yadgir", "Hassan", "Challakere", "Sidlaghatta", "Kalaburagi", "Chikkamagaluru", "Kanakagiri"]
 photos:
+  - file: "areas/a1-textiles-srinivaspur.jpg"
+    caption: "BOPP laminated bag for a textile store near Srinivaspur, Kolar"
+  - file: "areas/google-fashion-world-chintamani.jpg"
+    caption: "Printed D-cut bag for a fashion store in Chintamani"
+  - file: "areas/sri-lakshmi-saree-center-chelur.jpg"
+    caption: "BOPP laminated bag for a saree centre in Chelur"
   - file: "catalog/dc41a7674b9b70bffd62056a127c4c6a5a9b5405.jpg"
     caption: "Printed D-cut bag for a silk saree shop in Ilkal"
     product: "dcut-single-color"
   - file: "catalog/f8b9388bd9a6b78d1d44667b93918bac46a57f2a.jpg"
     caption: "Full colour bag for a saree shop in Siruguppa"
     product: "digital-multi-color"
-  - file: "catalog/60514e758a77de2ffe6e8800546158b42bc4afca.jpg"
-    caption: "Full colour bag for a jewellery shop in Gadag"
-    product: "digital-multi-color"
-  - file: "catalog/90bcd213e87db04b91850c5f449c4a82d034a1e7.jpg"
-    caption: "Full colour bag for a playschool in Chikkaballapur"
-    product: "digital-multi-color"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, Andhra Pradesh, and supplies shops across Karnataka.** In the last year, more than 850 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 3–4 days.
+**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, Andhra Pradesh, and supplies shops across Karnataka.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 3–4 days.
 
 ## Towns we supply
 
-Chintamani, Ballari, Kolar, Gangavati, Raichur, Koppal, Mulbagal, Sindhanur, Ilkal, Gauribidanur, Srinivaspur, Gadag, Hoskote, Manvi, Chikkaballapur, Vijayapura (Bengaluru Rural), Hosapete, Bagalkot, Karatagi, Dharwad, Bangarapet, Lingasugur, Kampli, Siruguppa, Doddaballapur, Bagepalli, Pavagada, Tumakuru, Chitradurga, KGF, Bengaluru, Devanahalli, Yadgir, Hassan, Challakere, Sidlaghatta, Kalaburagi, Chikkamagaluru and Kanakagiri.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

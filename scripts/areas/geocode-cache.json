@@ -1,0 +1,1502 @@
+{
+ "Dhone|kurnool-nandyal": {
+  "lat": 15.397,
+  "lon": 77.8718,
+  "q": "Dhone, Nandyal, Andhra Pradesh"
+ },
+ "Allagadda|kurnool-nandyal": {
+  "lat": 15.1332,
+  "lon": 78.5142,
+  "q": "Allagadda, Kurnool, Andhra Pradesh"
+ },
+ "Nandyal|kurnool-nandyal": {
+  "lat": 15.8024,
+  "lon": 78.0473,
+  "q": "Nandyal, Kurnool, Andhra Pradesh"
+ },
+ "Adoni|kurnool-nandyal": {
+  "lat": 15.6261,
+  "lon": 77.2724,
+  "q": "Adoni, Kurnool, Andhra Pradesh"
+ },
+ "Kurnool|kurnool-nandyal": {
+  "lat": 15.8309,
+  "lon": 78.0425,
+  "q": "Kurnool, Kurnool, Andhra Pradesh"
+ },
+ "Atmakur|kurnool-nandyal": {
+  "lat": 15.4987,
+  "lon": 78.5054,
+  "q": "Atmakur, Nandyal, Andhra Pradesh"
+ },
+ "Betamcherla|kurnool-nandyal": {
+  "lat": 15.4573,
+  "lon": 78.1511,
+  "q": "Betamcherla, Kurnool, Andhra Pradesh"
+ },
+ "Veldurthi|kurnool-nandyal": {
+  "lat": 15.5533,
+  "lon": 77.9292,
+  "q": "Veldurthi, Kurnool, Andhra Pradesh"
+ },
+ "Kodumur|kurnool-nandyal": {
+  "lat": 15.6832,
+  "lon": 77.772,
+  "q": "Kodumur, Kurnool, Andhra Pradesh"
+ },
+ "Pattikonda|kurnool-nandyal": {
+  "lat": 15.3954,
+  "lon": 77.5014,
+  "q": "Pattikonda, Kurnool, Andhra Pradesh"
+ },
+ "Peapully|kurnool-nandyal": {
+  "lat": 15.3747,
+  "lon": 77.5599,
+  "q": "Peapully, Kurnool, Andhra Pradesh"
+ },
+ "Banaganapalli|kurnool-nandyal": {
+  "lat": 15.3223,
+  "lon": 78.2507,
+  "q": "Banaganapalli, Andhra Pradesh"
+ },
+ "Nandikotkur|kurnool-nandyal": {
+  "lat": 15.8562,
+  "lon": 78.27,
+  "q": "Nandikotkur, Nandyal, Andhra Pradesh"
+ },
+ "Yemmiganur|kurnool-nandyal": {
+  "lat": 15.7681,
+  "lon": 77.4819,
+  "q": "Yemmiganur, Kurnool, Andhra Pradesh"
+ },
+ "Alur|kurnool-nandyal": {
+  "lat": 15.4277,
+  "lon": 77.2578,
+  "q": "Alur, Kurnool, Andhra Pradesh"
+ },
+ "Panyam|kurnool-nandyal": {
+  "lat": 15.5063,
+  "lon": 78.3343,
+  "q": "Panyam, Kurnool, Andhra Pradesh"
+ },
+ "Velugodu|kurnool-nandyal": {
+  "lat": 15.658,
+  "lon": 78.268,
+  "q": "Velugodu, Kurnool, Andhra Pradesh"
+ },
+ "Gadivemula|kurnool-nandyal": {
+  "lat": 15.658,
+  "lon": 78.268,
+  "q": "Gadivemula, Kurnool, Andhra Pradesh"
+ },
+ "Gudur|kurnool-nandyal": {
+  "lat": 15.7761,
+  "lon": 77.8062,
+  "q": "Gudur, Kurnool, Andhra Pradesh"
+ },
+ "Sirivella|kurnool-nandyal": {
+  "lat": 15.338,
+  "lon": 78.5277,
+  "q": "Sirivella, Andhra Pradesh"
+ },
+ "Chagalamarri|kurnool-nandyal": {
+  "lat": 14.9645,
+  "lon": 78.5891,
+  "q": "Chagalamarri, Andhra Pradesh"
+ },
+ "Devanakonda|kurnool-nandyal": {
+  "lat": 15.5382,
+  "lon": 77.5487,
+  "q": "Devanakonda, Kurnool, Andhra Pradesh"
+ },
+ "Mantralayam|kurnool-nandyal": {
+  "lat": 15.9414,
+  "lon": 77.4237,
+  "q": "Mantralayam, Kurnool, Andhra Pradesh"
+ },
+ "Aspari|kurnool-nandyal": {
+  "lat": 15.4764,
+  "lon": 77.3882,
+  "q": "Aspari, Kurnool, Andhra Pradesh"
+ },
+ "Yerraguntla|kurnool-nandyal": {
+  "lat": 14.6436,
+  "lon": 78.5338,
+  "q": "Yerraguntla, Andhra Pradesh"
+ },
+ "Guntakal|anantapur": {
+  "lat": 15.163,
+  "lon": 77.3769,
+  "q": "Guntakal, anantapur, Andhra Pradesh"
+ },
+ "Anantapur|anantapur": {
+  "lat": 14.6783,
+  "lon": 77.6065,
+  "q": "Anantapur, anantapur, Andhra Pradesh"
+ },
+ "Tadipatri|anantapur": {
+  "lat": 14.907,
+  "lon": 78.0097,
+  "q": "Tadipatri, anantapur, Andhra Pradesh"
+ },
+ "Rayadurg|anantapur": {
+  "lat": 14.6999,
+  "lon": 76.85,
+  "q": "Rayadurg, anantapur, Andhra Pradesh"
+ },
+ "Kalyandurg|anantapur": {
+  "lat": 14.6765,
+  "lon": 77.486,
+  "q": "Kalyandurg, anantapur, Andhra Pradesh"
+ },
+ "Uravakonda|anantapur": {
+  "lat": 14.9468,
+  "lon": 77.2578,
+  "q": "Uravakonda, anantapur, Andhra Pradesh"
+ },
+ "Gooty|anantapur": {
+  "lat": 15.1228,
+  "lon": 77.636,
+  "q": "Gooty, anantapur, Andhra Pradesh"
+ },
+ "Pamidi|anantapur": {
+  "lat": 14.945,
+  "lon": 77.5928,
+  "q": "Pamidi, anantapur, Andhra Pradesh"
+ },
+ "Mudigubba|anantapur": {
+  "lat": 14.3507,
+  "lon": 77.9958,
+  "q": "Mudigubba, Andhra Pradesh"
+ },
+ "Somandepalle|anantapur": {
+  "lat": 13.9713,
+  "lon": 77.5694,
+  "q": "Somandepalle, Sri Sathya Sai, Andhra Pradesh"
+ },
+ "Gorantla|anantapur": {
+  "lat": 13.983,
+  "lon": 77.7741,
+  "q": "Gorantla, anantapur, Andhra Pradesh"
+ },
+ "Hindupur|anantapur": {
+  "lat": 13.8328,
+  "lon": 77.4919,
+  "q": "Hindupur, anantapur, Andhra Pradesh"
+ },
+ "Rayalacheruvu|anantapur": {
+  "lat": 15.052,
+  "lon": 77.8176,
+  "q": "Rayalacheruvu, anantapur, Andhra Pradesh"
+ },
+ "Kadiri|anantapur": {
+  "lat": 14.6711,
+  "lon": 77.6097,
+  "q": "Kadiri, anantapur, Andhra Pradesh"
+ },
+ "Dharmavaram|anantapur": {
+  "lat": 14.5713,
+  "lon": 77.6479,
+  "q": "Dharmavaram, anantapur, Andhra Pradesh"
+ },
+ "Peruru|anantapur": {
+  "lat": 14.3543,
+  "lon": 77.3075,
+  "q": "Peruru, anantapur, Andhra Pradesh"
+ },
+ "Yadiki|anantapur": {
+  "lat": 15.0501,
+  "lon": 77.8724,
+  "q": "Yadiki, anantapur, Andhra Pradesh"
+ },
+ "Narpala|anantapur": {
+  "lat": 14.7077,
+  "lon": 77.8041,
+  "q": "Narpala, anantapur, Andhra Pradesh"
+ },
+ "Kundurpi|anantapur": {
+  "lat": 14.2902,
+  "lon": 77.0365,
+  "q": "Kundurpi, anantapur, Andhra Pradesh"
+ },
+ "Penukonda|anantapur": {
+  "lat": 14.0886,
+  "lon": 77.5965,
+  "q": "Penukonda, anantapur, Andhra Pradesh"
+ },
+ "Kothacheruvu|anantapur": {
+  "lat": 14.1814,
+  "lon": 77.7695,
+  "q": "Kothacheruvu, anantapur, Andhra Pradesh"
+ },
+ "Kasapuram|anantapur": {
+  "lat": 15.1958,
+  "lon": 77.392,
+  "q": "Kasapuram, anantapur, Andhra Pradesh"
+ },
+ "Kanekal|anantapur": {
+  "lat": 14.805,
+  "lon": 77.0759,
+  "q": "Kanekal, anantapur, Andhra Pradesh"
+ },
+ "Madakasira|anantapur": {
+  "lat": 13.9411,
+  "lon": 77.2649,
+  "q": "Madakasira, anantapur, Andhra Pradesh"
+ },
+ "Singanamala|anantapur": {
+  "lat": 14.8035,
+  "lon": 77.7181,
+  "q": "Singanamala, anantapur, Andhra Pradesh"
+ },
+ "Ramasamudram|kadapa": {
+  "lat": 13.3661,
+  "lon": 78.425,
+  "q": "Ramasamudram, Andhra Pradesh"
+ },
+ "Jammalamadugu|kadapa": {
+  "lat": 14.8473,
+  "lon": 78.3822,
+  "q": "Jammalamadugu, kadapa, Andhra Pradesh"
+ },
+ "Kadapa|kadapa": {
+  "lat": 14.4753,
+  "lon": 78.8217,
+  "q": "Kadapa, kadapa, Andhra Pradesh"
+ },
+ "Badvel|kadapa": {
+  "lat": 14.7434,
+  "lon": 79.061,
+  "q": "Badvel, kadapa, Andhra Pradesh"
+ },
+ "Rajampet|kadapa": {
+  "lat": 14.1987,
+  "lon": 79.111,
+  "q": "Rajampet, kadapa, Andhra Pradesh"
+ },
+ "Railway Koduru|kadapa": {
+  "lat": 13.9574,
+  "lon": 79.3488,
+  "q": "Railway Koduru, Andhra Pradesh"
+ },
+ "Rayachoti|kadapa": {
+  "lat": 14.0579,
+  "lon": 78.7478,
+  "q": "Rayachoti, kadapa, Andhra Pradesh"
+ },
+ "Proddatur|kadapa": {
+  "lat": 14.7556,
+  "lon": 78.5502,
+  "q": "Proddatur, kadapa, Andhra Pradesh"
+ },
+ "Kamalapuram|kadapa": {
+  "lat": 14.5963,
+  "lon": 78.6704,
+  "q": "Kamalapuram, kadapa, Andhra Pradesh"
+ },
+ "Yerraguntla|kadapa": {
+  "lat": 14.6436,
+  "lon": 78.5338,
+  "q": "Yerraguntla, YSR Kadapa, Andhra Pradesh"
+ },
+ "Galiveedu|kadapa": {
+  "lat": 14.0264,
+  "lon": 78.5018,
+  "q": "Galiveedu, kadapa, Andhra Pradesh"
+ },
+ "Mydukur|kadapa": {
+  "lat": 14.7358,
+  "lon": 78.7259,
+  "q": "Mydukur, kadapa, Andhra Pradesh"
+ },
+ "Pulivendula|kadapa": {
+  "lat": 14.4229,
+  "lon": 78.2266,
+  "q": "Pulivendula, kadapa, Andhra Pradesh"
+ },
+ "Nandalur|kadapa": {
+  "lat": 14.2708,
+  "lon": 79.1044,
+  "q": "Nandalur, kadapa, Andhra Pradesh"
+ },
+ "Mangalagiri|guntur": {
+  "lat": 16.4318,
+  "lon": 80.5688,
+  "q": "Mangalagiri, Guntur, Andhra Pradesh"
+ },
+ "Guntur|guntur": {
+  "lat": 16.2963,
+  "lon": 80.4217,
+  "q": "Guntur, Guntur, Andhra Pradesh"
+ },
+ "Ponnur|guntur": {
+  "lat": 16.0667,
+  "lon": 80.5465,
+  "q": "Ponnur, Guntur, Andhra Pradesh"
+ },
+ "Chilakaluripet|guntur": {
+  "lat": 16.29,
+  "lon": 80.4226,
+  "q": "Chilakaluripet, Guntur, Andhra Pradesh"
+ },
+ "Bapatla|guntur": {
+  "lat": 15.9075,
+  "lon": 80.4697,
+  "q": "Bapatla, Guntur, Andhra Pradesh"
+ },
+ "Sattenapalle|guntur": {
+  "lat": 16.3775,
+  "lon": 80.209,
+  "q": "Sattenapalle, Guntur, Andhra Pradesh"
+ },
+ "Vinukonda|guntur": {
+  "lat": 16.0503,
+  "lon": 79.7398,
+  "q": "Vinukonda, Guntur, Andhra Pradesh"
+ },
+ "Narasaraopet|guntur": {
+  "lat": 16.2359,
+  "lon": 80.0485,
+  "q": "Narasaraopet, Guntur, Andhra Pradesh"
+ },
+ "Piduguralla|guntur": {
+  "lat": 16.4798,
+  "lon": 79.8739,
+  "q": "Piduguralla, Guntur, Andhra Pradesh"
+ },
+ "Tenali|guntur": {
+  "lat": 16.2378,
+  "lon": 80.6497,
+  "q": "Tenali, Guntur, Andhra Pradesh"
+ },
+ "Pedanandipadu|guntur": {
+  "lat": 16.0715,
+  "lon": 80.3326,
+  "q": "Pedanandipadu, Guntur, Andhra Pradesh"
+ },
+ "Macherla|guntur": {
+  "lat": 16.4772,
+  "lon": 79.4356,
+  "q": "Macherla, Guntur, Andhra Pradesh"
+ },
+ "Repalle|guntur": {
+  "lat": 16.0212,
+  "lon": 80.835,
+  "q": "Repalle, Guntur, Andhra Pradesh"
+ },
+ "Amaravati|guntur": {
+  "lat": 16.5097,
+  "lon": 80.5185,
+  "q": "Amaravati, Guntur, Andhra Pradesh"
+ },
+ "Achampet|guntur": {
+  "lat": 16.6313,
+  "lon": 80.121,
+  "q": "Achampet, Palnadu, Andhra Pradesh"
+ },
+ "Gurazala|guntur": {
+  "lat": 16.5559,
+  "lon": 79.6382,
+  "q": "Gurazala, Guntur, Andhra Pradesh"
+ },
+ "Krosur|guntur": {
+  "lat": 16.5438,
+  "lon": 80.141,
+  "q": "Krosur, Palnadu, Andhra Pradesh"
+ },
+ "Nuzendla|guntur": {
+  "lat": 15.9269,
+  "lon": 79.7417,
+  "q": "Nuzendla, Palnadu, Andhra Pradesh"
+ },
+ "Dachepalli|guntur": {
+  "lat": 16.5952,
+  "lon": 79.7381,
+  "q": "Dachepalli, Guntur, Andhra Pradesh"
+ },
+ "Karempudi|guntur": {
+  "lat": 16.4277,
+  "lon": 79.7213,
+  "q": "Karempudi, Andhra Pradesh"
+ },
+ "Thullur|guntur": {
+  "lat": 16.5191,
+  "lon": 80.4947,
+  "q": "Thullur, Guntur, Andhra Pradesh"
+ },
+ "Giddalur|prakasam": {
+  "lat": 15.3784,
+  "lon": 78.9265,
+  "q": "Giddalur, Andhra Pradesh"
+ },
+ "Ongole|prakasam": {
+  "lat": 15.5059,
+  "lon": 80.0499,
+  "q": "Ongole, Prakasam, Andhra Pradesh"
+ },
+ "Podili|prakasam": {
+  "lat": 15.3595,
+  "lon": 79.9817,
+  "q": "Podili, Prakasam, Andhra Pradesh"
+ },
+ "Darsi|prakasam": {
+  "lat": 15.7695,
+  "lon": 79.6777,
+  "q": "Darsi, Prakasam, Andhra Pradesh"
+ },
+ "Markapur|prakasam": {
+  "lat": 15.741,
+  "lon": 79.2552,
+  "q": "Markapur, Prakasam, Andhra Pradesh"
+ },
+ "Inkollu|prakasam": {
+  "lat": 15.661,
+  "lon": 80.1209,
+  "q": "Inkollu, Prakasam, Andhra Pradesh"
+ },
+ "Kandukur|prakasam": {
+  "lat": 15.213,
+  "lon": 79.9071,
+  "q": "Kandukur, Prakasam, Andhra Pradesh"
+ },
+ "Komarolu|prakasam": {
+  "lat": 15.2643,
+  "lon": 79.0011,
+  "q": "Komarolu, Prakasam, Andhra Pradesh"
+ },
+ "Addanki|prakasam": {
+  "lat": 15.811,
+  "lon": 79.9738,
+  "q": "Addanki, Prakasam, Andhra Pradesh"
+ },
+ "Chirala|prakasam": {
+  "lat": 15.8309,
+  "lon": 80.3544,
+  "q": "Chirala, Prakasam, Andhra Pradesh"
+ },
+ "Kanigiri|prakasam": {
+  "lat": 15.791,
+  "lon": 79.5065,
+  "q": "Kanigiri, Prakasam, Andhra Pradesh"
+ },
+ "Kurichedu|prakasam": {
+  "lat": 15.9026,
+  "lon": 79.5773,
+  "q": "Kurichedu, Prakasam, Andhra Pradesh"
+ },
+ "Cumbum|prakasam": {
+  "lat": 15.5851,
+  "lon": 79.116,
+  "q": "Cumbum, Prakasam, Andhra Pradesh"
+ },
+ "Yerragondapalem|prakasam": {
+  "lat": 16.034,
+  "lon": 79.3052,
+  "q": "Yerragondapalem, Prakasam, Andhra Pradesh"
+ },
+ "Turpu Gangavaram|prakasam": {
+  "lat": 15.7136,
+  "lon": 79.8409,
+  "q": "Turpu Gangavaram, Prakasam, Andhra Pradesh"
+ },
+ "Martur|prakasam": {
+  "lat": 15.9883,
+  "lon": 80.1048,
+  "q": "Martur, Prakasam, Andhra Pradesh"
+ },
+ "Chimakurthy|prakasam": {
+  "lat": 15.7615,
+  "lon": 79.7286,
+  "q": "Chimakurthy, Prakasam, Andhra Pradesh"
+ },
+ "Pamur|prakasam": {
+  "lat": 15.0991,
+  "lon": 79.4126,
+  "q": "Pamur, Prakasam, Andhra Pradesh"
+ },
+ "Singarayakonda|prakasam": {
+  "lat": 15.2507,
+  "lon": 80.0213,
+  "q": "Singarayakonda, Prakasam, Andhra Pradesh"
+ },
+ "Parchur|prakasam": {
+  "lat": 15.9838,
+  "lon": 80.336,
+  "q": "Parchur, Andhra Pradesh"
+ },
+ "Tripuranthakam|prakasam": {
+  "lat": 16.0051,
+  "lon": 79.4553,
+  "q": "Tripuranthakam, Prakasam, Andhra Pradesh"
+ },
+ "Pullalacheruvu|prakasam": {
+  "lat": 16.1519,
+  "lon": 79.4262,
+  "q": "Pullalacheruvu, Prakasam, Andhra Pradesh"
+ },
+ "Eluru|krishna-godavari": {
+  "lat": 16.7013,
+  "lon": 81.1071,
+  "q": "Eluru, West Godavari, Andhra Pradesh"
+ },
+ "Rajahmundry|krishna-godavari": {
+  "lat": 17.005,
+  "lon": 81.7805,
+  "q": "Rajahmundry, East Godavari, Andhra Pradesh"
+ },
+ "Kakinada|krishna-godavari": {
+  "lat": 16.9175,
+  "lon": 82.028,
+  "q": "Kakinada, East Godavari, Andhra Pradesh"
+ },
+ "Vijayawada|krishna-godavari": {
+  "lat": 16.531,
+  "lon": 80.6331,
+  "q": "Vijayawada, Krishna, Andhra Pradesh"
+ },
+ "Vissannapeta|krishna-godavari": {
+  "lat": 16.9386,
+  "lon": 80.7818,
+  "q": "Vissannapeta, Krishna, Andhra Pradesh"
+ },
+ "Jangareddygudem|krishna-godavari": {
+  "lat": 17.1238,
+  "lon": 81.296,
+  "q": "Jangareddygudem, Andhra Pradesh"
+ },
+ "Machilipatnam|krishna-godavari": {
+  "lat": 16.1747,
+  "lon": 81.1431,
+  "q": "Machilipatnam, Krishna, Andhra Pradesh"
+ },
+ "Nuzvid|krishna-godavari": {
+  "lat": 16.6501,
+  "lon": 80.9623,
+  "q": "Nuzvid, Krishna, Andhra Pradesh"
+ },
+ "Tiruvuru|krishna-godavari": {
+  "lat": 17.1145,
+  "lon": 80.6101,
+  "q": "Tiruvuru, Krishna, Andhra Pradesh"
+ },
+ "Bhimavaram|krishna-godavari": {
+  "lat": 16.541,
+  "lon": 81.496,
+  "q": "Bhimavaram, West Godavari, Andhra Pradesh"
+ },
+ "Amalapuram|krishna-godavari": {
+  "lat": 16.587,
+  "lon": 82.0084,
+  "q": "Amalapuram, East Godavari, Andhra Pradesh"
+ },
+ "Undarajavaram|krishna-godavari": {
+  "lat": 16.8124,
+  "lon": 81.6814,
+  "q": "Undarajavaram, Andhra Pradesh"
+ },
+ "Tanuku|krishna-godavari": {
+  "lat": 16.756,
+  "lon": 81.6764,
+  "q": "Tanuku, West Godavari, Andhra Pradesh"
+ },
+ "Nandigama|krishna-godavari": {
+  "lat": 16.3002,
+  "lon": 81.1523,
+  "q": "Nandigama, Krishna, Andhra Pradesh"
+ },
+ "Hanuman Junction|krishna-godavari": {
+  "lat": 16.6357,
+  "lon": 80.9715,
+  "q": "Hanuman Junction, Krishna, Andhra Pradesh"
+ },
+ "Avanigadda|krishna-godavari": {
+  "lat": 16.0193,
+  "lon": 80.9151,
+  "q": "Avanigadda, Krishna, Andhra Pradesh"
+ },
+ "Vuyyuru|krishna-godavari": {
+  "lat": 16.365,
+  "lon": 80.8426,
+  "q": "Vuyyuru, Krishna, Andhra Pradesh"
+ },
+ "Challapalli|krishna-godavari": {
+  "lat": 16.1168,
+  "lon": 80.9302,
+  "q": "Challapalli, Krishna, Andhra Pradesh"
+ },
+ "Gannavaram|krishna-godavari": {
+  "lat": 16.5561,
+  "lon": 80.7962,
+  "q": "Gannavaram, Krishna, Andhra Pradesh"
+ },
+ "Chintalapudi|krishna-godavari": {
+  "lat": 16.0423,
+  "lon": 80.5413,
+  "q": "Chintalapudi, Andhra Pradesh"
+ },
+ "Wanaparthy|mahabubnagar": {
+  "lat": 16.2853,
+  "lon": 77.9864,
+  "q": "Wanaparthy, Telangana"
+ },
+ "Atmakur|mahabubnagar": {
+  "lat": 16.3373,
+  "lon": 77.8055,
+  "q": "Atmakur, Wanaparthy, Telangana"
+ },
+ "Maddur|mahabubnagar": {
+  "lat": 16.8637,
+  "lon": 77.6523,
+  "q": "Maddur, Narayanpet, Telangana"
+ },
+ "Kosgi|mahabubnagar": {
+  "lat": 16.9872,
+  "lon": 77.7158,
+  "q": "Kosgi, Mahbubnagar, Telangana"
+ },
+ "Nagarkurnool|mahabubnagar": {
+  "lat": 16.5008,
+  "lon": 78.287,
+  "q": "Nagarkurnool, Mahbubnagar, Telangana"
+ },
+ "Jadcherla|mahabubnagar": {
+  "lat": 17.5138,
+  "lon": 78.2883,
+  "q": "Jadcherla, Mahbubnagar, Telangana"
+ },
+ "Gadwal|mahabubnagar": {
+  "lat": 16.2339,
+  "lon": 77.8084,
+  "q": "Gadwal, Mahbubnagar, Telangana"
+ },
+ "Ieeja|mahabubnagar": {
+  "lat": 16.0194,
+  "lon": 77.668,
+  "q": "Ieeja, Telangana"
+ },
+ "Vikarabad|mahabubnagar": {
+  "lat": 17.3379,
+  "lon": 77.904,
+  "q": "Vikarabad, Vikarabad, Telangana"
+ },
+ "Mahabubnagar|mahabubnagar": {
+  "lat": 16.7458,
+  "lon": 77.9937,
+  "q": "Mahabubnagar, Mahbubnagar, Telangana"
+ },
+ "Shadnagar|mahabubnagar": {
+  "lat": 17.0765,
+  "lon": 78.2069,
+  "q": "Shadnagar, Mahbubnagar, Telangana"
+ },
+ "Tandur|mahabubnagar": {
+  "lat": 17.2509,
+  "lon": 77.5841,
+  "q": "Tandur, Telangana"
+ },
+ "Kalwakurthy|mahabubnagar": {
+  "lat": 16.6702,
+  "lon": 78.4896,
+  "q": "Kalwakurthy, Mahbubnagar, Telangana"
+ },
+ "Achampet|mahabubnagar": {
+  "lat": 16.4,
+  "lon": 78.638,
+  "q": "Achampet, Nagarkurnool, Telangana"
+ },
+ "Kollapur|mahabubnagar": {
+  "lat": 16.1061,
+  "lon": 78.3195,
+  "q": "Kollapur, Telangana"
+ },
+ "Narayanpet|mahabubnagar": {
+  "lat": 16.7443,
+  "lon": 77.4977,
+  "q": "Narayanpet, Mahbubnagar, Telangana"
+ },
+ "Pebbair|mahabubnagar": {
+  "lat": 16.2053,
+  "lon": 77.9942,
+  "q": "Pebbair, Telangana"
+ },
+ "Kodangal|mahabubnagar": {
+  "lat": 17.106,
+  "lon": 77.6287,
+  "q": "Kodangal, Vikarabad, Telangana"
+ },
+ "Devarakadra|mahabubnagar": {
+  "lat": 16.6145,
+  "lon": 77.8419,
+  "q": "Devarakadra, Telangana"
+ },
+ "Marikal|mahabubnagar": {
+  "lat": 16.9228,
+  "lon": 77.9874,
+  "q": "Marikal, Telangana"
+ },
+ "Shanti Nagar|mahabubnagar": {
+  "lat": 17.5223,
+  "lon": 78.5804,
+  "q": "Shanti Nagar, Telangana"
+ },
+ "Kothakota|mahabubnagar": {
+  "lat": 16.3693,
+  "lon": 77.9432,
+  "q": "Kothakota, Mahbubnagar, Telangana"
+ },
+ "Makhtal|mahabubnagar": {
+  "lat": 16.5011,
+  "lon": 77.5133,
+  "q": "Makhtal, Telangana"
+ },
+ "Balanagar|mahabubnagar": {
+  "lat": 16.9512,
+  "lon": 78.1844,
+  "q": "Balanagar, Mahbubnagar, Telangana"
+ },
+ "Shabad|mahabubnagar": {
+  "lat": 17.1619,
+  "lon": 78.1318,
+  "q": "Shabad, Ranga Reddy, Telangana"
+ },
+ "Chevella|mahabubnagar": {
+  "lat": 17.3062,
+  "lon": 78.137,
+  "q": "Chevella, Ranga Reddy, Telangana"
+ },
+ "Midjil|mahabubnagar": {
+  "lat": 16.7433,
+  "lon": 78.3209,
+  "q": "Midjil, Mahbubnagar, Telangana"
+ },
+ "Mohammadabad|mahabubnagar": {
+  "lat": 16.8726,
+  "lon": 77.8888,
+  "q": "Mohammadabad, Mahbubnagar, Telangana"
+ },
+ "Kulkacherla|mahabubnagar": {
+  "lat": 17.0151,
+  "lon": 77.8756,
+  "q": "Kulkacherla, Vikarabad, Telangana"
+ },
+ "Bhoothpur|mahabubnagar": {
+  "lat": 16.7,
+  "lon": 78.0518,
+  "q": "Bhoothpur, Telangana"
+ },
+ "Bhongir|nalgonda": {
+  "lat": 17.5173,
+  "lon": 78.8863,
+  "q": "Bhongir, Telangana"
+ },
+ "Thirumalagiri|nalgonda": {
+  "lat": 16.7239,
+  "lon": 79.3404,
+  "q": "Thirumalagiri, Nalgonda, Telangana"
+ },
+ "Suryapet|nalgonda": {
+  "lat": 17.1478,
+  "lon": 79.622,
+  "q": "Suryapet, Nalgonda, Telangana"
+ },
+ "Miryalaguda|nalgonda": {
+  "lat": 16.871,
+  "lon": 79.5617,
+  "q": "Miryalaguda, Nalgonda, Telangana"
+ },
+ "Nakrekal|nalgonda": {
+  "lat": 17.1648,
+  "lon": 79.4274,
+  "q": "Nakrekal, Nalgonda, Telangana"
+ },
+ "Kodad|nalgonda": {
+  "lat": 16.9958,
+  "lon": 79.9569,
+  "q": "Kodad, Nalgonda, Telangana"
+ },
+ "Nalgonda|nalgonda": {
+  "lat": 17.0504,
+  "lon": 79.2669,
+  "q": "Nalgonda, Nalgonda, Telangana"
+ },
+ "Peddavoora|nalgonda": {
+  "lat": 16.7037,
+  "lon": 79.2283,
+  "q": "Peddavoora, Nalgonda, Telangana"
+ },
+ "Haliya|nalgonda": {
+  "lat": 16.7814,
+  "lon": 79.3213,
+  "q": "Haliya, Nalgonda, Telangana"
+ },
+ "Devarakonda|nalgonda": {
+  "lat": 16.6932,
+  "lon": 78.9147,
+  "q": "Devarakonda, Nalgonda, Telangana"
+ },
+ "Yadagirigutta|nalgonda": {
+  "lat": 17.5951,
+  "lon": 78.9524,
+  "q": "Yadagirigutta, Nalgonda, Telangana"
+ },
+ "Huzurnagar|nalgonda": {
+  "lat": 16.9004,
+  "lon": 79.8746,
+  "q": "Huzurnagar, Telangana"
+ },
+ "Nereducharla|nalgonda": {
+  "lat": 16.8966,
+  "lon": 79.6858,
+  "q": "Nereducharla, Suryapet, Telangana"
+ },
+ "Chityal|nalgonda": {
+  "lat": 17.2315,
+  "lon": 79.1293,
+  "q": "Chityal, Nalgonda, Telangana"
+ },
+ "Munugode|nalgonda": {
+  "lat": 17.0795,
+  "lon": 79.0767,
+  "q": "Munugode, Nalgonda, Telangana"
+ },
+ "Dindi|nalgonda": {
+  "lat": 16.5054,
+  "lon": 78.9508,
+  "q": "Dindi, Nalgonda, Telangana"
+ },
+ "Mothkur|nalgonda": {
+  "lat": 17.4572,
+  "lon": 79.271,
+  "q": "Mothkur, Nalgonda, Telangana"
+ },
+ "Madhira|khammam": {
+  "lat": 16.9235,
+  "lon": 80.3629,
+  "q": "Madhira, Khammam, Telangana"
+ },
+ "Aswaraopeta|khammam": {
+  "lat": 17.2424,
+  "lon": 81.1302,
+  "q": "Aswaraopeta, Khammam, Telangana"
+ },
+ "Sathupally|khammam": {
+  "lat": 17.2114,
+  "lon": 80.8345,
+  "q": "Sathupally, Khammam, Telangana"
+ },
+ "Kothagudem|khammam": {
+  "lat": 17.2176,
+  "lon": 80.1682,
+  "q": "Kothagudem, Khammam, Telangana"
+ },
+ "Khammam|khammam": {
+  "lat": 17.2465,
+  "lon": 80.15,
+  "q": "Khammam, Khammam, Telangana"
+ },
+ "Kalluru|khammam": {
+  "lat": 17.1903,
+  "lon": 80.5624,
+  "q": "Kalluru, Khammam, Telangana"
+ },
+ "Sarapaka|khammam": {
+  "lat": 17.6899,
+  "lon": 80.8691,
+  "q": "Sarapaka, Telangana"
+ },
+ "Bhadrachalam|khammam": {
+  "lat": 17.6661,
+  "lon": 80.8924,
+  "q": "Bhadrachalam, Khammam, Telangana"
+ },
+ "Wyra|khammam": {
+  "lat": 17.1936,
+  "lon": 80.3594,
+  "q": "Wyra, Khammam, Telangana"
+ },
+ "Dammapeta|khammam": {
+  "lat": 17.27,
+  "lon": 81.0097,
+  "q": "Dammapeta, Telangana"
+ },
+ "Yellandu|khammam": {
+  "lat": 17.3225,
+  "lon": 80.207,
+  "q": "Yellandu, Khammam, Telangana"
+ },
+ "Burgampadu|khammam": {
+  "lat": 17.6444,
+  "lon": 80.8684,
+  "q": "Burgampadu, Khammam, Telangana"
+ },
+ "Parakala|north-telangana": {
+  "lat": 18.1983,
+  "lon": 79.7011,
+  "q": "Parakala, Telangana"
+ },
+ "Godavarikhani|north-telangana": {
+  "lat": 18.7569,
+  "lon": 79.5061,
+  "q": "Godavarikhani, Karimnagar, Telangana"
+ },
+ "Khanapur|north-telangana": {
+  "lat": 17.899,
+  "lon": 79.928,
+  "q": "Khanapur, Warangal, Telangana"
+ },
+ "Korutla|north-telangana": {
+  "lat": 18.8257,
+  "lon": 78.7116,
+  "q": "Korutla, Telangana"
+ },
+ "Vemulawada|north-telangana": {
+  "lat": 18.4179,
+  "lon": 79.1133,
+  "q": "Vemulawada, Karimnagar, Telangana"
+ },
+ "Hanumakonda|north-telangana": {
+  "lat": 17.9938,
+  "lon": 79.5407,
+  "q": "Hanumakonda, Warangal, Telangana"
+ },
+ "Siddipet|north-telangana": {
+  "lat": 18.0985,
+  "lon": 78.8506,
+  "q": "Siddipet, Medak, Telangana"
+ },
+ "Mahabubabad|north-telangana": {
+  "lat": 17.5944,
+  "lon": 80.0023,
+  "q": "Mahabubabad, Warangal, Telangana"
+ },
+ "Nizamabad|north-telangana": {
+  "lat": 18.6732,
+  "lon": 78.0978,
+  "q": "Nizamabad, Nizamabad, Telangana"
+ },
+ "Jangaon|north-telangana": {
+  "lat": 17.7254,
+  "lon": 79.1503,
+  "q": "Jangaon, Warangal, Telangana"
+ },
+ "Jagtial|north-telangana": {
+  "lat": 18.8214,
+  "lon": 78.9151,
+  "q": "Jagtial, Telangana"
+ },
+ "Manthani|north-telangana": {
+  "lat": 18.6512,
+  "lon": 79.6658,
+  "q": "Manthani, Telangana"
+ },
+ "Jammikunta|north-telangana": {
+  "lat": 18.2897,
+  "lon": 79.4739,
+  "q": "Jammikunta, Karimnagar, Telangana"
+ },
+ "Karimnagar|north-telangana": {
+  "lat": 18.4348,
+  "lon": 79.1328,
+  "q": "Karimnagar, Karimnagar, Telangana"
+ },
+ "Metpally|north-telangana": {
+  "lat": 18.2773,
+  "lon": 79.365,
+  "q": "Metpally, Karimnagar, Telangana"
+ },
+ "Maripeda|north-telangana": {
+  "lat": 17.3795,
+  "lon": 79.8725,
+  "q": "Maripeda, Telangana"
+ },
+ "Husnabad|north-telangana": {
+  "lat": 18.1266,
+  "lon": 79.2111,
+  "q": "Husnabad, Telangana"
+ },
+ "Palakurthi|north-telangana": {
+  "lat": 18.2212,
+  "lon": 78.0039,
+  "q": "Palakurthi, Telangana"
+ },
+ "Gangadhara|north-telangana": {
+  "lat": 18.5888,
+  "lon": 79.01,
+  "q": "Gangadhara, Karimnagar, Telangana"
+ },
+ "Narsampet|north-telangana": {
+  "lat": 17.9306,
+  "lon": 79.8936,
+  "q": "Narsampet, Warangal, Telangana"
+ },
+ "Armoor|north-telangana": {
+  "lat": 18.7904,
+  "lon": 78.2907,
+  "q": "Armoor, Nizamabad, Telangana"
+ },
+ "Nirmal|north-telangana": {
+  "lat": 19.1002,
+  "lon": 78.3352,
+  "q": "Nirmal, Adilabad, Telangana"
+ },
+ "Mancherial|north-telangana": {
+  "lat": 18.8727,
+  "lon": 79.4447,
+  "q": "Mancherial, Adilabad, Telangana"
+ },
+ "Huzurabad|north-telangana": {
+  "lat": 18.2018,
+  "lon": 79.3957,
+  "q": "Huzurabad, Karimnagar, Telangana"
+ },
+ "Patancheru|north-telangana": {
+  "lat": 17.5286,
+  "lon": 78.2674,
+  "q": "Patancheru, Telangana"
+ },
+ "Medak|north-telangana": {
+  "lat": 18.0459,
+  "lon": 78.2652,
+  "q": "Medak, Medak, Telangana"
+ },
+ "Thorrur|north-telangana": {
+  "lat": 17.583,
+  "lon": 79.6589,
+  "q": "Thorrur, Telangana"
+ },
+ "Sadasivpet|north-telangana": {
+  "lat": 17.6212,
+  "lon": 77.9503,
+  "q": "Sadasivpet, Telangana"
+ },
+ "Asifabad|north-telangana": {
+  "lat": 19.3593,
+  "lon": 79.296,
+  "q": "Asifabad, Telangana"
+ },
+ "Sultanabad|north-telangana": {
+  "lat": 18.5215,
+  "lon": 79.3184,
+  "q": "Sultanabad, Karimnagar, Telangana"
+ },
+ "Sircilla|north-telangana": {
+  "lat": 18.3898,
+  "lon": 78.8086,
+  "q": "Sircilla, Telangana"
+ },
+ "Warangal|north-telangana": {
+  "lat": 17.9821,
+  "lon": 79.5971,
+  "q": "Warangal, Warangal, Telangana"
+ },
+ "Ramagundam|north-telangana": {
+  "lat": 18.7692,
+  "lon": 79.4742,
+  "q": "Ramagundam, Karimnagar, Telangana"
+ },
+ "Chikkaballapur|karnataka": {
+  "lat": 13.0994,
+  "lon": 77.3887,
+  "q": "Chikkaballapur, Karnataka"
+ },
+ "Koppal|karnataka": {
+  "lat": 15.3484,
+  "lon": 76.1547,
+  "q": "Koppal, Koppal, Karnataka"
+ },
+ "Chintamani|karnataka": {
+  "lat": 13.3987,
+  "lon": 78.0533,
+  "q": "Chintamani, Karnataka"
+ },
+ "Chikkamagaluru|karnataka": {
+  "lat": 13.4059,
+  "lon": 75.6388,
+  "q": "Chikkamagaluru, Karnataka"
+ },
+ "KGF|karnataka": {
+  "lat": 12.9546,
+  "lon": 78.2731,
+  "q": "KGF, Kolar, Karnataka"
+ },
+ "Bagalkot|karnataka": {
+  "lat": 16.1653,
+  "lon": 75.6603,
+  "q": "Bagalkot, Bagalkot, Karnataka"
+ },
+ "Srinivaspur|karnataka": {
+  "lat": 13.3401,
+  "lon": 78.2117,
+  "q": "Srinivaspur, Kolar, Karnataka"
+ },
+ "Ballari|karnataka": {
+  "lat": 15.143,
+  "lon": 76.9173,
+  "q": "Ballari, Bellary, Karnataka"
+ },
+ "Karatagi|karnataka": {
+  "lat": 15.6082,
+  "lon": 76.6588,
+  "q": "Karatagi, Koppal, Karnataka"
+ },
+ "Sindhanur|karnataka": {
+  "lat": 15.7686,
+  "lon": 76.755,
+  "q": "Sindhanur, Raichur, Karnataka"
+ },
+ "Gauribidanur|karnataka": {
+  "lat": 13.615,
+  "lon": 77.5134,
+  "q": "Gauribidanur, Karnataka"
+ },
+ "Kolar|karnataka": {
+  "lat": 13.124,
+  "lon": 78.1329,
+  "q": "Kolar, Kolar, Karnataka"
+ },
+ "Bagepalli|karnataka": {
+  "lat": 13.7837,
+  "lon": 77.7972,
+  "q": "Bagepalli, Karnataka"
+ },
+ "Yadgir|karnataka": {
+  "lat": 16.7446,
+  "lon": 77.1297,
+  "q": "Yadgir, Yadgir, Karnataka"
+ },
+ "Bengaluru|karnataka": {
+  "lat": 12.9768,
+  "lon": 77.5901,
+  "q": "Bengaluru, Karnataka"
+ },
+ "Vijayapura (Bengaluru Rural)|karnataka": {
+  "lat": 13.2924,
+  "lon": 77.7872,
+  "q": "Vijayapura, Devanahalli, Bangalore Rural, Karnataka"
+ },
+ "Doddaballapur|karnataka": {
+  "lat": 13.2363,
+  "lon": 77.5509,
+  "q": "Doddaballapur, Bangalore Rural, Karnataka"
+ },
+ "Chitradurga|karnataka": {
+  "lat": 14.2266,
+  "lon": 76.4005,
+  "q": "Chitradurga, Chitradurga, Karnataka"
+ },
+ "Gadag|karnataka": {
+  "lat": 15.4222,
+  "lon": 75.6377,
+  "q": "Gadag, Gadag, Karnataka"
+ },
+ "Hoskote|karnataka": {
+  "lat": 13.077,
+  "lon": 77.8011,
+  "q": "Hoskote, Bangalore Rural, Karnataka"
+ },
+ "Hosapete|karnataka": {
+  "lat": 15.1452,
+  "lon": 76.9052,
+  "q": "Hosapete, Bellary, Karnataka"
+ },
+ "Devanahalli|karnataka": {
+  "lat": 13.2569,
+  "lon": 77.7273,
+  "q": "Devanahalli, Bangalore Rural, Karnataka"
+ },
+ "Gangavati|karnataka": {
+  "lat": 15.5262,
+  "lon": 76.7824,
+  "q": "Gangavati, Koppal, Karnataka"
+ },
+ "Siruguppa|karnataka": {
+  "lat": 15.1574,
+  "lon": 76.916,
+  "q": "Siruguppa, Bellary, Karnataka"
+ },
+ "Dharwad|karnataka": {
+  "lat": 15.4541,
+  "lon": 75.0067,
+  "q": "Dharwad, Dharwad, Karnataka"
+ },
+ "Mulbagal|karnataka": {
+  "lat": 13.166,
+  "lon": 78.3927,
+  "q": "Mulbagal, Kolar, Karnataka"
+ },
+ "Raichur|karnataka": {
+  "lat": 16.1983,
+  "lon": 77.3527,
+  "q": "Raichur, Raichur, Karnataka"
+ },
+ "Manvi|karnataka": {
+  "lat": 15.9967,
+  "lon": 77.0481,
+  "q": "Manvi, Raichur, Karnataka"
+ },
+ "Ilkal|karnataka": {
+  "lat": 15.9506,
+  "lon": 76.1096,
+  "q": "Ilkal, Bagalkot, Karnataka"
+ },
+ "Hassan|karnataka": {
+  "lat": 13.0071,
+  "lon": 76.0993,
+  "q": "Hassan, Hassan, Karnataka"
+ },
+ "Bangarapet|karnataka": {
+  "lat": 12.9895,
+  "lon": 78.1776,
+  "q": "Bangarapet, Kolar, Karnataka"
+ },
+ "Narasapura|karnataka": {
+  "lat": 13.1383,
+  "lon": 78.0044,
+  "q": "Narasapura, Kolar, Karnataka"
+ },
+ "Kampli|karnataka": {
+  "lat": 15.4065,
+  "lon": 76.6037,
+  "q": "Kampli, Bellary, Karnataka"
+ },
+ "Mudgal|karnataka": {
+  "lat": 16.0144,
+  "lon": 76.4464,
+  "q": "Mudgal, Raichur, Karnataka"
+ },
+ "Malur|karnataka": {
+  "lat": 13.0059,
+  "lon": 77.9394,
+  "q": "Malur, Kolar, Karnataka"
+ },
+ "Lingasugur|karnataka": {
+  "lat": 16.1563,
+  "lon": 76.5242,
+  "q": "Lingasugur, Raichur, Karnataka"
+ },
+ "Mundargi|karnataka": {
+  "lat": 15.2014,
+  "lon": 75.8842,
+  "q": "Mundargi, Gadag, Karnataka"
+ },
+ "Tumakuru|karnataka": {
+  "lat": 13.3339,
+  "lon": 77.102,
+  "q": "Tumakuru, Tumkur, Karnataka"
+ },
+ "Challakere|karnataka": {
+  "lat": 14.3168,
+  "lon": 76.6522,
+  "q": "Challakere, Chitradurga, Karnataka"
+ },
+ "Saidapur|karnataka": {
+  "lat": 16.5708,
+  "lon": 77.25,
+  "q": "Saidapur, Yadgir, Karnataka"
+ },
+ "Pavagada|karnataka": {
+  "lat": 14.1024,
+  "lon": 77.2842,
+  "q": "Pavagada, Tumkur, Karnataka"
+ },
+ "Arsikere|karnataka": {
+  "lat": 13.3138,
+  "lon": 76.2532,
+  "q": "Arsikere, Hassan, Karnataka"
+ },
+ "Huliyar|karnataka": {
+  "lat": 13.3352,
+  "lon": 76.4739,
+  "q": "Huliyar, Karnataka"
+ },
+ "Kalaburagi|karnataka": {
+  "lat": 17.3149,
+  "lon": 76.8256,
+  "q": "Kalaburagi, Gulbarga, Karnataka"
+ },
+ "Kanakagiri|karnataka": {
+  "lat": 15.5697,
+  "lon": 76.419,
+  "q": "Kanakagiri, Koppal, Karnataka"
+ },
+ "Kaivara|karnataka": {
+  "lat": 13.3474,
+  "lon": 77.9868,
+  "q": "Kaivara, Karnataka"
+ },
+ "Sidlaghatta|karnataka": {
+  "lat": 13.3885,
+  "lon": 77.8641,
+  "q": "Sidlaghatta, Karnataka"
+ },
+ "Mudigere|karnataka": {
+  "lat": 13.1333,
+  "lon": 75.6419,
+  "q": "Mudigere, Karnataka"
+ },
+ "Belur|karnataka": {
+  "lat": 13.1646,
+  "lon": 75.8635,
+  "q": "Belur, Hassan, Karnataka"
+ },
+ "Hagari Bommanahalli|karnataka": {
+  "lat": 15.05,
+  "lon": 76.2087,
+  "q": "Hagari Bommanahalli, Karnataka"
+ },
+ "Koppa|karnataka": {
+  "lat": 13.5332,
+  "lon": 75.3634,
+  "q": "Koppa, Karnataka"
+ },
+ "Kurugodu|karnataka": {
+  "lat": 15.3451,
+  "lon": 76.8334,
+  "q": "Kurugodu, Bellary, Karnataka"
+ },
+ "Kudatini|karnataka": {
+  "lat": 15.1969,
+  "lon": 76.7585,
+  "q": "Kudatini, Bellary, Karnataka"
+ },
+ "Sriram Nagar|karnataka": {
+  "lat": 13.0148,
+  "lon": 76.1048,
+  "q": "Sriram Nagar, Karnataka"
+ },
+ "Kushtagi|karnataka": {
+  "lat": 15.7572,
+  "lon": 76.1907,
+  "q": "Kushtagi, Koppal, Karnataka"
+ },
+ "Hiriyur|karnataka": {
+  "lat": 13.9443,
+  "lon": 76.6167,
+  "q": "Hiriyur, Chitradurga, Karnataka"
+ },
+ "Kadur|karnataka": {
+  "lat": 13.5503,
+  "lon": 76.0087,
+  "q": "Kadur, Karnataka"
+ },
+ "Hyderabad|hyderabad": {
+  "lat": 17.3606,
+  "lon": 78.4741,
+  "q": "Hyderabad, Telangana"
+ },
+ "Secunderabad|hyderabad": {
+  "lat": 17.4337,
+  "lon": 78.5007,
+  "q": "Secunderabad, Hyderabad, Telangana"
+ },
+ "Madanapalle|chittoor": {
+  "lat": 13.5576,
+  "lon": 78.4997,
+  "q": "Madanapalle, Chittoor, Andhra Pradesh"
+ },
+ "Tirupati|chittoor": {
+  "lat": 13.6077,
+  "lon": 79.4376,
+  "q": "Tirupati, Chittoor, Andhra Pradesh"
+ },
+ "Chittoor|chittoor": {
+  "lat": 13.2194,
+  "lon": 79.1033,
+  "q": "Chittoor, Chittoor, Andhra Pradesh"
+ },
+ "Punganur|chittoor": {
+  "lat": 13.3625,
+  "lon": 78.5598,
+  "q": "Punganur, Chittoor, Andhra Pradesh"
+ },
+ "Kuppam|chittoor": {
+  "lat": 12.7452,
+  "lon": 78.3443,
+  "q": "Kuppam, Chittoor, Andhra Pradesh"
+ },
+ "Palamaner|chittoor": {
+  "lat": 13.1981,
+  "lon": 78.7484,
+  "q": "Palamaner, Chittoor, Andhra Pradesh"
+ },
+ "Nellore|nellore": {
+  "lat": 14.462,
+  "lon": 79.9902,
+  "q": "Nellore, Nellore, Andhra Pradesh"
+ },
+ "Kavali|nellore": {
+  "lat": 14.9136,
+  "lon": 79.9927,
+  "q": "Kavali, Nellore, Andhra Pradesh"
+ },
+ "Kaligiri|nellore": {
+  "lat": 14.8285,
+  "lon": 79.6914,
+  "q": "Kaligiri, Nellore, Andhra Pradesh"
+ },
+ "Buchireddypalem|nellore": {
+  "lat": 14.5475,
+  "lon": 79.8936,
+  "q": "Buchireddypalem, Nellore, Andhra Pradesh"
+ },
+ "Vinjamur|nellore": {
+  "lat": 14.8368,
+  "lon": 79.5806,
+  "q": "Vinjamur, Nellore, Andhra Pradesh"
+ },
+ "Visakhapatnam|visakhapatnam": {
+  "lat": 17.6936,
+  "lon": 83.2921,
+  "q": "Visakhapatnam, Visakhapatnam, Andhra Pradesh"
+ },
+ "Kovelakuntla|kurnool-nandyal": {
+  "lat": 15.2395,
+  "lon": 78.3236,
+  "q": "Koilkuntla, Andhra Pradesh"
+ },
+ "Avuku|kurnool-nandyal": {
+  "lat": 15.201,
+  "lon": 78.075,
+  "q": "Owk, Andhra Pradesh"
+ },
+ "Lakkireddy Palli|kadapa": {
+  "lat": 14.184,
+  "lon": 78.6983,
+  "q": "Lakkireddipalle, Andhra Pradesh"
+ },
+ "Parigi|mahabubnagar": {
+  "lat": 17.1685,
+  "lon": 77.8798,
+  "q": "Pargi, Telangana"
+ },
+ "Bijinapally|mahabubnagar": {
+  "lat": 16.5241,
+  "lon": 78.1929,
+  "q": "Bijinapalle, Telangana"
+ },
+ "Chanduru|nalgonda": {
+  "lat": 16.9794,
+  "lon": 79.0584,
+  "q": "Chandur, Nalgonda, Telangana"
+ },
+ "Bhupalpalle|north-telangana": {
+  "lat": 18.4381,
+  "lon": 79.8685,
+  "q": "Bhupalpally, Telangana"
+ },
+ "Cherukupalle|guntur": {
+  "lat": 16.0481,
+  "lon": 80.6783,
+  "q": "Cherukupalle, Bapatla, Andhra Pradesh"
+ },
+ "Konda Mallepally|nalgonda": {
+  "lat": 16.7624,
+  "lon": 78.9193,
+  "q": "Kondamallepally, Nalgonda, Telangana"
+ },
+ "Peddapalle|north-telangana": {
+  "lat": 18.6207,
+  "lon": 79.495,
+  "q": "Peddapalli, Telangana"
+ }
+}

@@ -1,0 +1,82 @@
+{{ define "main" }}
+{{/* "Areas we supply": a map of every town we delivered to in the last year,
+     the regions with their delivery times, and the full town list. All from
+     assets/data/areas.json (scripts/areas/build-areas.mjs), drawn here as an
+     SVG: no map service, nothing loaded from elsewhere. */}}
+{{ with resources.Get "data/areas.json" }}
+{{ $a := . | transform.Unmarshal }}
+{{/* One colour per region, in the data's order; areas without a page share grey. */}}
+{{ $palette := slice "#0d3b66" "#e07a1f" "#2a9d8f" "#c0392b" "#7b5ea7" "#1f78b4" "#b8860b" "#d6336c" "#2e7d32" "#8d5524" "#0891b2" }}
+{{ $regions := slice }}
+{{ $i := 0 }}
+{{ range $a.regions }}
+  {{ $c := "#8a94a6" }}
+  {{ if .page }}{{ $c = index $palette (mod $i (len $palette)) }}{{ $i = add $i 1 }}{{ end }}
+  {{ $regions = $regions | append (merge . (dict "color" $c)) }}
+{{ end }}
+{{ $round := cond (ge (int $a.customers) 1000) 100 50 }}
+<div class="page">
+  <article class="container areas-hub">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="areas-lede"><strong>In the last year, more than {{ lang.FormatNumber 0 (mul (div (int $a.customers) $round) $round) }} shops in {{ $a.towns }} towns across Andhra Pradesh, Telangana and Karnataka ordered carry bags from our factory in Dhone.</strong> Every dot on the map is a town we delivered to. Tap a region for its towns, delivery time and rates.</p>
+
+    <figure class="areas-map">
+      <svg viewBox="0 0 {{ $a.map.width }} {{ $a.map.height }}" role="img" aria-labelledby="areas-map-title">
+        <title id="areas-map-title">Map of the towns Sri Raja Bags supplies in Andhra Pradesh, Telangana and Karnataka</title>
+        {{ range $a.map.states }}<path class="{{ if .focus }}st-focus{{ else }}st-context{{ end }}" d="{{ .d }}"/>{{ end }}
+        {{ range $a.map.states }}{{ $n := .name }}{{ with .label }}<text class="st-label" x="{{ index . 0 }}" y="{{ index . 1 }}">{{ $n }}</text>{{ end }}{{ end }}
+        {{ range $regions }}
+          {{ $r := . }}
+          {{ if .page }}<a href="{{ .page | relURL }}" class="map-region"><title>{{ .name }}: {{ .customers }} shops · delivery {{ .days }}</title>{{ else }}<g class="map-region map-other"><title>{{ .name }}: {{ .customers }} shops</title>{{ end }}
+          {{/* Dot area grows with the town's shop count. */}}
+          {{ range .towns }}{{ $rad := add 3 (mul 1.1 (math.Sqrt .customers)) }}{{ with .xy }}<circle cx="{{ index . 0 }}" cy="{{ index . 1 }}" r="{{ printf "%.1f" $rad }}" fill="{{ $r.color }}"/>{{ end }}{{ end }}
+          {{ if .page }}</a>{{ else }}</g>{{ end }}
+        {{ end }}
+        {{ with $a.factory.xy }}
+        <g class="map-factory">
+          <circle cx="{{ index . 0 }}" cy="{{ index . 1 }}" r="9"/>
+          <text x="{{ add (index . 0) 14 }}" y="{{ add (index . 1) 5 }}">Our factory, Dhone</text>
+        </g>
+        {{ end }}
+      </svg>
+    </figure>
+    <p class="areas-map-hint">Swipe the map sideways to see every region.</p>
+    {{ with $a.factory.xy }}
+    <script>
+    /* Phones show the map wider than the screen: start it centred on Dhone. */
+    (function () {
+      var fig = document.querySelector(".areas-map"), svg = fig && fig.querySelector("svg");
+      if (!svg || fig.scrollWidth <= fig.clientWidth) return;
+      fig.scrollLeft = {{ index . 0 }} / {{ $a.map.width }} * svg.clientWidth - fig.clientWidth / 2;
+    })();
+    </script>
+    {{ end }}
+
+    <h2>Regions</h2>
+    <div class="area-cards">
+      {{ range $regions }}{{ if .page }}
+      <a class="area-card" href="{{ .page | relURL }}" style="--c: {{ .color }}">
+        <span class="area-card-name">{{ .name }}</span>
+        <span class="area-card-meta">{{ .customers }} shops · {{ len .towns }} towns</span>
+        <span class="area-card-days">Delivery {{ .days }}</span>
+      </a>
+      {{ end }}{{ end }}
+    </div>
+
+    <h2>Every town we supply</h2>
+    <div class="area-list">
+      {{ range $regions }}
+      <section>
+        <h3><span class="area-dot" style="background: {{ .color }}"></span>{{ if .page }}<a href="{{ .page | relURL }}">{{ .name }}</a>{{ else }}{{ .name }}{{ end }}{{ with .days }} <span class="area-days">· delivery {{ . }}</span>{{ end }}</h3>
+        {{ $names := slice }}{{ range .towns }}{{ $names = $names | append .name }}{{ end }}
+        <p>{{ delimit $names ", " }}</p>
+      </section>
+      {{ end }}
+    </div>
+
+    <p class="areas-cta">Your town not here? We most likely deliver there too. Ask on <a href="https://api.whatsapp.com/send/?phone={{ site.Params.phoneRaw }}&amp;text={{ urlquery (printf "Hello Sri Raja Bags, do you deliver to __ (my town)? I need __ bags. %s" site.Params.waMarker) }}&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener">WhatsApp</a> or call <a href="tel:+{{ site.Params.phoneRaw }}">{{ site.Params.phone }}</a>.</p>
+    <p class="areas-credit">Shop counts are from our orders in the year to {{ time.Format "2 January 2006" $a.asOf }}. Town locations © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors; state boundaries from Natural Earth.</p>
+  </article>
+</div>
+{{ end }}
+{{ end }}

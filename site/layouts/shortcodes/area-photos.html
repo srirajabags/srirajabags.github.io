@@ -1,6 +1,6 @@
 {{/* Bags printed for shops in this area: the catalog's own photos, listed in
-     the page's front matter as photos: [{file, caption, product}]. Each links
-     to the product page for that bag. A photo since dropped from the catalog
+     the page's front matter as photos: [{file, caption, product}]. A photo
+     with a product links to that product's page. A photo since dropped from the catalog
      is skipped, not broken. */}}
 {{ with .Page.Params.photos }}
 <div class="area-photos">
@@ -9,9 +9,8 @@
   {{ with resources.Get (printf "images/%s" $p.file) }}
   {{ $im := .Fit "600x600 webp q80" }}
   <figure>
-    <a href="{{ printf "/products/%s/" $p.product | relURL }}">
-      <img src="{{ $im.RelPermalink }}" width="{{ $im.Width }}" height="{{ $im.Height }}" alt="{{ $p.caption }}" loading="lazy" decoding="async">
-    </a>
+    {{ $img := printf `<img src="%s" width="%d" height="%d" alt="%s" loading="lazy" decoding="async">` $im.RelPermalink $im.Width $im.Height $p.caption }}
+    {{ with $p.product }}<a href="{{ printf "/products/%s/" . | relURL }}">{{ $img | safeHTML }}</a>{{ else }}{{ $img | safeHTML }}{{ end }}
     <figcaption>{{ $p.caption }}</figcaption>
   </figure>
   {{ end }}

@@ -3,10 +3,11 @@
      Written per area from real orders, never generated from a template: the
      towns, the delivery arrangement and the photos are that area's own.
 
-     Front matter: towns (groups of {district, names}), photos (catalog photo
-     files with captions, bags printed for shops in the area), quote (the
-     WhatsApp message). The {{< area-photos >}} shortcode places the photos
-     inside the text. */}}
+     Front matter: areaKey (the region in assets/data/areas.json, which gives
+     the towns and shop count), areaName (footer label), weight (footer
+     order), photos (catalog photo files with captions, bags printed for
+     shops in the area). Shortcodes in the text: {{< area-towns >}},
+     {{< area-count >}}, {{< area-photos >}}. */}}
 <div class="page">
   <article class="container narrow post area">
     <h1 class="page-title">{{ .Title }}</h1>
@@ -14,9 +15,10 @@
   </article>
 </div>
 
-{{/* Search engines: what we do, for which places. */}}
+{{/* Search engines: what we do, for which places (the region's towns from
+     assets/data/areas.json). */}}
 {{ $areas := slice }}
-{{ range .Params.towns }}{{ range .names }}{{ $areas = $areas | append (dict "@type" "City" "name" .) }}{{ end }}{{ end }}
+{{ with partial "area-region.html" . }}{{ range .towns }}{{ $areas = $areas | append (dict "@type" "City" "name" .name) }}{{ end }}{{ end }}
 {{ $schema := dict
   "@context" "https://schema.org"
   "@type" "Service"

@@ -1,0 +1,7 @@
+{{/* Every town in this page's region with a customer in the last year, the
+     biggest first: "A, B and C." From assets/data/areas.json. */}}
+{{ with partial "area-region.html" .Page }}{{ with .towns }}
+{{ $names := slice }}{{ range . }}{{ $names = $names | append .name }}{{ end }}
+{{ $n := len $names }}
+<p class="area-towns">{{ if eq $n 1 }}{{ index $names 0 }}{{ else }}{{ delimit (first (sub $n 1) $names) ", " }} and {{ index $names (sub $n 1) }}{{ end }}.</p>
+{{ end }}{{ end }}

@@ -4,24 +4,23 @@ title: "Carry Bag Manufacturer for Shops in Nalgonda, Miryalaguda & Suryapet"
 metaTitle: "Carry Bag Manufacturers Near Nalgonda & Miryalaguda"
 description: "Printed non woven carry bags for shops in Nalgonda, Miryalaguda, Suryapet, Bhongir, Devarakonda and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 3–4 days."
 layout: "area"
-weight: 6
+areaKey: "nalgonda"
+weight: 8
 url: "/carry-bags-nalgonda/"
 areaName: "Nalgonda"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Nalgonda region"
-    names: ["Miryalaguda", "Nalgonda", "Devarakonda", "Bhongir", "Suryapet", "Konda Mallepally", "Haliya", "Nakrekal", "Kodad", "Huzurnagar", "Thirumalagiri", "Nereducharla", "Chityal", "Chanduru", "Yadagirigutta"]
 photos:
+  - file: "areas/ck-mens-wear-haliya.jpg"
+    caption: "Printed D-cut cover for a menswear shop in Haliya"
   - file: "catalog/4e7bdb29aad62fada4345f9177aae2809892cd0e.jpg"
     caption: "Printed D-cut bag for a menswear shop in Nalgonda"
     product: "dcut-single-color"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Nalgonda region.** In the last year, more than 250 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 3–4 days.
+**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Nalgonda region.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 3–4 days.
 
 ## Towns we supply
 
-Miryalaguda, Nalgonda, Devarakonda, Bhongir, Suryapet, Konda Mallepally, Haliya, Nakrekal, Kodad, Huzurnagar, Thirumalagiri, Nereducharla, Chityal, Chanduru and Yadagirigutta.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

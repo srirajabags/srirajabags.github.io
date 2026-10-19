@@ -1,0 +1,8 @@
+{{/* Shops in this page's region that ordered in the last year, rounded down
+     to a friendly figure: "more than 650". From assets/data/areas.json. */}}
+{{- with partial "area-region.html" .Page -}}
+{{- $n := int .customers -}}
+{{- $step := cond (ge $n 1000) 100 (cond (ge $n 200) 50 10) -}}
+{{- $floor := mul (div $n $step) $step -}}
+{{- if eq $floor $n }}{{ lang.FormatNumber 0 $n }}{{ else }}more than {{ lang.FormatNumber 0 $floor }}{{ end -}}
+{{- end -}}

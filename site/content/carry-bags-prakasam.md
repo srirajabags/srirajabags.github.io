@@ -4,13 +4,10 @@ title: "Carry Bag Manufacturer for Shops in Ongole & Prakasam"
 metaTitle: "Carry Bag Manufacturers Near Ongole & Markapur"
 description: "Printed non woven carry bags for shops in Ongole, Chirala, Markapur, Darsi, Kandukur and across Prakasam, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
-weight: 4
+areaKey: "prakasam"
+weight: 5
 url: "/carry-bags-prakasam/"
 areaName: "Prakasam"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Ongole & Prakasam"
-    names: ["Ongole", "Chirala", "Markapur", "Darsi", "Kandukur", "Addanki", "Giddalur", "Podili", "Kanigiri", "Yerragondapalem", "Chimakurthy", "Martur", "Cumbum", "Pamur", "Inkollu", "Kurichedu"]
 photos:
   - file: "catalog/f94c8fdd2ed9763a7efe7f6711490b2883fe8002.jpg"
     caption: "Full colour bag for a jewellery mart in Markapur"
@@ -23,11 +20,11 @@ photos:
     product: "digital-bopp"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Ongole & Prakasam.** In the last year, more than 300 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Ongole & Prakasam.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
-Ongole, Chirala, Markapur, Darsi, Kandukur, Addanki, Giddalur, Podili, Kanigiri, Yerragondapalem, Chimakurthy, Martur, Cumbum, Pamur, Inkollu and Kurichedu.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

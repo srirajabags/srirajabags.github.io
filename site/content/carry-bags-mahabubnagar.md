@@ -4,13 +4,10 @@ title: "Carry Bag Manufacturer for Shops in Mahabubnagar, Gadwal, Wanaparthy & N
 metaTitle: "Carry Bag Manufacturers Near Mahabubnagar & Gadwal"
 description: "Printed non woven carry bags for shops in Mahabubnagar, Gadwal, Wanaparthy, Tandur, Narayanpet and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
-weight: 5
+areaKey: "mahabubnagar"
+weight: 7
 url: "/carry-bags-mahabubnagar/"
 areaName: "Mahabubnagar"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-towns:
-  - district: "Mahabubnagar region"
-    names: ["Gadwal", "Wanaparthy", "Mahabubnagar", "Tandur", "Shadnagar", "Nagarkurnool", "Ieeja", "Kosgi", "Kalwakurthy", "Kothakota", "Vikarabad", "Parigi", "Maddur", "Achampet", "Jadcherla", "Shanti Nagar", "Pebbair", "Atmakur", "Devarakadra", "Narayanpet", "Kodangal", "Kollapur", "Bijinapally", "Marikal", "Midjil", "Makhtal", "Balanagar", "Shabad", "Chevella"]
 photos:
   - file: "catalog/4bd2ae0512b373996272e9696bf3c5c352b4dcc6.jpg"
     caption: "Two colour stitched bag for a suiting house in Mahabubnagar"
@@ -23,11 +20,11 @@ photos:
     product: "dcut-single-color"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, just across the border from Jogulamba Gadwal district, and supplies shops across Mahabubnagar region.** In the last year, more than 600 shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, just across the border from Jogulamba Gadwal district, and supplies shops across Mahabubnagar region.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
-Gadwal, Wanaparthy, Mahabubnagar, Tandur, Shadnagar, Nagarkurnool, Ieeja, Kosgi, Kalwakurthy, Kothakota, Vikarabad, Parigi, Maddur, Achampet, Jadcherla, Shanti Nagar, Pebbair, Atmakur, Devarakadra, Narayanpet, Kodangal, Kollapur, Bijinapally, Marikal, Midjil, Makhtal, Balanagar, Shabad and Chevella.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 

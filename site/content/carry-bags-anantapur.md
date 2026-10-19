@@ -4,18 +4,15 @@ title: "Carry Bag Manufacturer for Shops in Anantapur District"
 metaTitle: "Carry Bag Manufacturers Near Anantapur"
 description: "Printed non woven carry bags for shops in Anantapur, Guntakal, Tadipatri, Hindupur and across the district, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
+areaKey: "anantapur"
 weight: 2
 areaName: "Anantapur"
 url: "/carry-bags-anantapur/"
-# Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
-# Grist still files them under the old Anantapur district; split here into
-# today's Anantapur and Sri Sathya Sai districts.
-towns:
-  - district: "Anantapur district"
-    names: ["Anantapur", "Guntakal", "Tadipatri", "Gooty", "Rayadurg", "Kalyandurg", "Uravakonda", "Pamidi", "Yadiki", "Kanekal", "Narpala", "Singanamala"]
-  - district: "Sri Sathya Sai district"
-    names: ["Hindupur", "Dharmavaram", "Kadiri", "Penukonda", "Gorantla", "Madakasira", "Mudigubba", "Kothacheruvu"]
 photos:
+  - file: "areas/bommana-anantapur.jpg"
+    caption: "Full colour D-cut bag for a family showroom in Anantapur"
+  - file: "areas/urmila-fashions-guntakal.jpg"
+    caption: "BOPP laminated bag for a family showroom in Guntakal"
   - file: "catalog/5c4b89f90b70aaf6aecd4d07a7dae3432e06e581.jpg"
     caption: "Printed D-cut bag for a menswear showroom in Tadipatri"
     product: "dcut-single-color"
@@ -27,13 +24,11 @@ photos:
     product: "digital-bopp"
 ---
 
-**Sri Raja Bags makes printed non woven carry bags at Dhone, on the Bengaluru–Hyderabad highway about 100 km from Anantapur, and supplies shops across Anantapur and Sri Sathya Sai districts.** In the last year, more than 500 shops in the two districts ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
+**Sri Raja Bags makes printed non woven carry bags at Dhone, on the Bengaluru–Hyderabad highway about 100 km from Anantapur, and supplies shops across Anantapur and Sri Sathya Sai districts.** In the last year, {{< area-count >}} shops in the two districts ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 1–2 days.
 
 ## Towns we supply
 
-**Anantapur district:** Anantapur, Guntakal, Tadipatri, Gooty, Rayadurg, Kalyandurg, Uravakonda, Pamidi, Yadiki, Kanekal, Narpala and Singanamala.
-
-**Sri Sathya Sai district:** Hindupur, Dharmavaram, Kadiri, Penukonda, Gorantla, Madakasira, Mudigubba and Kothacheruvu.
+{{< area-towns >}}
 
 Your town not listed? We most likely deliver there too. Ask on WhatsApp.
 
