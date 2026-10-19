@@ -17,7 +17,7 @@
 {{ $round := cond (ge (int $a.customers) 1000) 100 50 }}
 <div class="page">
   <article class="container areas-hub">
-    <h1 class="page-title">{{ .Title }}</h1>
+    <h1 class="page-title">{{ $.Title }}</h1>
     <p class="areas-lede"><strong>In the last year, more than {{ lang.FormatNumber 0 (mul (div (int $a.customers) $round) $round) }} shops in {{ $a.towns }} towns across Andhra Pradesh, Telangana and Karnataka ordered carry bags from our factory in Dhone.</strong> Every dot on the map is a town we delivered to. Tap a region for its towns, delivery time and rates.</p>
 
     <figure class="areas-map">
