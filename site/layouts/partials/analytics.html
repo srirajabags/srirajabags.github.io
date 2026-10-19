@@ -36,7 +36,8 @@
     ];
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest("a[href]");
-      if (!a || !OURS.test(a.href) || /^\/review\//.test(location.pathname)) return;
+      // The desktop QR box's own links are the same enquiry, already counted.
+      if (!a || !OURS.test(a.href) || a.closest("[data-wa-qr]") || /^\/review\//.test(location.pathname)) return;
       var place = "other";
       for (var i = 0; i < PLACES.length; i++) if (a.closest(PLACES[i][0])) { place = PLACES[i][1]; break; }
       gtag("event", "whatsapp_enquiry", { placement: place, page_path: location.pathname });

@@ -1,0 +1,89 @@
+{{/* WhatsApp on a computer. On a phone our WhatsApp buttons open the app with
+     the message typed in. On a computer the same link lands on WhatsApp's
+     "Continue to chat" page, which needs WhatsApp Desktop or Web signed in,
+     and many buyers stop there. So on a computer (mouse or trackpad, no touch)
+     a tap on any WhatsApp button for our number opens this box instead: a QR
+     code of the same link with the same message, marker included, to scan
+     with the phone, plus WhatsApp Web and the app for those who use them.
+
+     The QR library (qrcode-generator, MIT) loads on the first such click, so
+     phones and visitors who never click never download it. The click is still
+     counted as an enquiry by analytics.html; choices inside the box are not
+     counted again. */}}
+{{ $qr := resources.Get "js/qrcode.js" | fingerprint }}
+<dialog class="wa-qr" id="wa-qr" aria-labelledby="wa-qr-h" data-wa-qr>
+  <button type="button" class="wa-qr-close" aria-label="Close">×</button>
+  <h2 id="wa-qr-h">Message us on WhatsApp</h2>
+  <p class="wa-qr-lede">Scan with your phone's camera. WhatsApp opens with your message ready to send.</p>
+  <div class="wa-qr-code" role="img" aria-label="QR code that opens WhatsApp with your message"></div>
+  <p class="wa-qr-msg"></p>
+  <div class="wa-qr-actions">
+    <a class="wa-qr-web" href="https://web.whatsapp.com/" target="_blank" rel="noopener">Open WhatsApp Web</a>
+    <a class="wa-qr-app" href="https://api.whatsapp.com/" target="_blank" rel="noopener">Open the WhatsApp app</a>
+  </div>
+  <p class="wa-qr-num">WhatsApp number: <strong>{{ .Site.Params.phone }}</strong></p>
+</dialog>
+<script>
+(function () {
+  var dlg = document.getElementById("wa-qr");
+  if (!dlg || !window.matchMedia) return;
+  var PHONE = "{{ .Site.Params.phoneRaw }}";
+  var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ .Site.Params.phoneRaw }}/;
+  var desktop = matchMedia("(hover: hover) and (pointer: fine)");
+  var box = dlg.querySelector(".wa-qr-code"), msg = dlg.querySelector(".wa-qr-msg");
+  var web = dlg.querySelector(".wa-qr-web"), app = dlg.querySelector(".wa-qr-app");
+  var lib = null;
+
+  function loadLib() {
+    if (window.qrcode) return Promise.resolve();
+    if (lib) return lib;
+    lib = new Promise(function (ok, fail) {
+      var s = document.createElement("script");
+      s.src = "{{ $qr.RelPermalink }}";
+      s.onload = ok; s.onerror = fail;
+      document.head.appendChild(s);
+    });
+    return lib;
+  }
+
+  function open(href) {
+    var text = "";
+    try { text = new URL(href).searchParams.get("text") || ""; } catch (e) {}
+    var q = text ? "?text=" + encodeURIComponent(text) : "";
+    web.href = "https://web.whatsapp.com/send?phone=" + PHONE + (text ? "&text=" + encodeURIComponent(text) : "");
+    app.href = href;
+    msg.textContent = text;
+    msg.hidden = !text;
+    box.textContent = "";
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    loadLib().then(function () {
+      var code = window.qrcode(0, "M");
+      code.addData("https://wa.me/" + PHONE + q);
+      code.make();
+      box.innerHTML = code.createSvgTag({ cellSize: 4, margin: 2, scalable: true });
+    }, function () {
+      // No QR without the library; the links and the number still work.
+      box.hidden = true;
+    });
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (!desktop.matches) return;
+    var a = e.target.closest && e.target.closest("a[href]");
+    if (!a || a.closest("[data-wa-qr]") || !OURS.test(a.href)) return;
+    e.preventDefault();
+    open(a.href);
+  });
+
+  function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); }
+  dlg.querySelector(".wa-qr-close").addEventListener("click", close);
+  // A click on the dimmed backdrop lands on the dialog element itself.
+  dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
+  [web, app].forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (typeof gtag === "function") gtag("event", "whatsapp_desktop", { method: a === web ? "web" : "app" });
+    });
+  });
+})();
+</script>
