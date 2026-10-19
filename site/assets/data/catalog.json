@@ -172,9 +172,23 @@
      "alt": ""
     },
     {
+     "file": "catalog/dc41a7674b9b70bffd62056a127c4c6a5a9b5405.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/f679ce15eb79e65bed60fc263b25d6b7244a05ed.jpg",
      "shopTypes": [
       "Mobile Shops"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/f902978fd158764478497b486b88b24a12873256.jpg",
+     "shopTypes": [
+      "Textiles"
      ],
      "alt": ""
     },
@@ -235,13 +249,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/dc41a7674b9b70bffd62056a127c4c6a5a9b5405.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
-     "alt": ""
-    },
-    {
      "file": "catalog/919157a2f3dd1c647d370b1bb96907bc45e3853f.jpg",
      "shopTypes": [
       "Jewellery Stores"
@@ -279,13 +286,6 @@
     {
      "file": "catalog/978a43ff6a06018e79b18bfae2454af91f411777.jpg",
      "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f902978fd158764478497b486b88b24a12873256.jpg",
-     "shopTypes": [
-      "Textiles"
-     ],
      "alt": ""
     },
     {
@@ -410,9 +410,16 @@
    ],
    "photos": [
     {
-     "file": "catalog/225ca44e49ffed191e6eea97a0953cfe34ddc632.jpg",
+     "file": "catalog/951be382721c75f9377af7e05c2707ae90f47533.jpg",
      "shopTypes": [
-      "Medical Shops"
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/060df7cb86a4e97af9d326255bc436e97b4f589c.jpg",
+     "shopTypes": [
+      "Textiles"
      ],
      "alt": ""
     },
@@ -424,22 +431,15 @@
      "alt": ""
     },
     {
+     "file": "catalog/225ca44e49ffed191e6eea97a0953cfe34ddc632.jpg",
+     "shopTypes": [
+      "Medical Shops"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/cdca4a390281481a6b5a5c45e79591d441f46bbf.jpg",
      "shopTypes": [],
-     "alt": ""
-    },
-    {
-     "file": "catalog/060df7cb86a4e97af9d326255bc436e97b4f589c.jpg",
-     "shopTypes": [
-      "Textiles"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/951be382721c75f9377af7e05c2707ae90f47533.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
      "alt": ""
     }
    ]
@@ -1630,6 +1630,13 @@
      "file": "catalog/6f3d56d99112ab33d51b6ff762a418239aedfecf.jpg",
      "shopTypes": [
       "Eye Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/3bf5b285179918a8b8b878d8cea8efff2bf560ad.jpg",
+     "shopTypes": [
+      "Dry Fruits"
      ],
      "alt": ""
     }
@@ -3053,16 +3060,37 @@
    ],
    "photos": [
     {
-     "file": "catalog/d7841141e61ececa91efa23cd1e640179d9db334.jpg",
+     "file": "catalog/4ef4a87f38d9639aa099c3fa5396ef9fc72dd7e0.jpg",
      "shopTypes": [
-      "Jewellery Stores"
+      "Family Wear"
      ],
      "alt": ""
     },
     {
-     "file": "catalog/d3c895aae000d8c63b6ccf282c7af9dd18e38249.jpg",
+     "file": "catalog/634cf48a150ad65e7b05e62dd986725fe2258aa8.jpg",
      "shopTypes": [
       "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/0239bdd9bfa62e6fe1bf7f949cdacecb7c866f51.jpg",
+     "shopTypes": [
+      "Mens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/11e106d31d31cd412e95d8423b3a6eb9549b3019.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/214c93e799a18d9d865104ae6fac3e4de6fabe59.jpg",
+     "shopTypes": [
+      "Fireworks"
      ],
      "alt": ""
     },
@@ -3084,13 +3112,6 @@
      "file": "catalog/5963aed95fea48d3c8cd0cd5d701dcee1b636a8a.jpg",
      "shopTypes": [
       "Textiles"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/214c93e799a18d9d865104ae6fac3e4de6fabe59.jpg",
-     "shopTypes": [
-      "Fireworks"
      ],
      "alt": ""
     },
@@ -3124,13 +3145,6 @@
      "file": "catalog/f8b9388bd9a6b78d1d44667b93918bac46a57f2a.jpg",
      "shopTypes": [
       "Textiles"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/4ef4a87f38d9639aa099c3fa5396ef9fc72dd7e0.jpg",
-     "shopTypes": [
-      "Family Wear"
      ],
      "alt": ""
     },
@@ -3170,13 +3184,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/634cf48a150ad65e7b05e62dd986725fe2258aa8.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
-     "alt": ""
-    },
-    {
      "file": "catalog/e12a340a3c3e10e475499d3f7a041407e2409cd1.jpg",
      "shopTypes": [
       "Womens Wear"
@@ -3187,6 +3194,13 @@
      "file": "catalog/47763ec1ca0b99c77af752e7aa1105696445cc1f.jpg",
      "shopTypes": [
       "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/d7841141e61ececa91efa23cd1e640179d9db334.jpg",
+     "shopTypes": [
+      "Jewellery Stores"
      ],
      "alt": ""
     },
@@ -3226,6 +3240,13 @@
      "alt": ""
     },
     {
+     "file": "catalog/d3c895aae000d8c63b6ccf282c7af9dd18e38249.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/53f872da72b14996bf270a11604552ba06ce36c4.jpg",
      "shopTypes": [
       "Womens Wear"
@@ -3236,6 +3257,13 @@
      "file": "catalog/d70535e02f7d75e31b3bbcfde294bfcd890e9ea9.jpg",
      "shopTypes": [
       "Textiles"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/ae7dca94dcd01b6a0caf3fbb8dc85377a0e950f7.jpg",
+     "shopTypes": [
+      "Mens Wear"
      ],
      "alt": ""
     }
@@ -3683,6 +3711,13 @@
    ],
    "photos": [
     {
+     "file": "catalog/dc5344be457e53be848d8cab41eea1d61cac5cb7.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/a1109db104dc0f6dd407b81b5b0a1350251567ec.jpg",
      "shopTypes": [
       "Jewellery Stores"
@@ -3690,9 +3725,37 @@
      "alt": ""
     },
     {
+     "file": "catalog/eef86f7784a22ece8f4a7c0eca1549edad6eb28c.jpg",
+     "shopTypes": [
+      "Family Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/fd6d2e88a380b3692f97ecd14e4a4d1acff3702a.jpg",
+     "shopTypes": [
+      "Fireworks"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/12ec3e9a587fe89de8e1dd1a0e4bb70f6cee4d35.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/bbb48abb140d3244ff1c64fb164047692438daf7.jpg",
      "shopTypes": [
       "Family Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/225d02e9450093c11859af76899edc42990391d8.jpg",
+     "shopTypes": [
+      "Womens Wear"
      ],
      "alt": ""
     },
@@ -3760,13 +3823,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/12ec3e9a587fe89de8e1dd1a0e4bb70f6cee4d35.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
-     "alt": ""
-    },
-    {
      "file": "catalog/1336b95e1730ce17efc4e2193f4ed370b9bf0ba3.jpg",
      "shopTypes": [
       "Womens Wear"
@@ -3802,16 +3858,16 @@
      "alt": ""
     },
     {
-     "file": "catalog/225d02e9450093c11859af76899edc42990391d8.jpg",
+     "file": "catalog/1c0ada3492fbaa6a84f8472e759772436aa870fe.jpg",
      "shopTypes": [
-      "Womens Wear"
+      "Jewellery Stores"
      ],
      "alt": ""
     },
     {
-     "file": "catalog/1c0ada3492fbaa6a84f8472e759772436aa870fe.jpg",
+     "file": "catalog/14684b5c63ddf670ca6e2a4489a3737d1132d1a0.jpg",
      "shopTypes": [
-      "Jewellery Stores"
+      "Womens Wear"
      ],
      "alt": ""
     }
@@ -4039,6 +4095,13 @@
    ],
    "photos": [
     {
+     "file": "catalog/f5fd9d7eedac70f00588cd3b3be933e14059e3bd.jpg",
+     "shopTypes": [
+      "Family Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/e51e1b207072c5f766b5d17adbb0becc2b65924e.jpg",
      "shopTypes": [
       "Mens Wear"
@@ -4082,13 +4145,6 @@
     },
     {
      "file": "catalog/c2fda806569a4a7a09141ca14c88b324c6ce4ef9.jpg",
-     "shopTypes": [
-      "Family Wear"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/f5fd9d7eedac70f00588cd3b3be933e14059e3bd.jpg",
      "shopTypes": [
       "Family Wear"
      ],
@@ -4274,9 +4330,30 @@
    ],
    "photos": [
     {
+     "file": "catalog/5089d88503e35a4f9d5ab52f28b8722da6bccedf.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/1467e7ceac8f91b64ddf3dc0bcdc5e0e32c45bfe.jpg",
      "shopTypes": [
       "Mobile Shops"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/5f2a79e100de7cb8abe07a5baba9bb0f2bfbf830.jpg",
+     "shopTypes": [
+      "Womens Wear"
+     ],
+     "alt": ""
+    },
+    {
+     "file": "catalog/0c94c034738189e399c0d7ee507f55516d90926f.jpg",
+     "shopTypes": [
+      "Womens Wear"
      ],
      "alt": ""
     },
@@ -4317,13 +4394,6 @@
     },
     {
      "file": "catalog/91a558c22e8151e01fa11c3076df0b1c126bd847.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/5089d88503e35a4f9d5ab52f28b8722da6bccedf.jpg",
      "shopTypes": [
       "Womens Wear"
      ],
@@ -4372,13 +4442,6 @@
      "alt": ""
     },
     {
-     "file": "catalog/5f2a79e100de7cb8abe07a5baba9bb0f2bfbf830.jpg",
-     "shopTypes": [
-      "Womens Wear"
-     ],
-     "alt": ""
-    },
-    {
      "file": "catalog/f119b7f24be0536b8690bba857fe8e10baf3741c.jpg",
      "shopTypes": [
       "Family Wear"
@@ -4403,13 +4466,6 @@
      "file": "catalog/89bb3649f1181a021aa8819bba68d7c8b18356a9.jpg",
      "shopTypes": [
       "Kids Wear"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/0c94c034738189e399c0d7ee507f55516d90926f.jpg",
-     "shopTypes": [
-      "Womens Wear"
      ],
      "alt": ""
     },
