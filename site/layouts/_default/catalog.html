@@ -461,7 +461,7 @@
             <dt>Approx. pcs / kg</dt>
             <dd class="ct-d-pcs">{{ if and $first $first.pcs }}~{{ $first.pcs }} pieces{{ end }}</dd>
           </div>
-          {{ with .shops }}<div class="ct-dl-wide"><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
+          {{ with .shopsAll }}<div class="ct-dl-wide"><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
         </dl>
 
         {{ with .colours }}

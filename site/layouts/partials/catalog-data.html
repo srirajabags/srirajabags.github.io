@@ -229,10 +229,9 @@
   {{- $img := "" }}{{ $img2x := "" -}}
   {{- with $imgs }}{{ $img = (index . 0).src }}{{ $img2x = (index . 0).src2x }}{{ end -}}
 
-  {{/* Shop types the filter and search match on: the product's own list plus
-       every shop a photo of it was shot for, so a D-cut photo tagged "Sweet
-       Shops" puts the D-cut bag under Sweet Shops. "Best for" keeps showing
-       the product's own list. */}}
+  {{/* Shop types the filter, search and "Best for" use: the product's own list
+       first, then every shop a photo of it was shot for, so a D-cut photo
+       tagged "Sweet Shops" puts the D-cut bag under Sweet Shops. */}}
   {{- $shopsAll := $m.shopTypes | default slice -}}
   {{- range $imgs }}{{ range .shops }}{{ if not (in $shopsAll .) }}{{ $shopsAll = $shopsAll | append . }}{{ end }}{{ end }}{{ end -}}
 

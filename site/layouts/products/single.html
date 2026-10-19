@@ -136,7 +136,7 @@
           {{ with .patties }}<div><dt>Side patty</dt><dd>{{ range $i, $s := . }}{{ if $i }}<span class="pd-sep" aria-hidden="true"> · </span>{{ end }}<span class="nw">{{ $s }}</span>{{ end }}</dd></div>{{ end }}
           {{ if .hasMoq }}<div><dt>Minimum order</dt><dd>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}</dd></div>{{ end }}
           {{ with .colours }}<div><dt>Colours</dt><dd class="pd-swatches">{{ range . }}<span class="nw"><span class="ct-sw" data-c="{{ .slug }}"{{ with .hex }} style="background:{{ . }}"{{ end }}></span>{{ .name }}</span>{{ end }}</dd></div>{{ end }}
-          {{ with .shops }}<div><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
+          {{ with .shopsAll }}<div><dt>Best for</dt><dd>{{ delimit . " · " }}</dd></div>{{ end }}
         </dl>
       </div>
     </div>
@@ -280,10 +280,11 @@
         if (n === at) b.setAttribute("aria-current", "true"); else b.removeAttribute("aria-current");
       });
       if (counter) counter.textContent = (at + 1) + " / " + thumbs.length;
-      // Keep the outlined thumbnail in view, scrolling only the strip.
-      var l = a.offsetLeft - film.offsetLeft, r = l + a.offsetWidth;
-      if (l < film.scrollLeft) film.scrollLeft = l - 8;
-      else if (r > film.scrollLeft + film.clientWidth) film.scrollLeft = r - film.clientWidth + 8;
+      // Keep the outlined thumbnail in view, scrolling only the strip (down,
+      // now that it wraps into rows).
+      var t = a.offsetTop - film.offsetTop, btm = t + a.offsetHeight;
+      if (t < film.scrollTop) film.scrollTop = t - 6;
+      else if (btm > film.scrollTop + film.clientHeight) film.scrollTop = btm - film.clientHeight + 6;
     }
     film.addEventListener("click", function (e) {
       var a = e.target.closest(".ct-film-btn");

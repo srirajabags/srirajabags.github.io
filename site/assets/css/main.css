@@ -481,10 +481,16 @@ a { color: var(--navy); }
 }
 .pd-noimg { display: flex; align-items: center; justify-content: center; }
 .pd-stage .ct-cnav { opacity: 0.9; }
-/* One scrolling row of thumbnails, however many photos there are. */
-/* Scoped under .pd-photos so it beats the catalog dialog's desktop rule for
-   .ct-film (which wraps), later in this file. */
-.pd-photos .pd-film { padding: 0.7rem 0 0.2rem; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; max-height: none; }
+/* Small thumbnails in up to three rows under the photo, so most products show
+   every photo at a glance. More than three rows scroll inside the strip, with
+   a sliver of the next row showing so it reads as scrollable.
+   Scoped under .pd-photos so it beats the catalog dialog's .ct-film rules. */
+.pd-photos .pd-film {
+  display: grid; grid-template-columns: repeat(auto-fill, 3.25rem); grid-auto-rows: 3.25rem;
+  gap: 0.35rem; padding: 0.6rem 0.1rem 0.2rem;
+  overflow-x: hidden; overflow-y: auto; max-height: calc(3 * 3.25rem + 2 * 0.35rem + 0.8rem + 1.1rem);
+}
+.pd-photos .pd-film .ct-film-btn { width: 3.25rem; height: 3.25rem; }
 
 .pd-info { min-width: 0; }
 .pd-title { margin: 0 0 0.9rem; font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.12; color: var(--navy); letter-spacing: -0.01em; }
