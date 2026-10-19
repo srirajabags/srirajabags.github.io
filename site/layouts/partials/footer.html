@@ -9,8 +9,11 @@
       <a href="{{ "/privacy/" | relURL }}">Privacy</a>
     </nav>
 
-    {{/* Areas with a page of their own (content/carry-bags-<area>.md). */}}
-    <p class="foot-areas">Areas we supply: <a href="{{ "/carry-bags-anantapur/" | relURL }}">Anantapur district</a></p>
+    {{/* Every area page (content/carry-bags-<area>.md, layout "area"), in
+         their weight order, so a new area page appears here by itself. */}}
+    {{ with (where site.RegularPages "Params.layout" "area").ByWeight }}
+    <p class="foot-areas">Areas we supply: {{ range $i, $p := . }}{{ if $i }}<span aria-hidden="true"> · </span>{{ end }}<a href="{{ $p.RelPermalink }}">{{ $p.Params.areaName }}</a>{{ end }}</p>
+    {{ end }}
 
     <div class="social">
       <a href="{{ .Site.Params.instagram }}" target="_blank" rel="noopener" aria-label="Instagram">

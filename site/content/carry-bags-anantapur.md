@@ -4,6 +4,8 @@ title: "Carry Bag Manufacturer for Shops in Anantapur District"
 metaTitle: "Carry Bag Manufacturers Near Anantapur"
 description: "Printed non woven carry bags for shops in Anantapur, Guntakal, Tadipatri, Hindupur and across the district, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
 layout: "area"
+weight: 2
+areaName: "Anantapur"
 url: "/carry-bags-anantapur/"
 # Towns with customers who ordered in the last year (Grist Orders, Oct 2026).
 # Grist still files them under the old Anantapur district; split here into
