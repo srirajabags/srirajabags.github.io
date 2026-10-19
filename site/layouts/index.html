@@ -262,6 +262,59 @@
 {{ end }}
 {{ end }}
 
+{{/* ---------------- Instagram reels ----------------
+     A cover image per reel, served from our own site. Tapping it swaps in
+     Instagram's embed of that reel, so Instagram's code and video load only
+     for visitors who want to watch, not for everyone opening the homepage.
+     Reels past their "until" date are left out at build time, and a reel
+     without a cover image in assets/images/reels/ is skipped. */}}
+{{ with .Params.reels }}
+{{ $r := . }}
+{{ $live := slice }}
+{{ range .items }}
+  {{ $item := . }}
+  {{ if or (not .until) ((time (printf "%sT23:59:59+05:30" .until)).After now) }}
+    {{ with resources.Get (printf "images/reels/%s.jpg" .id) }}
+      {{ $live = $live | append (dict "id" $item.id "title" $item.title "img" (.Resize "360x webp q80")) }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ with $live }}
+<section class="section" id="reels">
+  <div class="container">
+    <h2 class="section-title">{{ $r.heading }}</h2>
+    <div class="reels">
+      {{ range . }}
+      <figure class="reel">
+        <button type="button" class="reel-play" data-reel="{{ .id }}" data-title="{{ .title }}" aria-label="Play video: {{ .title }}">
+          <img src="{{ .img.RelPermalink }}" width="{{ .img.Width }}" height="{{ .img.Height }}" alt="" loading="lazy" decoding="async">
+        </button>
+        <figcaption>{{ .title }}</figcaption>
+      </figure>
+      {{ end }}
+    </div>
+    {{ with $r.profile }}<p class="reels-more"><a href="{{ . }}" target="_blank" rel="noopener">More on Instagram @srirajabags</a></p>{{ end }}
+  </div>
+</section>
+<script>
+(function () {
+  document.querySelectorAll(".reel-play").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var f = document.createElement("iframe");
+      f.className = "reel-frame";
+      f.src = "https://www.instagram.com/reel/" + b.dataset.reel + "/embed/";
+      f.title = b.dataset.title;
+      f.setAttribute("allow", "autoplay; encrypted-media; picture-in-picture; fullscreen");
+      f.setAttribute("allowfullscreen", "");
+      b.replaceWith(f);
+      if (typeof gtag === "function") gtag("event", "reel_play", { reel_id: b.dataset.reel });
+    });
+  });
+})();
+</script>
+{{ end }}
+{{ end }}
+
 {{/* ---------------- contact ---------------- */}}
 {{ with .Params.contact }}
 <section class="section section-alt" id="contact">

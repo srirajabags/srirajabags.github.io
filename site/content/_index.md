@@ -49,6 +49,18 @@ gallery:
   limit: 24
   cta: "Browse the full catalog"
 
+reels:
+  heading: "Watch on Instagram"
+  profile: "https://www.instagram.com/srirajabags/"
+  # Reels shown on the homepage. Each needs its cover image saved as
+  # assets/images/reels/<id>.jpg. The reel's own player loads only when a
+  # visitor taps the cover, so the page stays fast. "until" (optional) drops a
+  # reel from the site after that date, at the next deploy.
+  items:
+    - id: "DeY554WzdGk"
+      title: "Misprint clearance sale: up to 25% off"
+      until: "2026-10-31"
+
 contact:
   heading: "Contact us"
 ---
