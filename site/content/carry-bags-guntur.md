@@ -11,6 +11,8 @@ areaName: "Guntur & Palnadu"
 photos:
   - file: "areas/kusumaharanath-showroom-narasaraopet.jpg"
     caption: "BOPP laminated bag for a clothing showroom in Narasaraopet"
+  - file: "areas/new-mataji-garments-narasaraopet.jpg"
+    caption: "Stitched bag for a garments store in Narasaraopet"
   - file: "catalog/3b12da282e12bd61d0ee0e56c88a2fbd4a7bd196.jpg"
     caption: "Full colour digital D-cut bag for a kids' wear shop in Guntur"
     product: "digital-dcut"
