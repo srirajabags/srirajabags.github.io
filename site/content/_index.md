@@ -50,16 +50,11 @@ gallery:
   cta: "Browse the full catalog"
 
 reels:
-  heading: "Watch on Instagram"
+  heading: "Latest offers & updates"
   profile: "https://www.instagram.com/srirajabags/"
-  # Reels shown on the homepage. Each needs its cover image saved as
-  # assets/images/reels/<id>.jpg. The reel's own player loads only when a
-  # visitor taps the cover, so the page stays fast. "until" (optional) drops a
-  # reel from the site after that date, at the next deploy.
-  items:
-    - id: "DeY554WzdGk"
-      title: "Misprint clearance sale: up to 25% off"
-      until: "2026-10-31"
+  # The reels themselves come live from the Grist table Website_Reels (Link,
+  # Title, Show, Until, Cover), through the website-proxy function on Railway
+  # (params.reelsAPI). Changes show within about 5 minutes, no deploy needed.
 
 contact:
   heading: "Contact us"

@@ -49,6 +49,9 @@ disableKinds = ["taxonomy", "term"]
   # can search WhatsApp for it and count website enquiries exactly (goal sheet,
   # workstream A). Not added to review-page messages or to blog share links.
   waMarker = "— via srirajabags.in"
+  # Live Grist content for the static site (reels for now): see
+  # railway-functions/website-proxy. Read in the browser, cached 5 minutes.
+  reelsAPI = "https://website-proxy-production.up.railway.app"
   # The states the trust line on product pages names.
   servedStates = "Andhra Pradesh, Telangana and Karnataka"
 
