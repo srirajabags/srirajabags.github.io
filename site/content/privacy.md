@@ -2,7 +2,7 @@
 title: "Privacy Policy"
 description: "What www.srirajabags.in collects when you visit, how Sri Raja Bags uses it, and how to contact us about your data."
 layout: "legal"
-updated: "18 October 2026"
+updated: "20 October 2026"
 ---
 
 This policy covers our website, **www.srirajabags.in**. It explains what the site collects when you visit, what we receive when you contact us, and how to reach us about it.
@@ -14,6 +14,8 @@ Sri Raja Bags, 9/74-1, KVS Colony, Kothapeta, Dhone, Nandyal district, Andhra Pr
 ## What the website collects
 
 **Visit statistics (Google Analytics).** We use Google Analytics to count visits and see which pages and buttons are used: the pages you view, the website or link that brought you here, your type of device and browser, your approximate location (city level), and taps on our WhatsApp buttons. Google Analytics uses cookies to do this. We use these figures only to improve the website; we do not use them to identify you and we do not show advertising. Google's own use of this data is explained in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites).
+
+**How visitors use our pages (Microsoft Clarity).** We use Microsoft Clarity to see how visitors use our pages: heatmaps of where people tap and scroll, and recordings of visits with anything typed hidden. It records your type of device and browser, your approximate location (country), and what you tap and scroll on our pages. Clarity uses cookies to do this. We use it only to make the pages easier to use; we do not use it to identify you. Microsoft's use of this data is explained in the [Microsoft Privacy Statement](https://www.microsoft.com/privacy/privacystatement).
 
 **Your enquiry list.** The list you build in our catalog is saved only in your own browser, so it is still there when you come back. It is not sent to us. Removing the items, or clearing this site's data in your browser, deletes it.
 
@@ -35,7 +37,7 @@ We use Google Search Console and our Google Business Profile to see how our webs
 
 ## Your choices
 
-- You can block or delete cookies in your browser settings, or install Google's [Analytics opt-out add-on](https://tools.google.com/dlpage/gaoptout).
+- You can block or delete cookies in your browser settings, or install Google's [Analytics opt-out add-on](https://tools.google.com/dlpage/gaoptout). Blocking cookies for clarity.ms stops Microsoft Clarity.
 - You can ask us what information we hold from your messages, or ask us to correct or delete it, by writing to dhoneaswinibags@gmail.com or messaging +91 91770 56061. Records we must keep for billing and tax are kept for as long as the law requires.
 
 ## Changes

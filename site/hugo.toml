@@ -72,6 +72,8 @@ disableKinds = ["taxonomy", "term"]
   gstin = "37BYPPR4050M1ZP"
 
   gtag = "G-PEF5RMYG3G"
+  # Microsoft Clarity (heatmaps and session recordings), project "Sri Raja Bags website".
+  clarity = "z0bhe8yjxy"
   instagram = "https://www.instagram.com/srirajabags"
   facebook = "https://www.facebook.com/srirajabags"
   # Verified Google Business Profile, added to schema sameAs to tie this site's
