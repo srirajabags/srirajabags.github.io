@@ -9,6 +9,8 @@ weight: 7
 url: "/carry-bags-mahabubnagar/"
 areaName: "Mahabubnagar"
 photos:
+  - file: "areas/sai-rithwika-fireworks-shadnagar.jpg"
+    caption: "BOPP laminated bag for a fireworks shop in Shadnagar"
   - file: "catalog/4bd2ae0512b373996272e9696bf3c5c352b4dcc6.jpg"
     caption: "Two colour stitched bag for a suiting house in Mahabubnagar"
     product: "stitching-double-color"

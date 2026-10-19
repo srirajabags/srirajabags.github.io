@@ -9,6 +9,8 @@ weight: 6
 url: "/carry-bags-krishna-godavari/"
 areaName: "Krishna & Godavari"
 photos:
+  - file: "areas/damodara-cloth-stores-jangareddygudem.jpg"
+    caption: "Printed D-cut cover for a cloth store in Jangareddygudem"
   - file: "catalog/060df7cb86a4e97af9d326255bc436e97b4f589c.jpg"
     caption: "Two colour D-cut bag for a family shopping mall in Jangareddygudem"
     product: "dcut-double-color"
