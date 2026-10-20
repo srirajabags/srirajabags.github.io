@@ -5,11 +5,11 @@
      (dict "page" . "variant" "top"|"dock" "place" "area"|"areas"|"blog"
            "text" "<message typed in WhatsApp>" "lede" "<optional line>")
 
-     "top": under the title, in the first screen — the quote button and a
+     "top": after the opening paragraph, in the first screen — the quote button and a
      call button, both full-size tap targets.
      "dock": phones only; the same quote button pinned to the bottom of the
-     screen once the top block has scrolled away, as on the home and product
-     pages.
+     screen whenever the top block is out of view — before it scrolls in and
+     after it scrolls away — so a quote button is always on screen.
 
      data-wa-place names the button for the whatsapp_enquiry event
      (partials/analytics.html), e.g. "area_top", "blog_dock". */}}
@@ -32,10 +32,8 @@
   var dock = document.querySelector(".wa-dock"), top = document.querySelector(".wa-top");
   if (!dock) return;
   if (!top || !("IntersectionObserver" in window)) { dock.hidden = false; return; }
-  // Shown once the top buttons have scrolled up out of view.
-  new IntersectionObserver(function (e) {
-    dock.hidden = e[0].isIntersecting || e[0].boundingClientRect.top > 0;
-  }).observe(top);
+  // Shown whenever the top buttons are not on screen.
+  new IntersectionObserver(function (e) { dock.hidden = e[0].isIntersecting; }).observe(top);
 })();
 </script>
 {{- end }}

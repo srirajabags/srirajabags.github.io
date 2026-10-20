@@ -13,9 +13,13 @@
 <div class="page">
   <article class="container narrow post area">
     <h1 class="page-title">{{ .Title }}</h1>
-    {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" "area" "text" $text
-         "lede" (printf "Shops in %s: send your design and quantity, get a rate the same day." $area)) }}
-    {{ .Content }}
+    {{/* The quote buttons follow the opening paragraph, which already says
+         what we make and how to order; on phones the bottom bar covers the
+         first screen until they scroll into view. */}}
+    {{ $parts := split (replaceRE `(?s)^(.*?</p>)` "$1<!--wa-top-->" (string .Content) 1) "<!--wa-top-->" }}
+    {{ index $parts 0 | safeHTML }}
+    {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" "area" "text" $text) }}
+    {{ delimit (after 1 $parts) "" | safeHTML }}
   </article>
 </div>
 {{ partial "wa-quote.html" (dict "page" . "variant" "dock" "place" "area" "text" $text) }}
