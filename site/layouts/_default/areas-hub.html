@@ -19,6 +19,7 @@
   <article class="container areas-hub">
     <h1 class="page-title">{{ $.Title }}</h1>
     <p class="areas-lede"><strong>In the last year, more than {{ lang.FormatNumber 0 (mul (div (int $a.customers) $round) $round) }} shops in {{ $a.towns }} towns across Andhra Pradesh, Telangana and Karnataka ordered carry bags from our factory in Dhone.</strong> Every dot on the map is a town we delivered to. Tap a region for its towns, delivery time and rates.</p>
+    {{ partial "wa-quote.html" (dict "page" $ "variant" "top" "place" "areas" "text" "Hello Sri Raja Bags, I have a shop in __. I need __ bags, size __ inch, quantity __.") }}
 
     <figure class="areas-map">
       <svg viewBox="0 0 {{ $a.map.width }} {{ $a.map.height }}" role="img" aria-labelledby="areas-map-title">
@@ -78,5 +79,6 @@
     <p class="areas-credit">Shop counts are from our orders in the year to {{ time.Format "2 January 2006" $a.asOf }}. Town locations © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors; state boundaries from Natural Earth.</p>
   </article>
 </div>
+{{ partial "wa-quote.html" (dict "page" $ "variant" "dock" "place" "areas" "text" "Hello Sri Raja Bags, I have a shop in __. I need __ bags, size __ inch, quantity __.") }}
 {{ end }}
 {{ end }}

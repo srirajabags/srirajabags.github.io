@@ -1,0 +1,41 @@
+{{/* WhatsApp quote buttons for the pages new visitors land on from search
+     (region pages, the areas map, blog posts). Before these, the first way
+     to message us on those pages was a small text link far down the page.
+
+     (dict "page" . "variant" "top"|"dock" "place" "area"|"areas"|"blog"
+           "text" "<message typed in WhatsApp>" "lede" "<optional line>")
+
+     "top": under the title, in the first screen — the quote button and a
+     call button, both full-size tap targets.
+     "dock": phones only; the same quote button pinned to the bottom of the
+     screen once the top block has scrolled away, as on the home and product
+     pages.
+
+     data-wa-place names the button for the whatsapp_enquiry event
+     (partials/analytics.html), e.g. "area_top", "blog_dock". */}}
+{{- $s := .page.Site -}}
+{{- $href := printf "https://api.whatsapp.com/send/?phone=%s&text=%s&type=phone_number&app_absent=0" $s.Params.phoneRaw (urlquery (printf "%s %s" .text $s.Params.waMarker)) -}}
+{{- if eq .variant "top" }}
+<div class="wa-top" data-wa-place="{{ .place }}_top">
+  {{ with .lede }}<p class="wa-top-lede">{{ . }}</p>{{ end }}
+  <div class="wa-top-btns">
+    <a class="btn btn-wa" href="{{ $href }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Get a quote on WhatsApp</span></a>
+    <a class="btn wa-top-call" href="tel:+{{ $s.Params.phoneRaw }}">Call {{ $s.Params.phone }}</a>
+  </div>
+</div>
+{{- else }}
+<div class="wa-dock" data-wa-place="{{ .place }}_dock" hidden>
+  <a class="btn btn-wa" href="{{ $href }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Get a quote on WhatsApp</span></a>
+</div>
+<script>
+(function () {
+  var dock = document.querySelector(".wa-dock"), top = document.querySelector(".wa-top");
+  if (!dock) return;
+  if (!top || !("IntersectionObserver" in window)) { dock.hidden = false; return; }
+  // Shown once the top buttons have scrolled up out of view.
+  new IntersectionObserver(function (e) {
+    dock.hidden = e[0].isIntersecting || e[0].boundingClientRect.top > 0;
+  }).observe(top);
+})();
+</script>
+{{- end }}

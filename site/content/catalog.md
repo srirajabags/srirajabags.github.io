@@ -1,12 +1,14 @@
 ---
-title: "Non Woven Bags & Plastic Covers"
+title: "Non Woven Carry Bags & Plastic Covers"
+# Search title: the price list people look for when buying in bulk.
+metaTitle: "Carry Bags Wholesale Price List: Non Woven Bags & Plastic Covers"
 # Shown in the breadcrumb and its schema, where the full title is too long to be
 # useful. Falls back to `title` if removed.
 breadcrumb: "Catalog"
 # Keep this under ~155 characters. Google truncates around there, and the
 # same-day-rate promise at the end is the part that earns the click — it has to
 # survive the cut. The full material list lives on the products themselves.
-description: "Non woven D-cut, U-cut, handle and stitched bags, plus HM, LD and bio-degradable covers, made at Dhone. Send your list on WhatsApp for a same-day rate."
+description: "Wholesale rates for printed non woven carry bags (D-cut, U-cut, handle, stitched) and plastic covers, made at Dhone. WhatsApp your list for a same-day rate."
 layout: "catalog"
 
 # Indexable. There is deliberately no `noindex` here: the sitemap template

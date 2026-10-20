@@ -24,22 +24,24 @@
   /* "whatsapp_enquiry": a tap on a button that opens a chat with OUR number —
      the goal-sheet KPI, marked as a key event in GA4. Not fired on /review/
      (customers sending a photo, not orders) nor for blog share links (those
-     go to other people's numbers). "placement" says which button it was. */
+     go to other people's numbers). "placement" says which button it was:
+     the button's own data-wa-place if it has one (partials/wa-quote.html),
+     else the first matching area of the page below. */
   (function () {
     var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ $.Site.Params.phoneRaw }}/;
     var PLACES = [
       [".hero", "home_hero"], [".home-dock", "home_dock"],
       [".ct-cart", "enquiry_list"], [".ct-dialog", "product_dialog"], [".ct-card", "catalog_card"],
       [".ct-cta", "catalog_custom"], [".ct-empty", "catalog_custom"], [".ct-dock", "catalog_dock"],
-      [".pd-dock", "product_dock"], [".pd-cta", "product_page"], [".post", "blog_post"],
+      [".pd-dock", "product_dock"], [".pd-cta", "product_page"], [".area", "area_page"], [".areas-hub", "areas_page"], [".post", "blog_post"],
       [".nav-wa", "navbar"], ["footer", "footer"], ["#contact", "contact"], [".about-cta, .page", "page"]
     ];
     document.addEventListener("click", function (e) {
       var a = e.target.closest && e.target.closest("a[href]");
       // The desktop QR box's own links are the same enquiry, already counted.
       if (!a || !OURS.test(a.href) || a.closest("[data-wa-qr]") || /^\/review\//.test(location.pathname)) return;
-      var place = "other";
-      for (var i = 0; i < PLACES.length; i++) if (a.closest(PLACES[i][0])) { place = PLACES[i][1]; break; }
+      var named = a.closest("[data-wa-place]"), place = named ? named.dataset.waPlace : "other";
+      if (!named) for (var i = 0; i < PLACES.length; i++) if (a.closest(PLACES[i][0])) { place = PLACES[i][1]; break; }
       gtag("event", "whatsapp_enquiry", { placement: place, page_path: location.pathname });
       // Same tap in Clarity, so recordings can be filtered to visits that enquired (or didn't).
       if (typeof clarity === "function") { clarity("event", "whatsapp_enquiry"); clarity("set", "placement", place); }

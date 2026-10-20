@@ -72,7 +72,7 @@
           {{ with .print }}<span>{{ . }}</span>{{ end }}
           {{ range .badges }}<span class="ct-tag-badge">{{ . }}</span>{{ end }}
         </p>
-        <h1 class="pd-title">{{ .name }}</h1>
+        <h1 class="pd-title">{{ $.Params.searchName | default .name }}</h1>
 
         <div class="pd-price">
           {{ if .hasRate }}

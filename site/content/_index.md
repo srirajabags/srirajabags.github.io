@@ -4,7 +4,7 @@ hero:
   # Strip of trust badges, shown on a white band below the headline.
   # Cropped from the original Mobirise hero graphic, which was mostly empty white.
   badges: "images/trust-badges.png"
-  heading: "Non Woven Carry Bags and Plastic Covers Manufacturers"
+  heading: "Non Woven Carry Bags and Plastic Covers: Manufacturers & Wholesale Suppliers"
   text: "A manufacturing and supply unit established in 2011. Sri Raja Bags supplies all types of shopping bags and carry bags across three South Indian states — Andhra Pradesh, Telangana and Karnataka — to more than 10,000 customers."
   # The first thing on the page is the enquiry button (goal sheet, workstream B):
   # until Oct 2026 the hero's only button scrolled to the product rail, and the

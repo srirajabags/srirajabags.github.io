@@ -8,12 +8,17 @@
      order), photos (catalog photo files with captions, bags printed for
      shops in the area). Shortcodes in the text: {{< area-towns >}},
      {{< area-count >}}, {{< area-photos >}}. */}}
+{{ $area := .Params.quoteArea | default .Params.areaName }}
+{{ $text := printf "Hello Sri Raja Bags, I have a shop in __ (%s). I need __ bags, size __ inch, quantity __." $area }}
 <div class="page">
   <article class="container narrow post area">
     <h1 class="page-title">{{ .Title }}</h1>
+    {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" "area" "text" $text
+         "lede" (printf "Shops in %s: send your design and quantity, get a rate the same day." $area)) }}
     {{ .Content }}
   </article>
 </div>
+{{ partial "wa-quote.html" (dict "page" . "variant" "dock" "place" "area" "text" $text) }}
 
 {{/* Search engines: what we do, for which places (the region's towns from
      assets/data/areas.json). */}}

@@ -196,6 +196,30 @@ a { color: var(--navy); }
   body:has(.home-dock) footer { padding-bottom: 5.5rem; }
 }
 
+/* Quote buttons on region pages, the areas map and blog posts
+   (partials/wa-quote.html): a block under the title, and on phones a bar
+   pinned to the bottom once that block has scrolled away. */
+.wa-top { margin: 0 0 1.8rem; padding: 1rem 1.1rem; background: var(--mint-pale); border-radius: 12px; }
+.wa-top-lede { margin: 0 0 0.75rem !important; font-weight: 600; color: var(--ink); }
+.wa-top-btns { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.wa-top .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.55rem; min-height: 3rem; }
+.wa-top .btn svg, .wa-dock .btn svg { width: 1.25rem; height: 1.25rem; flex: none; }
+.wa-top .wa-top-call { background: #fff; color: var(--navy); border: 1.5px solid var(--navy); }
+.wa-top .wa-top-call:hover { background: var(--paper-alt); }
+.wa-dock { display: none; }
+@media (max-width: 700px) {
+  .wa-top-btns { flex-direction: column; }
+  .wa-top .btn { width: 100%; }
+  .wa-dock:not([hidden]) {
+    display: block; position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+    padding: 0.6rem 1.25rem calc(0.6rem + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.97); border-top: 1px solid var(--rule);
+    box-shadow: 0 -4px 16px rgba(17,24,32,0.06);
+  }
+  .wa-dock .btn { display: flex; align-items: center; justify-content: center; gap: 0.5rem; width: 100%; min-height: 3rem; }
+  body:has(.wa-dock) footer { padding-bottom: 5.5rem; }
+}
+
 /* Trust-badge strip (10,000 customers / 10 years / support / sales team).
    Source image is pre-cropped to the badges, so it just scales. */
 .badges {
@@ -630,6 +654,9 @@ html:not(.js) .pd-tables { max-width: none; grid-template-columns: repeat(auto-f
 .share-btn.is-done { border-color: var(--navy); background: var(--mint-pale); }
 .share-btn[hidden] { display: none; }
 .share-top { margin: -0.4rem 0 1.6rem; }
+/* Under the title the WhatsApp share icon is plain like the others, so the
+   only green button near the top is the quote (wa-quote.html). */
+.share-top .share-btn.share-wa { background: #fff; border-color: var(--rule); color: var(--navy); }
 .share-top .share-btn { padding: 0; width: 2.5rem; }
 .share-top .share-btn.share-native, .share-top .share-btn.share-copy { width: auto; padding: 0 0.8rem; }
 .share-end { margin: 2.6rem 0 1.4rem; padding: 1.2rem 1.25rem; background: var(--paper-alt); border-radius: 12px; }

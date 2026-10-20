@@ -44,10 +44,22 @@
   {{ with $p.minOrder }}{{ $bits = $bits | append (printf "min %v %s" (lang.FormatNumberCustom 0 .) $qtyUnit) }}{{ end }}
   {{ $desc := printf "%s from Sri Raja Bags, Dhone: %s. %s" $p.name (delimit $bits ", ") (cond (gt $hi 0.0) "Send your design on WhatsApp for a quote." "Rate on request — send your design on WhatsApp.") }}
 
-  {{/* Search title: the product plus what people search alongside it. */}}
-  {{ $metaTitle := cond (gt $hi 0.0) (printf "%s — Price, Sizes & Minimum Order" $p.name) (printf "%s — Sizes & Quote" $p.name) }}
+  {{/* The name in the words buyers search with, for the search title and the
+       page heading: the catalog names ("D-Cut Single Color Bags") are the
+       office's, but people search "non woven … carry bags" and "plastic
+       covers". Cards, breadcrumbs and WhatsApp messages keep the catalog name. */}}
+  {{ $searchName := $p.name }}
+  {{ if eq $p.material "Non Woven Bag" }}
+    {{ if not (findRE `(?i)non woven` $searchName) }}{{ $searchName = printf "Non Woven %s" $searchName }}{{ end }}
+    {{ $searchName = replaceRE `(?i)\b(bags?)$` "Carry $1" $searchName }}
+  {{ else if eq $p.material "Plastic Cover" }}
+    {{ if not (findRE `(?i)plastic` $searchName) }}{{ $searchName = replaceRE `(?i)\b(covers?)$` "Plastic $1" $searchName }}{{ end }}
+  {{ end }}
 
-  {{ $params := dict "productId" $p.id "metaTitle" $metaTitle "description" $desc }}
+  {{/* Search title: the product plus what people search alongside it. */}}
+  {{ $metaTitle := cond (gt $hi 0.0) (printf "%s — Wholesale Price & Sizes" $searchName) (printf "%s — Sizes & Quote" $searchName) }}
+
+  {{ $params := dict "productId" $p.id "metaTitle" $metaTitle "searchName" $searchName "description" $desc }}
   {{ with $p.photos }}{{ $params = merge $params (dict "ogImage" (printf "images/%s" (index . 0).file)) }}{{ end }}
   {{/* Quality gate: no price and no photo is a page with nothing a buyer or a
        search engine can use yet. It is still built and linked for visitors,

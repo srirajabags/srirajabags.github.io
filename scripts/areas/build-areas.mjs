@@ -39,7 +39,7 @@ const REGIONS = [
     { key: "north-telangana", name: "North Telangana", page: "/carry-bags-north-telangana/", days: "3–4 days", state: TG, districts: ["karimnagar", "warangal", "adilabad", "nizamabad", "kamareddy", "medak"] },
     { key: "karnataka", name: "Karnataka", page: "/carry-bags-karnataka/", days: "3–4 days", state: KA, anyDistrict: true },
     // Smaller areas: on the map and the list, no page of their own.
-    { key: "hyderabad", name: "Hyderabad", page: null, days: "1–2 days", state: TG, districts: ["hyderabad"] },
+    { key: "hyderabad", name: "Hyderabad", page: "/carry-bags-hyderabad/", days: "1–2 days", state: TG, districts: ["hyderabad"] },
     { key: "chittoor", name: "Chittoor", page: null, days: "3–4 days", state: AP, districts: ["chittoor"] },
     { key: "nellore", name: "Nellore", page: null, days: "3–4 days", state: AP, districts: ["nellore"] },
     { key: "visakhapatnam", name: "Visakhapatnam", page: null, days: null, state: AP, districts: ["visakhapatnam"] },
