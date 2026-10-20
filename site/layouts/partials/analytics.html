@@ -9,12 +9,20 @@
      build opened from localhost. */}}
 {{ if hugo.IsProduction }}{{ with $.Site.Params.gtag }}
 <script>
+  /* The tag itself loads once the page has finished loading. Fetched during
+     the load, its script ran while the phone was still drawing the first
+     screen and held back the hero text by about 2 seconds on slow 4G
+     (Lighthouse, Oct 2026). Page views and clicks before then wait in
+     dataLayer and are sent when it arrives. */
   (function () {
     if (!/(^|\.)srirajabags\.in$/.test(location.hostname)) return;
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id={{ . }}";
-    document.head.appendChild(s);
+    function load() {
+      var s = document.createElement("script");
+      s.async = true;
+      s.src = "https://www.googletagmanager.com/gtag/js?id={{ . }}";
+      document.head.appendChild(s);
+    }
+    if (document.readyState === "complete") load(); else window.addEventListener("load", load);
   })();
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -56,11 +64,17 @@
      masking hides anything typed; the site has no forms. */}}
 {{ if hugo.IsProduction }}{{ with $.Site.Params.clarity }}
 <script>
-  (function (c, l, a, r, i, t, y) {
+  /* Loaded a moment after the page, like Analytics above; calls made before
+     then queue up in clarity.q. */
+  (function (c, l, a, r, i) {
     if (!/(^|\.)srirajabags\.in$/.test(location.hostname)) return;
     c[a] = c[a] || function () { (c[a].q = c[a].q || []).push(arguments); };
-    t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
-    y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    function load() {
+      var t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
+      var y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
+    }
+    function later() { setTimeout(load, 1500); }
+    if (l.readyState === "complete") later(); else c.addEventListener("load", later);
   })(window, document, "clarity", "script", "{{ . }}");
 </script>
 {{ end }}{{ end }}

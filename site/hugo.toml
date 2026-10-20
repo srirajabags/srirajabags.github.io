@@ -84,6 +84,12 @@ disableKinds = ["taxonomy", "term"]
   # tracking. 6670143212572038284 is CID 0x5c911be97256d48c, the same place ID
   # as the map embed below.
   googleProfile = "https://www.google.com/maps?cid=6670143212572038284"
+  # The profile's rating as Google shows it, for the trust line beside the
+  # quote buttons (partials/google-rating.html). Copied by hand, so update it
+  # when the profile changes (checked 20 Oct 2026). Not put in schema: Google
+  # ignores a business's own markup of its reviews.
+  googleRating = "4.7"
+  googleReviews = 95
 
   # Direct "write a review" link from the profile. Its token decodes to the same
   # CID, so all three references point at one listing.

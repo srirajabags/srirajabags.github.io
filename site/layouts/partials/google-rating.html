@@ -1,0 +1,8 @@
+{{/* "★ 4.7 on Google · 95 reviews", linked to the Business Profile, beside
+     the quote buttons: buyers who have never heard of us check the rating
+     before they message. From params.googleRating / googleReviews (copied by
+     hand from the profile). Pass a class for the setting: "on-dark" on the
+     navy hero. */}}
+{{- with site.Params.googleRating -}}
+<a class="g-rating {{ $.class }}" href="{{ site.Params.googleProfile }}" target="_blank" rel="noopener"><span class="g-star" aria-hidden="true">★</span> <strong>{{ . }}</strong> on Google · {{ site.Params.googleReviews }} reviews</a>
+{{- end -}}

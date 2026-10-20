@@ -122,6 +122,7 @@
 
         <ul class="pd-trust">
           <li><strong>Manufacturer since {{ $site.Params.foundingYear }}</strong> — made at our own unit in Dhone</li>
+          {{ with $site.Params.googleRating }}<li><strong>Rated {{ . }} on Google</strong> by {{ $site.Params.googleReviews }} customers — <a href="{{ $site.Params.googleProfile }}" target="_blank" rel="noopener">read the reviews</a></li>{{ end }}
           <li><strong>Same-day quote</strong> on WhatsApp, from your artwork or a photo of your old bag</li>
           <li><strong>Supplying</strong> {{ $site.Params.servedStates }}</li>
         </ul>
@@ -219,6 +220,18 @@
           <p>We manufacture at Dhone, Andhra Pradesh and supply shops across {{ $site.Params.servedStates }}. Rates are ex-factory; freight is quoted for your town.</p></details>
       </div>
     </section>
+
+    {{/* ---- buying guide ----
+         A few paragraphs written for this product alone (assets/product-
+         guides/<id>.md, in the website repo, not Grist): when to choose it
+         over the bags next to it. Without them, sibling pages such as the
+         single and two colour versions were nearly word for word the same,
+         and Google left some of them out of its index. */}}
+    {{ with resources.Get (printf "product-guides/%s.md" .id) }}
+    <section class="pd-section pd-guide">
+      {{ $.Page.RenderString .Content }}
+    </section>
+    {{ end }}
 
     {{/* ---- similar bags ----
          The same shape first, then the same material; products with a photo

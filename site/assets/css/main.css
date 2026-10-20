@@ -182,6 +182,13 @@ a { color: var(--navy); }
 .hero .btn-ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.7); }
 .hero .btn-ghost:hover { background: rgba(255,255,255,0.1); }
 .hero-promise { margin: 1.1rem auto 0 !important; font-size: 0.88rem !important; color: rgba(255,255,255,0.75) !important; }
+/* Google rating beside the quote buttons (partials/google-rating.html). */
+.g-rating { display: inline-flex; align-items: center; gap: 0.3rem; min-height: 2.75rem; font-size: 0.9rem; color: var(--ink); text-decoration: none; }
+.g-rating:hover { text-decoration: underline; }
+.g-star { color: #e8a400; font-size: 1.05rem; }
+.wa-top .g-rating { margin-top: 0.35rem; }
+.hero-rating { margin: 0.4rem auto 0 !important; }
+.hero .g-rating.on-dark { color: #fff; font-size: 0.92rem; }
 .home-dock { display: none; }
 @media (max-width: 700px) {
   .hero-ctas { flex-direction: column; align-items: stretch; max-width: 22rem; margin: 0 auto; }
@@ -550,6 +557,10 @@ a { color: var(--navy); }
 
 .pd-section { margin-top: 3.25rem; }
 .pd-section h2 { font-size: 1.4rem; color: var(--navy); margin: 0 0 0.6rem; }
+/* Per-product buying guide (assets/product-guides/<id>.md): plain reading text. */
+.pd-guide p, .pd-guide ul { max-width: 44rem; line-height: 1.7; }
+.pd-guide ul { padding-left: 1.3rem; }
+.pd-guide li { margin-bottom: 0.4rem; }
 .pd-lede { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.6; max-width: 44rem; margin: 0 0 1.1rem; }
 .pd-switch { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; margin: 0 0 1rem; }
 .pd-switch-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); margin-right: 0.35rem; }

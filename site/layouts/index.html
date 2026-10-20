@@ -13,6 +13,7 @@
       <a class="btn btn-ghost" href="{{ "/catalog/" | relURL }}">{{ .cta }}</a>
     </div>
     {{ with .promise }}<p class="hero-promise">{{ . }}</p>{{ end }}
+    <p class="hero-rating">{{ partial "google-rating.html" (dict "class" "on-dark") }}</p>
   </div>
 </section>
 {{/* Phone: once the hero has scrolled away, the quote button stays reachable

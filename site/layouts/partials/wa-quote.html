@@ -22,6 +22,7 @@
     <a class="btn btn-wa" href="{{ $href }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Get a quote on WhatsApp</span></a>
     <a class="btn wa-top-call" href="tel:+{{ $s.Params.phoneRaw }}">Call {{ $s.Params.phone }}</a>
   </div>
+  {{ partial "google-rating.html" (dict "class" "") }}
 </div>
 {{- else }}
 <div class="wa-dock" data-wa-place="{{ .place }}_dock" hidden>
