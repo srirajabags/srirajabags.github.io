@@ -3955,10 +3955,10 @@
     "Budget Friendly"
    ],
    "unit": "kg",
-   "minOrder": 30,
+   "minOrder": 10,
    "thickness": "micron",
    "description": "HM plastic carry cover with a punched D-cut handle, printed to your design.",
-   "priceNotes": "9x11 is printed on one side.",
+   "priceNotes": "9x11 is printed on one side. Minimum 10 kg for a single colour print, 30 kg for two colours.",
    "variants": [
     {
      "size": "9x11",
