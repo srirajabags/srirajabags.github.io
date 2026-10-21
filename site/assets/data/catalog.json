@@ -4051,6 +4051,13 @@
    ],
    "photos": [
     {
+     "file": "catalog/d7f801d3dc60dab97a9ec13e3999a69c71f7c2a8.jpg",
+     "shopTypes": [
+      "Mens Wear"
+     ],
+     "alt": ""
+    },
+    {
      "file": "catalog/f5fd9d7eedac70f00588cd3b3be933e14059e3bd.jpg",
      "shopTypes": [
       "Family Wear"
@@ -4068,13 +4075,6 @@
      "file": "catalog/e96e9bc2929c4abf62e008198976f3eabf203951.jpg",
      "shopTypes": [
       "Foot Wear"
-     ],
-     "alt": ""
-    },
-    {
-     "file": "catalog/d7f801d3dc60dab97a9ec13e3999a69c71f7c2a8.jpg",
-     "shopTypes": [
-      "Mens Wear"
      ],
      "alt": ""
     },
