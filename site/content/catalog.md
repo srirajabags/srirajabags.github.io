@@ -1,5 +1,17 @@
 ---
 title: "Non Woven Carry Bags & Plastic Covers"
+# Old product pages for covers below 120 micron and the uncertified
+# bio-degradable cover, taken off the site on 21 Oct 2026 (not legal to sell
+# as carry bags). Their addresses send visitors here instead of to a 404.
+aliases:
+  - /products/hm-plastic-dcut/
+  - /products/ld-plastic-dcut/
+  - /products/plastic-ucut/
+  - /products/bio-ucut/
+  - /products/misprint-plastic/
+  - /products/hm-plastic-dcut-plain/
+  - /products/ld-plastic-dcut-plain/
+  - /products/plastic-ucut-plain/
 # Search title: the price list people look for when buying in bulk.
 metaTitle: "Carry Bags Wholesale Price List: Non Woven Bags & Plastic Covers"
 # Shown in the breadcrumb and its schema, where the full title is too long to be
@@ -58,6 +70,6 @@ stats:
 aboutTitle: "About non woven bags and plastic covers"
 about:
   - "Non woven bags are made from polypropylene fabric that is bonded rather than woven — light, tear resistant, washable and reusable, and a legal replacement for single use plastic carry bags. Rate depends on the fabric GSM, the bag size and the number of print colours."
-  - "Alongside them we make HM and LD plastic covers and bio-degradable covers, in U-cut and D-cut shapes, for the counters where a cover still suits the goods better than a bag."
+  - "Alongside them we make plastic carry covers of 120 micron and above, the legal minimum for plastic carry bags since 2022, for the counters where a cover still suits the goods better than a bag. Ask on WhatsApp for sizes and rates."
   - "All of it is supplied to clothing showrooms, sweet shops, jewellery stores, kirana and general stores, seed companies and pharmacies across the Rayalaseema and Telangana belt."
 ---
