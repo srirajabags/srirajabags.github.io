@@ -42,7 +42,7 @@ disableKinds = ["taxonomy", "term"]
   # Source image for og:image / twitter:image social preview cards.
   # The production line: native 16:9 so it crops to 1200x630 with no upscaling,
   # and shows people actually making bags — the strongest "real manufacturer" signal.
-  ogImage = "images/factory-production-line.jpg"
+  ogImage = "images/factory/bag-stacks.jpg"
   foundingYear = "2011"
   # Shown on product pages under "How ordering works". From the Oct 2026
   # pricelist note: "Delivery 15 to 20 days, also depending on customer".

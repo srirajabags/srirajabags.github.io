@@ -50,7 +50,7 @@
        Absolute URLs are required; scrapers do not resolve relative paths. */}}
   {{/* A page's own ogImage wins: a product page shares its product photo, so
        a link sent on WhatsApp shows the bag rather than the factory. */}}
-  {{ $ogSrc := resources.Get (.Params.ogImage | default .Site.Params.ogImage | default "images/factory-production-line.jpg") }}
+  {{ $ogSrc := resources.Get (.Params.ogImage | default .Site.Params.ogImage | default "images/factory/bag-stacks.jpg") }}
   {{/* A blog post's lead image lives in its own folder. */}}
   {{ with .Params.image }}{{ with $.Resources.Get . }}{{ $ogSrc = . }}{{ end }}{{ end }}
   {{ with $ogSrc }}

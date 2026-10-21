@@ -32,7 +32,10 @@ products:
 about:
   heading: "About Our Factory"
   text: "Sri Raja Bags manufactures every type of non-woven fabric carry bag and plastic cover at Dhone, in Nandyal district of Andhra Pradesh. We employ around 300 people directly, and provide household work to a further 600 women in the surrounding villages."
-  image: "images/capture-980x702.jpg"
+  # A still from our production video (Oct 2026): finished bags stacked by colour
+  # on the cutting floor.
+  image: "images/factory/bag-stacks.jpg"
+  alt: "Finished non woven bags stacked by colour on the factory floor while workers cut and fold more"
   # Link text has to say where it goes when read on its own — a screen reader
   # lists links out of context, and "Learn more" was the one link Lighthouse
   # flagged as non-descriptive.

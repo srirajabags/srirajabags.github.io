@@ -247,7 +247,7 @@
       <div class="pd-rel-grid">
         {{ range . }}
         <a class="pd-rel" href="{{ printf "/products/%s/" .id | relURL }}">
-          {{ if .img }}<img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 240px" width="320" height="320" alt="" loading="lazy" decoding="async">{{ else }}<span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>{{ end }}
+          {{ if .img }}<img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 240px" width="320" height="320" alt="" loading="lazy" decoding="async">{{ else }}<span class="ct-noimg" aria-hidden="true">Photo coming soon</span>{{ end }}
           <span class="pd-rel-name">{{ .name }}</span>
           <span class="pd-rel-rate">{{ if .hasRate }}{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}/{{ .unit }}{{ else }}Rate on request{{ end }}</span>
         </a>

@@ -6,7 +6,7 @@
 {{ $a := .Site.Params.address }}
 {{/* Schema carries the address the Google Business Profile lists — params.address.primary. */}}
 {{ $p := index $a $a.primary }}
-{{ $ogSrc := resources.Get (default "images/factory-production-line.jpg" .Site.Params.ogImage) }}
+{{ $ogSrc := resources.Get (default "images/factory/bag-stacks.jpg" .Site.Params.ogImage) }}
 {{ $addr := dict "@type" "PostalAddress" "addressLocality" $p.locality "addressRegion" $a.region "addressCountry" $a.country }}
 {{ with $p.streetAddress }}{{ $addr = merge $addr (dict "streetAddress" .) }}{{ end }}
 {{ with $p.postalCode }}{{ $addr = merge $addr (dict "postalCode" .) }}{{ end }}

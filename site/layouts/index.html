@@ -89,7 +89,7 @@
                  sizes="(max-width: 700px) 60vw, 240px"
                  width="320" height="320" alt="{{ .name }}" loading="lazy" decoding="async">
             {{ else }}
-            <span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>
+            <span class="ct-noimg" aria-hidden="true">Photo coming soon</span>
             {{ end }}
             {{/* One badge only, and the feature badge wins where a row carries
                  several — otherwise a card sitting at the front because it is a
@@ -180,7 +180,7 @@
            srcset="{{ $a0.RelPermalink }} 400w, {{ $a1.RelPermalink }} 700w"
            sizes="(max-width: 800px) 100vw, 400px"
            loading="lazy" decoding="async"
-           alt="The Sri Raja Bags manufacturing unit at Dorapalli, Dhone">
+           alt="{{ .alt | default "The Sri Raja Bags manufacturing unit at Dorapalli, Dhone" }}">
     </div>
   </div>
 </section>
