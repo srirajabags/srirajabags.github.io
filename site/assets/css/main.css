@@ -324,6 +324,13 @@ a { color: var(--navy); }
 .about-img img { border-radius: 8px; }
 .about-more { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.6rem; }
 .about-more img { display: block; width: 100%; height: auto; }
+/* Home: machines on the factory floor. */
+.machines-lede { max-width: 44rem; margin: -0.6rem auto 1.6rem; text-align: center; color: var(--ink-soft); }
+.machines-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.machines-grid figure { margin: 0; }
+.machines-grid img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.machines-grid figcaption { margin-top: 0.45rem; font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+@media (max-width: 700px) { .machines-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; } .machines-grid figcaption { font-size: 0.8rem; } }
 
 @media (max-width: 800px) {
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }

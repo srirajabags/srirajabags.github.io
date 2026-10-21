@@ -195,6 +195,26 @@
 </section>
 {{ end }}
 
+{{/* ---------------- machines ----------------
+     The plant behind the bags: stills from our production video. Buyers
+     comparing suppliers want to see a factory, not a trader. */}}
+{{ with .Params.machines }}
+<section class="section" id="machines">
+  <div class="container">
+    <h2 class="section-title">{{ .heading }}</h2>
+    {{ with .text }}<p class="machines-lede">{{ . }}</p>{{ end }}
+    <div class="machines-grid">
+      {{ range .items }}{{ $it := . }}{{ with resources.Get .src }}{{ $t := .Fill "640x420 Smart webp q78" }}{{ $s := .Fill "400x262 Smart webp q76" }}
+      <figure>
+        <img src="{{ $t.RelPermalink }}" srcset="{{ $s.RelPermalink }} 400w, {{ $t.RelPermalink }} 640w" sizes="(max-width: 700px) 50vw, 340px" width="{{ $t.Width }}" height="{{ $t.Height }}" loading="lazy" decoding="async" alt="{{ $it.alt }}">
+        <figcaption>{{ $it.caption }}</figcaption>
+      </figure>
+      {{ end }}{{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
 {{/* ---------------- gallery ----------------
      Two rows of catalog photos drifting slowly in opposite directions. Photos
      keep their own shape (a portrait bag, a landscape group shot) at one

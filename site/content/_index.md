@@ -46,6 +46,31 @@ about:
   # flagged as non-descriptive.
   cta: "About our factory"
 
+# The machines on the factory floor, as stills from our production video
+# (Oct 2026). Captions say what each machine does; no brand or model names.
+machines:
+  heading: "Machines Inside Our Factory"
+  text: "Every bag is cut, sealed and printed on our own machines at Dhone, so we control the quality and the delivery date of your order."
+  items:
+    - src: "images/factory/bag-making-line.jpg"
+      caption: "Automatic bag-making machine"
+      alt: "Automatic non woven bag making machine with an operator stacking finished bags"
+    - src: "images/factory/machine-automatic-2.jpg"
+      caption: "Second automatic bag-making line"
+      alt: "Large automatic bag making machine with fabric rollers and a printed web running through it"
+    - src: "images/factory/machine-cutting-sealing.jpg"
+      caption: "Fabric cutting and sealing line"
+      alt: "Workers guiding orange non woven fabric through a cutting and sealing machine"
+    - src: "images/factory/machine-feed-rollers.jpg"
+      caption: "Fabric feed rollers on a bag machine"
+      alt: "Blue non woven fabric running over the feed rollers of a bag making machine"
+    - src: "images/factory/offset-press-room.jpg"
+      caption: "Offset printing press"
+      alt: "Operator at an offset printing press in the print room, with stacks of printed sheets"
+    - src: "images/factory/offset-press-rollers.jpg"
+      caption: "Inside the offset press: the ink rollers"
+      alt: "Close view of the blue ink rollers inside an offset printing press"
+
 gallery:
   heading: "Bags Gallery"
   # The photos are the catalog's own, synced from Grist (Catalog_Photos) — this
