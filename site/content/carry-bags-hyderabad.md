@@ -54,7 +54,7 @@ Bags travel to Hyderabad by transport. Tell us your area when you ask for a quot
 3. **Approve the proof and pay the 50% advance.** Printing takes about 15–20 days.
 4. **Delivery by transport, 1–2 days** after the bags are ready. Freight is quoted for your area; the balance is paid at billing.
 
-You never need to visit the factory: everything from the design to the payment happens on WhatsApp and the phone.
+Everything from the design to the payment happens on WhatsApp and the phone.
 
 > **Get a quote today.** Send your area, the bag you need and roughly how many on [WhatsApp](https://api.whatsapp.com/send/?phone=919177056061&text=Hello%20Sri%20Raja%20Bags%2C%20I%20have%20a%20shop%20in%20__%20%28Hyderabad%29.%20I%20need%20__%20bags%2C%20size%20__%20inch%2C%20quantity%20__.%20%E2%80%94%20via%20srirajabags.in&type=phone_number&app_absent=0), or call [+91 91770 56061](tel:+919177056061).
 
