@@ -499,6 +499,11 @@ a { color: var(--navy); }
 }
 
 .map iframe { width: 100%; height: 20rem; border: 0; border-radius: 8px; }
+/* About: "Visit our factory" map. */
+.factory-map { margin-top: 3rem; }
+.factory-map .map { margin: 1rem 0; }
+.btn-ghost-dark { background: #fff; color: var(--navy); border: 1.5px solid var(--navy); }
+.btn-ghost-dark:hover { background: var(--paper-alt); }
 
 @media (max-width: 800px) {
   .contact-grid { grid-template-columns: 1fr; gap: 2rem; }

@@ -19,7 +19,7 @@ Sri Raja Bags, 9/74-1, KVS Colony, Kothapeta, Dhone, Nandyal district, Andhra Pr
 
 **Your enquiry list.** The list you build in our catalog is saved only in your own browser, so it is still there when you come back. It is not sent to us. Removing the items, or clearing this site's data in your browser, deletes it.
 
-**The map.** Our homepage shows a Google Maps map of our office. It is loaded from Google, which may set its own cookies.
+**The maps.** Our homepage shows a Google Maps map of our office, and our About page a map of our factory. They are loaded from Google, which may set its own cookies.
 
 **Share buttons.** The share buttons on our blog are plain links to WhatsApp, Facebook, X and LinkedIn. Nothing is sent to those services unless you tap one.
 

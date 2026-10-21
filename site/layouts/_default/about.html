@@ -58,6 +58,22 @@
   </div>
   {{ end }}
 
+  {{/* Where the factory is: the owner's exact pin (params.address.factory),
+       a plain coordinate map (output=embed needs no API key) and the address
+       as text, since Google reads the text, not the map. */}}
+  {{ with .Site.Params.address.factory }}
+  <div class="container narrow factory-map">
+    <h2 class="section-title left">Where our factory is</h2>
+    <p>{{ $.Site.Title }}, {{ .streetAddress }}, {{ .locality }}, {{ $.Site.Params.address.region }} – {{ .postalCode }}.</p>
+    <div class="map">
+      <iframe src="https://maps.google.com/maps?q={{ .latitude }},{{ .longitude }}&amp;z=15&amp;output=embed"
+              title="Map of the Sri Raja Bags factory, {{ .streetAddress }}, {{ .locality }}"
+              loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+    <p><a class="btn btn-ghost-dark" href="{{ .mapLink | default (printf "https://www.google.com/maps/search/?api=1&query=%v,%v" .latitude .longitude) }}" target="_blank" rel="noopener">Open in Google Maps</a></p>
+  </div>
+  {{ end }}
+
   <div class="container narrow">
     <p class="about-cta">
       <a class="btn" target="_blank" rel="noopener"
