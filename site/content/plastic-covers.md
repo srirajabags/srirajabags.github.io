@@ -32,8 +32,7 @@ Rates are ex-factory, per kg, for a 50% advance, before GST and freight. The col
 
 ## Minimum order
 
-- **Printed HM D-cut covers in one colour:** 10 kg.
-- **Every other cover**, printed or plain: 30 kg.
+**30 kg** for every cover, printed or plain.
 
 ## How ordering works
 

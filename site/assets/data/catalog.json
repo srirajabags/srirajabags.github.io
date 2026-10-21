@@ -3955,7 +3955,7 @@
     "Budget Friendly"
    ],
    "unit": "kg",
-   "minOrder": 10,
+   "minOrder": 30,
    "thickness": "micron",
    "description": "HM plastic carry cover with a punched D-cut handle, printed to your design.",
    "priceNotes": "9x11 is printed on one side.",
@@ -5052,7 +5052,7 @@
    ],
    "badges": [],
    "unit": "kg",
-   "minOrder": 10,
+   "minOrder": 30,
    "thickness": "micron",
    "description": "Plain HM plastic cover with a punched D-cut handle, no printing.",
    "priceNotes": "",

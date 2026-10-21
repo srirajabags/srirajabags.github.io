@@ -36,6 +36,11 @@ about:
   # on the cutting floor.
   image: "images/factory/bag-stacks.jpg"
   alt: "Finished non woven bags stacked by colour on the factory floor while workers cut and fold more"
+  more:
+    - src: "images/factory/main-hall.jpg"
+      alt: "The main production hall with machines, stacks of finished bags and workers"
+    - src: "images/factory/outdoor-finishing.jpg"
+      alt: "Women sorting and bundling finished bags under the shed beside the factory"
   # Link text has to say where it goes when read on its own — a screen reader
   # lists links out of context, and "Learn more" was the one link Lighthouse
   # flagged as non-descriptive.

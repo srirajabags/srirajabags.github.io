@@ -181,6 +181,15 @@
            sizes="(max-width: 800px) 100vw, 400px"
            loading="lazy" decoding="async"
            alt="{{ .alt | default "The Sri Raja Bags manufacturing unit at Dorapalli, Dhone" }}">
+      {{/* Two smaller stills under the main one, so the section shows the
+           size of the unit and the people in it, not one corner of it. */}}
+      {{ with .more }}
+      <div class="about-more">
+        {{ range . }}{{ $alt := .alt }}{{ with resources.Get .src }}{{ $t := .Fill "460x300 Smart webp q78" }}
+        <img src="{{ $t.RelPermalink }}" width="{{ $t.Width }}" height="{{ $t.Height }}" loading="lazy" decoding="async" alt="{{ $alt }}">
+        {{ end }}{{ end }}
+      </div>
+      {{ end }}
     </div>
   </div>
 </section>

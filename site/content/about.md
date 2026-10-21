@@ -38,6 +38,15 @@ photos:
   - src: "images/factory/stitching.jpg"
     alt: "Workers finishing and bundling blue non woven handle bags beside sewing machines"
     caption: "Finishing and bundling handle bags before dispatch."
+  - src: "images/factory/offset-press.jpg"
+    alt: "Operator at a large offset printing press with stacks of printed sheets"
+    caption: "Our offset press, for sharp one and two colour prints."
+  - src: "images/factory/outdoor-finishing.jpg"
+    alt: "Women sorting and bundling finished bags under the shed beside the factory"
+    caption: "Sorting, counting and bundling finished bags under the side shed."
+  - src: "images/factory/printed-bags.jpg"
+    alt: "Piles of finished bags printed with customers' shop names in red, turquoise and white"
+    caption: "Finished orders: every bag printed with a shop's own name and design."
 
 # Registered units and GSTIN come from site params, so they stay consistent
 # with the schema. Still to supply, and they will render automatically:
