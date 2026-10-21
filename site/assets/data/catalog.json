@@ -4709,7 +4709,46 @@
    "description": "Overrun and misprinted plastic covers, sold by weight in assorted sizes and prints.",
    "priceNotes": "",
    "variants": [],
-   "photos": []
+   "photos": [
+    {
+     "file": "catalog/a4c764a400e834fcf908fa5dc606041b627b812f.jpg",
+     "shopTypes": [
+      "Mens Wear",
+      "Family Wear",
+      "Sweet Shops"
+     ],
+     "alt": "Misprinted plastic D-cut covers printed for clothing and sweet shops, laid out on a floor"
+    },
+    {
+     "file": "catalog/44b75461135bdd9e0162da0250bdaa4bbed6ae47.jpg",
+     "shopTypes": [
+      "Mens Wear",
+      "Sweet Shops"
+     ],
+     "alt": "A stack of misprinted plastic D-cut covers fanned out to show the prints"
+    },
+    {
+     "file": "catalog/8ab02b0774399749013d46660d18f5a2beb71e1a.jpg",
+     "shopTypes": [
+      "Sweet Shops"
+     ],
+     "alt": "Misprinted plastic U-cut covers in assorted sizes and prints"
+    },
+    {
+     "file": "catalog/1fe333681799692968b605dc8ab74c759bc5ee4a.jpg",
+     "shopTypes": [
+      "Sweet Shops"
+     ],
+     "alt": "Misprinted plastic U-cut covers stacked by size"
+    },
+    {
+     "file": "catalog/1cb41b2f18793f4a0b2a017bb9959d0a19a347c0.jpg",
+     "shopTypes": [
+      "Sweet Shops"
+     ],
+     "alt": "Assorted misprinted plastic U-cut covers spread on a floor"
+    }
+   ]
   },
   {
    "id": "dcut-plain",
