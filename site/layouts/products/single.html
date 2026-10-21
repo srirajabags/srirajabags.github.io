@@ -256,6 +256,7 @@
     </section>
     {{ end }}
 
+    {{ if and .materials (strings.Contains (index .materials 0) "Cover") }}<p class="pd-back"><a href="{{ "/plastic-covers/" | relURL }}">All plastic covers and their rates →</a></p>{{ end }}
     <p class="pd-back"><a href="{{ "/catalog/" | relURL }}">← All non woven bags and plastic covers</a></p>
   </div>
 </div>

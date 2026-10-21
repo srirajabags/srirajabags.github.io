@@ -1,0 +1,20 @@
+{{/* Printed cover rates by order value, one row per cover, from the catalog
+     data (so the table changes when the office changes a rate in Grist). A
+     cell shows a range where sizes differ. */}}
+{{- $cat := partialCached "catalog-data.html" .Page -}}
+<div class="table-scroll">
+<table>
+  <thead><tr><th>Cover (per kg)</th>{{ range $cat.priceTypes }}<th>{{ .label }}</th>{{ end }}</tr></thead>
+  <tbody>
+  {{- range $cat.products }}{{ if and .hasRate .materials (strings.Contains (index .materials 0) "Cover") }}
+    {{- $p := . }}
+    <tr><td><a href="{{ printf "/products/%s/" .id | relURL }}">{{ .name }}</a></td>
+    {{- range $i, $t := $cat.priceTypes }}
+      {{- $lo := 0.0 }}{{ $hi := 0.0 }}
+      {{- range $p.variants }}{{ with .rates }}{{ $r := float (index . $i) }}{{ if or (eq $lo 0.0) (lt $r $lo) }}{{ $lo = $r }}{{ end }}{{ if gt $r $hi }}{{ $hi = $r }}{{ end }}{{ end }}{{ end }}
+      <td>{{ if gt $hi 0.0 }}{{ partial "catalog-money" $lo }}{{ if ne $lo $hi }} – {{ partial "catalog-money" $hi }}{{ end }}{{ else }}—{{ end }}</td>
+    {{- end }}</tr>
+  {{- end }}{{ end }}
+  </tbody>
+</table>
+</div>

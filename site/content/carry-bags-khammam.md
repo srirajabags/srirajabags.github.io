@@ -13,8 +13,6 @@ photos:
     caption: "Stitched bag for a readymade store in Kothagudem"
   - file: "areas/vaibhav-fashions-kothagudem-telugu.jpg"
     caption: "The same store's bag with a Telugu print"
-  - file: "areas/vaibhav-fashions-kothagudem-cover.jpg"
-    caption: "Printed D-cut cover for the same store"
 ---
 
 **Sri Raja Bags makes printed non woven carry bags at our factory in Dhone, and supplies shops across Khammam & Kothagudem.** In the last year, {{< area-count >}} shops in the area ordered bags from us. Send your design on WhatsApp or call us for a quote the same day, and finished bags reach your town by transport in 3–4 days.

@@ -1,0 +1,21 @@
+{{ define "main" }}
+{{/* A topic landing page (e.g. /plastic-covers/): a search term people use,
+     answered with our products for it. The quote buttons follow the opening
+     paragraph, as on the region pages; the content can pull live catalog
+     data through shortcodes ({{< covers-grid >}}, {{< covers-rates >}}).
+
+     Front matter: quoteText (the WhatsApp message), place (the analytics
+     placement prefix, e.g. "covers" → covers_top / covers_dock). */}}
+{{ $text := .Params.quoteText | default "Hello Sri Raja Bags, I need __ for my shop. Size __ inch, quantity __." }}
+{{ $place := .Params.place | default "landing" }}
+<div class="page">
+  <article class="container narrow post landing">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ $parts := split (replaceRE `(?s)^(.*?</p>)` "$1<!--wa-top-->" (string .Content) 1) "<!--wa-top-->" }}
+    {{ index $parts 0 | safeHTML }}
+    {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" $place "text" $text) }}
+    {{ delimit (after 1 $parts) "" | safeHTML }}
+  </article>
+</div>
+{{ partial "wa-quote.html" (dict "page" . "variant" "dock" "place" $place "text" $text) }}
+{{ end }}

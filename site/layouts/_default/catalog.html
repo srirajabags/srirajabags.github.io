@@ -286,7 +286,7 @@
         {{ with .Params.about }}
         <section class="ct-about">
           <h2>{{ $.Params.aboutTitle | default "About non woven carry bags" }}</h2>
-          {{ range . }}<p>{{ . }}</p>{{ end }}
+          {{ range . }}<p>{{ . | markdownify }}</p>{{ end }}
         </section>
         {{ end }}
 

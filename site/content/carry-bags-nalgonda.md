@@ -9,10 +9,11 @@ weight: 8
 url: "/carry-bags-nalgonda/"
 areaName: "Nalgonda"
 photos:
-  - file: "areas/ck-mens-wear-haliya.jpg"
-    caption: "Printed D-cut cover for a menswear shop in Haliya"
   - file: "catalog/4e7bdb29aad62fada4345f9177aae2809892cd0e.jpg"
     caption: "Printed D-cut bag for a menswear shop in Nalgonda"
+  - file: "catalog/4bd2ae0512b373996272e9696bf3c5c352b4dcc6.jpg"
+    caption: "Stitched bag with a side patty for a suiting and shirting house in Mahabubnagar"
+    product: "stitching-double-color"
     product: "dcut-single-color"
 ---
 

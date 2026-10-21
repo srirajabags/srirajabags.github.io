@@ -182,6 +182,25 @@ export async function buildCatalog(source, { log = console.log } = {}) {
         });
     }
 
+    // Covers (Thickness unit = Micron): the website does not state the micron
+    // (owner's decision, 21 Oct 2026). Grist keeps a row per size and micron;
+    // here they become one row per size. Rates and pieces per kg carry over
+    // only where every micron agrees; otherwise the size shows "rate on request".
+    for (const product of out.products) {
+        if (product.thickness !== "micron") continue;
+        const bySize = new Map();
+        for (const v of product.variants) {
+            const key = `${v.size}|${v.patty}`;
+            if (!bySize.has(key)) bySize.set(key, []);
+            bySize.get(key).push(v);
+        }
+        product.variants = [...bySize.values()].map((vs) => {
+            const same = (pick) => vs.every((v) => JSON.stringify(pick(v)) === JSON.stringify(pick(vs[0])));
+            if (!same((v) => v.rates)) problems.push(`${product.id} ${vs[0].size}: rates differ by micron — shown as rate on request`);
+            return { size: vs[0].size, gsm: null, patty: vs[0].patty, rates: same((v) => v.rates) ? vs[0].rates : null, pcsPerKg: same((v) => v.pcsPerKg) ? vs[0].pcsPerKg : null };
+        });
+    }
+
     const wanted = new Map(); // file name -> attachment id
     for (const ph of photos) {
         const product = byId.get(ph.fields.Product);

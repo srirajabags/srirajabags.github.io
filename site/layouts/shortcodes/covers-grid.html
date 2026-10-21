@@ -1,0 +1,13 @@
+{{/* Every cover in the catalog (material "... Cover"), as cards linking to
+     its product page: photo, rate range and minimum order, read live from
+     the catalog data the office keeps in Grist. */}}
+{{- $cat := partialCached "catalog-data.html" .Page -}}
+<div class="pd-rel-grid covers-grid">
+  {{- range $cat.products }}{{ if and .materials (strings.Contains (index .materials 0) "Cover") }}
+  <a class="pd-rel" href="{{ printf "/products/%s/" .id | relURL }}">
+    {{ if .img }}<img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 240px" width="320" height="320" alt="{{ .name }}" loading="lazy" decoding="async">{{ else }}<span class="ct-noimg" aria-hidden="true">Sri Raja Bags</span>{{ end }}
+    <span class="pd-rel-name">{{ .name }}</span>
+    <span class="pd-rel-rate">{{ if .hasRate }}{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}/{{ .unit }}{{ else }}Rate on request{{ end }}{{ if .hasMoq }} · min {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ end }}</span>
+  </a>
+  {{- end }}{{ end }}
+</div>
