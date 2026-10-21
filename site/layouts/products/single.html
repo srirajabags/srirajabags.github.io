@@ -201,7 +201,7 @@
       <div class="pd-faq">
         {{ if .hasMoq }}
         <details><summary>What is the minimum order for {{ .name }}?</summary>
-          <p>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ with .priceNotes }}{{ if strings.Contains . "per size" }} per size{{ end }}{{ end }}.{{ with .priceNotes }}{{ if strings.Contains . "inimum" }} {{ . }}{{ end }}{{ end }} Smaller trial orders can sometimes be arranged — ask on WhatsApp.</p></details>
+          <p>{{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ with .priceNotes }}{{ if strings.Contains . "per size" }} per size{{ end }}{{ end }}.{{ with .priceNotes }}{{ range findRE `[^.]*[Mm]inimum[^.]*\.` . }} {{ strings.TrimSpace . }}{{ end }}{{ end }} Smaller trial orders can sometimes be arranged — ask on WhatsApp.</p></details>
         {{ end }}
         {{ if .hasRate }}
         <details><summary>How is the price decided?</summary>
