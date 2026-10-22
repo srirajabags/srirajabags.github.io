@@ -1,0 +1,12 @@
+{{/* A product's current rate range from the catalog, e.g.
+     {{< product-rate "digital-bopp" >}} → "₹15.50 – ₹30.50 per bag".
+     Optional second argument: a size qualifier to match ("BOPP" keeps only
+     variants whose size label contains it). Says "rate on request" when the
+     product has no published rate, so posts never carry a stale number. */}}
+{{- $id := .Get 0 -}}{{- $only := .Get 1 | default "" -}}
+{{- $cat := partialCached "catalog-data.html" .Page -}}
+{{- range where $cat.products "id" $id -}}
+  {{- $p := . -}}{{- $lo := 0.0 -}}{{- $hi := 0.0 -}}
+  {{- range $p.variants -}}{{- if or (eq $only "") (strings.Contains (string .size) $only) -}}{{- with .rates -}}{{- range . -}}{{- $r := float . -}}{{- if or (eq $lo 0.0) (lt $r $lo) -}}{{- $lo = $r -}}{{- end -}}{{- if gt $r $hi -}}{{- $hi = $r -}}{{- end -}}{{- end -}}{{- end -}}{{- end -}}{{- end -}}
+  {{- if gt $hi 0.0 -}}{{ partial "catalog-money" $lo }}{{ if ne $lo $hi }} – {{ partial "catalog-money" $hi }}{{ end }} per {{ cond (eq $p.unit "pc") "bag" "kg" }}{{- else -}}rate on request{{- end -}}
+{{- end -}}

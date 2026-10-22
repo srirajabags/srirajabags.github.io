@@ -29,7 +29,10 @@ disableKinds = ["taxonomy", "term"]
   # search for — the product term and the district have to be in here.
   # Keyword Planner (Oct 2026, AP+TG+KA): "carry bags" is searched ~3x more
   # than "non woven bags", and "wholesale" is the buying word, so both lead.
-  homeTitle = "Non Woven Carry Bags Wholesale Manufacturer, Kurnool · Sri Raja Bags"
+  # "Dhone" is in it because "sri raja bags dhone" ranked ~19 without it
+  # (Search Console, Oct 2026). Dhone is in Nandyal district, so "near
+  # Kurnool", not "Kurnool district".
+  homeTitle = "Carry Bags Wholesale Manufacturer in Dhone, near Kurnool · Sri Raja Bags"
   # Dhone moved from Kurnool to Nandyal district in the 2022 reorganisation.
   # The district appears in prose only — the postal address and schema omit it,
   # because the Google Business Profile shows "Dhone, Andhra Pradesh 518222"
