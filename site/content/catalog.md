@@ -5,6 +5,10 @@ metaTitle: "Carry Bags Wholesale Price List: Non Woven Bags & Plastic Covers"
 # Shown in the breadcrumb and its schema, where the full title is too long to be
 # useful. Falls back to `title` if removed.
 breadcrumb: "Catalog"
+# /catalog/rates/ is the display path in our Google Ads (shown, not clicked);
+# anyone who types it lands here instead of on a 404.
+aliases:
+  - /catalog/rates/
 # Keep this under ~155 characters. Google truncates around there, and the
 # same-day-rate promise at the end is the part that earns the click — it has to
 # survive the cut. The full material list lives on the products themselves.
