@@ -1046,6 +1046,19 @@
   document.querySelectorAll("[data-open]").forEach(function (b) {
     b.addEventListener("click", function () { openDialog(dialogOf(b.dataset.open)); });
   });
+  // The rest of the card opens it too. Clarity showed most catalog visits
+  // tapping the size and GSM chips, colour dots, price line and the
+  // "Printed"/badge labels, which did nothing (Oct 2026: 21 dead clicks in 26
+  // visits). Links, buttons and the photo strip keep their own behaviour.
+  document.querySelectorAll(".ct-card").forEach(function (card) {
+    var t = card.querySelector("[data-open]");
+    if (!t) return;
+    card.addEventListener("click", function (e) {
+      if (e.target.closest("a, button, input, label, select, .ct-slides")) return;
+      if (window.getSelection && String(getSelection()).length) return; // selecting a rate to copy
+      openDialog(dialogOf(t.dataset.open));
+    });
+  });
   document.querySelectorAll("[data-close]").forEach(function (b) {
     b.addEventListener("click", function () { b.closest("dialog").close(); });
   });

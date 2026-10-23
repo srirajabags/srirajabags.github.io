@@ -321,7 +321,11 @@ a { color: var(--navy); }
   align-items: center;
 }
 .about-grid p { margin: 0 0 1.5rem; }
+.about-img { display: block; }
 .about-img img { border-radius: 8px; }
+.badges-link { display: block; }
+.machines-item { color: inherit; text-decoration: none; }
+.machines-item:hover figcaption { text-decoration: underline; }
 .about-more { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.6rem; }
 .about-more img { display: block; width: 100%; height: auto; }
 /* Home: machines on the factory floor. */
@@ -1157,6 +1161,8 @@ html:not(.js) .js-only { display: none !important; }
 }
 .ct-open-title:hover { color: var(--navy); }
 .ct-open-title:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; border-radius: 3px; }
+/* The whole card opens the product details (catalog.html), so it says so. */
+.js .ct-card { cursor: pointer; }
 .ct-specs { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: 0; }
 .ct-specs span {
   font-size: 0.72rem; font-weight: 600;

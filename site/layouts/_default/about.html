@@ -30,7 +30,7 @@
 
   {{ with .Params.photos }}
   <div class="container">
-    <div class="photo-grid">
+    <div class="photo-grid" id="factory-photos">
       {{ range . }}
       {{ $p := resources.Get .src }}
       {{ $t := $p.Fill "700x460 Smart webp q78" }}
