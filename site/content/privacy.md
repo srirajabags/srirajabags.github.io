@@ -2,7 +2,7 @@
 title: "Privacy Policy"
 description: "What www.srirajabags.in collects when you visit, how Sri Raja Bags uses it, and how to contact us about your data."
 layout: "legal"
-updated: "20 October 2026"
+updated: "23 October 2026"
 ---
 
 This policy covers our website, **www.srirajabags.in**. It explains what the site collects when you visit, what we receive when you contact us, and how to reach us about it.
@@ -13,7 +13,9 @@ Sri Raja Bags, 9/74-1, KVS Colony, Kothapeta, Dhone, Nandyal district, Andhra Pr
 
 ## What the website collects
 
-**Visit statistics (Google Analytics).** We use Google Analytics to count visits and see which pages and buttons are used: the pages you view, the website or link that brought you here, your type of device and browser, your approximate location (city level), and taps on our WhatsApp buttons. Google Analytics uses cookies to do this. We use these figures only to improve the website; we do not use them to identify you and we do not show advertising. Google's own use of this data is explained in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites).
+**Visit statistics (Google Analytics).** We use Google Analytics to count visits and see which pages and buttons are used: the pages you view, the website or link that brought you here, your type of device and browser, your approximate location (city level), and taps on our WhatsApp buttons. Google Analytics uses cookies to do this. We use these figures only to improve the website and to see which of our Google ads bring enquiries; we do not use them to identify you. Google's own use of this data is explained in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites).
+
+**Our Google ads.** We advertise on Google Search. When you reach our website by clicking one of our ads, Google Ads records the click, and whether you then tapped our WhatsApp or call button, so we can see which ads are useful. We do not use this to show you ads elsewhere. Google's use of this data is explained in [How Google uses information from sites that use its services](https://policies.google.com/technologies/partner-sites).
 
 **How visitors use our pages (Microsoft Clarity).** We use Microsoft Clarity to see how visitors use our pages: heatmaps of where people tap and scroll, and recordings of visits with anything typed hidden. It records your type of device and browser, your approximate location (country), and what you tap and scroll on our pages. Clarity uses cookies to do this. We use it only to make the pages easier to use; we do not use it to identify you. Microsoft's use of this data is explained in the [Microsoft Privacy Statement](https://www.microsoft.com/privacy/privacystatement).
 
