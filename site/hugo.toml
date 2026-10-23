@@ -32,13 +32,15 @@ disableKinds = ["taxonomy", "term"]
   # "Dhone" is in it because "sri raja bags dhone" ranked ~19 without it
   # (Search Console, Oct 2026). Dhone is in Nandyal district, so "near
   # Kurnool", not "Kurnool district".
-  homeTitle = "Carry Bags Wholesale Manufacturer in Dhone, near Kurnool · Sri Raja Bags"
+  # Kept under ~60 characters so the brand at the end is not cut off in
+  # results (72 was truncated); "near Kurnool" is in the description.
+  homeTitle = "Carry Bags Wholesale Manufacturer, Dhone · Sri Raja Bags"
   # Dhone moved from Kurnool to Nandyal district in the 2022 reorganisation.
   # The district appears in prose only — the postal address and schema omit it,
   # because the Google Business Profile shows "Dhone, Andhra Pradesh 518222"
   # with no district and the NAP has to match that exactly. "Kurnool" stays in
   # the title and here because it is still what buyers in this region search.
-  description = "Wholesale manufacturers of printed non woven carry bags and plastic covers since 2011, at Dhone near Kurnool. Supplying shops across AP, Telangana and Karnataka."
+  description = "Wholesale manufacturer of printed non woven carry bags and plastic covers at Dhone, near Kurnool, since 2011. Supplying shops in AP, Telangana and Karnataka."
   phone = "+91 91770 56061"
   phoneRaw = "919177056061"
   email = "dhoneaswinibags@gmail.com"

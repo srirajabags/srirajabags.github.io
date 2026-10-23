@@ -5,7 +5,9 @@ hero:
   # Cropped from the original Mobirise hero graphic, which was mostly empty white.
   badges: "images/trust-badges.png"
   heading: "Non Woven Carry Bags and Plastic Covers: Manufacturers & Wholesale Suppliers"
-  text: "A manufacturing and supply unit established in 2011. Sri Raja Bags supplies all types of shopping bags and carry bags across three South Indian states — Andhra Pradesh, Telangana and Karnataka — to more than 10,000 customers."
+  # Short sentences and plain words: most readers are shop owners reading
+  # English as a second language (readability check, Oct 2026).
+  text: "We make printed carry bags and plastic covers at our own factory in Dhone, since 2011. More than 10,000 shops in Andhra Pradesh, Telangana and Karnataka buy their bags from us."
   # The first thing on the page is the enquiry button (goal sheet, workstream B):
   # until Oct 2026 the hero's only button scrolled to the product rail, and the
   # first WhatsApp button was in the contact section at the bottom.
@@ -31,7 +33,7 @@ products:
 
 about:
   heading: "About Our Factory"
-  text: "Sri Raja Bags manufactures every type of non-woven fabric carry bag and plastic cover at Dhone, in Nandyal district of Andhra Pradesh. We employ around 300 people directly, and provide household work to a further 600 women in the surrounding villages."
+  text: "We make every type of non woven carry bag and plastic cover at Dhone, in Nandyal district of Andhra Pradesh. Around 300 people work at our factory. Another 600 women in nearby villages do stitching and finishing work from home."
   # A still from our production video (Oct 2026): finished bags stacked by colour
   # on the cutting floor.
   image: "images/factory/bag-stacks.jpg"
@@ -50,7 +52,7 @@ about:
 # (Oct 2026). Captions say what each machine does; no brand or model names.
 machines:
   heading: "Machines Inside Our Factory"
-  text: "Every bag is cut, sealed and printed on our own machines at Dhone, so we control the quality and the delivery date of your order."
+  text: "We cut, seal and print every bag on our own machines at Dhone. That is how we control the quality and the delivery date of your order."
   items:
     - src: "images/factory/bag-making-line.jpg"
       caption: "Automatic bag-making machine"
