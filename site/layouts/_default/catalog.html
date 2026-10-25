@@ -486,7 +486,7 @@
             </div>
             <button type="button" class="ct-qty-btn" data-qty="1" aria-label="Increase quantity">+</button>
           </div>
-          <p class="ct-qty-min ct-fine" hidden>Minimum order is {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}.</p>
+          <p class="ct-qty-min ct-fine" hidden>Minimum order is {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}. Need less? Ask us on WhatsApp.</p>
           <p class="ct-qty-total" hidden><span>Indicative value</span><strong class="ct-qty-sum"></strong></p>
           <p class="ct-fine ct-qty-fine" hidden></p>
         </div>
@@ -515,6 +515,14 @@
 {{ end }}
 
 {{/* ---- enquiry list ---- */}}
+{{/* Photo viewer: a tap on a photo inside a product's details opens it full
+     screen. Clarity (Oct 2026) showed buyers tapping those photos to see the
+     print up close, and nothing happened. */}}
+<dialog class="ct-zoom" id="ct-zoom" aria-label="Photo">
+  <button type="button" class="ct-zoom-x" aria-label="Close photo">×</button>
+  <img alt="" id="ct-zoom-img">
+</dialog>
+
 <dialog class="ct-dialog ct-cart" id="ct-cart" aria-labelledby="ct-cart-title">
   <div class="ct-dialog-inner">
     <button type="button" class="ct-dialog-x" data-close aria-label="Close">×</button>
@@ -1034,6 +1042,26 @@
     });
   });
 
+  // Photos inside a product's details open full screen when tapped (not swiped).
+  (function () {
+    var zoom = document.getElementById("ct-zoom"), zimg = document.getElementById("ct-zoom-img");
+    if (!zoom || typeof zoom.showModal !== "function") return;
+    document.querySelectorAll(".ct-dialog-img .ct-slides").forEach(function (strip) {
+      var x = 0, y = 0, dragged = false;
+      strip.addEventListener("pointerdown", function (e) { x = e.clientX; y = e.clientY; dragged = false; });
+      strip.addEventListener("pointermove", function (e) {
+        if (Math.abs(e.clientX - x) > 8 || Math.abs(e.clientY - y) > 8) dragged = true;
+      });
+      strip.addEventListener("click", function (e) {
+        var im = e.target.closest("img");
+        if (!im || dragged) return;
+        zimg.src = im.currentSrc || im.src; zimg.alt = im.alt;
+        zoom.showModal();
+      });
+    });
+    zoom.addEventListener("click", function () { zoom.close(); });
+  })();
+
   function openDialog(d) {
     if (!d) return;
     if (typeof d.showModal === "function") d.showModal();
@@ -1080,6 +1108,8 @@
     var sumEl = box.querySelector(".ct-qty-sum");
     var totEl = box.querySelector(".ct-qty-total");
     var fineEl = box.querySelector(".ct-qty-fine");
+    var floorQty = p.moq || p.step;
+    var minus = box.querySelector('[data-qty="-1"]');
     var ask = dlg.querySelector("[data-ask]");
     var rateEl = dlg.querySelector(".ct-d-rate");
     var sizeCell = dlg.querySelector(".ct-d-size");
@@ -1138,7 +1168,8 @@
       if (sumEl) sumEl.textContent = has ? money(Math.round(tr.total)) : "";
       if (fineEl) fineEl.textContent = has ? rateText(id, v.rates[tr.t]) + " at the " + TYPES[tr.t].label +
         " order rate. Everything in your enquiry counts towards the order value." : "";
-      if (minEl) minEl.hidden = !(p.moq && sel.qty < p.moq);
+      if (minEl) minEl.hidden = !(p.moq && sel.qty <= p.moq);
+      if (minus) minus.disabled = sel.qty <= floorQty;
       if (document.activeElement !== input) input.value = sel.qty;
 
       if (ask) {
@@ -1172,9 +1203,13 @@
       });
     });
 
+    // "−" stops at the minimum order instead of stepping below it. Clarity
+    // (Oct 2026) showed buyers tapping it down past the minimum to 5 kg, where
+    // it then did nothing; at the minimum it is now greyed out and the note
+    // under it says a smaller order can be asked for on WhatsApp.
     box.querySelectorAll("[data-qty]").forEach(function (b) {
       b.addEventListener("click", function () {
-        variant[id].qty = stepQty(variant[id].qty, p.step, parseInt(b.dataset.qty, 10));
+        variant[id].qty = Math.max(floorQty, stepQty(variant[id].qty, p.step, parseInt(b.dataset.qty, 10)));
         draw();
       });
     });
