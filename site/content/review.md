@@ -1,59 +1,26 @@
 ---
 title: "Leave us a review"
-description: "Tell us how your order went. Tap a few options, copy, and paste into Google — takes about 20 seconds."
+description: "Tell other shop owners how your order went, in your own words. Takes about a minute."
 layout: "review"
 noindex: true
 
-intro: "Thanks for your order. A short review helps other shop owners find us — tap a few options below, then paste into Google."
+intro: "Thanks for your order. A few lines in your own words help other shop owners decide, and tell us what to fix."
 
-# Step 1 — what they bought. Single select, optional.
-products:
-  - "D-cut plain bags"
-  - "D-cut printed bags"
-  - "W-cut bags"
-  - "Loop handle bags"
-  - "Side-patty stitched bags"
-  - "Digital multicolor bags"
-  - "BOPP multicolor bags"
-  - "Printed bags with our shop design"
+# Questions only, never suggested answers. The page used to compose the review
+# from tap-to-add phrases, and those phrases showed up word for word across
+# dozens of reviews. Google filters reviews that read as templated, and text we
+# wrote is not the customer's review. Keep these neutral: no "was it good?"
+# framing and nothing that invites only happy customers.
+prompts:
+  - "What did you order, and for what kind of shop?"
+  - "How were the bags and the printing when they arrived?"
+  - "How did delivery and our replies on WhatsApp or the phone go?"
+  - "Is there anything we should do better?"
 
-# Step 2 — what went well. Multi select.
-# Deliberately no "was it good? yes/no" gate: Google prohibits filtering review
-# requests by sentiment, and a page that only invites happy customers is exactly
-# what gets a profile actioned.
-aspects:
-  - "the bag quality was good"
-  - "the printing came out exactly like our design"
-  - "delivery was on time"
-  - "the price was reasonable"
-  - "they replied quickly on WhatsApp"
-  - "reordering the same design was easy"
-  - "the bags are strong and hold weight well"
-  - "the sizes were exactly as ordered"
+language: "Write in Telugu, Kannada, Hindi or English, whatever is easiest. To speak instead of typing, tap the mic on your phone's keyboard."
 
-# Sentence shapes. Picked at random so no two reviews read identically —
-# a page that emits the same paragraph every time produces reviews Google
-# filters as templated.
-openers:
-  - "Ordered {product} from Sri Raja Bags."
-  - "We buy {product} from Sri Raja Bags for our shop."
-  - "Got our {product} from Sri Raja Bags."
-  - "Been ordering {product} from Sri Raja Bags."
-
-openersNoProduct:
-  - "Ordered bags from Sri Raja Bags."
-  - "We buy our shop bags from Sri Raja Bags."
-  - "Got our carry bags from Sri Raja Bags."
-
-# Shown as the last step. A photo cannot be attached from here — Google's form
-# takes it directly — so this is a prompt, not an upload.
-photoPrompt: "If you have a photo of the bags, add it in the review — tap the camera icon in the Google review box. Photos get seen far more than text alone."
+# A photo cannot be attached from here (Google's form takes it directly), so
+# this is a prompt, not an upload.
+photoPrompt: "If you have a photo of the bags, add it in the review: tap the camera icon in the Google review box. Photos get seen far more than text alone."
 photoAlt: "Or send the photo to us on WhatsApp and we will add it to our gallery."
-
-closers:
-  - "Happy with the order."
-  - "Would order again."
-  - "Good to deal with."
-  - "Recommended for shop owners."
-  - "No complaints."
 ---

@@ -30,8 +30,8 @@
     {{/* Reviews are the slowest local ranking signal to build, so the ask needs
          to be visible on every page — but quiet enough not to compete with the
          WhatsApp enquiry CTAs that actually carry the sales funnel. */}}
-    {{/* Sends people to /review/, which composes the text for them, rather than
-         to a blank Google form — the friction the page exists to remove.
+    {{/* Sends people to /review/, which gives a few neutral prompts before the
+         Google form. The customer writes the review themselves.
          Hidden on /review/ itself so it does not link to the current page. */}}
     {{ if and .Site.Params.reviewLink (ne .RelPermalink "/review/") }}
     <p class="review-cta">
