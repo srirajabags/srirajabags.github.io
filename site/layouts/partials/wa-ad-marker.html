@@ -1,0 +1,44 @@
+{{/* "(G)" on WhatsApp messages from Google Ads visitors, so the office can tell
+     which chats came from an ad and report which of them ordered (owner's
+     request, 28 Oct 2026; average order ₹7,000 at ~15% margin, so the ads are
+     judged on orders, not taps).
+
+     A visit counts as an ad visit when the landing URL carries Google's
+     auto-tagging click id (gclid, or gbraid/wbraid on iPhones) or a paid
+     utm_medium. It is remembered for 30 days in this browser, so a buyer who
+     comes back later by typing the address is still marked. Storage can be
+     blocked (private tabs); then only the landing visit is marked.
+
+     One capture-phase click listener rewrites the link's text just before it
+     opens, so every WhatsApp button to OUR number is covered, including the
+     ones the catalog and product pages build in script, and the desktop QR
+     box (partials/wa-desktop.html), which reads the link after this runs. */}}
+<script>
+  (function () {
+    var KEY = "srb-ad-visit", DAYS = 30, TAG = " (G)";
+    var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ .Site.Params.phoneRaw }}/;
+    var q = new URLSearchParams(location.search);
+    var fromAd = q.has("gclid") || q.has("gbraid") || q.has("wbraid") || /^(cpc|ppc|paid)$/i.test(q.get("utm_medium") || "");
+    try {
+      if (fromAd) localStorage.setItem(KEY, String(Date.now()));
+      else {
+        var t = +localStorage.getItem(KEY);
+        if (t && Date.now() - t < DAYS * 864e5) fromAd = true;
+        else if (t) localStorage.removeItem(KEY);
+      }
+    } catch (e) {}
+    if (!fromAd) return;
+
+    function mark(href) {
+      var m = href.match(/([?&]text=)([^&#]*)/);
+      if (!m) return href + (href.indexOf("?") < 0 ? "?" : "&") + "text=" + encodeURIComponent(TAG.trim());
+      var text = decodeURIComponent(m[2].replace(/\+/g, " "));
+      if (/\(G\)$/.test(text)) return href;
+      return href.replace(m[0], m[1] + encodeURIComponent(text + TAG));
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (a && OURS.test(a.href)) a.setAttribute("href", mark(a.getAttribute("href")));
+    }, true);
+  })();
+</script>
