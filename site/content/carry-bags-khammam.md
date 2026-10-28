@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Khammam & Kothagudem"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Khammam & Kothagudem"
-description: "Printed non woven carry bags for shops in Khammam, Sathupally, Bhadrachalam, Kothagudem, Aswaraopeta and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 3–4 days."
+metaTitle: "Wholesale Carry Bags for Khammam & Kothagudem Shops"
+description: "{shops} shops in Khammam, Sathupally and Bhadrachalam ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 3–4 days."
 layout: "area"
 areaKey: "khammam"
 weight: 9

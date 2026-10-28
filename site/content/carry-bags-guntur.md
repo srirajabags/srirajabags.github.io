@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Guntur & Palnadu"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Guntur & Narasaraopet"
-description: "Printed non woven carry bags for shops in Guntur, Narasaraopet, Tenali, Chilakaluripet, Vinukonda and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Wholesale Carry Bags for Guntur & Narasaraopet Shops"
+description: "{shops} shops in Guntur, Narasaraopet and Vinukonda ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "guntur"
 weight: 4

@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Karimnagar, Warangal & North Telangana"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Karimnagar & Warangal"
-description: "Printed non woven carry bags for shops in Karimnagar, Jagtial, Warangal, Jangaon, Mahabubabad, Nirmal and across North Telangana, from our Dhone factory. Quote on WhatsApp, delivery in 3–4 days."
+metaTitle: "Wholesale Carry Bags for Karimnagar & Warangal Shops"
+description: "{shops} shops in Jagtial, Jangaon and across North Telangana ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 3–4 days."
 layout: "area"
 areaKey: "north-telangana"
 weight: 10

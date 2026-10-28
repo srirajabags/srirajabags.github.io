@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Kadapa & Annamayya"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Kadapa & Proddatur"
-description: "Printed non woven carry bags for shops in Kadapa, Proddatur, Rayachoti, Rajampet, Mydukur and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 3–4 days."
+metaTitle: "Wholesale Carry Bags for Kadapa & Proddatur Shops"
+description: "{shops} shops in Kadapa, Rayachoti and Proddatur ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 3–4 days."
 layout: "area"
 areaKey: "kadapa"
 weight: 3

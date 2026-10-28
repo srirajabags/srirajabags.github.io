@@ -2,8 +2,8 @@
 title: "Carry Bag Manufacturer for Shops in Hyderabad & Secunderabad"
 # Search-result title, kept under Google's ~60-character cut-off. "for
 # Hyderabad shops", not "in Hyderabad": the factory is in Dhone.
-metaTitle: "Non Woven Carry Bag Manufacturers for Hyderabad Shops"
-description: "Printed non woven carry bags for clothing, saree and mobile shops in Hyderabad and Secunderabad, from our Dhone factory on NH 44. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Non Woven Bags Manufacturer for Hyderabad Shops"
+description: "Printed non woven carry bags for clothing, saree and mobile shops in Hyderabad, from our factory at Dhone on NH 44. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "hyderabad"
 weight: 12

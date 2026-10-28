@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Ongole & Prakasam"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Ongole & Markapur"
-description: "Printed non woven carry bags for shops in Ongole, Chirala, Markapur, Darsi, Kandukur and across Prakasam, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Wholesale Carry Bags for Ongole & Chirala Shops"
+description: "{shops} shops in Ongole, Chirala and Markapur ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "prakasam"
 weight: 5

@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Mahabubnagar, Gadwal, Wanaparthy & Nearby"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Mahabubnagar & Gadwal"
-description: "Printed non woven carry bags for shops in Mahabubnagar, Gadwal, Wanaparthy, Tandur, Narayanpet and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Wholesale Carry Bags for Mahabubnagar & Gadwal Shops"
+description: "{shops} shops in Gadwal, Wanaparthy and Mahabubnagar ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "mahabubnagar"
 weight: 7

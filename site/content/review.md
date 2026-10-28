@@ -12,7 +12,7 @@ intro: "Thanks for your order. A few lines in your own words help other shop own
 # wrote is not the customer's review. Keep these neutral: no "was it good?"
 # framing and nothing that invites only happy customers.
 prompts:
-  - "What did you order, and for what kind of shop?"
+  - "What did you order, and for which shop and town?"
   - "How were the bags and the printing when they arrived?"
   - "How did delivery and our replies on WhatsApp or the phone go?"
   - "Is there anything we should do better?"

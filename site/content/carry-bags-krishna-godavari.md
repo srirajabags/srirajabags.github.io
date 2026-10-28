@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Krishna & Godavari"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Vijayawada & Jangareddygudem"
-description: "Printed non woven carry bags for shops in Vijayawada, Jangareddygudem, Tiruvuru, Eluru, Rajahmundry and nearby towns, from our Dhone factory. Quote on WhatsApp, delivery in 2–3 days."
+metaTitle: "Wholesale Carry Bags for Vijayawada & Godavari Shops"
+description: "{shops} shops in Vijayawada, Jangareddygudem and Tiruvuru ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 2–3 days."
 layout: "area"
 areaKey: "krishna-godavari"
 weight: 6

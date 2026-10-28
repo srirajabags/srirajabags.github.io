@@ -12,6 +12,23 @@
   {{/* .Description is front matter; pages built by a content adapter (the
        product pages) carry theirs in params instead. */}}
   {{ $desc := .Description | default .Params.description | default .Site.Params.description }}
+  {{/* Area pages quote their shop count in the snippet. "{shops}" is the
+       page's region and "{allshops}" all regions, from assets/data/areas.json,
+       so the figure refreshes whenever the areas script is rerun. */}}
+  {{ if in $desc "{shops}" }}
+    {{ with partial "area-region.html" . }}
+      {{ $n := int .customers }}{{ $f := partial "area-floor.html" $n }}
+      {{ $desc = replace $desc "{shops}" (cond (eq $f $n) (lang.FormatNumber 0 $n) (printf "%s+" (lang.FormatNumber 0 $f))) }}
+    {{ end }}
+  {{ end }}
+  {{ if in $desc "{allshops}" }}
+    {{ with resources.Get "data/areas.json" }}
+      {{ $n := int (. | transform.Unmarshal).customers }}{{ $f := partial "area-floor.html" $n }}
+      {{ $desc = replace $desc "{allshops}" (printf "%s+" (lang.FormatNumber 0 $f)) }}
+    {{ end }}
+  {{ end }}
+  {{/* No data for the region: drop the number rather than print the token. */}}
+  {{ $desc = replace (replace $desc "{shops} shops" "Shops") "{allshops} shops" "Shops" }}
   <meta name="description" content="{{ $desc }}">
   <link rel="canonical" href="{{ .Permalink }}">
   {{/* Utility pages have nothing to rank for. "follow" so link equity still

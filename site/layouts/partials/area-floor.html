@@ -1,0 +1,7 @@
+{{/* A shop count rounded down to a friendly figure: 649 → 600, 128 → 120,
+     4371 → 4300. Pass the count; returns the rounded int. Shared by the
+     area-count shortcode and the {shops} placeholder in descriptions, so the
+     page and its search snippet always quote the same number. */}}
+{{ $n := int . }}
+{{ $step := cond (ge $n 1000) 100 (cond (ge $n 200) 50 10) }}
+{{ return mul (div $n $step) $step }}

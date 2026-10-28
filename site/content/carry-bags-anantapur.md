@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Anantapur District"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers Near Anantapur"
-description: "Printed non woven carry bags for shops in Anantapur, Guntakal, Tadipatri, Hindupur and across the district, from our Dhone factory. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Wholesale Carry Bags for Anantapur & Guntakal Shops"
+description: "{shops} shops in Anantapur, Guntakal and Hindupur ordered printed carry bags from our Dhone factory last year. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "anantapur"
 weight: 2

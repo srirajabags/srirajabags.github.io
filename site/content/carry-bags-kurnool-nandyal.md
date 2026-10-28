@@ -1,8 +1,8 @@
 ---
 title: "Carry Bag Manufacturer for Shops in Kurnool & Nandyal Districts"
 # Search-result title, kept under Google's ~60-character cut-off.
-metaTitle: "Carry Bag Manufacturers in Kurnool & Nandyal"
-description: "Printed non woven carry bags for shops in Kurnool, Nandyal, Adoni, Dhone and across both districts, made at our own factory in Dhone. Quote on WhatsApp, delivery in 1–2 days."
+metaTitle: "Wholesale Carry Bags for Kurnool & Nandyal Shops"
+description: "{shops} shops in Kurnool, Nandyal and Adoni ordered printed carry bags from our factory in Dhone last year. Same-day rate on WhatsApp, delivery in 1–2 days."
 layout: "area"
 areaKey: "kurnool-nandyal"
 weight: 1
