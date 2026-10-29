@@ -5,7 +5,8 @@ title: "Sri Raja Bags Reviews: What Shop Owners Say"
 # (Search Console, 29 Sep–26 Oct 2026). The score and reviews come from
 # assets/data/google-reviews.json; refresh it with
 # .local/analytics/export-reviews.mjs when new reviews come in.
-metaTitle: "Sri Raja Bags Dhone Reviews from Shop Owners"
+# The site appends " · Sri Raja Bags", so the name is not repeated here.
+metaTitle: "Customer Reviews from Shop Owners, Dhone"
 description: "Read what textile, saree, readymade and kirana shop owners say about our printed carry bags, covers and service, copied word for word from our Google reviews."
 layout: "reviews"
 place: "reviews"
