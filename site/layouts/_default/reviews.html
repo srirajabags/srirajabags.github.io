@@ -1,0 +1,125 @@
+{{ define "main" }}
+{{/* /customer-reviews/: what shop owners wrote about us on Google, for people
+     who search "sri raja bags dhone reviews" before a first order.
+
+     The reviews come from assets/data/google-reviews.json, a snapshot written
+     by .local/analytics/export-reviews.mjs (Business Profile API, owner
+     sign-in), which also holds the rules for picking them. Text is copied
+     word for word; an English meaning we add is labelled as ours. No Review
+     or AggregateRating schema: Google ignores a business's markup of its own
+     reviews. The page always links to every review on Google. */}}
+{{ $d := dict }}
+{{ with resources.Get "data/google-reviews.json" }}{{ $d = . | transform.Unmarshal }}{{ end }}
+{{ $place := .Params.place | default "reviews" }}
+{{ $text := .Params.quoteText | default "Hello Sri Raja Bags, I read your customer reviews. I need __ bags, size __ inch, quantity __." }}
+{{ $groups := .Params.groups }}
+{{ $month := "Jan 2006" }}
+
+<script>document.documentElement.className += " js";</script>
+<main class="rvw">
+  <section class="rvw-hero">
+    <div class="container rvw-hero-in">
+      <div class="rvw-hero-text">
+        <p class="rvw-eyebrow">Google reviews · Sri Raja Bags, Dhone</p>
+        <h1>{{ .Title }}</h1>
+        {{ .Content }}
+        <p class="rvw-links">
+          <a class="btn rvw-btn-light" href="{{ site.Params.googleProfile }}" target="_blank" rel="noopener">Read all {{ $d.total }} reviews on Google</a>
+        </p>
+      </div>
+      {{ with $d.rating }}
+      <div class="rvw-score" aria-label="Rated {{ . }} out of 5 from {{ $d.total }} Google reviews">
+        <p class="rvw-score-num">{{ . }}</p>
+        <p class="rvw-score-stars" style="--fill: {{ div (mul . 100.0) 5 }}%" aria-hidden="true"><span>★★★★★</span></p>
+        <p class="rvw-score-count">{{ $d.total }} Google reviews</p>
+        <ul class="rvw-bars" aria-hidden="true">
+          {{ range $s := slice "5" "4" "3" "2" "1" }}
+          {{ $n := index $d.breakdown $s | default 0 }}
+          <li><span>{{ $s }}★</span><b style="--w: {{ div (mul $n 100.0) $d.total }}%"></b><em>{{ $n }}</em></li>
+          {{ end }}
+        </ul>
+        <p class="rvw-asof">As of {{ (time $d.asOf).Format "2 Jan 2006" }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ with $d.ticker }}
+  <section class="rvw-strip" aria-label="Short reviews from Google">
+    <div class="container rvw-strip-head">
+      <p>In a few words</p>
+      <button type="button" class="mq-pause rvw-pause js-only" aria-pressed="false">
+        <span class="mq-pause-on">Pause</span><span class="mq-pause-off">Play</span>
+      </button>
+    </div>
+    {{ $half := div (len .) 2 }}
+    {{ range $r, $row := slice (first $half .) (after $half .) }}
+    <div class="rvw-row rvw-row-{{ $r }}">
+      <ul class="rvw-track">
+        {{ range $copy := slice false true }}
+        {{ range $row }}
+        <li{{ if $copy }} aria-hidden="true"{{ end }}>
+          <span class="rvw-chip-stars" aria-label="{{ .stars }} stars">{{ strings.Repeat (int .stars) "★" }}</span>
+          <q>{{ .text | replaceRE `\s*\n+\s*` " · " }}</q>
+          <span class="rvw-chip-name">{{ .name }}</span>
+        </li>
+        {{ end }}
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+  </section>
+  {{ end }}
+
+  <div class="container rvw-body">
+    {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" $place "text" $text "lede" .Params.quoteLede) }}
+
+    <nav class="rvw-jump" aria-label="Reviews by product">
+      {{ range $groups }}{{ $g := . }}{{ if where $d.featured "group" $g.id }}
+      <a href="#{{ $g.id }}">{{ $g.name }}</a>
+      {{ end }}{{ end }}
+    </nav>
+
+    {{ range $i, $g := $groups }}
+    {{ with where $d.featured "group" $g.id }}
+    <section class="rvw-group rvw-tone-{{ mod $i 4 }}" id="{{ $g.id }}">
+      <div class="rvw-group-head">
+        <h2>{{ $g.name }}</h2>
+        {{ with $g.link }}<a href="{{ . | relURL }}">{{ $g.linkText | default "See rates" }} <span aria-hidden="true">→</span></a>{{ end }}
+      </div>
+      <div class="rvw-cards">
+        {{ range . }}
+        <figure class="rvw-card">
+          <p class="rvw-card-stars" aria-label="{{ .stars }} out of 5 stars">{{ strings.Repeat (int .stars) "★" }}<span>{{ strings.Repeat (sub 5 (int .stars)) "★" }}</span></p>
+          <blockquote>{{ range $j, $line := split .text "\n" }}{{ if $line }}<p>{{ $line }}</p>{{ end }}{{ end }}</blockquote>
+          {{ with .meaning }}<p class="rvw-meaning"><b>In English (our translation):</b> {{ . }}</p>{{ end }}
+          <figcaption><strong>{{ .name }}</strong> <span>{{ (time .date).Format $month }} · Google review</span></figcaption>
+        </figure>
+        {{ end }}
+      </div>
+    </section>
+    {{ end }}
+    {{ end }}
+
+    <section class="rvw-note">
+      <h2>How we choose these reviews</h2>
+      {{ with .Params.note }}{{ . | markdownify }}{{ end }}
+      <p class="rvw-note-links">
+        <a class="btn" href="{{ site.Params.googleProfile }}" target="_blank" rel="noopener">All {{ $d.total }} reviews on Google</a>
+        <a class="rvw-write" href="{{ "/review/" | relURL }}">Ordered from us? Write a review <span aria-hidden="true">→</span></a>
+      </p>
+    </section>
+  </div>
+</main>
+{{ partial "wa-quote.html" (dict "page" . "variant" "dock" "place" $place "text" $text) }}
+<script>
+(function () {
+  var b = document.querySelector(".rvw-pause"), s = document.querySelector(".rvw-strip");
+  if (!b || !s) return;
+  b.addEventListener("click", function () {
+    var on = s.classList.toggle("is-paused");
+    b.setAttribute("aria-pressed", String(on));
+  });
+})();
+</script>
+{{ end }}

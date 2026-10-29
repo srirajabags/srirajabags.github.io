@@ -1724,3 +1724,182 @@ html:not(.js) .js-only { display: none !important; }
 .area-days { font-weight: 400; font-size: 0.86rem; color: var(--ink-soft); }
 .areas-cta { font-weight: 600; }
 .areas-credit { font-size: 0.78rem; color: var(--ink-soft); margin-top: 1.5rem; }
+
+/* ---------------- customer reviews (layouts/_default/reviews.html) ----------------
+   A navy hero with the Google score, two scrolling strips of short reviews in
+   opposite directions, then the longer reviews grouped by what was ordered.
+   Every animation stops under prefers-reduced-motion. */
+
+.rvw { --gold: #f5b301; --coral: #ff7a59; --sky: #4cc9f0; }
+
+.rvw-hero {
+  position: relative; overflow: hidden; color: #fff;
+  padding: calc(var(--nav-h) + 3rem) 0 3.5rem;
+  background: linear-gradient(125deg, var(--navy-deep), var(--navy) 50%, #0a6a7a);
+  background-size: 200% 200%;
+  animation: rvw-sky 18s ease-in-out infinite alternate;
+}
+.rvw-hero::before, .rvw-hero::after {
+  content: ""; position: absolute; border-radius: 50%; pointer-events: none; filter: blur(10px);
+}
+.rvw-hero::before {
+  width: 26rem; height: 26rem; right: -6rem; top: -8rem;
+  background: radial-gradient(circle, rgba(92, 219, 149, 0.45), transparent 65%);
+  animation: rvw-drift 14s ease-in-out infinite alternate;
+}
+.rvw-hero::after {
+  width: 20rem; height: 20rem; left: -7rem; bottom: -9rem;
+  background: radial-gradient(circle, rgba(245, 179, 1, 0.3), transparent 65%);
+  animation: rvw-drift 17s ease-in-out infinite alternate-reverse;
+}
+@keyframes rvw-sky { to { background-position: 100% 100%; } }
+@keyframes rvw-drift { to { transform: translate(-3rem, 2.5rem) scale(1.15); } }
+
+.rvw-hero-in {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 2.5rem; align-items: center;
+}
+.rvw-eyebrow {
+  margin: 0 0 0.8rem; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--mint);
+}
+.rvw-hero h1 {
+  margin: 0 0 1rem; font-size: clamp(1.9rem, 4.5vw, 2.9rem); font-weight: 800; line-height: 1.12;
+  text-wrap: balance;
+}
+.rvw-hero-text p { color: rgba(255, 255, 255, 0.86); max-width: 36rem; }
+.rvw-links { margin-top: 1.5rem; }
+.rvw-btn-light { background: #fff; color: var(--navy); }
+.rvw-btn-light:hover { background: var(--mint-pale); }
+
+.rvw-score {
+  background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 16px; padding: 1.6rem 1.6rem 1.2rem; text-align: center;
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+  animation: rvw-rise 0.7s ease-out both;
+}
+.rvw-score p { margin: 0; }
+.rvw-score-num { font-size: 4rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.rvw-score-stars { position: relative; display: inline-block; font-size: 1.9rem; letter-spacing: 0.12em; margin: 0.3rem 0 0.2rem !important; }
+.rvw-score-stars span { color: rgba(255, 255, 255, 0.22); }
+.rvw-score-stars::before {
+  content: "★★★★★"; position: absolute; inset: 0 auto 0 0; overflow: hidden; white-space: nowrap;
+  color: var(--gold); width: var(--fill); text-shadow: 0 0 14px rgba(245, 179, 1, 0.55);
+  animation: rvw-fill 1.6s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes rvw-fill { from { width: 0; } }
+.rvw-score-count { font-weight: 600; color: rgba(255, 255, 255, 0.9); }
+.rvw-bars { list-style: none; margin: 1rem 0 0.6rem; padding: 0; display: grid; gap: 0.35rem; font-size: 0.8rem; }
+.rvw-bars li { display: grid; grid-template-columns: 2rem 1fr 2rem; align-items: center; gap: 0.5rem; }
+.rvw-bars span { text-align: left; color: rgba(255, 255, 255, 0.8); }
+.rvw-bars em { font-style: normal; text-align: right; font-variant-numeric: tabular-nums; color: rgba(255, 255, 255, 0.8); }
+.rvw-bars b {
+  display: block; height: 0.45rem; border-radius: 99px; width: var(--w); min-width: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--mint));
+  animation: rvw-grow 1.4s 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes rvw-grow { from { width: 0; } }
+.rvw-asof { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
+@keyframes rvw-rise { from { opacity: 0; transform: translateY(1rem); } }
+
+/* Scrolling strips of short reviews. Same seamless-loop trick as the
+   homepage gallery: two copies of the list, slid by -50%. */
+.rvw-strip { background: var(--mint-pale); padding: 1.6rem 0 1.8rem; display: grid; gap: 0.8rem; }
+.rvw-strip-head { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.rvw-strip-head p { margin: 0; font-weight: 800; color: var(--navy); font-size: 1.05rem; }
+.rvw-row {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.rvw-track {
+  display: flex; width: max-content; margin: 0; padding: 0.2rem 0; list-style: none;
+  animation: mq-slide 70s linear infinite;
+}
+.rvw-row-1 .rvw-track { animation-duration: 85s; animation-direction: reverse; }
+.rvw-track li {
+  margin-right: 0.8rem; display: flex; align-items: center; gap: 0.55rem; white-space: nowrap;
+  background: #fff; border: 1px solid var(--rule); border-radius: 999px;
+  padding: 0.5rem 1rem; font-size: 0.88rem; box-shadow: 0 2px 8px rgba(5, 56, 107, 0.06);
+}
+.rvw-row-1 .rvw-track li:nth-child(3n+1) { border-color: rgba(92, 219, 149, 0.7); }
+.rvw-row-0 .rvw-track li:nth-child(4n+2) { border-color: rgba(245, 179, 1, 0.6); }
+.rvw-chip-stars { color: var(--gold); letter-spacing: 0.05em; font-size: 0.8rem; }
+.rvw-track q { font-weight: 600; color: var(--ink); quotes: "“" "”"; }
+.rvw-chip-name { color: var(--ink-soft); font-size: 0.8rem; }
+.rvw-strip:hover .rvw-track, .rvw-strip:focus-within .rvw-track,
+.rvw-strip.is-paused .rvw-track { animation-play-state: paused; }
+
+.rvw-body { padding-top: 0.5rem; padding-bottom: 4rem; max-width: 60rem; }
+.rvw-body .wa-top { margin-top: 2rem; }
+
+.rvw-jump { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 2rem 0 0.5rem; }
+.rvw-jump a {
+  text-decoration: none; font-size: 0.85rem; font-weight: 600; color: var(--navy);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.4rem 0.9rem;
+  transition: background 0.15s, border-color 0.15s, transform 0.15s;
+}
+.rvw-jump a:hover { background: var(--mint-pale); border-color: var(--mint); transform: translateY(-2px); }
+
+.rvw-group { --tone: var(--mint); margin-top: 2.6rem; scroll-margin-top: calc(var(--nav-h) + 1rem); }
+.rvw-tone-1 { --tone: var(--gold); }
+.rvw-tone-2 { --tone: var(--sky); }
+.rvw-tone-3 { --tone: var(--coral); }
+.rvw-group-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.4rem 1rem; margin-bottom: 1rem; }
+.rvw-group-head h2 {
+  margin: 0; font-size: 1.4rem; color: var(--navy);
+  background: linear-gradient(transparent 62%, color-mix(in srgb, var(--tone) 40%, transparent) 62%);
+  padding: 0 0.15rem;
+}
+.rvw-group-head a { font-weight: 700; font-size: 0.9rem; }
+
+.rvw-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); gap: 1rem; }
+.rvw-card {
+  position: relative; margin: 0; display: flex; flex-direction: column; gap: 0.7rem;
+  background: #fff; border: 1px solid var(--rule); border-top: 4px solid var(--tone); border-radius: 12px;
+  padding: 1.2rem 1.25rem 1.1rem; overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.rvw-card::after {
+  content: "”"; position: absolute; right: 0.6rem; top: -1.4rem; font-size: 6rem; line-height: 1;
+  font-weight: 800; color: color-mix(in srgb, var(--tone) 22%, transparent); pointer-events: none;
+}
+.rvw-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(5, 56, 107, 0.12); }
+.rvw-card-stars { margin: 0; color: var(--gold); letter-spacing: 0.1em; }
+.rvw-card-stars span { color: var(--rule); }
+.rvw-card blockquote { margin: 0; flex: 1; }
+.rvw-card blockquote p { margin: 0 0 0.4rem; overflow-wrap: anywhere; }
+.rvw-card blockquote p:last-child { margin: 0; }
+.rvw-meaning { margin: 0; font-size: 0.85rem; color: var(--ink-soft); background: var(--paper-alt); border-radius: 8px; padding: 0.55rem 0.7rem; }
+.rvw-meaning b { color: var(--ink); font-weight: 600; }
+.rvw-card figcaption { font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 0.2rem 0.5rem; align-items: baseline; }
+.rvw-card figcaption strong { color: var(--navy); }
+.rvw-card figcaption span { color: var(--ink-soft); font-size: 0.78rem; }
+
+/* Cards rise in as they scroll into view, where the browser supports
+   scroll-driven animations; elsewhere they are simply there. */
+@supports (animation-timeline: view()) {
+  .rvw-card { animation: rvw-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 40%; }
+}
+
+.rvw-note { margin-top: 3rem; padding: 1.6rem 1.5rem; border-radius: 14px; background: var(--paper-alt); border: 1px solid var(--rule); }
+.rvw-note h2 { margin: 0 0 0.6rem; font-size: 1.2rem; color: var(--navy); }
+.rvw-note p { margin: 0 0 0.8rem; }
+.rvw-note-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.4rem; margin: 1.2rem 0 0 !important; }
+.rvw-write { font-weight: 700; }
+
+@media (max-width: 760px) {
+  .rvw-hero { padding-bottom: 2.5rem; }
+  .rvw-hero-in { grid-template-columns: 1fr; gap: 1.8rem; }
+  .rvw-score-num { font-size: 3.2rem; }
+  .rvw-track li { font-size: 0.82rem; padding: 0.45rem 0.85rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rvw-hero, .rvw-hero::before, .rvw-hero::after, .rvw-score, .rvw-score-stars::before, .rvw-bars b, .rvw-card { animation: none; }
+  .rvw-track { animation: none; }
+  .rvw-row { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  .rvw-track li[aria-hidden] { display: none; }
+  .rvw-pause { display: none; }
+  .rvw-card, .rvw-jump a { transition: none; }
+  .rvw-card:hover, .rvw-jump a:hover { transform: none; }
+}
