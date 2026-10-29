@@ -1,0 +1,21 @@
+{{/* Cards for the catalog products named, in that order, linking to each
+     product page: photo, rate range and minimum order, read live from the
+     catalog data the office keeps in Grist (like covers-grid, but for any
+     list of products, e.g. the ones a shop type buys).
+
+       {{< products-grid "dcut-single-color" "hm-plastic-dcut" >}}
+
+     A product id that is not in the catalog stops the build, so a renamed
+     product cannot quietly drop off a page. */}}
+{{- $cat := partialCached "catalog-data.html" .Page -}}
+<div class="pd-rel-grid covers-grid">
+  {{- range .Params }}{{ $id := . }}
+  {{- with index (where $cat.products "id" $id) 0 }}
+  <a class="pd-rel" href="{{ printf "/products/%s/" .id | relURL }}">
+    {{ if .img }}<img src="{{ .img }}" srcset="{{ .img }} 320w, {{ .img2x }} 640w" sizes="(max-width: 700px) 45vw, 240px" width="320" height="320" alt="{{ .name }}" loading="lazy" decoding="async">{{ else }}<span class="ct-noimg" aria-hidden="true">Photo coming soon</span>{{ end }}
+    <span class="pd-rel-name">{{ .name }}</span>
+    <span class="pd-rel-rate">{{ if .hasRate }}{{ partial "catalog-money" .rateMin }}{{ if ne .rateMin .rateMax }} – {{ partial "catalog-money" .rateMax }}{{ end }}/{{ .unit }}{{ else }}Rate on request{{ end }}{{ if .hasMoq }} · min {{ lang.FormatNumberCustom 0 .moq }} {{ .qtyUnit }}{{ end }}</span>
+  </a>
+  {{- else }}{{ errorf "products-grid: no product %q in the catalog (%s)" $id $.Page.File.Path }}{{ end }}
+  {{- end }}
+</div>

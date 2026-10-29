@@ -44,7 +44,7 @@ Rates are ex-factory, per kg, for a 50% advance, before GST and freight. The col
 
 ## Plastic cover or non woven bag?
 
-A cover is the cheapest way to hand goods over the counter. A [non woven carry bag](/catalog/) costs a little more per kg, but it is reused for weeks, so your shop name travels further. Many shops order both: covers for small, quick sales and a non woven bag for bigger purchases. See [how non woven bag prices per kg work](/blog/2026/10/18/non-woven-bag-price-per-kg/) to compare.
+A cover is the cheapest way to hand goods over the counter. A [non woven carry bag](/catalog/) costs a little more per kg, but it is reused for weeks, so your shop name travels further. Many shops order both: covers for small, quick sales and a non woven bag for bigger purchases. See [what clothing shops order from us](/carry-bags-for-clothes-shops/). See [how non woven bag prices per kg work](/blog/2026/10/18/non-woven-bag-price-per-kg/) to compare.
 
 ## Common questions
 
@@ -52,7 +52,7 @@ A cover is the cheapest way to hand goods over the counter. A [non woven carry b
 Yes. We print your shop name, address and phone number in one or two colours, in Telugu, English or both. Plain covers without printing are also available.
 
 **What is the difference between HM and LD covers?**
-HM covers are crisper and more economical. LD covers are softer and clearer. Both come with a punched D-cut handle.
+HM covers are crisper and more economical. LD covers are softer and clearer. Both come with a punched D-cut handle. See [LD vs HM covers](/blog/2026/10/29/ld-vs-hm-covers/) for how to choose.
 
 **Which sizes do you make?**
 10×14, 12×18, 14×20 and 16×20 inches are the most common. Each cover's page lists every size, and other sizes can be made to order.

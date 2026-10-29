@@ -13,11 +13,13 @@
     {{ partial "share.html" (dict "page" . "variant" "top") }}
     {{/* The quote block goes after the opening paragraph: the posts start with
          a short direct answer, and the offer reads best right after it. */}}
-    {{ $text := printf "Hello Sri Raja Bags, I read your article \"%s\". I need __ bags, size __ inch, quantity __." .Title }}
+    {{/* A post can set its own message and offer line in front matter
+         (quoteText, quoteLede), e.g. about covers rather than bags. */}}
+    {{ $text := .Params.quoteText | default (printf "Hello Sri Raja Bags, I read your article \"%s\". I need __ bags, size __ inch, quantity __." .Title) }}
     {{ $parts := split (replaceRE `(?s)^(.*?</p>)` "$1<!--wa-top-->" (string .Content) 1) "<!--wa-top-->" }}
     {{ index $parts 0 | safeHTML }}
     {{ partial "wa-quote.html" (dict "page" . "variant" "top" "place" "blog" "text" $text
-         "lede" "Need bags printed with your shop name? Send your design for a rate today.") }}
+         "lede" (.Params.quoteLede | default "Need bags printed with your shop name? Send your design for a rate today.")) }}
     {{ delimit (after 1 $parts) "" | safeHTML }}
     {{ partial "share.html" (dict "page" . "variant" "end") }}
     <p class="back"><a href="{{ "/blog/" | relURL }}">← All posts</a></p>

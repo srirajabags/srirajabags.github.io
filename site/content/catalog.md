@@ -63,5 +63,5 @@ aboutTitle: "About non woven bags and plastic covers"
 about:
   - "Non woven bags are made from polypropylene fabric that is bonded rather than woven — light, tear resistant, washable and reusable, and a legal replacement for single use plastic carry bags. Rate depends on the fabric GSM, the bag size and the number of print colours."
   - "Alongside them we make HM and LD plastic covers and bio-degradable covers, in U-cut and D-cut shapes, for the counters where a cover still suits the goods better than a bag. See [all plastic covers and their rates](/plastic-covers/)."
-  - "All of it is supplied to clothing showrooms, sweet shops, jewellery stores, kirana and general stores, seed companies and pharmacies across the Rayalaseema and Telangana belt."
+  - "All of it is supplied to [clothing showrooms](/carry-bags-for-clothes-shops/), sweet shops, jewellery stores, kirana and general stores, seed companies and pharmacies across the Rayalaseema and Telangana belt."
 ---
