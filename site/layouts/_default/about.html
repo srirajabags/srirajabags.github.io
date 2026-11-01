@@ -28,19 +28,44 @@
     {{ .Content }}
   </div>
 
+  {{/* Each photo links to its full, uncropped version, which a tap opens full
+       screen. Clarity (Oct 2026) caught visitors rage-tapping these photos to
+       see the machines up close, twice, and nothing happened. */}}
   {{ with .Params.photos }}
   <div class="container">
     <div class="photo-grid" id="factory-photos">
       {{ range . }}
       {{ $p := resources.Get .src }}
       {{ $t := $p.Fill "700x460 Smart webp q78" }}
+      {{ $big := $p.Fit "1600x1600 webp q80" }}
       <figure>
-        <img src="{{ $t.RelPermalink }}" width="700" height="460" loading="lazy" alt="{{ .alt }}">
+        <a class="photo-zoom" href="{{ $big.RelPermalink }}" aria-label="Open photo: {{ .alt }}">
+          <img src="{{ $t.RelPermalink }}" width="700" height="460" loading="lazy" alt="{{ .alt }}">
+        </a>
         <figcaption>{{ .caption }}</figcaption>
       </figure>
       {{ end }}
     </div>
   </div>
+  <dialog class="ct-zoom" id="photo-zoom" aria-label="Photo">
+    <button type="button" class="ct-zoom-x" aria-label="Close photo">×</button>
+    <img alt="" id="photo-zoom-img">
+  </dialog>
+  <script>
+  (function () {
+    var zoom = document.getElementById("photo-zoom"), zimg = document.getElementById("photo-zoom-img");
+    if (!zoom || typeof zoom.showModal !== "function") return;
+    document.querySelectorAll("#factory-photos .photo-zoom").forEach(function (a) {
+      a.addEventListener("click", function (e) {
+        e.preventDefault();
+        var im = a.querySelector("img");
+        zimg.src = a.href; zimg.alt = im ? im.alt : "";
+        zoom.showModal();
+      });
+    });
+    zoom.addEventListener("click", function () { zoom.close(); });
+  })();
+  </script>
   {{ end }}
 
   {{/* Statutory registration details live in the footer — buyers who need to

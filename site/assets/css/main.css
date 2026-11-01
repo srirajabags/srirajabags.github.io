@@ -474,6 +474,7 @@ a { color: var(--navy); }
 }
 .photo-grid figure { margin: 0; }
 .photo-grid img { width: 100%; border-radius: 8px; }
+.photo-grid .photo-zoom { display: block; cursor: zoom-in; }
 .photo-grid figcaption {
   margin-top: 0.6rem;
   font-size: 0.875rem;
