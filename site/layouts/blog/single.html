@@ -4,7 +4,9 @@
 {{/* baseof.html already provides the <main> landmark; a second one inside
      it is invalid HTML and confuses screen readers. */}}
 <div class="page">
-  <article class="container narrow post">
+  {{/* theme: a seasonal look for one post (e.g. theme: sankranti), styled
+       under .theme-<name> in main.css. */}}
+  <article class="container narrow post{{ with .Params.theme }} theme-{{ . }}{{ end }}">
     <h1 class="page-title">{{ .Title }}</h1>
     <p class="meta">
       {{ with .Params.author }}By <span class="post-author">{{ . }}</span> · {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 January 2006" }}</time>

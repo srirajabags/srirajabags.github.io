@@ -1,0 +1,19 @@
+{{/* Dated steps from the post's front matter `timeline`, drawn as a kite
+     string with a coloured bead per step:
+
+       timeline:
+         - {when: "By 10 Dec", title: "Approve the proof", text: "…", tone: "marigold"}
+
+     tone is one of marigold, red, leaf, sky, plum (theme colours). text is
+     Markdown. */}}
+{{- with .Page.Params.timeline -}}
+<ol class="fest-timeline">
+  {{- range . }}
+  <li class="tone-{{ .tone | default "marigold" }}">
+    <span class="ft-when">{{ .when }}</span>
+    <strong class="ft-title">{{ .title }}</strong>
+    <span class="ft-text">{{ .text | markdownify }}</span>
+  </li>
+  {{- end }}
+</ol>
+{{- end -}}

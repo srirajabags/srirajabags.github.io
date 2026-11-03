@@ -1,0 +1,14 @@
+{{/* A row of big-number tiles from the post's front matter `stats`:
+
+       stats:
+         - {value: "1,535", label: "bag orders, 1 Dec – 12 Jan", tone: "marigold"}
+
+     Optional `statsNote` (Markdown) is printed under the row. */}}
+{{- with .Page.Params.stats -}}
+<div class="stat-tiles">
+  {{- range . }}
+  <div class="stat-tile tone-{{ .tone | default "marigold" }}"><b>{{ .value }}</b><span>{{ .label }}</span></div>
+  {{- end }}
+</div>
+{{- with $.Page.Params.statsNote }}<div class="stat-note">{{ . | markdownify }}</div>{{ end }}
+{{- end -}}

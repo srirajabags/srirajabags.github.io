@@ -1,0 +1,47 @@
+{{/* A festival banner for a seasonal post: sunrise sky, kites, a mango-leaf
+     toran, the greeting, the festival days and a live countdown.
+
+       {{< festive-hero >}}
+
+     Reads the post's front matter `festival`:
+       festival:
+         greeting: "సంక్రాంతి శుభాకాంక్షలు"
+         eyebrow: "Sankranti 2027 · for shops"
+         countTo: "2027-01-14"          # day the countdown counts to (IST)
+         countLabel: "Bhogi"
+         days: [{name: "Bhogi", date: "Thu 14 Jan"}, …]
+         orderBy: "Order by 10 Dec"
+
+     No <p> inside: the blog layout puts the quote block after the post's
+     first paragraph, and that must stay the opening paragraph, not this.
+     The countdown is worked out at build time and refreshed in the browser,
+     so it is right without JavaScript on the day of the build. */}}
+{{- with .Page.Params.festival -}}
+{{- $to := time (printf "%sT00:00:00+05:30" .countTo) -}}
+{{- $days := math.Max 0 (math.Ceil (div ($to.Sub now).Hours 24)) | int -}}
+<div class="fest-hero" role="img" aria-label="{{ .eyebrow }}: {{ $days }} days to {{ .countLabel }}">
+  <div class="fest-toran" aria-hidden="true"></div>
+  <svg class="fest-sky" viewBox="0 0 360 120" aria-hidden="true" focusable="false">
+    <circle class="fest-sun" cx="326" cy="34" r="22"/>
+    <g class="fest-kite k1"><path d="M58 14 L80 40 L58 74 L36 40 Z" fill="#ffd23f"/><path d="M58 14 L58 74 M36 40 L80 40" stroke="#d62839" stroke-width="2.5"/><path d="M58 74 q-7 14 4 26 q8 10 -2 18" stroke="#fff" stroke-width="1.3" fill="none" stroke-dasharray="3 3"/><path d="M54 78 l8 5 l-8 4 z" fill="#d62839"/></g>
+    <g class="fest-kite k2"><path d="M168 8 L186 30 L168 58 L150 30 Z" fill="#2b9348"/><path d="M168 8 L168 58 M150 30 L186 30" stroke="#ffd23f" stroke-width="2"/><path d="M168 58 q9 14 -3 26 q-9 10 3 22" stroke="#fff" stroke-width="1.1" fill="none" stroke-dasharray="3 3"/></g>
+    <g class="fest-kite k3"><path d="M262 20 L276 38 L262 60 L248 38 Z" fill="#1c7ed6"/><path d="M262 20 L262 60 M248 38 L276 38" stroke="#fff" stroke-width="1.8"/><path d="M262 60 q-6 12 4 22" stroke="#fff" stroke-width="1" fill="none" stroke-dasharray="2 3"/></g>
+  </svg>
+  <div class="fest-copy">
+    <span class="fest-eyebrow">{{ .eyebrow }}</span>
+    <span class="fest-greeting" lang="te">{{ .greeting }}</span>
+    <span class="fest-count"><b data-count-to="{{ $to.Unix }}">{{ $days }}</b> days to {{ .countLabel }}</span>
+    <span class="fest-days">{{ range .days }}<span class="fest-day"><b>{{ .name }}</b> {{ .date }}</span>{{ end }}</span>
+    {{ with .orderBy }}<span class="fest-orderby">{{ . }}</span>{{ end }}
+  </div>
+  <div class="fest-rangoli" aria-hidden="true"></div>
+</div>
+<script>
+  (function () {
+    var b = document.querySelector("[data-count-to]");
+    if (!b) return;
+    var d = Math.ceil((+b.dataset.countTo * 1000 - Date.now()) / 864e5);
+    b.textContent = String(Math.max(0, d));
+  })();
+</script>
+{{- end -}}

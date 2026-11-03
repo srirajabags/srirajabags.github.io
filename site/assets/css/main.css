@@ -1904,3 +1904,114 @@ html:not(.js) .js-only { display: none !important; }
   .rvw-card, .rvw-jump a { transition: none; }
   .rvw-card:hover, .rvw-jump a:hover { transform: none; }
 }
+
+/* ───────────── Festival look: theme: sankranti (blog/single.html) ─────────────
+   Sankranti colours: kumkum red, marigold, turmeric, mango-leaf green, kite-sky
+   blue and a deep plum for text. Shortcodes: festive-hero, timeline,
+   bag-picks, stat-tiles, tip. Light only, like the rest of the site. */
+.theme-sankranti {
+  --s-red: #d62839; --s-marigold: #f08c00; --s-turmeric: #ffd23f; --s-leaf: #2b9348;
+  --s-sky: #1c7ed6; --s-plum: #4a1259; --s-magenta: #c2255c; --s-cream: #fff6e0;
+}
+.theme-sankranti .page-title { color: var(--s-plum); }
+.theme-sankranti h2 { color: var(--s-plum); display: flex; align-items: center; gap: 0.6rem; }
+.theme-sankranti h2::before {
+  content: ""; flex: none; width: 0.85rem; height: 0.85rem; border-radius: 2px; transform: rotate(45deg);
+  background: linear-gradient(135deg, var(--k1, var(--s-marigold)) 50%, var(--k2, var(--s-red)) 50%);
+}
+.theme-sankranti h2:nth-of-type(4n+2) { --k1: var(--s-sky); --k2: var(--s-leaf); }
+.theme-sankranti h2:nth-of-type(4n+3) { --k1: var(--s-turmeric); --k2: var(--s-magenta); }
+.theme-sankranti h2:nth-of-type(4n+4) { --k1: var(--s-leaf); --k2: var(--s-marigold); }
+.theme-sankranti .post-photo img { box-shadow: 0 6px 0 var(--s-turmeric); }
+.theme-sankranti table th { background: var(--s-plum); color: #fff; }
+.theme-sankranti strong { color: var(--s-plum); }
+
+/* tone-* colours, shared by the timeline, cards and tiles */
+.tone-marigold { --tone: #f08c00; --tone-soft: #fff1d6; }
+.tone-red { --tone: #d62839; --tone-soft: #ffe3e6; }
+.tone-leaf { --tone: #2b9348; --tone-soft: #e2f5e6; }
+.tone-sky { --tone: #1c7ed6; --tone-soft: #e1efff; }
+.tone-plum { --tone: #7b2cbf; --tone-soft: #f1e6fb; }
+
+/* Hero: sunrise sky, kites, toran on top, rangoli dots below */
+.fest-hero {
+  position: relative; overflow: hidden; margin: 0.4rem 0 1.4rem; border-radius: 16px; color: #fff;
+  background: linear-gradient(165deg, #3b0a57 0%, #8e1b5e 38%, #e8590c 78%, #ffb703 100%);
+  
+}
+.fest-toran {
+  position: absolute; top: 0; left: 0; right: 0; height: 26px; z-index: 2;
+  background:
+    radial-gradient(circle at 12px 5px, #ffd23f 4px, transparent 4.5px) 0 0 / 24px 26px repeat-x,
+    conic-gradient(from 135deg at 50% 0, #2b9348 90deg, transparent 0) 0 8px / 24px 18px repeat-x;
+}
+.fest-sky { display: block; width: 100%; max-width: 30rem; height: auto; margin: 30px 0 0 auto; }
+.fest-sun { fill: #ffd23f; opacity: 0.7; }
+.fest-kite { transform-box: fill-box; transform-origin: 50% 0; animation: fest-sway 4.5s ease-in-out infinite alternate; }
+.fest-kite.k2 { animation-duration: 5.5s; animation-delay: -1.5s; }
+.fest-kite.k3 { animation-duration: 3.8s; animation-delay: -0.8s; }
+@keyframes fest-sway { from { transform: rotate(-6deg) translateY(0); } to { transform: rotate(7deg) translateY(4px); } }
+.fest-copy { position: relative; z-index: 1; display: grid; gap: 0.45rem; padding: 0.4rem 1.1rem 2.2rem; }
+.fest-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.9; }
+.fest-greeting { font-size: clamp(1.7rem, 7vw, 2.4rem); font-weight: 800; line-height: 1.2; text-shadow: 0 2px 0 rgba(59, 10, 87, 0.45); }
+.fest-count { font-size: 1.05rem; }
+.fest-count b { display: inline-block; min-width: 2.6ch; padding: 0.05rem 0.45rem; margin-right: 0.15rem; border-radius: 8px; background: #fff; color: #8e1b5e; font-size: 1.5rem; text-align: center; }
+.fest-days { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.fest-day { padding: 0.2rem 0.6rem; border-radius: 999px; background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.35); font-size: 0.85rem; }
+.fest-orderby { justify-self: start; margin-top: 0.3rem; padding: 0.35rem 0.85rem; border-radius: 999px; background: #ffd23f; color: #3b0a57; font-weight: 800; font-size: 0.95rem; }
+.fest-rangoli {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 14px;
+  background:
+    radial-gradient(circle, #fff 2.5px, transparent 3px) 0 0 / 16px 14px,
+    radial-gradient(circle, #ffd23f 4.5px, transparent 5px) 8px 0 / 16px 14px,
+    #c2255c;
+}
+
+/* Timeline: a kite string with coloured beads */
+.fest-timeline { list-style: none; margin: 1.2rem 0 1.8rem; padding: 0 0 0 1.6rem; position: relative; }
+.fest-timeline::before { content: ""; position: absolute; left: 0.55rem; top: 0.6rem; bottom: 0.6rem; border-left: 2px dashed #c9b6d6; }
+.fest-timeline li { position: relative; display: grid; gap: 0.15rem; padding: 0 0 1.15rem 0.5rem; }
+.fest-timeline li::before {
+  content: ""; position: absolute; left: -1.38rem; top: 0.25rem; width: 0.95rem; height: 0.95rem; transform: rotate(45deg);
+  border-radius: 3px; background: var(--tone); box-shadow: 0 0 0 4px var(--tone-soft);
+}
+.ft-when { justify-self: start; padding: 0.1rem 0.6rem; border-radius: 999px; background: var(--tone-soft); color: var(--tone); font-weight: 800; font-size: 0.82rem; letter-spacing: 0.02em; }
+.ft-title { font-size: 1.02rem; color: var(--s-plum, #232323); }
+.ft-text { color: var(--ink-soft); font-size: 0.95rem; }
+.ft-text p { margin: 0; }
+
+/* Bag cards */
+.bag-picks { display: grid; gap: 1rem; margin: 1.2rem 0 1.8rem; }
+@media (min-width: 640px) { .bag-picks { grid-template-columns: 1fr 1fr; } }
+.bag-pick { display: flex; flex-direction: column; border-radius: 14px; overflow: hidden; background: #fff; border: 1px solid var(--rule); border-top: 6px solid var(--tone); box-shadow: 0 2px 10px rgba(74, 18, 89, 0.07); }
+.bp-photo { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--tone-soft); }
+.bp-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.bp-badge { position: absolute; left: 0.6rem; top: 0.6rem; padding: 0.2rem 0.6rem; border-radius: 999px; background: var(--tone); color: #fff; font-size: 0.75rem; font-weight: 800; }
+.bp-body { display: grid; gap: 0.4rem; padding: 0.85rem 0.95rem 1rem; }
+.post .bp-name { margin: 0; font-size: 1.08rem; }
+.bp-name a { color: var(--s-plum, var(--navy)); text-decoration: none; }
+.bp-name a:hover { text-decoration: underline; }
+.bp-for { justify-self: start; padding: 0.1rem 0.55rem; border-radius: 6px; background: var(--tone-soft); color: var(--tone); font-size: 0.8rem; font-weight: 700; }
+.bp-why { font-size: 0.93rem; }
+.bp-why p { margin: 0; }
+.bp-facts { display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; align-items: baseline; font-size: 0.88rem; }
+.bp-rate { font-weight: 800; color: var(--tone); }
+.bp-min { color: var(--ink-soft); }
+
+/* Big-number tiles */
+.stat-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.7rem; margin: 1.2rem 0 0.6rem; }
+.stat-tile { display: grid; gap: 0.2rem; padding: 0.9rem 0.95rem; border-radius: 12px; background: var(--tone-soft); border-bottom: 4px solid var(--tone); }
+.stat-tile b { font-size: 1.7rem; line-height: 1.1; color: var(--tone); }
+.stat-tile span { font-size: 0.85rem; color: var(--ink); }
+.stat-note { font-size: 0.82rem; color: var(--ink-soft); margin: 0 0 1.4rem; }
+.stat-note p { margin: 0; }
+
+/* Tip box */
+.post-tip { margin: 1.4rem 0; padding: 0.9rem 1rem 0.9rem 1rem; border-radius: 12px; background: var(--s-cream, #fff6e0); border-left: 6px solid var(--s-marigold, #f08c00); }
+.post-tip .tip-label { display: block; margin-bottom: 0.25rem; color: var(--s-red, #d62839); font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; }
+.post-tip p { margin: 0; }
+.post-tip p + p { margin-top: 0.5rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fest-kite { animation: none; }
+}

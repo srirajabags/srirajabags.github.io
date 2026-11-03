@@ -1,0 +1,7 @@
+{{/* A highlighted tip box. The inner text is Markdown.
+
+       {{< tip "Smart tip" >}}Leave the date off the design…{{< /tip >}}  */}}
+<aside class="post-tip">
+  <strong class="tip-label">{{ .Get 0 | default "Tip" }}</strong>
+  {{ .Inner | markdownify }}
+</aside>

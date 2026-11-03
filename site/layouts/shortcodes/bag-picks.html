@@ -1,0 +1,35 @@
+{{/* Bag cards from the post's front matter `picks`, each with its photo
+     from the post's folder, who it suits, and today's rate from the catalog:
+
+       picks:
+         - {product: "dcut-single-color", photo: "dcut.jpg", name: "…",
+            for: "Textile and readymade shops", why: "…", min: "10 kg",
+            tone: "red", alt: "…"}
+
+     The rate is partials/product-rate.html, so a card never shows a stale
+     number. why is Markdown. */}}
+{{- $page := .Page -}}
+{{- with .Page.Params.picks -}}
+<div class="bag-picks">
+  {{- range . }}
+  {{- $img := $page.Resources.Get .photo -}}
+  {{- if not $img }}{{ errorf "bag-picks: %q not found next to %s" .photo $page.File.Path }}{{ end -}}
+  {{- $t := $img.Fill "640x480 Smart webp q78" -}}
+  <article class="bag-pick tone-{{ .tone | default "marigold" }}">
+    <a class="bp-photo" href="{{ printf "/products/%s/" .product | relURL }}">
+      <img src="{{ $t.RelPermalink }}" width="640" height="480" alt="{{ .alt }}" loading="lazy" decoding="async">
+      {{ with .badge }}<span class="bp-badge">{{ . }}</span>{{ end }}
+    </a>
+    <div class="bp-body">
+      <h3 class="bp-name"><a href="{{ printf "/products/%s/" .product | relURL }}">{{ .name }}</a></h3>
+      <span class="bp-for">{{ .for }}</span>
+      <span class="bp-why">{{ .why | markdownify }}</span>
+      <span class="bp-facts">
+        <span class="bp-rate">{{ partial "product-rate.html" (dict "page" $page "id" .product "only" (.only | default "")) }}</span>
+        {{ with .min }}<span class="bp-min">Minimum {{ . }}</span>{{ end }}
+      </span>
+    </div>
+  </article>
+  {{- end }}
+</div>
+{{- end -}}
