@@ -63,7 +63,11 @@
       // The desktop QR box's own links are the same enquiry, already counted.
       if (!ev || a.closest("[data-wa-qr]")) return;
       var place = placeOf(a);
-      gtag("event", ev, { placement: place, page_path: location.pathname });
+      // An ad visitor's reference (partials/wa-ad-marker.html, the same one
+      // their WhatsApp message carries), so a registry row finds its visit.
+      var p = { placement: place, page_path: location.pathname };
+      if (window.srbAdRef) p.enquiry_ref = window.srbAdRef;
+      gtag("event", ev, p);
       // Same tap in Clarity, so recordings can be filtered to visits that enquired (or didn't).
       if (typeof clarity === "function") { clarity("event", ev); clarity("set", "placement", place); }
     }, true);

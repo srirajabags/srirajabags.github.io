@@ -1,13 +1,22 @@
-{{/* "(G)" on WhatsApp messages from Google Ads visitors, so the office can tell
-     which chats came from an ad and report which of them ordered (owner's
-     request, 28 Oct 2026; average order ₹7,000 at ~15% margin, so the ads are
-     judged on orders, not taps).
+{{/* An ad reference such as "(G1B-7K3P)" on WhatsApp messages from Google Ads
+     visitors, so the office can tell which chats came from an ad, and which
+     ad, and report which of them ordered (owner's requests, 28 Oct and 3 Nov
+     2026; average order ₹7,000 at ~15% margin, so the ads are judged on
+     orders, not taps). It replaces the plain "(G)" of 28 Oct.
+
+     "G" says Google Ads. "1B" is the campaign and ad group, from the
+     srb_ag=1B that each ad group's final URL suffix adds to the landing URL
+     (campaign 1 is "Search – AP & TG buyers – test"; A–D its ad groups). The
+     last four characters are this visitor's own, and go to Analytics with the
+     tap as enquiry_ref (partials/analytics.html), so one registry row can be
+     matched to its visit: the search keyword, landing page and time.
 
      A visit counts as an ad visit when the landing URL carries Google's
      auto-tagging click id (gclid, or gbraid/wbraid on iPhones) or a paid
      utm_medium. It is remembered for 30 days in this browser, so a buyer who
-     comes back later by typing the address is still marked. Storage can be
-     blocked (private tabs); then only the landing visit is marked.
+     comes back later by typing the address keeps the same reference; a later
+     ad click starts a new one. Storage can be blocked (private tabs); then
+     only the landing visit is marked.
 
      One capture-phase click listener rewrites the link's text just before it
      opens, so every WhatsApp button to OUR number is covered, including the
@@ -15,25 +24,42 @@
      box (partials/wa-desktop.html), which reads the link after this runs. */}}
 <script>
   (function () {
-    var KEY = "srb-ad-visit", DAYS = 30, TAG = " (G)";
+    var KEY = "srb-ad-visit", DAYS = 30;
     var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ .Site.Params.phoneRaw }}/;
     var q = new URLSearchParams(location.search);
     var fromAd = q.has("gclid") || q.has("gbraid") || q.has("wbraid") || /^(cpc|ppc|paid)$/i.test(q.get("utm_medium") || "");
+
+    // No 0/O, 1/I/L: the office reads these off a phone screen.
+    function newId() {
+      var abc = "23456789ABCDEFGHJKMNPQRSTUVWXYZ", n = new Uint8Array(4), s = "";
+      try { crypto.getRandomValues(n); } catch (e) { for (var i = 0; i < 4; i++) n[i] = Math.random() * 256; }
+      for (var j = 0; j < 4; j++) s += abc[n[j] % abc.length];
+      return s;
+    }
+
+    var visit = null;
+    if (fromAd) visit = { t: Date.now(), ag: (q.get("srb_ag") || "").toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 4), id: newId() };
     try {
-      if (fromAd) localStorage.setItem(KEY, String(Date.now()));
+      if (visit) localStorage.setItem(KEY, JSON.stringify(visit));
       else {
-        var t = +localStorage.getItem(KEY);
-        if (t && Date.now() - t < DAYS * 864e5) fromAd = true;
-        else if (t) localStorage.removeItem(KEY);
+        var saved = JSON.parse(localStorage.getItem(KEY) || "null");
+        if (typeof saved === "number") saved = { t: saved }; // a "(G)" visit, saved as a bare time
+        if (saved && saved.t && Date.now() - saved.t < DAYS * 864e5) {
+          visit = saved;
+          if (!visit.id) { visit.id = newId(); localStorage.setItem(KEY, JSON.stringify(visit)); }
+        } else if (saved) localStorage.removeItem(KEY);
       }
     } catch (e) {}
-    if (!fromAd) return;
+    if (!visit) return;
+
+    var REF = "G" + (visit.ag || "") + "-" + visit.id, TAG = " (" + REF + ")";
+    window.srbAdRef = REF;
 
     function mark(href) {
       var m = href.match(/([?&]text=)([^&#]*)/);
       if (!m) return href + (href.indexOf("?") < 0 ? "?" : "&") + "text=" + encodeURIComponent(TAG.trim());
       var text = decodeURIComponent(m[2].replace(/\+/g, " "));
-      if (/\(G\)$/.test(text)) return href;
+      if (/\(G[0-9A-Z]*-[0-9A-Z]+\)$/.test(text)) return href;
       return href.replace(m[0], m[1] + encodeURIComponent(text + TAG));
     }
     document.addEventListener("click", function (e) {
