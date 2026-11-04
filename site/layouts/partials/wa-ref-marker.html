@@ -1,0 +1,94 @@
+{{/* A visitor reference such as "(G1B-7K3P)" or "(W-7K3P)" on WhatsApp
+     messages from the site, so the office can tell how each website chat
+     found us and report which channels ordered (owner's requests, 28 Oct and
+     3–4 Nov 2026; average order ₹7,000 at ~15% margin, so channels are
+     judged on orders, not taps). The office pastes it into the registry's
+     Source_Ref.
+
+     The letter is how the visitor arrived:
+       G  Google Ads; "1B" after it is the campaign and ad group, from the
+          srb_ag=1B that each ad group's final URL suffix adds (campaign 1 is
+          "Search – AP & TG buyers – test"; A–D its ad groups)
+       M  the Business Profile / Maps website link (utm_campaign=gbp)
+       W  a tagged WhatsApp link: status, broadcast, catalogue
+       S  a search engine (Google, Bing…) without an ad
+       A  an AI assistant (ChatGPT, Perplexity, Gemini, Copilot)
+       O  any other site or tagged link (Instagram, YouTube, listings…)
+       D  typed, bookmarked or an untagged share
+     The last four characters are this visitor's own. They go to Analytics
+     with each tap as enquiry_ref (partials/analytics.html) and to Clarity on
+     every page as the enquiry_ref tag, so one registry row can be matched to
+     its visits and recordings.
+
+     The reference is remembered for 30 days in this browser, so a buyer who
+     comes back later by typing the address keeps it (and its letter). Only
+     an ad click starts a new one, so paid visits are never credited to an
+     earlier free one. Storage can be blocked (private tabs); then each page
+     gets its own reference from how it was reached.
+
+     One capture-phase click listener rewrites the link's text just before it
+     opens, so every WhatsApp button to OUR number is covered, including the
+     ones the catalog and product pages build in script, and the desktop QR
+     box (partials/wa-desktop.html), which reads the link after this runs. */}}
+<script>
+  (function () {
+    var KEY = "srb-ad-visit", DAYS = 30;
+    var OURS = /(api\.whatsapp\.com\/send\/?\?phone=|wa\.me\/){{ .Site.Params.phoneRaw }}/;
+    var q = new URLSearchParams(location.search);
+    var fromAd = q.has("gclid") || q.has("gbraid") || q.has("wbraid") || /^(cpc|ppc|paid)$/i.test(q.get("utm_medium") || "");
+
+    // How this page was reached, as the letter above ("G" is handled apart).
+    function channel() {
+      var src = (q.get("utm_source") || "").toLowerCase(), ref = "";
+      try { ref = document.referrer ? new URL(document.referrer).hostname : ""; } catch (e) {}
+      if (/^gbp$/i.test(q.get("utm_campaign") || "") || src === "gbp") return "M";
+      if (src === "whatsapp" || /(^|\.)whatsapp\.com$/.test(ref)) return "W";
+      if (/chatgpt|openai|perplexity|gemini|copilot/.test(src + " " + ref)) return "A";
+      if (src) return "O";
+      if (/(^|\.)(google|bing|yahoo|duckduckgo)\./.test(ref)) return "S";
+      if (ref && !/(^|\.)srirajabags\.in$/.test(ref)) return "O";
+      return "D";
+    }
+
+    // No 0/O, 1/I/L: the office reads these off a phone screen.
+    function newId() {
+      var abc = "23456789ABCDEFGHJKMNPQRSTUVWXYZ", n = new Uint8Array(4), s = "";
+      try { crypto.getRandomValues(n); } catch (e) { for (var i = 0; i < 4; i++) n[i] = Math.random() * 256; }
+      for (var j = 0; j < 4; j++) s += abc[n[j] % abc.length];
+      return s;
+    }
+
+    var visit = fromAd ? { t: Date.now(), ch: "G", ag: (q.get("srb_ag") || "").toUpperCase().replace(/[^0-9A-Z]/g, "").slice(0, 4), id: newId() } : null;
+    try {
+      if (!visit) {
+        var saved = JSON.parse(localStorage.getItem(KEY) || "null");
+        if (typeof saved === "number") saved = { t: saved }; // a "(G)" visit, saved as a bare time
+        if (saved && saved.t && Date.now() - saved.t < DAYS * 864e5) {
+          visit = saved;
+          visit.ch = visit.ch || "G"; // saved before 4 Nov: only ad visits were kept
+          visit.id = visit.id || newId();
+        }
+      }
+      if (!visit) visit = { t: Date.now(), ch: channel(), id: newId() };
+      localStorage.setItem(KEY, JSON.stringify(visit));
+    } catch (e) {
+      visit = visit || { t: Date.now(), ch: channel(), id: newId() };
+    }
+
+    var REF = visit.ch + (visit.ch === "G" ? visit.ag || "" : "") + "-" + visit.id, TAG = " (" + REF + ")";
+    window.srbRef = REF;
+    if (typeof clarity === "function") clarity("set", "enquiry_ref", REF);
+
+    function mark(href) {
+      var m = href.match(/([?&]text=)([^&#]*)/);
+      if (!m) return href + (href.indexOf("?") < 0 ? "?" : "&") + "text=" + encodeURIComponent(TAG.trim());
+      var text = decodeURIComponent(m[2].replace(/\+/g, " "));
+      if (/\([A-Z][0-9A-Z]*-[0-9A-Z]{4}\)$/.test(text)) return href;
+      return href.replace(m[0], m[1] + encodeURIComponent(text + TAG));
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest("a[href]");
+      if (a && OURS.test(a.href)) a.setAttribute("href", mark(a.getAttribute("href")));
+    }, true);
+  })();
+</script>
