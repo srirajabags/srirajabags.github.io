@@ -1,6 +1,7 @@
 {{ $logo := resources.Get "images/srb-22.png" }}
 {{ $logo2x := $logo.Resize "160x webp" }}
 <header class="navbar">
+  {{ partial "offer.html" (dict "part" "bar") }}
   <div class="navbar-inner">
     <a class="navbar-brand" href="{{ "/" | relURL }}">
       <img src="{{ $logo2x.RelPermalink }}" width="{{ div $logo2x.Width 2 }}" height="{{ div $logo2x.Height 2 }}" alt="Sri Raja Bags logo">

@@ -108,6 +108,27 @@ disableKinds = ["taxonomy", "term"]
 #
 # Note: these tables must stay last in [params] — any plain key written after a
 # TOML sub-table gets absorbed into that sub-table.
+
+# The running offer: a red bar above the navbar on every page, which opens a
+# dialog with the poster and the rate table (partials/offer.html). Shown only
+# until `until`. The build leaves it out once that has passed, and the page's
+# own clock hides it on the day too, because the site is only rebuilt on a
+# push (no nightly publish). Delete this table to take the offer down early.
+#
+# The struck-out "was" rates are read from the catalog (the first product in
+# `products`), never typed here: a crossed-out price has to be the real one.
+# The owner's first graphic said "was 240/250/260" and "15% off"; the catalog
+# is 245/255/266, so the cut is 16–17%, and no percentage is shown.
+# Owner's offer, 6 Nov 2026: single and double colour D-cut, 80 GSM, all sizes.
+[params.offer]
+  until = "2026-12-10T23:59:59+05:30"
+  products = ["dcut-single-color", "dcut-double-color"]
+  rates = [205, 215, 220]
+  # The regular rates of the other D-cut prints, shown under the offer row
+  # for comparison, from the catalog's Digital D-Cut (13x19) variants.
+  compare = "digital-dcut"
+  poster = "images/offers/dcut-offer-nov-2026.jpg"
+
 [params.address]
   primary = "office"
   region = "Andhra Pradesh"

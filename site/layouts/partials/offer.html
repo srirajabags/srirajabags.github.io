@@ -1,0 +1,134 @@
+{{/* The running offer (params.offer in hugo.toml): a red bar at the top of
+     every page, and a dialog with the poster and the rate table that the bar
+     opens. Called three times from the base layout and navbar:
+       (dict "part" "head")    a script that marks <html class="has-offer">
+                               while the offer is on, by the visitor's clock
+       (dict "part" "bar")     the bar, inside the fixed header
+       (dict "part" "dialog")  the dialog and its script, at the end of <body>
+     Nothing shows without the has-offer class, so after `until` the bar is
+     gone the same day even though the site is not rebuilt until the next
+     push, and the next build leaves it all out.
+
+     The dialog also opens from any link to "#offer", so a WhatsApp status or
+     broadcast can link straight to it: https://www.srirajabags.in/#offer.
+
+     The struck-out rates are the catalog's own (Grist), so a crossed-out
+     price is always the real regular price. */}}
+{{- with site.Params.offer -}}
+{{- $until := time .until -}}
+{{- if lt now.Unix $until.Unix -}}
+{{- $part := $.part -}}
+
+{{- if eq $part "head" }}
+<script>if (Date.now() < {{ mul $until.Unix 1000 }}) document.documentElement.classList.add("has-offer");</script>
+{{- else -}}
+
+{{- $cat := dict -}}
+{{- with resources.Get "data/catalog.json" }}{{ $cat = . | transform.Unmarshal }}{{ end -}}
+{{- $mainID := index .products 0 -}}
+{{- $main := index (where $cat.products "id" $mainID) 0 -}}
+{{- $was := slice -}}
+{{- with $main }}{{ with index .variants 0 }}{{ with .rates }}{{ $was = . }}{{ end }}{{ end }}{{ end -}}
+{{- if ne (len $was) (len .rates) }}{{ warnf "offer: no catalog rates for %s, so no struck-out prices" $mainID }}{{ $was = slice }}{{ end -}}
+{{- $rates := .rates -}}
+{{- $from := index $rates 0 -}}
+{{- $till := $until.Format "2 Jan" -}}
+
+{{- if eq $part "bar" }}
+<div class="offer-bar">
+  <a href="#offer" data-offer-open="bar">
+    <span class="offer-bar-tag">Offer</span>
+    <span class="offer-bar-text"><span class="ob-wide">Printed </span>D-cut bags <b>₹{{ $from }}/kg</b>{{ with $was }} <s>₹{{ index . 0 }}</s>{{ end }} <span class="ob-till">till {{ $till }}</span></span>
+    <span class="offer-bar-cta">See rates<span class="ob-wide"> &amp; poster</span> ›</span>
+  </a>
+</div>
+{{- end -}}
+
+{{- if eq $part "dialog" -}}
+{{- $s := site -}}
+{{- $poster := resources.Get .poster -}}
+{{- $cmp := index (where $cat.products "id" .compare) 0 -}}
+{{- $names := dict "Normal" "Multi colour" "Outside Lamination" "Multi colour, outside lamination" "BOPP" "BOPP multi colour" -}}
+{{- $waText := printf "Hello, I want printed D-cut bags at the offer rate (₹%d/kg till %s). %s" $from $till $s.Params.waMarker -}}
+{{- $wa := printf "https://api.whatsapp.com/send/?phone=%s&text=%s&type=phone_number&app_absent=0" $s.Params.phoneRaw (urlquery $waText) }}
+<dialog class="offer-dialog" id="offer" aria-labelledby="offer-h">
+  <div class="offer-scroll">
+    <button type="button" class="ct-dialog-x offer-x" aria-label="Close">×</button>
+    <div class="offer-grid">
+      {{ with $poster }}
+      {{ $img := .Resize "720x webp q80" }}
+      <div class="offer-poster">
+        {{/* Lazy inside a closed dialog: fetched only when the dialog opens. */}}
+        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Offer poster: printed D-cut bags, single or double colour, 80 GSM, all sizes, ₹{{ delimit $rates "/" }} per kg by order value, offer till {{ $till }}">
+      </div>
+      {{ end }}
+      <div class="offer-info">
+        <p class="offer-kicker">Offer till {{ $until.Format "2 January 2006" }}</p>
+        <h2 id="offer-h">Printed D-cut bags from ₹{{ $from }}/kg</h2>
+        <p class="offer-sub">Single or double colour print · 80 GSM · all sizes</p>
+
+        <div class="offer-table-wrap">
+        <table class="offer-table">
+          <thead>
+            <tr>
+              <th scope="col">Rate per kg<br><span>by your total order value</span></th>
+              {{ range $cat.priceTypes }}<th scope="col">{{ .label }}</th>{{ end }}
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="offer-row">
+              <th scope="row"><a href="{{ printf "/products/%s/" $mainID | relURL }}">Single / double colour</a><span class="offer-badge">Offer</span></th>
+              {{ range $i, $r := $rates }}
+              <td><b>₹{{ $r }}</b>{{ with $was }}<s aria-label="regular rate">₹{{ index . $i }}</s>{{ end }}</td>
+              {{ end }}
+            </tr>
+            {{ with $cmp }}{{ $id := .id }}
+            {{ range .variants }}{{ if and .rates (hasPrefix .size "13x19") }}
+            {{ $kind := replaceRE `^.*\((.*)\)$` "$1" .size }}
+            <tr>
+              <th scope="row"><a href="{{ printf "/products/%s/" $id | relURL }}">{{ index $names $kind | default $kind }}</a></th>
+              {{ range .rates }}<td>₹{{ . }}</td>{{ end }}
+            </tr>
+            {{ end }}{{ end }}
+            {{ end }}
+          </tbody>
+        </table>
+        </div>
+        <p class="offer-notes">Only single and double colour bags are on offer; the other prints are at their usual rates. Per kg, printed, ex-factory; GST and transport extra. Minimum 10 kg, or 50 kg per size for multi colour (13 × 19 and 16 × 19 inch).</p>
+      </div>
+    </div>
+    <div class="offer-cta" data-wa-place="offer_dialog">
+      <a class="btn btn-wa" href="{{ $wa }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Get the offer<span class="ob-wide"> on WhatsApp</span></span></a>
+      <a class="btn offer-call" href="tel:+{{ $s.Params.phoneRaw }}">Call</a>
+    </div>
+  </div>
+</dialog>
+<script>
+  (function () {
+    var d = document.getElementById("offer");
+    if (!d || !document.documentElement.classList.contains("has-offer")) return;
+    function open(source) {
+      if (typeof d.showModal !== "function") { location.href = {{ printf "/products/%s/" $mainID | relURL }}; return; }
+      if (!d.open) d.showModal();
+      if (typeof gtag === "function") gtag("event", "offer_open", { source: source, page_path: location.pathname });
+      if (typeof clarity === "function") clarity("event", "offer_open");
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest('[data-offer-open], a[href="#offer"]');
+      if (!a) return;
+      e.preventDefault();
+      open(a.getAttribute("data-offer-open") || "link");
+    });
+    d.querySelector(".offer-x").addEventListener("click", function () { d.close(); });
+    // A tap on the dimmed backdrop lands on the <dialog> itself.
+    d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
+    d.addEventListener("close", function () {
+      if (location.hash === "#offer") history.replaceState(null, "", location.pathname + location.search);
+    });
+    if (location.hash === "#offer") open("link");
+  })();
+</script>
+{{- end -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}

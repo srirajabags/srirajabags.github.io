@@ -92,6 +92,7 @@
   {{ partial "schema.html" . }}
   {{ partial "analytics.html" . }}
   {{ partial "wa-ref-marker.html" . }}
+  {{ partial "offer.html" (dict "part" "head") }}
 </head>
 <body>
   {{ partial "navbar.html" . }}
@@ -104,5 +105,6 @@
   </main>
   {{ partial "footer.html" . }}
   {{ partial "wa-desktop.html" . }}
+  {{ partial "offer.html" (dict "part" "dialog") }}
 </body>
 </html>
