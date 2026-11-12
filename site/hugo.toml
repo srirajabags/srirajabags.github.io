@@ -117,8 +117,9 @@ disableKinds = ["taxonomy", "term"]
 #
 # The struck-out "was" rates are read from the catalog (the first product in
 # `products`), never typed here: a crossed-out price has to be the real one.
-# The owner's first graphic said "was 240/250/260" and "15% off"; the catalog
-# is 245/255/266, so the cut is 16–17%, and no percentage is shown.
+# Since the 6 Nov 2026 pricelist the catalog has 240/250/260, the same as the
+# owner's poster. The poster's "15%" is rounded (the cuts are 14–15.4%), so
+# the page itself shows rates only, no percentage.
 # Owner's offer, 6 Nov 2026: single and double colour D-cut, 80 GSM, all sizes.
 [params.offer]
   until = "2026-12-10T23:59:59+05:30"

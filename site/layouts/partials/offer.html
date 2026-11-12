@@ -59,7 +59,7 @@
       {{ $img := .Resize "720x webp q80" }}
       <div class="offer-poster">
         {{/* Lazy inside a closed dialog: fetched only when the dialog opens. */}}
-        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Offer poster: printed D-cut bags, single or double colour, 80 GSM, all sizes, ₹{{ delimit $rates "/" }} per kg by order value, offer till {{ $till }}">
+        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Offer poster: non woven D-cut bags, single or double colour at ₹{{ delimit $rates "/" }} per kg by order value, and the regular rates of multi colour, laminated and BOPP D-cut bags">
       </div>
       {{ end }}
       <div class="offer-info">
