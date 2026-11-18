@@ -122,7 +122,7 @@ disableKinds = ["taxonomy", "term"]
 # the page itself shows rates only, no percentage.
 # Owner's offer, 6 Nov 2026: single and double colour D-cut, 80 GSM, all sizes.
 [params.offer]
-  until = "2026-12-10T23:59:59+05:30"
+  until = "2026-12-31T23:59:59+05:30"
   products = ["dcut-single-color", "dcut-double-color"]
   rates = [205, 215, 220]
   # The regular rates of the other D-cut prints, shown under the offer row
