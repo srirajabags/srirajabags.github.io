@@ -59,6 +59,13 @@
   {{/* Search title: the product plus what people search alongside it. */}}
   {{ $metaTitle := cond (gt $hi 0.0) (printf "%s — Wholesale Price & Sizes" $searchName) (printf "%s — Sizes & Quote" $searchName) }}
 
+  {{/* Where buyers search a short name ("hm cover", "bio cover"), that name
+       leads the title and the description instead (params.searchAlias). */}}
+  {{ with index (site.Params.searchAlias | default dict) $p.id }}
+    {{ if gt $hi 0.0 }}{{ $metaTitle = printf "%s Price per %s: %s" . $unit $searchName }}{{ end }}
+    {{ $desc = printf "%s price: %s. %s from Sri Raja Bags, Dhone, printed with your shop name. %s" . (delimit $bits ", ") $searchName (cond (gt $hi 0.0) "Send your design on WhatsApp for a quote." "Rate on request on WhatsApp.") }}
+  {{ end }}
+
   {{ $params := dict "productId" $p.id "metaTitle" $metaTitle "searchName" $searchName "description" $desc }}
   {{ with $p.photos }}{{ $params = merge $params (dict "ogImage" (printf "images/%s" (index . 0).file)) }}{{ end }}
   {{/* Quality gate: no price and no photo is a page with nothing a buyer or a

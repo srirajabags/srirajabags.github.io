@@ -4,7 +4,9 @@ slug: "non-woven-bag-gsm"
 date: 2026-10-16T10:00:00+05:30
 author: "Achyutha Raja"
 # Search-result title: the H1 is too long for Google's ~60-character cut-off.
-metaTitle: "Non Woven Bag GSM Explained: 60 vs 80 vs 110 GSM"
+# 24 Nov 2026: searches were "110 gsm means", "gsm bags", "110 gsm meaning"
+# (positions 5–10, no clicks), so the title now starts with the meaning.
+metaTitle: "GSM Meaning for Bags: What 60, 80 and 110 GSM Mean"
 description: "What GSM means on a non woven bag, how 60, 80 and 110 GSM differ in strength, feel and cost, the legal minimum, and how to check a bag's GSM yourself."
 tags: ["bag types", "buying guide"]
 image: "dcut-80-gsm.jpg"

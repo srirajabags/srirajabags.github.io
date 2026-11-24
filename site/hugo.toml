@@ -121,6 +121,19 @@ disableKinds = ["taxonomy", "term"]
 # owner's poster. The poster's "15%" is rounded (the cuts are 14–15.4%), so
 # the page itself shows rates only, no percentage.
 # Owner's offer, 6 Nov 2026: single and double colour D-cut, 80 GSM, all sizes.
+[params.searchAlias]
+  # The short name buyers type into Google for a product, by Product_ID. When
+  # set, it leads the product page's search title and description, e.g.
+  # "HM Cover Price per kg: …". From Search Console, 25 Oct–21 Nov 2026: these
+  # pages were shown at positions 6–9 for "hm cover" (52), "bio cover" (153),
+  # "ld cover price" (22) and "u cut carry bag" (17) with 0 clicks, because
+  # the titles started with the office's catalog names instead.
+  hm-plastic-dcut = "HM Cover"
+  ld-plastic-dcut = "LD Cover"
+  bio-ucut = "Bio Cover"
+  plastic-ucut = "U Cut Cover"
+  ucut = "U Cut Carry Bag"
+
 [params.offer]
   until = "2026-12-31T23:59:59+05:30"
   products = ["dcut-single-color", "dcut-double-color"]
