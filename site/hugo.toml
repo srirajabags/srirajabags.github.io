@@ -131,8 +131,8 @@ disableKinds = ["taxonomy", "term"]
   hm-plastic-dcut = "HM Cover"
   ld-plastic-dcut = "LD Cover"
   bio-ucut = "Bio Cover"
-  plastic-ucut = "U Cut Cover"
-  ucut = "U Cut Carry Bag"
+  # U-cut covers and U-cut bags: held back until the owner confirms their
+  # details (24 Nov 2026).
 
 [params.offer]
   until = "2026-12-31T23:59:59+05:30"
