@@ -4518,7 +4518,7 @@
   },
   {
    "id": "bio-ucut",
-   "name": "Bio Degradable U-CUT Covers",
+   "name": "Bio Degradable U-Cut Covers",
    "material": "Bio-degradable Cover",
    "bagType": "U-Cut",
    "print": "Printed",
@@ -4534,6 +4534,7 @@
     "Medical Shops"
    ],
    "badges": [
+    "New",
     "Eco Friendly",
     "High Capacity"
    ],
@@ -4541,65 +4542,59 @@
    "minOrder": 30,
    "thickness": "micron",
    "description": "Bio-degradable U-cut cover, made in the same shape and sizes as our plastic U-cut cover.",
-   "priceNotes": "",
+   "priceNotes": "Launch offer: 25% off till 30 Jan 2027 (was ₹240 / ₹250 / ₹260 per kg). Printed: minimum 30 kg.",
    "variants": [
     {
      "size": "10x14",
      "gsm": null,
      "patty": "",
      "rates": [
-      240,
-      250,
-      260
+      180,
+      188,
+      195
      ],
-     "pcsPerKg": null
+     "pcsPerKg": 123
     },
     {
      "size": "13x16",
      "gsm": null,
      "patty": "",
      "rates": [
-      240,
-      250,
-      260
+      180,
+      188,
+      195
      ],
-     "pcsPerKg": null
+     "pcsPerKg": 83
     },
     {
      "size": "16x20",
      "gsm": null,
      "patty": "",
      "rates": [
-      240,
-      250,
-      260
+      180,
+      188,
+      195
      ],
-     "pcsPerKg": null
-    },
-    {
-     "size": "16x22",
-     "gsm": null,
-     "patty": "",
-     "rates": [
-      240,
-      250,
-      260
-     ],
-     "pcsPerKg": null
+     "pcsPerKg": 53
     },
     {
      "size": "20x26",
      "gsm": null,
      "patty": "",
      "rates": [
-      240,
-      250,
-      260
+      180,
+      188,
+      195
      ],
-     "pcsPerKg": null
+     "pcsPerKg": 33
     }
    ],
    "photos": [
+    {
+     "file": "catalog/5c228363ed40e64b2fa0a4720d31a3b125d3b17a.jpg",
+     "shopTypes": [],
+     "alt": "Bio-Degradable U-cut carry bags launch offer: 25% off, from ₹180 per kg, sizes 10x14 to 20x26"
+    },
     {
      "file": "catalog/bd974ca2e1806c27b429bdf6a5d7365ad9ced520.jpg",
      "shopTypes": [],
