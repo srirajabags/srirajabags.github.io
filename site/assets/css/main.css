@@ -186,6 +186,33 @@ html.has-offer { --offer-h: 2.25rem; --nav-h: calc(4.5rem + var(--offer-h)); }
 }
 @media (max-width: 360px) { .ob-till { display: none; } }
 
+/* Two offers at once (D-cut + Bio U-cut launch). Each half shows only while
+   its own class is on <html> (set by the head script from its end date).
+   Side by side on wide screens; on phones they take turns in the same strip,
+   so the header height never changes. The bio half is the poster's green. */
+.has-offer .offer-bar { display: flex; }
+.offer-bar .ob-item { display: none; flex: 1 1 0; min-width: 0; }
+.has-offer-dcut .offer-bar .ob-dcut, .has-offer-bio .offer-bar .ob-bio { display: flex; }
+.offer-bar .ob-bio { background: #1d5e35; }
+.offer-bar .ob-new { color: #1d5e35; }
+.has-offer-two .offer-bar .ob-bio { border-left: 2px solid rgba(255,255,255,0.35); }
+.ob-pcs { font-size: 0.74rem; font-weight: 500; color: var(--ink-soft); }
+@media (max-width: 1100px) { .has-offer-two .offer-bar .ob-wide { display: none; } }
+@media (max-width: 760px) {
+  .has-offer-two .offer-bar { position: relative; height: var(--offer-h); }
+  .has-offer-two .offer-bar .ob-item { position: absolute; inset: 0; border-left: 0; animation: ob-swap 10s infinite; }
+  .has-offer-two .offer-bar .ob-bio { animation-delay: -5s; }
+}
+@keyframes ob-swap {
+  0%, 46% { opacity: 1; visibility: visible; }
+  50%, 96% { opacity: 0; visibility: hidden; }
+  100% { opacity: 1; visibility: visible; }
+}
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .has-offer-two .offer-bar .ob-item { animation: none; }
+  .has-offer-two .offer-bar .ob-bio { display: none; }
+}
+
 .offer-dialog {
   border: 0; padding: 0;
   width: min(58rem, calc(100vw - 2rem));

@@ -1,55 +1,90 @@
-{{/* The running offer (params.offer in hugo.toml): a red bar at the top of
-     every page, and a dialog with the poster and the rate table that the bar
-     opens. Called three times from the base layout and navbar:
-       (dict "part" "head")    a script that marks <html class="has-offer">
-                               while the offer is on, by the visitor's clock
+{{/* The running offers: a red bar at the top of every page, and one dialog
+     per offer (poster + rate table) that the bar opens. Two offers can run at
+     once, each with its own end date:
+       params.offer     D-cut bags (dialog #offer)
+       params.bioOffer  Bio U-cut cover launch (dialog #offer-bio)
+     Called three times from the base layout and navbar:
+       (dict "part" "head")    a script that marks <html class="has-offer"> plus
+                               has-offer-dcut / has-offer-bio for each offer
+                               still on by the visitor's clock
        (dict "part" "bar")     the bar, inside the fixed header
-       (dict "part" "dialog")  the dialog and its script, at the end of <body>
-     Nothing shows without the has-offer class, so after `until` the bar is
-     gone the same day even though the site is not rebuilt until the next
-     push, and the next build leaves it all out.
+       (dict "part" "dialog")  the dialogs and their script, at the end of <body>
+     Nothing shows without those classes, so an offer leaves the bar on the
+     day it ends even though the site is only rebuilt on a push, and the next
+     build leaves it out.
 
-     The dialog also opens from any link to "#offer", so a WhatsApp status or
-     broadcast can link straight to it: https://www.srirajabags.in/#offer.
+     A dialog also opens from any link to its id, so a WhatsApp status or
+     broadcast can link straight to it: https://www.srirajabags.in/#offer or
+     https://www.srirajabags.in/#offer-bio.
 
-     The struck-out rates are the catalog's own (Grist), so a crossed-out
-     price is always the real regular price. */}}
-{{- with site.Params.offer -}}
-{{- $until := time .until -}}
-{{- if lt now.Unix $until.Unix -}}
-{{- $part := $.part -}}
-
-{{- if eq $part "head" }}
-<script>if (Date.now() < {{ mul $until.Unix 1000 }}) document.documentElement.classList.add("has-offer");</script>
-{{- else -}}
-
+     D-cut's struck-out rates are the catalog's own (Grist). The bio launch
+     rates ARE the catalog rates for now, so its struck-out regular rates come
+     from params.bioOffer.was (the owner's poster). */}}
+{{- $part := .part -}}
+{{- $s := site -}}
 {{- $cat := dict -}}
 {{- with resources.Get "data/catalog.json" }}{{ $cat = . | transform.Unmarshal }}{{ end -}}
-{{- $mainID := index .products 0 -}}
+
+{{- /* Which offers are still on at build time. */ -}}
+{{- $d := dict "on" false -}}
+{{- with $s.Params.offer }}{{ $u := time .until }}{{ if lt now.Unix $u.Unix }}{{ $d = dict "on" true "until" $u "p" . }}{{ end }}{{ end -}}
+{{- $b := dict "on" false -}}
+{{- with $s.Params.bioOffer }}{{ $u := time .until }}{{ if lt now.Unix $u.Unix }}{{ $b = dict "on" true "until" $u "p" . }}{{ end }}{{ end -}}
+
+{{- if eq $part "head" -}}
+{{- if or $d.on $b.on }}
+<script>(function(){var n=Date.now(),c=document.documentElement.classList,o={ {{- if $d.on }}dcut:{{ mul $d.until.Unix 1000 }}{{ end }}{{ if and $d.on $b.on }},{{ end }}{{ if $b.on }}bio:{{ mul $b.until.Unix 1000 }}{{ end -}} },k,m=0;for(k in o)if(n<o[k]){c.add("has-offer-"+k);m++}if(m)c.add("has-offer");if(m>1)c.add("has-offer-two")})();</script>
+{{- end -}}
+{{- end -}}
+
+{{- /* D-cut figures, used by the bar and its dialog. */ -}}
+{{- $dc := dict -}}
+{{- if $d.on -}}
+{{- $p := $d.p -}}
+{{- $mainID := index $p.products 0 -}}
 {{- $main := index (where $cat.products "id" $mainID) 0 -}}
 {{- $was := slice -}}
 {{- with $main }}{{ with index .variants 0 }}{{ with .rates }}{{ $was = . }}{{ end }}{{ end }}{{ end -}}
-{{- if ne (len $was) (len .rates) }}{{ warnf "offer: no catalog rates for %s, so no struck-out prices" $mainID }}{{ $was = slice }}{{ end -}}
-{{- $rates := .rates -}}
-{{- $from := index $rates 0 -}}
-{{- $till := $until.Format "2 Jan" -}}
+{{- if ne (len $was) (len $p.rates) }}{{ warnf "offer: no catalog rates for %s, so no struck-out prices" $mainID }}{{ $was = slice }}{{ end -}}
+{{- $dc = dict "mainID" $mainID "was" $was "rates" $p.rates "from" (index $p.rates 0) "till" ($d.until.Format "2 Jan") -}}
+{{- end -}}
 
-{{- if eq $part "bar" }}
+{{- /* Bio figures: rates per size from the catalog (already the offer rates). */ -}}
+{{- $bc := dict -}}
+{{- if $b.on -}}
+{{- $p := $b.p -}}
+{{- $prod := index (where $cat.products "id" $p.product) 0 -}}
+{{- $from := 0 -}}
+{{- with $prod }}{{ range .variants }}{{ with .rates }}{{ $r := index . 0 }}{{ if or (eq $from 0) (lt $r $from) }}{{ $from = $r }}{{ end }}{{ end }}{{ end }}{{ end -}}
+{{- $bc = dict "prod" $prod "id" $p.product "was" $p.was "from" $from "till" ($b.until.Format "2 Jan") -}}
+{{- end -}}
+
+{{- if and (eq $part "bar") (or $d.on $b.on) }}
 <div class="offer-bar">
-  <a href="#offer" data-offer-open="bar">
+  {{- if $d.on }}
+  <a class="ob-item ob-dcut" href="#offer" data-offer-open="bar">
     <span class="offer-bar-tag">Offer</span>
-    <span class="offer-bar-text"><span class="ob-wide">Printed </span>D-cut bags <b>₹{{ $from }}/kg</b>{{ with $was }} <s>₹{{ index . 0 }}</s>{{ end }} <span class="ob-till">till {{ $till }}</span></span>
+    <span class="offer-bar-text"><span class="ob-wide">Printed </span>D-cut bags <b>₹{{ $dc.from }}/kg</b>{{ with $dc.was }} <s>₹{{ index . 0 }}</s>{{ end }} <span class="ob-till">till {{ $dc.till }}</span></span>
     <span class="offer-bar-cta">See rates<span class="ob-wide"> &amp; poster</span> ›</span>
   </a>
+  {{- end }}
+  {{- if $b.on }}
+  <a class="ob-item ob-bio" href="#offer-bio" data-offer-open="bar-bio">
+    <span class="offer-bar-tag ob-new">New</span>
+    <span class="offer-bar-text">Bio U-cut covers <b>₹{{ $bc.from }}/kg</b>{{ with $bc.was }} <s>₹{{ index . 0 }}</s>{{ end }} <span class="ob-till">till {{ $bc.till }}</span></span>
+    <span class="offer-bar-cta">See rates<span class="ob-wide"> &amp; poster</span> ›</span>
+  </a>
+  {{- end }}
 </div>
 {{- end -}}
 
 {{- if eq $part "dialog" -}}
-{{- $s := site -}}
-{{- $poster := resources.Get .poster -}}
-{{- $cmp := index (where $cat.products "id" .compare) 0 -}}
+{{- if $d.on -}}
+{{- $p := $d.p -}}
+{{- $poster := resources.Get $p.poster -}}
+{{- $cmp := index (where $cat.products "id" $p.compare) 0 -}}
 {{- $names := dict "Normal" "Multi colour" "Outside Lamination" "Multi colour, outside lamination" "BOPP" "BOPP multi colour" -}}
-{{- $waText := printf "Hello, I want printed D-cut bags at the offer rate (₹%d/kg till %s). %s" $from $till $s.Params.waMarker -}}
+{{- $waText := printf "Hello, I want printed D-cut bags at the offer rate (₹%d/kg till %s). %s" $dc.from $dc.till $s.Params.waMarker -}}
 {{- $wa := printf "https://api.whatsapp.com/send/?phone=%s&text=%s&type=phone_number&app_absent=0" $s.Params.phoneRaw (urlquery $waText) }}
 <dialog class="offer-dialog" id="offer" aria-labelledby="offer-h">
   <div class="offer-scroll">
@@ -59,12 +94,12 @@
       {{ $img := .Resize "720x webp q80" }}
       <div class="offer-poster">
         {{/* Lazy inside a closed dialog: fetched only when the dialog opens. */}}
-        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Offer poster: non woven D-cut bags, single or double colour at ₹{{ delimit $rates "/" }} per kg by order value, and the regular rates of multi colour, laminated and BOPP D-cut bags">
+        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Offer poster: non woven D-cut bags, single or double colour at ₹{{ delimit $dc.rates "/" }} per kg by order value, and the regular rates of multi colour, laminated and BOPP D-cut bags">
       </div>
       {{ end }}
       <div class="offer-info">
-        <p class="offer-kicker">Offer till {{ $until.Format "2 January 2006" }}</p>
-        <h2 id="offer-h">Printed D-cut bags from ₹{{ $from }}/kg</h2>
+        <p class="offer-kicker">Offer till {{ $d.until.Format "2 January 2006" }}</p>
+        <h2 id="offer-h">Printed D-cut bags from ₹{{ $dc.from }}/kg</h2>
         <p class="offer-sub">Single or double colour print · 80 GSM · all sizes</p>
 
         <div class="offer-table-wrap">
@@ -77,9 +112,9 @@
           </thead>
           <tbody>
             <tr class="offer-row">
-              <th scope="row"><a href="{{ printf "/products/%s/" $mainID | relURL }}">Single / double colour</a><span class="offer-badge">Offer</span></th>
-              {{ range $i, $r := $rates }}
-              <td><b>₹{{ $r }}</b>{{ with $was }}<s aria-label="regular rate">₹{{ index . $i }}</s>{{ end }}</td>
+              <th scope="row"><a href="{{ printf "/products/%s/" $dc.mainID | relURL }}">Single / double colour</a><span class="offer-badge">Offer</span></th>
+              {{ range $i, $r := $dc.rates }}
+              <td><b>₹{{ $r }}</b>{{ with $dc.was }}<s aria-label="regular rate">₹{{ index . $i }}</s>{{ end }}</td>
               {{ end }}
             </tr>
             {{ with $cmp }}{{ $id := .id }}
@@ -103,32 +138,92 @@
     </div>
   </div>
 </dialog>
+{{- end -}}
+
+{{- if $b.on -}}
+{{- $p := $b.p -}}
+{{- $poster := resources.Get $p.poster -}}
+{{- $waText := printf "Hello, I want Bio Degradable U-Cut Covers at the launch offer (from ₹%v/kg till %s). %s" $bc.from $bc.till $s.Params.waMarker -}}
+{{- $wa := printf "https://api.whatsapp.com/send/?phone=%s&text=%s&type=phone_number&app_absent=0" $s.Params.phoneRaw (urlquery $waText) }}
+<dialog class="offer-dialog" id="offer-bio" aria-labelledby="offer-bio-h">
+  <div class="offer-scroll">
+    <button type="button" class="ct-dialog-x offer-x" aria-label="Close">×</button>
+    <div class="offer-grid">
+      {{ with $poster }}
+      {{ $img := .Resize "720x webp q80" }}
+      <div class="offer-poster">
+        <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" loading="lazy" alt="Launch poster: Bio-Degradable U-cut carry bags, 25% off, from ₹{{ $bc.from }} per kg, sizes 10x14 to 20x26">
+      </div>
+      {{ end }}
+      <div class="offer-info">
+        <p class="offer-kicker">New · 25% off till {{ $b.until.Format "2 January 2006" }}</p>
+        <h2 id="offer-bio-h">Bio Degradable U-Cut Covers from ₹{{ $bc.from }}/kg</h2>
+        <p class="offer-sub">Printed with your shop name · minimum 30 kg</p>
+
+        <div class="offer-table-wrap">
+        <table class="offer-table">
+          <thead>
+            <tr>
+              <th scope="col">Size (inch)<br><span>pieces per kg</span></th>
+              {{ range $cat.priceTypes }}<th scope="col">{{ .label }}</th>{{ end }}
+            </tr>
+          </thead>
+          <tbody>
+            {{ with $bc.prod }}
+            {{ range .variants }}{{ if .rates }}
+            <tr class="offer-row">
+              <th scope="row"><a href="{{ printf "/products/%s/" $bc.id | relURL }}">{{ replace .size "x" " × " }}</a>{{ with .pcsPerKg }}<br><span class="ob-pcs">{{ . }} pcs/kg</span>{{ end }}</th>
+              {{ range $i, $r := .rates }}
+              <td><b>₹{{ $r }}</b>{{ with $bc.was }}<s aria-label="regular rate">₹{{ index . $i }}</s>{{ end }}</td>
+              {{ end }}
+            </tr>
+            {{ end }}{{ end }}
+            {{ end }}
+          </tbody>
+        </table>
+        </div>
+        <p class="offer-notes">Launch offer: 25% off the regular rates (struck out) till {{ $b.until.Format "2 January 2006" }}. The rate depends on your total order value. Per kg, printed, ex-factory; GST and transport extra.</p>
+      </div>
+    </div>
+    <div class="offer-cta" data-wa-place="offer_bio_dialog">
+      <a class="btn btn-wa" href="{{ $wa }}" target="_blank" rel="noopener">{{ partial "icon-whatsapp.html" }}<span>Get the offer<span class="ob-wide"> on WhatsApp</span></span></a>
+      <a class="btn offer-call" href="tel:+{{ $s.Params.phoneRaw }}">Call</a>
+    </div>
+  </div>
+</dialog>
+{{- end -}}
+
+{{- if or $d.on $b.on }}
 <script>
   (function () {
-    var d = document.getElementById("offer");
-    if (!d || !document.documentElement.classList.contains("has-offer")) return;
-    function open(source) {
-      if (typeof d.showModal !== "function") { location.href = {{ printf "/products/%s/" $mainID | relURL }}; return; }
+    if (!document.documentElement.classList.contains("has-offer")) return;
+    var fallback = { "offer": {{ printf "/products/%s/" ($dc.mainID | default "dcut-single-color") | relURL }}, "offer-bio": {{ printf "/products/%s/" ($bc.id | default "bio-ucut") | relURL }} };
+    function open(id, source) {
+      var d = document.getElementById(id);
+      if (!d) return;
+      if (typeof d.showModal !== "function") { location.href = fallback[id]; return; }
       if (!d.open) d.showModal();
-      if (typeof gtag === "function") gtag("event", "offer_open", { source: source, page_path: location.pathname });
+      if (typeof gtag === "function") gtag("event", "offer_open", { source: source, offer: id, page_path: location.pathname });
       if (typeof clarity === "function") clarity("event", "offer_open");
     }
     document.addEventListener("click", function (e) {
-      var a = e.target.closest && e.target.closest('[data-offer-open], a[href="#offer"]');
+      var a = e.target.closest && e.target.closest('[data-offer-open], a[href="#offer"], a[href="#offer-bio"]');
       if (!a) return;
+      var id = (a.getAttribute("href") || "#offer").slice(1);
+      if (!document.getElementById(id)) return;
       e.preventDefault();
-      open(a.getAttribute("data-offer-open") || "link");
+      open(id, a.getAttribute("data-offer-open") || "link");
     });
-    d.querySelector(".offer-x").addEventListener("click", function () { d.close(); });
-    // A tap on the dimmed backdrop lands on the <dialog> itself.
-    d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
-    d.addEventListener("close", function () {
-      if (location.hash === "#offer") history.replaceState(null, "", location.pathname + location.search);
+    document.querySelectorAll(".offer-dialog").forEach(function (d) {
+      d.querySelector(".offer-x").addEventListener("click", function () { d.close(); });
+      // A tap on the dimmed backdrop lands on the <dialog> itself.
+      d.addEventListener("click", function (e) { if (e.target === d) d.close(); });
+      d.addEventListener("close", function () {
+        if (location.hash === "#" + d.id) history.replaceState(null, "", location.pathname + location.search);
+      });
     });
-    if (location.hash === "#offer") open("link");
+    if (location.hash === "#offer" || location.hash === "#offer-bio") open(location.hash.slice(1), "link");
   })();
 </script>
-{{- end -}}
-{{- end -}}
 {{- end -}}
 {{- end -}}

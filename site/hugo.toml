@@ -134,6 +134,18 @@ disableKinds = ["taxonomy", "term"]
   # U-cut covers and U-cut bags: held back until the owner confirms their
   # details (24 Nov 2026).
 
+# Second offer in the same red bar: the Bio U-cut cover launch (owner, 26 Nov
+# 2026). Grist already holds the offer rates (180/188/195) as this product's
+# catalog rates, so the struck-out regular rates are written here, from the
+# owner's poster. Each offer has its own end date; the bar shows whichever are
+# still running and alternates between them on phones. Delete this table to
+# take it down early. After `until`, also put 240/250/260 back in Grist.
+[params.bioOffer]
+  until = "2027-01-30T23:59:59+05:30"
+  product = "bio-ucut"
+  was = [240, 250, 260]
+  poster = "images/offers/bio-ucut-launch-2026.jpg"
+
 [params.offer]
   until = "2026-12-31T23:59:59+05:30"
   products = ["dcut-single-color", "dcut-double-color"]
